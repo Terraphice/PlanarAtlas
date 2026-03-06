@@ -86,61 +86,73 @@
   "Plane_Gamalgoth First City": {
     "tags": [
       "plane",
-      "complete"
+      "complete",
+      "phyrexia"
     ]
   },
   "Plane_Halcyon Floating Capital": {
     "tags": [
       "plane",
-      "complete"
+      "complete",
+      "thran",
+      "dominaria"
     ]
   },
   "Plane_Havengul Port City": {
     "tags": [
       "plane",
-      "complete"
+      "complete",
+      "innistrad",
+      "nephalia"
     ]
   },
   "Plane_Lotus Basin": {
     "tags": [
       "plane",
-      "complete"
+      "complete",
+      "dominaria"
     ]
   },
   "Plane_Mephidross": {
     "tags": [
       "plane",
-      "complete"
+      "complete",
+      "mirrodin"
     ]
   },
-  "Plane_Surging Vitality": {
+  "Phenomenon_Surging Vitality": {
     "tags": [
-      "plane",
+      "phenomenon",
       "complete"
     ]
   },
   "Plane_The Dead Zone": {
     "tags": [
       "plane",
-      "complete"
+      "complete",
+      "ulgrotha"
     ]
   },
   "Plane_The Fathom Ward": {
     "tags": [
       "plane",
-      "complete"
+      "complete",
+      "new phyrexia"
     ]
   },
   "Plane_The Tangle": {
     "tags": [
       "plane",
-      "complete"
+      "complete",
+      "mirrodin"
     ]
   },
   "Plane_Thraben High City": {
     "tags": [
       "plane",
-      "complete"
+      "complete",
+      "innistrad",
+      "gavony"
     ]
   }
 }
