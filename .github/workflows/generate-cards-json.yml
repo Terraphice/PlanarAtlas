@@ -25,7 +25,7 @@ jobs:
           node-version: 20
 
       - name: Generate cards.json and cardData.json
-        run: node generateCards.js
+        run: node gencards.js
 
       - name: Commit updated generated files
         run: |
