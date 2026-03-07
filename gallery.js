@@ -17,6 +17,7 @@ const sidebar = document.getElementById("sidebar");
 const sidebarToggle = document.getElementById("sidebar-toggle");
 const sidebarBackdrop = document.getElementById("sidebar-backdrop");
 const topbarSidebarToggle = document.getElementById("topbar-sidebar-toggle");
+const randomCardButton = document.getElementById("random-card-button");
 
 const clearTypeFiltersButton = document.getElementById("clear-type-filters");
 const clearStatusFiltersButton = document.getElementById("clear-status-filters");
@@ -39,6 +40,7 @@ const modalCloseButton = document.getElementById("modal-close");
 const modalPrevButton = document.getElementById("modal-prev");
 const modalNextButton = document.getElementById("modal-next");
 const modalTagList = document.getElementById("modal-tag-list");
+const modalCopyLinkButton = document.getElementById("modal-copy-link");
 
 const filters = {
   search: "",
@@ -102,7 +104,8 @@ function enrichCard(card) {
     key,
     displayName: getDisplayName(card.file),
     imagePath: `images/cards/${card.folder}/${card.file}`,
-    transcriptPath: `transcripts/cards/${card.folder}/${key}.txt`,
+    transcriptPathMd: `transcripts/cards/${card.folder}/${key}.md`,
+    transcriptPathTxt: `transcripts/cards/${card.folder}/${key}.txt`,
     status: card.folder,
     tags
   };
@@ -170,6 +173,8 @@ function bindEvents() {
   topbarSidebarToggle.addEventListener("click", toggleSidebar);
   sidebarBackdrop.addEventListener("click", closeSidebar);
 
+  randomCardButton.addEventListener("click", openRandomCard);
+
   modal.addEventListener("click", (event) => {
     if (event.target instanceof HTMLElement && event.target.dataset.closeModal === "true") {
       closeModal();
@@ -179,6 +184,7 @@ function bindEvents() {
   modalCloseButton.addEventListener("click", closeModal);
   modalPrevButton.addEventListener("click", showPreviousCard);
   modalNextButton.addEventListener("click", showNextCard);
+  modalCopyLinkButton.addEventListener("click", copyCurrentCardLink);
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
@@ -219,6 +225,35 @@ function bindEvents() {
 
       if (!typing) {
         toggleSidebar();
+      }
+    }
+
+    if (event.key.toLowerCase() === "g" && !event.metaKey && !event.ctrlKey && !event.altKey) {
+      const active = document.activeElement;
+      const typing = active && (
+        active.tagName === "INPUT" ||
+        active.tagName === "TEXTAREA" ||
+        active.tagName === "SELECT" ||
+        active.isContentEditable
+      );
+
+      if (!typing) {
+        event.preventDefault();
+        gallery.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+
+    if (event.key.toLowerCase() === "n" && !event.metaKey && !event.ctrlKey && !event.altKey) {
+      if (!modal.classList.contains("hidden")) {
+        event.preventDefault();
+        showNextCard();
+      }
+    }
+
+    if (event.key.toLowerCase() === "p" && !event.metaKey && !event.ctrlKey && !event.altKey) {
+      if (!modal.classList.contains("hidden")) {
+        event.preventDefault();
+        showPreviousCard();
       }
     }
 
@@ -505,21 +540,6 @@ function parseSearchQuery(rawQuery) {
   return parsed;
 }
 
-function stripQuotes(value) {
-  return value.replace(/^"(.*)"$/, "$1").trim();
-}
-
-function normalizeQueryStatus(value) {
-  if (value === "complete") return "complete";
-  if (value === "wip") return "wip";
-  if (value === "incomplete") return "wip";
-  return value;
-}
-
-function normalizeStatusLabel(status) {
-  return status === "complete" ? "complete" : "wip";
-}
-
 function renderGallery() {
   gallery.innerHTML = "";
   resultsCount.textContent = `${filteredCards.length} ${filteredCards.length === 1 ? "card" : "cards"}`;
@@ -625,9 +645,8 @@ function createCardElement(card) {
   const badgeClass = card.status === "complete" ? "card-badge-complete" : "card-badge-wip";
 
   const visibleTags = card.tags.slice(0, 4);
-  const tagMarkup = visibleTags
-    .map((tag) => `<span class="card-tag">${escapeHtml(tag)}</span>`)
-    .join("");
+  const tagsContainer = document.createElement("div");
+  tagsContainer.className = "card-tags";
 
   cardButton.innerHTML = `
     <article class="card">
@@ -640,10 +659,28 @@ function createCardElement(card) {
           <h3 class="card-name">${escapeHtml(card.displayName)}</h3>
           <div class="card-type">${card.type}</div>
         </div>
-        <div class="card-tags">${tagMarkup}</div>
       </div>
     </article>
   `;
+
+  const footer = cardButton.querySelector(".card-footer");
+  footer.appendChild(tagsContainer);
+
+  for (const tag of visibleTags) {
+    const tagElement = document.createElement("span");
+    tagElement.className = "card-tag";
+    tagElement.textContent = tag;
+
+    tagElement.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      filters.tags.add(tag);
+      syncTagFilterUI();
+      applyFilters();
+    });
+
+    tagsContainer.appendChild(tagElement);
+  }
 
   cardButton.addEventListener("click", () => openModalByKey(card.key, true));
   return cardButton;
@@ -726,8 +763,15 @@ async function renderModal(card, updateHash = true) {
     updateUrlForCard(card);
   }
 
+  preloadAdjacentImages();
+
   try {
-    const response = await fetch(card.transcriptPath, { cache: "no-store" });
+    let response = await fetch(card.transcriptPathMd, { cache: "no-store" });
+
+    if (!response.ok) {
+      response = await fetch(card.transcriptPathTxt, { cache: "no-store" });
+    }
+
     if (!response.ok) throw new Error("Transcript not found");
 
     const transcript = await response.text();
@@ -770,6 +814,46 @@ function showNextCard() {
 function updateModalNavButtons() {
   modalPrevButton.disabled = currentModalIndex <= 0;
   modalNextButton.disabled = currentModalIndex >= filteredCards.length - 1;
+}
+
+function preloadAdjacentImages() {
+  preloadCardImage(filteredCards[currentModalIndex - 1]);
+  preloadCardImage(filteredCards[currentModalIndex + 1]);
+}
+
+function preloadCardImage(card) {
+  if (!card || !card.imagePath) return;
+  const img = new Image();
+  img.src = card.imagePath;
+}
+
+function openRandomCard() {
+  if (!filteredCards.length) return;
+  const randomIndex = Math.floor(Math.random() * filteredCards.length);
+  const card = filteredCards[randomIndex];
+  openModalByKey(card.key, true);
+}
+
+async function copyCurrentCardLink() {
+  if (currentModalIndex < 0 || currentModalIndex >= filteredCards.length) return;
+
+  const card = filteredCards[currentModalIndex];
+  const url = `${window.location.origin}${window.location.pathname}#card=${encodeURIComponent(card.key)}`;
+
+  try {
+    await navigator.clipboard.writeText(url);
+    const original = modalCopyLinkButton.textContent;
+    modalCopyLinkButton.textContent = "Copied!";
+    setTimeout(() => {
+      modalCopyLinkButton.textContent = original;
+    }, 1200);
+  } catch {
+    const original = modalCopyLinkButton.textContent;
+    modalCopyLinkButton.textContent = "Copy failed";
+    setTimeout(() => {
+      modalCopyLinkButton.textContent = original;
+    }, 1200);
+  }
 }
 
 function clearAllFilters() {
@@ -853,32 +937,59 @@ function renderTranscriptMarkdown(markdownText) {
 function enhanceManaSymbols(html) {
   return html.replace(/\{([^}]+)\}/g, (_, rawSymbol) => {
     const symbol = rawSymbol.trim().toLowerCase();
-    return buildManaIcon(symbol);
+    const classes = getManaClasses(symbol);
+
+    if (!classes) {
+      return `{${escapeHtml(rawSymbol)}}`;
+    }
+
+    return `<i class="${classes}" aria-label="${escapeHtml(rawSymbol.toUpperCase())}" title="${escapeHtml(rawSymbol.toUpperCase())}"></i>`;
   });
 }
 
-function buildManaIcon(symbol) {
-  const classes = getManaClasses(symbol);
-  const label = escapeHtml(symbol.toUpperCase());
-  return `<i class="${classes}" aria-label="${label}" title="${label}"></i>`;
-}
-
 function getManaClasses(symbol) {
-  if (symbol === "w") return "ms ms-w";
-  if (symbol === "u") return "ms ms-u";
-  if (symbol === "b") return "ms ms-b";
-  if (symbol === "r") return "ms ms-r";
-  if (symbol === "g") return "ms ms-g";
-  if (symbol === "c") return "ms ms-c";
-  if (symbol === "x") return "ms ms-x";
-  if (symbol === "y") return "ms ms-y";
-  if (symbol === "z") return "ms ms-z";
-  if (symbol === "chaos") return "ms ms-chaos";
-  if (symbol === "tap" || symbol === "t") return "ms ms-tap";
-  if (symbol === "untap" || symbol === "q") return "ms ms-untap";
-  if (/^\d+$/.test(symbol)) return `ms ms-${symbol}`;
-  if (/^[wubrgc]\/[wubrgc]$/.test(symbol)) return `ms ms-${symbol.replace("/", "")}`;
-  return "ms ms-c";
+  const raw = symbol.replace(/\s+/g, "");
+
+  const aliases = {
+    t: "tap",
+    q: "untap",
+    planeswalk: "planeswalker"
+  };
+
+  const normalized = aliases[raw] || raw;
+
+  const direct = new Set([
+    "w", "u", "b", "r", "g", "c",
+    "x", "y", "z",
+    "tap", "untap",
+    "chaos",
+    "planeswalker"
+  ]);
+
+  if (direct.has(normalized)) {
+    return normalized === "tap" || normalized === "untap" || normalized === "planeswalker"
+      ? `ms ms-${normalized}`
+      : `ms ms-${normalized} ms-cost`;
+  }
+
+  if (/^(0|[1-9]|10|11|12|13|14|15|16|17|18|19|20|100|1000000|infinity|1\/2)$/.test(normalized)) {
+    const converted = normalized === "1/2" ? "1-2" : normalized;
+    return `ms ms-${converted} ms-cost`;
+  }
+
+  if (/^[wubrgc]\/[wubrgc]$/.test(normalized)) {
+    return `ms ms-${normalized.replace("/", "")} ms-cost`;
+  }
+
+  if (/^2\/[wubrg]$/.test(normalized)) {
+    return `ms ms-${normalized.replace("/", "")} ms-cost`;
+  }
+
+  if (/^[wubrg]\/p$/.test(normalized)) {
+    return `ms ms-${normalized.replace("/", "")} ms-cost`;
+  }
+
+  return null;
 }
 
 function normalizeQueryStatus(value) {

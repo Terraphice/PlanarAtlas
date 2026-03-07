@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Planechase Booster — Terraphice</title>
+  <title>Planechase</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -12,7 +12,7 @@
       <div class="sidebar-header">
         <div>
           <div class="brand-kicker">Terraphice</div>
-          <h1 class="brand-title">Planechase Booster</h1>
+          <h1 class="brand-title">Planechase</h1>
         </div>
         <button id="sidebar-toggle" class="sidebar-toggle" type="button" aria-label="Close filters">
           ✕
@@ -33,7 +33,7 @@
           <label class="filter-label" for="view-mode-select">View mode</label>
           <select id="view-mode-select" class="select-input">
             <option value="grid">Grid</option>
-            <option value="single">Single-card</option>
+            <option value="single">Singleton</option>
           </select>
 
           <label class="filter-label filter-label-spaced" for="group-by-select">Group results by</label>
@@ -110,9 +110,13 @@
               ☰ Filters
             </button>
 
+            <button id="random-card-button" class="topbar-random-button" type="button" aria-label="Planeswalk Set">
+              Planeswalk
+            </button>
+
             <div class="topbar-copy">
               <div class="brand-kicker">Terraphice</div>
-              <h1 class="page-title">Planechase Booster</h1>
+              <h1 class="page-title">Planechase</h1>
               <p class="page-subtitle">Gallery</p>
             </div>
           </div>
@@ -149,17 +153,22 @@
         <div class="modal-image-column">
           <img id="modal-image" class="modal-image" src="" alt="" />
           <a id="modal-source-link" class="modal-source-link" href="" target="_blank" rel="noopener noreferrer">
-            full-size
+            Full-Size
           </a>
         </div>
 
         <div class="modal-info-column">
           <div class="modal-header">
-            <div>
+            <div class="modal-title-block">
               <p id="modal-card-type" class="modal-type"></p>
               <h2 id="modal-card-name" class="modal-name"></h2>
             </div>
-            <div id="modal-card-badge" class="modal-status-badge"></div>
+            <div class="modal-header-actions">
+              <button id="modal-copy-link" class="modal-copy-link" type="button" aria-label="Link">
+                Link
+              </button>
+              <div id="modal-card-badge" class="modal-status-badge"></div>
+            </div>
           </div>
 
           <div id="modal-tag-list" class="modal-tag-list"></div>
