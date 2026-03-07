@@ -620,7 +620,8 @@ code {
   border: 1px solid var(--border);
   border-radius: 18px;
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
-  overflow: hidden;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .modal-close,
@@ -673,7 +674,7 @@ code {
 .modal-layout {
   display: grid;
   grid-template-columns: minmax(520px, 860px) minmax(280px, 1fr);
-  max-height: calc(100vh - 32px);
+  max-height: none;
 }
 
 .modal-image-column {
@@ -713,7 +714,7 @@ code {
 
 .modal-info-column {
   padding: 26px 24px 24px;
-  overflow: auto;
+  overflow: visible;
 }
 
 .modal-header {
@@ -757,12 +758,6 @@ code {
   margin-bottom: 18px;
 }
 
-.modal-transcript-block h3 {
-  margin: 0 0 10px;
-  font-size: 1rem;
-  color: var(--text-soft);
-}
-
 .modal-transcript {
   margin: 0;
   padding: 16px;
@@ -772,15 +767,59 @@ code {
   border-radius: 14px;
   color: var(--text);
   font-family:
-    ui-monospace,
-    SFMono-Regular,
-    Menlo,
-    Consolas,
-    monospace;
-  font-size: 0.93rem;
-  line-height: 1.55;
-  white-space: pre-wrap;
+    ui-sans-serif,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  font-size: 0.96rem;
+  line-height: 1.6;
+  white-space: normal;
   overflow-wrap: anywhere;
+}
+
+.modal-transcript > :first-child {
+  margin-top: 0;
+}
+
+.modal-transcript > :last-child {
+  margin-bottom: 0;
+}
+
+.modal-transcript p {
+  margin: 0 0 12px;
+}
+
+.modal-transcript em {
+  color: #d8e6ff;
+  font-style: italic;
+}
+
+.modal-transcript strong {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.modal-transcript hr {
+  border: 0;
+  border-top: 1px solid var(--border-soft);
+  margin: 16px 0;
+}
+
+.modal-transcript ul,
+.modal-transcript ol {
+  margin: 0 0 12px 1.2rem;
+  padding: 0;
+}
+
+.modal-transcript li {
+  margin: 0 0 6px;
+}
+
+.modal-transcript .ms {
+  font-size: 1.1em;
+  vertical-align: -0.08em;
+  margin: 0 0.05em;
 }
 
 @media (max-width: 1100px) {
@@ -799,6 +838,12 @@ code {
 }
 
 @media (max-width: 980px) {
+  .modal-panel {
+    max-width: calc(100vw - 12px);
+    max-height: calc(100vh - 12px);
+    margin: 6px auto;
+  }
+
   .modal-layout {
     grid-template-columns: 1fr;
   }
@@ -809,7 +854,7 @@ code {
   }
 
   .modal-image {
-    max-height: 60vh;
+    max-height: none;
   }
 }
 
@@ -842,10 +887,24 @@ code {
     max-width: 100%;
   }
 
-  .modal-panel {
-    max-width: calc(100vw - 12px);
-    max-height: calc(100vh - 12px);
-    margin: 6px auto;
+  .modal-close {
+    top: 10px;
+    right: 10px;
+  }
+
+  .modal-prev,
+  .modal-next {
+    top: auto;
+    bottom: 10px;
+    transform: none;
+  }
+
+  .modal-prev {
+    left: 10px;
+  }
+
+  .modal-next {
+    right: 10px;
   }
 
   .modal-info-column,

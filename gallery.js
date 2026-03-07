@@ -714,7 +714,7 @@ async function renderModal(card, updateHash = true) {
     .map((tag) => `<span class="modal-tag">${escapeHtml(tag)}</span>`)
     .join("");
 
-  modalTranscript.textContent = "Loading transcript…";
+  modalTranscript.innerHTML = "Loading transcript…";
 
   modal.classList.remove("hidden");
   modal.setAttribute("aria-hidden", "false");
@@ -731,9 +731,9 @@ async function renderModal(card, updateHash = true) {
     if (!response.ok) throw new Error("Transcript not found");
 
     const transcript = await response.text();
-    modalTranscript.textContent = transcript.trim() || "No transcript available.";
+    renderTranscriptMarkdown(transcript.trim() || "No transcript available.");
   } catch {
-    modalTranscript.textContent = "No transcript available.";
+    renderTranscriptMarkdown("No transcript available.");
   }
 }
 
@@ -744,7 +744,7 @@ function closeModal(updateHash = true) {
   modalImage.src = "";
   modalImage.alt = "";
   modalSourceLink.href = "#";
-  modalTranscript.textContent = "No transcript available.";
+  modalTranscript.innerHTML = "No transcript available.";
   modalTagList.innerHTML = "";
   currentModalIndex = -1;
 
@@ -839,6 +839,61 @@ function tryOpenCardFromHash() {
 function toggleSetValue(setObject, value, enabled) {
   if (enabled) setObject.add(value);
   else setObject.delete(value);
+}
+
+function renderTranscriptMarkdown(markdownText) {
+  const rawHtml = marked.parse(markdownText, {
+    breaks: true
+  });
+
+  const safeHtml = DOMPurify.sanitize(rawHtml);
+  modalTranscript.innerHTML = enhanceManaSymbols(safeHtml);
+}
+
+function enhanceManaSymbols(html) {
+  return html.replace(/\{([^}]+)\}/g, (_, rawSymbol) => {
+    const symbol = rawSymbol.trim().toLowerCase();
+    return buildManaIcon(symbol);
+  });
+}
+
+function buildManaIcon(symbol) {
+  const classes = getManaClasses(symbol);
+  const label = escapeHtml(symbol.toUpperCase());
+  return `<i class="${classes}" aria-label="${label}" title="${label}"></i>`;
+}
+
+function getManaClasses(symbol) {
+  if (symbol === "w") return "ms ms-w";
+  if (symbol === "u") return "ms ms-u";
+  if (symbol === "b") return "ms ms-b";
+  if (symbol === "r") return "ms ms-r";
+  if (symbol === "g") return "ms ms-g";
+  if (symbol === "c") return "ms ms-c";
+  if (symbol === "x") return "ms ms-x";
+  if (symbol === "y") return "ms ms-y";
+  if (symbol === "z") return "ms ms-z";
+  if (symbol === "chaos") return "ms ms-chaos";
+  if (symbol === "tap" || symbol === "t") return "ms ms-tap";
+  if (symbol === "untap" || symbol === "q") return "ms ms-untap";
+  if (/^\d+$/.test(symbol)) return `ms ms-${symbol}`;
+  if (/^[wubrgc]\/[wubrgc]$/.test(symbol)) return `ms ms-${symbol.replace("/", "")}`;
+  return "ms ms-c";
+}
+
+function normalizeQueryStatus(value) {
+  if (value === "complete") return "complete";
+  if (value === "wip") return "wip";
+  if (value === "incomplete") return "wip";
+  return value;
+}
+
+function normalizeStatusLabel(status) {
+  return status === "complete" ? "complete" : "wip";
+}
+
+function stripQuotes(value) {
+  return value.replace(/^"(.*)"$/, "$1").trim();
 }
 
 function escapeHtml(value) {
