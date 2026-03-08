@@ -1,9 +1,30 @@
+import {
+  loadPreferences,
+  savePreferences,
+  enrichCard,
+  sortCards,
+  reconcileSelectedTags,
+  readUrlState,
+  writeUrlState,
+  matchesFilters,
+  parseSearchQuery,
+  getTagLabel,
+  getTagToneClass,
+  getBadgeTags,
+  parseBadgeTag,
+  escapeHtml
+} from "./gallery-utils.js";
+
+import {
+  initToastManager,
+  initThemeController
+} from "./gallery-ui.js";
+
 const STORAGE_KEY = "planechaseGalleryPreferences.v2";
 
 let allCards = [];
 let filteredCards = [];
 let currentModalIndex = -1;
-let cardMetadata = {};
 let stackActiveRaf = null;
 let suggestionIndex = -1;
 
@@ -17,15 +38,13 @@ const topSearchGhost = document.querySelector(".search-input-ghost");
 const sidebarSearch = document.getElementById("sidebar-search");
 const fuzzySearchToggle = document.getElementById("fuzzy-search-toggle");
 const inlineAutocompleteToggle = document.getElementById("inline-autocomplete-toggle");
-const typeFilterInputs = [...document.querySelectorAll(".type-filter")];
 
 const sidebar = document.getElementById("sidebar");
 const sidebarToggle = document.getElementById("sidebar-toggle");
+const sidebarLip = document.getElementById("sidebar-lip");
 const sidebarBackdrop = document.getElementById("sidebar-backdrop");
-const topbarSidebarToggle = document.getElementById("topbar-sidebar-toggle");
 const randomCardButton = document.getElementById("random-card-button");
 
-const clearTypeFiltersButton = document.getElementById("clear-type-filters");
 const clearTagFiltersButton = document.getElementById("clear-tag-filters");
 const clearAllFiltersButton = document.getElementById("clear-all-filters");
 
@@ -33,6 +52,12 @@ const viewModeSelect = document.getElementById("view-mode-select");
 const groupBySelect = document.getElementById("group-by-select");
 const groupTagPickerWrap = document.getElementById("group-tag-picker-wrap");
 const groupTagSelect = document.getElementById("group-tag-select");
+
+const settingsMenuToggle = document.getElementById("settings-menu-toggle");
+const settingsMenu = document.getElementById("settings-menu");
+const settingsClearPreferencesButton = document.getElementById("settings-clear-preferences");
+const settingsContactDeveloperLink = document.getElementById("settings-contact-developer");
+const themeToggleButton = document.getElementById("theme-toggle");
 
 const modal = document.getElementById("card-modal");
 const modalImage = document.getElementById("modal-image");
@@ -46,12 +71,12 @@ const modalNextButton = document.getElementById("modal-next");
 const modalTagList = document.getElementById("modal-tag-list");
 const modalCopyLinkButton = document.getElementById("modal-copy-link");
 const gallery = document.getElementById("gallery");
+const toastRegion = document.getElementById("toast-region");
 
-const preferences = loadPreferences();
+const preferences = loadPreferences(STORAGE_KEY);
 
 const filters = {
   search: "",
-  types: new Set(),
   tags: new Set(),
   fuzzy: preferences.fuzzySearch,
   inlineAutocomplete: preferences.inlineAutocomplete
@@ -63,34 +88,54 @@ const displayState = {
   groupTag: preferences.groupTag
 };
 
+const showToast = initToastManager(toastRegion);
+const themeController = initThemeController({
+  button: themeToggleButton,
+  initialTheme: preferences.theme,
+  initialPalette: preferences.themePalette,
+  onChange(theme, palette) {
+    persistPreferences();
+
+    const paletteLabel = palette === "gruvbox"
+      ? " Gruvbox"
+      : palette === "atom"
+        ? " Atom"
+        : "";
+
+    const themeLabel = theme === "system"
+      ? "system"
+      : theme;
+
+    showToast(`Theme set to ${themeLabel}${paletteLabel}.`);
+  }
+});
+
 init();
 
 async function init() {
   try {
+    readUrlState(filters, displayState);
     applyStoredPreferencesToUI();
 
-    const [cardsResponse, metadataResponse] = await Promise.allSettled([
-      fetch("cards.json"),
-      fetch("cardData.json")
-    ]);
-
-    if (cardsResponse.status !== "fulfilled" || !cardsResponse.value.ok) {
+    const response = await fetch("cards.json");
+    if (!response.ok) {
       throw new Error("Failed to load cards.json");
     }
 
-    const rawCards = await cardsResponse.value.json();
+    const rawCards = await response.json();
+    allCards = rawCards.map(enrichCard);
 
-    if (metadataResponse.status === "fulfilled" && metadataResponse.value.ok) {
-      cardMetadata = await metadataResponse.value.json();
-    } else {
-      cardMetadata = {};
+    filters.tags = reconcileSelectedTags(filters.tags, allCards);
+
+    if (displayState.groupTag) {
+      displayState.groupTag = reconcileSelectedTags(new Set([displayState.groupTag]), allCards).values().next().value || "";
     }
 
-    allCards = rawCards.map(enrichCard);
     buildTagFilters(allCards);
     buildGroupTagOptions(allCards);
     bindEvents();
-    applyFilters();
+    syncTagFilterUI();
+    applyFilters({ updateUrl: false });
     tryOpenCardFromHash();
   } catch (error) {
     console.error(error);
@@ -104,73 +149,23 @@ function applyStoredPreferencesToUI() {
   groupBySelect.value = displayState.groupBy;
   fuzzySearchToggle.checked = filters.fuzzy;
   inlineAutocompleteToggle.checked = filters.inlineAutocomplete;
+  topSearch.value = filters.search;
+  sidebarSearch.value = filters.search;
   groupTagPickerWrap.classList.toggle("hidden", displayState.groupBy !== "tag");
 }
 
-function loadPreferences() {
-  const defaults = {
-    viewMode: "grid",
-    groupBy: "none",
-    groupTag: "",
-    fuzzySearch: false,
-    inlineAutocomplete: false
-  };
-
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return defaults;
-
-    const parsed = JSON.parse(raw);
-    return {
-      viewMode: ["grid", "single", "stack"].includes(parsed.viewMode) ? parsed.viewMode : defaults.viewMode,
-      groupBy: ["none", "type", "tag"].includes(parsed.groupBy) ? parsed.groupBy : defaults.groupBy,
-      groupTag: typeof parsed.groupTag === "string" ? parsed.groupTag : defaults.groupTag,
-      fuzzySearch: Boolean(parsed.fuzzySearch),
-      inlineAutocomplete: Boolean(parsed.inlineAutocomplete)
-    };
-  } catch {
-    return defaults;
-  }
+function persistPreferences() {
+  savePreferences(
+    STORAGE_KEY,
+    displayState,
+    filters,
+    themeController.getTheme(),
+    themeController.getPalette()
+  );
 }
 
-function savePreferences() {
-  try {
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify({
-        viewMode: displayState.viewMode,
-        groupBy: displayState.groupBy,
-        groupTag: displayState.groupTag,
-        fuzzySearch: filters.fuzzy,
-        inlineAutocomplete: filters.inlineAutocomplete
-      })
-    );
-  } catch {
-    // ignore storage failures
-  }
-}
-
-function enrichCard(card) {
-  const key = getCardKey(card.file);
-  const metadata = cardMetadata[key] || {};
-
-  const tags = Array.isArray(metadata.tags)
-    ? metadata.tags
-        .filter(Boolean)
-        .map((tag) => String(tag).trim().toLowerCase())
-        .filter(Boolean)
-    : [];
-
-  return {
-    ...card,
-    key,
-    displayName: getDisplayName(card.file),
-    imagePath: `images/cards/${card.folder}/${card.file}`,
-    transcriptPathMd: `transcripts/cards/${card.folder}/${key}.md`,
-    transcriptPathTxt: `transcripts/cards/${card.folder}/${key}.txt`,
-    tags,
-    type: getCardType(tags)
-  };
+function updateUrlFromState(options) {
+  writeUrlState(filters, displayState, options);
 }
 
 function bindEvents() {
@@ -186,38 +181,34 @@ function bindEvents() {
 
   document.addEventListener("click", (event) => {
     if (!(event.target instanceof Node)) return;
+
     const insideSearch =
       topSearch.contains(event.target) ||
       searchSuggestions.contains(event.target);
+
+    const insideSettings =
+      settingsMenu.contains(event.target) ||
+      settingsMenuToggle.contains(event.target);
+
     if (!insideSearch) {
       hideSearchSuggestions();
     }
-  });
 
-  typeFilterInputs.forEach((input) => {
-    input.addEventListener("change", () => {
-      toggleSetValue(filters.types, input.value, input.checked);
-      applyFilters();
-    });
+    if (!insideSettings) {
+      closeSettingsMenu();
+    }
   });
 
   fuzzySearchToggle.addEventListener("change", () => {
     filters.fuzzy = fuzzySearchToggle.checked;
-    savePreferences();
+    persistPreferences();
     applyFilters();
   });
 
   inlineAutocompleteToggle.addEventListener("change", () => {
     filters.inlineAutocomplete = inlineAutocompleteToggle.checked;
-    savePreferences();
+    persistPreferences();
     updateInlineAutocomplete();
-  });
-
-  clearTypeFiltersButton.addEventListener("click", () => {
-    filters.types.clear();
-    typeFilterInputs.forEach((input) => {
-      input.checked = false;
-    });
     applyFilters();
   });
 
@@ -225,35 +216,51 @@ function bindEvents() {
     filters.tags.clear();
     syncTagFilterUI();
     applyFilters();
+    showToast("Tag filters cleared.");
   });
 
-  clearAllFiltersButton.addEventListener("click", clearAllFilters);
+  clearAllFiltersButton.addEventListener("click", () => {
+    clearAllFilters();
+    showToast("All filters cleared.");
+  });
 
   viewModeSelect.addEventListener("change", () => {
     displayState.viewMode = viewModeSelect.value;
-    savePreferences();
+    persistPreferences();
     renderGallery();
     scheduleStackActiveUpdate();
+    updateUrlFromState();
   });
 
   groupBySelect.addEventListener("change", () => {
     displayState.groupBy = groupBySelect.value;
     groupTagPickerWrap.classList.toggle("hidden", displayState.groupBy !== "tag");
-    savePreferences();
+    persistPreferences();
     renderGallery();
     scheduleStackActiveUpdate();
+    updateUrlFromState();
   });
 
   groupTagSelect.addEventListener("change", () => {
     displayState.groupTag = groupTagSelect.value;
-    savePreferences();
+    persistPreferences();
     renderGallery();
     scheduleStackActiveUpdate();
+    updateUrlFromState();
   });
 
-  sidebarToggle.addEventListener("click", toggleSidebar);
-  topbarSidebarToggle.addEventListener("click", toggleSidebar);
+  sidebarToggle.addEventListener("click", closeSidebar);
+  sidebarLip.addEventListener("click", toggleSidebar);
   sidebarBackdrop.addEventListener("click", closeSidebar);
+
+  settingsMenuToggle.addEventListener("click", () => {
+    toggleSettingsMenu();
+  });
+
+  settingsClearPreferencesButton.addEventListener("click", clearSavedPreferences);
+  settingsContactDeveloperLink.addEventListener("click", () => {
+    closeSettingsMenu();
+  });
 
   randomCardButton.addEventListener("click", openRandomCard);
 
@@ -293,6 +300,16 @@ function bindEvents() {
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
+      if (!searchSuggestions.classList.contains("hidden")) {
+        hideSearchSuggestions();
+        return;
+      }
+
+      if (!settingsMenu.classList.contains("hidden")) {
+        closeSettingsMenu();
+        return;
+      }
+
       if (!modal.classList.contains("hidden")) {
         closeModal();
         return;
@@ -381,6 +398,21 @@ function bindEvents() {
     openModalByKey(key, false);
   });
 
+  window.addEventListener("popstate", () => {
+    readUrlState(filters, displayState);
+    filters.tags = reconcileSelectedTags(filters.tags, allCards);
+
+    if (displayState.groupTag) {
+      displayState.groupTag = reconcileSelectedTags(new Set([displayState.groupTag]), allCards).values().next().value || "";
+    }
+
+    applyStoredPreferencesToUI();
+    buildGroupTagOptions(allCards);
+    syncTagFilterUI();
+    applyFilters({ updateUrl: false });
+    tryOpenCardFromHash();
+  });
+
   window.addEventListener("scroll", scheduleStackActiveUpdate, { passive: true });
   window.addEventListener("resize", scheduleStackActiveUpdate);
 }
@@ -416,6 +448,24 @@ function toggleSidebar() {
     closeSidebar();
   } else {
     openSidebar();
+  }
+}
+
+function openSettingsMenu() {
+  settingsMenu.classList.remove("hidden");
+  settingsMenuToggle.setAttribute("aria-expanded", "true");
+}
+
+function closeSettingsMenu() {
+  settingsMenu.classList.add("hidden");
+  settingsMenuToggle.setAttribute("aria-expanded", "false");
+}
+
+function toggleSettingsMenu() {
+  if (settingsMenu.classList.contains("hidden")) {
+    openSettingsMenu();
+  } else {
+    closeSettingsMenu();
   }
 }
 
@@ -462,7 +512,7 @@ function buildGroupTagOptions(cards) {
   } else {
     displayState.groupTag = "";
     groupTagSelect.value = "";
-    savePreferences();
+    persistPreferences();
   }
 }
 
@@ -509,265 +559,20 @@ function getCurrentModalCardKey() {
   return null;
 }
 
-function applyFilters() {
+function applyFilters({ updateUrl = true } = {}) {
   const parsedQuery = parseSearchQuery(filters.search);
 
-  filteredCards = allCards.filter((card) => matchesFilters(card, parsedQuery));
-
-  filteredCards.sort((a, b) => {
-    if (a.type !== b.type) {
-      return a.type.localeCompare(b.type);
-    }
-    return a.displayName.localeCompare(b.displayName, undefined, {
-      numeric: true,
-      sensitivity: "base"
-    });
-  });
+  filteredCards = allCards.filter((card) => matchesFilters(card, parsedQuery, filters));
+  sortCards(filteredCards);
 
   renderActiveFilters(parsedQuery);
   renderGallery();
   renderSearchSuggestions();
   updateInlineAutocomplete();
-}
 
-function matchesFilters(card, parsedQuery) {
-  if (filters.types.size > 0 && !filters.types.has(card.type)) {
-    return false;
+  if (updateUrl) {
+    updateUrlFromState();
   }
-
-  if (filters.tags.size > 0) {
-    for (const tag of filters.tags) {
-      if (!card.tags.includes(tag)) {
-        return false;
-      }
-    }
-  }
-
-  if (!matchesParsedQuery(card, parsedQuery)) {
-    return false;
-  }
-
-  return true;
-}
-
-function matchesParsedQuery(card, parsedQuery) {
-  const haystack = [
-    card.displayName,
-    card.type,
-    ...card.tags
-  ].join(" ").toLowerCase();
-
-  if (parsedQuery.regex) {
-    if (!parsedQuery.regex.test(haystack)) {
-      return false;
-    }
-  }
-
-  for (const term of parsedQuery.textTerms) {
-    const termLower = term.toLowerCase();
-
-    if (filters.fuzzy) {
-      if (!fuzzyIncludes(haystack, termLower)) {
-        return false;
-      }
-    } else if (!haystack.includes(termLower)) {
-      return false;
-    }
-  }
-
-  for (const term of parsedQuery.negTextTerms) {
-    const termLower = term.toLowerCase();
-
-    if (filters.fuzzy) {
-      if (fuzzyIncludes(haystack, termLower)) {
-        return false;
-      }
-    } else if (haystack.includes(termLower)) {
-      return false;
-    }
-  }
-
-  for (const value of parsedQuery.nameTerms) {
-    const candidate = card.displayName.toLowerCase();
-    if (filters.fuzzy) {
-      if (!fuzzyIncludes(candidate, value)) return false;
-    } else if (!candidate.includes(value)) {
-      return false;
-    }
-  }
-
-  for (const value of parsedQuery.negNameTerms) {
-    const candidate = card.displayName.toLowerCase();
-    if (filters.fuzzy) {
-      if (fuzzyIncludes(candidate, value)) return false;
-    } else if (candidate.includes(value)) {
-      return false;
-    }
-  }
-
-  for (const value of parsedQuery.typeTerms) {
-    if (card.type.toLowerCase() !== value) {
-      return false;
-    }
-  }
-
-  for (const value of parsedQuery.negTypeTerms) {
-    if (card.type.toLowerCase() === value) {
-      return false;
-    }
-  }
-
-  for (const value of parsedQuery.tagTerms) {
-    if (!card.tags.includes(value)) {
-      return false;
-    }
-  }
-
-  for (const value of parsedQuery.negTagTerms) {
-    if (card.tags.includes(value)) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-function parseSearchQuery(rawQuery) {
-  const parsed = {
-    textTerms: [],
-    negTextTerms: [],
-    nameTerms: [],
-    negNameTerms: [],
-    typeTerms: [],
-    negTypeTerms: [],
-    tagTerms: [],
-    negTagTerms: [],
-    regex: null,
-    regexSource: null
-  };
-
-  if (!rawQuery) return parsed;
-
-  const regexMatch = rawQuery.match(/^\/(.+)\/([gimsuy]*)$/);
-  if (regexMatch) {
-    try {
-      parsed.regex = new RegExp(regexMatch[1], regexMatch[2]);
-      parsed.regexSource = rawQuery;
-    } catch {
-      parsed.regex = null;
-      parsed.regexSource = null;
-    }
-  }
-
-  const tokens = rawQuery.match(/"[^"]+"|\S+/g) || [];
-
-  for (let token of tokens) {
-    let negated = false;
-
-    if (token.startsWith("-")) {
-      negated = true;
-      token = token.slice(1);
-    }
-
-    token = stripQuotes(token);
-    if (!token) continue;
-
-    const colonIndex = token.indexOf(":");
-    if (colonIndex > 0) {
-      const field = token.slice(0, colonIndex).toLowerCase();
-      const value = stripQuotes(token.slice(colonIndex + 1)).toLowerCase().trim();
-      if (!value) continue;
-
-      if (field === "type" || field === "t") {
-        (negated ? parsed.negTypeTerms : parsed.typeTerms).push(value);
-        continue;
-      }
-
-      if (field === "tag") {
-        (negated ? parsed.negTagTerms : parsed.tagTerms).push(value);
-        continue;
-      }
-
-      if (field === "name") {
-        (negated ? parsed.negNameTerms : parsed.nameTerms).push(value);
-        continue;
-      }
-    }
-
-    if (!/^\/(.+)\/([gimsuy]*)$/.test(token)) {
-      (negated ? parsed.negTextTerms : parsed.textTerms).push(token.toLowerCase());
-    }
-  }
-
-  return parsed;
-}
-
-function fuzzyIncludes(haystack, needle) {
-  if (!needle) return true;
-  if (haystack.includes(needle)) return true;
-
-  const threshold = getFuzzyThreshold(needle.length);
-  const words = haystack.split(/\s+/);
-
-  for (const word of words) {
-    if (levenshteinDistance(word, needle) <= threshold) {
-      return true;
-    }
-  }
-
-  const joined = haystack.replace(/\s+/g, " ");
-  const slices = createCandidateSlices(joined, needle.length);
-
-  for (const slice of slices) {
-    if (levenshteinDistance(slice, needle) <= threshold) {
-      return true;
-    }
-  }
-
-  return false;
-}
-
-function createCandidateSlices(text, needleLength) {
-  const results = [];
-  const min = Math.max(1, needleLength - 2);
-  const max = needleLength + 2;
-
-  for (let size = min; size <= max; size += 1) {
-    for (let i = 0; i <= text.length - size; i += 1) {
-      results.push(text.slice(i, i + size));
-    }
-  }
-
-  return results;
-}
-
-function getFuzzyThreshold(length) {
-  if (length <= 3) return 0;
-  if (length <= 5) return 1;
-  if (length <= 8) return 2;
-  return 3;
-}
-
-function levenshteinDistance(a, b) {
-  const rows = a.length + 1;
-  const cols = b.length + 1;
-  const dp = Array.from({ length: rows }, () => new Array(cols).fill(0));
-
-  for (let i = 0; i < rows; i += 1) dp[i][0] = i;
-  for (let j = 0; j < cols; j += 1) dp[0][j] = j;
-
-  for (let i = 1; i < rows; i += 1) {
-    for (let j = 1; j < cols; j += 1) {
-      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
-      dp[i][j] = Math.min(
-        dp[i - 1][j] + 1,
-        dp[i][j - 1] + 1,
-        dp[i - 1][j - 1] + cost
-      );
-    }
-  }
-
-  return dp[a.length][b.length];
 }
 
 function renderGallery() {
@@ -835,16 +640,23 @@ function getLayoutClassName() {
 function groupCards(cards, mode, selectedTag) {
   const groups = new Map();
 
-  if (mode === "type") {
-    for (const card of cards) {
-      addCardToGroup(groups, card.type, card);
-    }
-  } else if (mode === "tag") {
+  if (mode === "tag") {
     if (!selectedTag) {
       addCardToGroup(groups, "Ungrouped", ...cards);
     } else {
-      addCardToGroup(groups, `Has tag: ${getTagLabel(selectedTag)}`, ...cards.filter((card) => card.tags.includes(selectedTag)));
-      addCardToGroup(groups, `Missing tag: ${getTagLabel(selectedTag)}`, ...cards.filter((card) => !card.tags.includes(selectedTag)));
+      const selectedTagLower = selectedTag.toLowerCase();
+
+      addCardToGroup(
+        groups,
+        `Has tag: ${getTagLabel(selectedTag)}`,
+        ...cards.filter((card) => card.normalizedTags.includes(selectedTagLower))
+      );
+
+      addCardToGroup(
+        groups,
+        `Missing tag: ${getTagLabel(selectedTag)}`,
+        ...cards.filter((card) => !card.normalizedTags.includes(selectedTagLower))
+      );
     }
   }
 
@@ -1030,10 +842,6 @@ function renderActiveFilters(parsedQuery) {
     pillData.push({ label: `Search: ${filters.search}`, removable: false });
   }
 
-  for (const type of filters.types) {
-    pillData.push({ label: `Type: ${type}`, removable: false });
-  }
-
   for (const tag of filters.tags) {
     pillData.push({
       label: `Tag: ${getTagLabel(tag)}`,
@@ -1042,12 +850,21 @@ function renderActiveFilters(parsedQuery) {
     });
   }
 
-  for (const value of parsedQuery.typeTerms) pillData.push({ label: `type:${value}`, removable: false });
-  for (const value of parsedQuery.negTypeTerms) pillData.push({ label: `-type:${value}`, removable: false });
-  for (const value of parsedQuery.tagTerms) pillData.push({ label: `tag:${value}`, removable: false });
-  for (const value of parsedQuery.negTagTerms) pillData.push({ label: `-tag:${value}`, removable: false });
-  for (const value of parsedQuery.nameTerms) pillData.push({ label: `name:${value}`, removable: false });
-  for (const value of parsedQuery.negNameTerms) pillData.push({ label: `-name:${value}`, removable: false });
+  for (const value of parsedQuery.tagTerms) {
+    pillData.push({ label: `tag:${value}`, removable: false });
+  }
+
+  for (const value of parsedQuery.negTagTerms) {
+    pillData.push({ label: `-tag:${value}`, removable: false });
+  }
+
+  for (const value of parsedQuery.nameTerms) {
+    pillData.push({ label: `name:${value}`, removable: false });
+  }
+
+  for (const value of parsedQuery.negNameTerms) {
+    pillData.push({ label: `-name:${value}`, removable: false });
+  }
 
   if (parsedQuery.regexSource) {
     pillData.push({ label: `regex:${parsedQuery.regexSource}`, removable: false });
@@ -1116,7 +933,7 @@ function buildSuggestions(query) {
   const queryLower = query.toLowerCase();
   const parsed = parseSearchQuery(query);
   const matches = allCards
-    .filter((card) => matchesFilters(card, parsed))
+    .filter((card) => matchesFilters(card, parsed, filters))
     .slice(0, 6);
 
   const suggestions = [];
@@ -1133,8 +950,7 @@ function buildSuggestions(query) {
 
   const matchingTags = [...new Set(
     allCards.flatMap((card) => card.tags).filter((tag) => getTagLabel(tag).toLowerCase().includes(queryLower))
-  )]
-    .slice(0, 4);
+  )].slice(0, 4);
 
   for (const tag of matchingTags) {
     suggestions.push({
@@ -1145,31 +961,27 @@ function buildSuggestions(query) {
     });
   }
 
-  const typeOptions = ["plane", "phenomenon"].filter((type) => type.includes(queryLower));
-  for (const type of typeOptions) {
-    suggestions.push({
-      kind: "type",
-      value: `type:${type}`,
-      title: `type:${type}`,
-      meta: "Filter by type"
-    });
-  }
-
   return suggestions.slice(0, 8);
 }
 
 function getBestCardSuggestion() {
   const query = filters.search.trim();
   if (!query) return null;
+  if (query.includes(":") || /^\/.*\/[gimsuy]*$/.test(query)) return null;
 
-  const parsed = parseSearchQuery(query);
-  const matches = allCards
-    .filter((card) => matchesFilters(card, parsed))
-    .slice(0, 1);
+  const normalized = query.toLowerCase();
+  const candidates = filteredCards
+    .filter((card) => card.displayName.toLowerCase().includes(normalized))
+    .sort((a, b) => {
+      const aStarts = a.displayName.toLowerCase().startsWith(normalized) ? 0 : 1;
+      const bStarts = b.displayName.toLowerCase().startsWith(normalized) ? 0 : 1;
+      if (aStarts !== bStarts) return aStarts - bStarts;
+      return a.displayName.length - b.displayName.length;
+    });
 
-  if (!matches.length) return null;
+  if (!candidates.length) return null;
 
-  const card = matches[0];
+  const card = candidates[0];
   return {
     kind: "card",
     value: card.displayName,
@@ -1294,15 +1106,7 @@ function openModalByKey(cardKey, updateHash = true) {
 
     if (!filteredCards.some((card) => card.key === cardKey)) {
       filteredCards = [...allCards];
-      filteredCards.sort((a, b) => {
-        if (a.type !== b.type) {
-          return a.type.localeCompare(b.type);
-        }
-        return a.displayName.localeCompare(b.displayName, undefined, {
-          numeric: true,
-          sensitivity: "base"
-        });
-      });
+      sortCards(filteredCards);
       renderGallery();
     }
 
@@ -1376,15 +1180,13 @@ function closeModal(updateHash = true) {
 function showPreviousCard() {
   if (currentModalIndex <= 0) return;
   currentModalIndex -= 1;
-  const card = filteredCards[currentModalIndex];
-  renderModal(card, true);
+  renderModal(filteredCards[currentModalIndex], true);
 }
 
 function showNextCard() {
   if (currentModalIndex >= filteredCards.length - 1) return;
   currentModalIndex += 1;
-  const card = filteredCards[currentModalIndex];
-  renderModal(card, true);
+  renderModal(filteredCards[currentModalIndex], true);
 }
 
 function updateModalNavButtons() {
@@ -1406,43 +1208,58 @@ function preloadCardImage(card) {
 function openRandomCard() {
   if (!filteredCards.length) return;
   const randomIndex = Math.floor(Math.random() * filteredCards.length);
-  const card = filteredCards[randomIndex];
-  openModalByKey(card.key, true);
+  openModalByKey(filteredCards[randomIndex].key, true);
 }
 
 async function copyCurrentCardLink() {
   if (currentModalIndex < 0 || currentModalIndex >= filteredCards.length) return;
 
-  const card = filteredCards[currentModalIndex];
-  const url = `${window.location.origin}${window.location.pathname}#card=${encodeURIComponent(card.key)}`;
-
   try {
-    await navigator.clipboard.writeText(url);
-    const original = modalCopyLinkButton.textContent;
-    modalCopyLinkButton.textContent = "Copied!";
-    setTimeout(() => {
-      modalCopyLinkButton.textContent = original;
-    }, 1200);
+    await navigator.clipboard.writeText(window.location.href);
+    showToast("Link copied.");
   } catch {
-    const original = modalCopyLinkButton.textContent;
-    modalCopyLinkButton.textContent = "Copy failed";
-    setTimeout(() => {
-      modalCopyLinkButton.textContent = original;
-    }, 1200);
+    showToast("Copy failed.");
   }
+}
+
+function clearSavedPreferences() {
+  localStorage.removeItem(STORAGE_KEY);
+
+  filters.search = "";
+  filters.tags.clear();
+  filters.fuzzy = false;
+  filters.inlineAutocomplete = true;
+
+  displayState.viewMode = "grid";
+  displayState.groupBy = "none";
+  displayState.groupTag = "";
+
+  themeController.setTheme("system", {
+    silent: true,
+    paletteOverride: "standard"
+  });
+
+  topSearch.value = "";
+  sidebarSearch.value = "";
+  topSearchGhost.value = "";
+
+  applyStoredPreferencesToUI();
+  buildGroupTagOptions(allCards);
+  syncTagFilterUI();
+  hideSearchSuggestions();
+  applyFilters();
+  closeSettingsMenu();
+
+  showToast("Preferences cleared.");
 }
 
 function clearAllFilters() {
   filters.search = "";
-  filters.types.clear();
   filters.tags.clear();
 
   topSearch.value = "";
   sidebarSearch.value = "";
   topSearchGhost.value = "";
-  typeFilterInputs.forEach((input) => {
-    input.checked = false;
-  });
 
   syncTagFilterUI();
   hideSearchSuggestions();
@@ -1450,57 +1267,12 @@ function clearAllFilters() {
   tryOpenCardFromHash();
 }
 
-function getCardKey(filename) {
-  return filename.replace(/\.[^.]+$/, "");
-}
-
-function getDisplayName(filename) {
-  const withoutExtension = filename.replace(/\.[^.]+$/, "");
-  const withoutTypePrefix = withoutExtension.replace(/^(Plane|Phenomenon)[-_ ]+/i, "");
-  return withoutTypePrefix.replace(/[_-]+/g, " ").trim();
-}
-
-function getCardType(tags) {
-  if (tags.includes("plane")) return "Plane";
-  if (tags.includes("phenomenon")) return "Phenomenon";
-  return "Unknown";
-}
-
-function parseBadgeTag(tag) {
-  const parts = String(tag).split(":");
-  if (parts.length < 4 || parts[0] !== "badge") return null;
-
-  const corner = parts[1];
-  const color = parts[2];
-  const label = parts.slice(3).join(":");
-
-  if (!["tl", "tr", "bl", "br"].includes(corner)) return null;
-  if (!["green", "amber", "blue", "red", "purple", "gray"].includes(color)) return null;
-  if (!label) return null;
-
-  return { raw: tag, corner, color, label };
-}
-
-function getBadgeTags(tags) {
-  return tags
-    .map(parseBadgeTag)
-    .filter(Boolean);
-}
-
-function getTagLabel(tag) {
-  const badge = parseBadgeTag(tag);
-  return badge ? badge.label : tag;
-}
-
-function getTagToneClass(tag, baseClass) {
-  const badge = parseBadgeTag(tag);
-  return badge ? `${baseClass} tone-${badge.color}` : baseClass;
-}
-
 function updateUrlForCard(card) {
   const hash = `#card=${encodeURIComponent(card.key)}`;
-  if (window.location.hash !== hash) {
-    history.pushState(null, "", hash);
+  const url = `${window.location.pathname}${window.location.search}${hash}`;
+
+  if (`${window.location.pathname}${window.location.search}${window.location.hash}` !== url) {
+    history.pushState(null, "", url);
   }
 }
 
@@ -1520,11 +1292,6 @@ function tryOpenCardFromHash() {
   const key = getCardKeyFromHash();
   if (!key) return;
   openModalByKey(key, false);
-}
-
-function toggleSetValue(setObject, value, enabled) {
-  if (enabled) setObject.add(value);
-  else setObject.delete(value);
 }
 
 function renderTranscriptMarkdown(markdownText) {
@@ -1592,17 +1359,4 @@ function getManaClasses(symbol) {
   }
 
   return null;
-}
-
-function stripQuotes(value) {
-  return value.replace(/^"(.*)"$/, "$1").trim();
-}
-
-function escapeHtml(value) {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
 }

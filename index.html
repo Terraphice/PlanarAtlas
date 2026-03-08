@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Planechase Gallery</title>
+  <title>Planar Atlas</title>
   <meta name="description" content="A simple gallery and database for Magic: The Gathering's Planechase format.">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Planar Atlas">
@@ -12,12 +12,16 @@
   <meta property="og:image" content="https://planechase.terraphice.dev/images/assets/social-preview.jpg">
   <meta property="og:image:alt" content="Preview image for Planar Atlas.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Planechase</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="app-shell">
     <aside id="sidebar" class="sidebar collapsed">
+      <button id="sidebar-lip" class="sidebar-lip" type="button" aria-label="Toggle filters">
+        <span class="sidebar-lip-icon">☰</span>
+        <span class="sidebar-lip-label">Filters</span>
+      </button>
+
       <div class="sidebar-header">
         <div>
           <div class="brand-kicker">Terraphice's</div>
@@ -36,65 +40,39 @@
 
         <div class="filter-block">
           <div class="filter-heading-row">
-
-            <h2 class="filter-heading">Search Options</h2>
+            <h2 class="filter-heading">Options</h2>
           </div>
 
           <label class="checkbox-row">
             <input id="fuzzy-search-toggle" type="checkbox" />
             <span>Fuzzy</span>
           </label>
-
-          <label class="checkbox-row">
-            <input id="inline-autocomplete-toggle" type="checkbox" />
-            <span>Tab Autocompletion</span>
-          </label>
         </div>
 
         <div class="filter-block">
           <div class="filter-heading-row">
-
-
             <h2 class="filter-heading">Display</h2>
           </div>
 
-          <label class="filter-label" for="view-mode-select">View mode</label>
+          <label class="filter-label" for="view-mode-select">Style</label>
           <select id="view-mode-select" class="select-input">
             <option value="grid">Grid</option>
             <option value="single">Singleton</option>
             <option value="stack">Stack</option>
           </select>
 
-          <label class="filter-label filter-label-spaced" for="group-by-select">Group results by</label>
+          <label class="filter-label filter-label-spaced" for="group-by-select">Grouping:</label>
           <select id="group-by-select" class="select-input">
             <option value="none">None</option>
-            <option value="type">Type</option>
             <option value="tag">Tag</option>
           </select>
 
           <div id="group-tag-picker-wrap" class="group-tag-picker-wrap hidden">
-            <label class="filter-label filter-label-spaced" for="group-tag-select">Tag to group by</label>
+            <label class="filter-label filter-label-spaced" for="group-tag-select">Tag:</label>
             <select id="group-tag-select" class="select-input">
               <option value="">Choose a tag...</option>
             </select>
           </div>
-        </div>
-
-        <div class="filter-block">
-          <div class="filter-heading-row">
-            <h2 class="filter-heading">Type</h2>
-            <button id="clear-type-filters" class="clear-inline-button" type="button">Clear</button>
-          </div>
-
-          <label class="checkbox-row">
-            <input type="checkbox" class="type-filter" value="Plane" />
-            <span>Plane</span>
-          </label>
-
-          <label class="checkbox-row">
-            <input type="checkbox" class="type-filter" value="Phenomenon" />
-            <span>Phenomenon</span>
-          </label>
         </div>
 
         <div class="filter-block">
@@ -117,14 +95,6 @@
       <header class="topbar">
         <div class="topbar-inner">
           <div class="topbar-left">
-            <button id="topbar-sidebar-toggle" class="topbar-filter-button" type="button" aria-label="Open filters">
-              ☰ Filters
-            </button>
-
-            <button id="random-card-button" class="topbar-random-button" type="button" aria-label="Planeswalk Set">
-              Planeswalk
-            </button>
-
             <div class="topbar-copy">
               <div class="brand-kicker">Terraphice's</div>
               <h1 class="page-title">Planar Atlas</h1>
@@ -132,12 +102,83 @@
           </div>
 
           <div class="topbar-controls">
-            <div class="search-shell">
-              <div class="search-inline-shell">
-                <input id="top-search" class="search-input search-input-large search-input-ghost" type="text" aria-hidden="true" tabindex="-1" readonly />
-                <input id="top-search" class="search-input search-input-large search-input-real" type="search" placeholder="Search cards..." autocomplete="off" />
+            <div class="topbar-actions">
+              <button id="random-card-button" class="topbar-random-button" type="button" aria-label="Planeswalk">
+                <i class="ms ms-planeswalker" aria-hidden="true"></i>
+                <span class="sr-only">Planeswalk</span>
+              </button>
+
+              <div class="search-shell">
+                <div class="search-inline-shell">
+                  <input class="search-input search-input-large search-input-ghost" type="text" aria-hidden="true" tabindex="-1" readonly />
+                  <input id="top-search" class="search-input search-input-large search-input-real" type="search" placeholder="Search cards..." autocomplete="off" />
+                </div>
+                <div id="search-suggestions" class="search-suggestions hidden" role="listbox" aria-label="Search suggestions"></div>
               </div>
-              <div id="search-suggestions" class="search-suggestions hidden" role="listbox" aria-label="Search suggestions"></div>
+
+              <div class="topbar-utility-buttons">
+                <div class="settings-menu-wrap">
+                  <button id="settings-menu-toggle" class="topbar-icon-button" type="button" aria-label="Open site settings" aria-expanded="false" aria-controls="settings-menu">
+                    ⚙
+                  </button>
+
+                  <div id="settings-menu" class="settings-menu hidden" role="dialog" aria-label="Site settings">
+                    <div class="settings-menu-section">
+                      <h2 class="settings-menu-title">About</h2>
+                      <p class="settings-menu-copy">
+                        A simple gallery and database for Magic: The Gathering's Planechase format.
+                      </p>
+                    </div>
+
+                    <div class="settings-menu-section">
+                      <h2 class="settings-menu-title">Advanced Search Syntax</h2>
+                      <p class="settings-menu-copy">
+                        Use field filters directly in the search box.
+                      </p>
+                      <ul class="settings-menu-list">
+                        <li><code>tag:Plane</code> — match cards with a tag</li>
+                        <li><code>-tag:Phenomenon</code> — exclude a tag</li>
+                        <li><code>name:"Spatial Merging"</code> — search by exact name text</li>
+                        <li><code>/chaos|planeswalker/i</code> — regex search</li>
+                      </ul>
+                    </div>
+
+                    <div class="settings-menu-section">
+                      <h2 class="settings-menu-title">Keyboard Shortcuts</h2>
+                      <ul class="settings-menu-list">
+                        <li><kbd>/</kbd> Focus Search</li>
+                        <li><kbd>f</kbd> Toggle Filters</li>
+                        <li><kbd>g</kbd> Gallery</li>
+                        <li><kbd>Tab</kbd> Tab Complete</li>
+                        <li><kbd>n</kbd> / <kbd>→</kbd> Next</li>
+                        <li><kbd>p</kbd> / <kbd>←</kbd> Previous</li>
+                        <li><kbd>Esc</kbd> Close/Exit</li>
+                      </ul>
+                    </div>
+
+                    <div class="settings-menu-section">
+                      <h2 class="settings-menu-title">Preferences</h2>
+
+                      <label class="checkbox-row settings-checkbox-row">
+                        <input id="inline-autocomplete-toggle" type="checkbox" />
+                        <span>Tab Autocompletion</span>
+                      </label>
+                    </div>
+
+                    <div class="settings-menu-section settings-menu-actions">
+                      <button id="settings-clear-preferences" class="settings-menu-action" type="button">Clear Saved Preferences</button>
+                      <a id="settings-contact-developer" class="settings-menu-action settings-menu-link" href="mailto:me@terraphice.dev?subject=Planar%20Atlas">
+                        Contact
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <button id="theme-toggle" class="topbar-icon-button theme-toggle" type="button" aria-label="Theme">
+                  <span class="theme-toggle-glyph" aria-hidden="true">◐</span>
+                  <span class="sr-only">Theme</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -197,9 +238,11 @@
     </div>
   </div>
 
+  <div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+
   <link href="https://cdn.jsdelivr.net/npm/mana-font@latest/css/mana.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
-  <script src="gallery.js"></script>
+  <script type="module" src="gallery.js"></script>
 </body>
 </html>
