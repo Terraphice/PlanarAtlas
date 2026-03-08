@@ -181,7 +181,7 @@ function bindEvents() {
 
   sidebarSearch.addEventListener("focus", () => {
     activeSearchSurface = "sidebar";
-    renderSearchSuggestions();
+    hideAllSearchSuggestions();
     updateInlineAutocomplete();
   });
 
@@ -195,7 +195,7 @@ function bindEvents() {
     if (!(event.target instanceof Node)) return;
 
     const insideTopSearch = topSearch.contains(event.target) || topSearchSuggestions.contains(event.target);
-    const insideSidebarSearch = sidebarSearch.contains(event.target) || sidebarSearchSuggestions.contains(event.target);
+    const insideSidebarSearch = sidebarSearch.contains(event.target);
     const insideSettings = settingsMenu.contains(event.target) || settingsMenuToggle.contains(event.target);
 
     if (!insideTopSearch && !insideSidebarSearch) {
@@ -318,7 +318,7 @@ function bindEvents() {
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
-      if (!topSearchSuggestions.classList.contains("hidden") || !sidebarSearchSuggestions.classList.contains("hidden")) {
+      if (!topSearchSuggestions.classList.contains("hidden")) {
         hideAllSearchSuggestions();
         return;
       }
@@ -443,6 +443,7 @@ function syncSearchInputsFromSidebar() {
   topSearch.value = value;
   filters.search = value.trim();
   activeSearchSurface = "sidebar";
+  hideAllSearchSuggestions();
   applyFilters();
 }
 
@@ -451,7 +452,7 @@ function getActiveSearchElements() {
     ? {
         input: sidebarSearch,
         ghost: sidebarSearchGhost,
-        suggestions: sidebarSearchSuggestions
+        suggestions: null
       }
     : {
         input: topSearch,
@@ -893,27 +894,27 @@ function renderActiveFilters(parsedQuery) {
 }
 
 function renderSearchSuggestions() {
-  const query = filters.search.trim();
-  const { suggestions } = getActiveSearchElements();
-  const allSuggestionBoxes = [topSearchSuggestions, sidebarSearchSuggestions];
+  topSearchSuggestions.innerHTML = "";
+  sidebarSearchSuggestions.innerHTML = "";
+  sidebarSearchSuggestions.classList.add("hidden");
 
-  suggestionIndex = -1;
-  suggestions.innerHTML = "";
-  allSuggestionBoxes.forEach((box) => {
-    if (box !== suggestions) {
-      box.classList.add("hidden");
-      box.innerHTML = "";
-    }
-  });
-
-  const results = buildSuggestions(query);
-
-  if (!query || results.length === 0) {
-    suggestions.classList.add("hidden");
+  if (activeSearchSurface !== "top") {
+    topSearchSuggestions.classList.add("hidden");
     return;
   }
 
-  results.forEach((suggestion, index) => {
+  const query = filters.search.trim();
+  const suggestions = buildSuggestions(query);
+
+  suggestionIndex = -1;
+  topSearchSuggestions.innerHTML = "";
+
+  if (!query || suggestions.length === 0) {
+    topSearchSuggestions.classList.add("hidden");
+    return;
+  }
+
+  suggestions.forEach((suggestion, index) => {
     const button = document.createElement("button");
     button.type = "button";
     button.className = "search-suggestion";
@@ -928,10 +929,10 @@ function renderSearchSuggestions() {
       applySuggestion(suggestion);
     });
 
-    suggestions.appendChild(button);
+    topSearchSuggestions.appendChild(button);
   });
 
-  suggestions.classList.remove("hidden");
+  topSearchSuggestions.classList.remove("hidden");
 }
 
 function buildSuggestions(query) {
@@ -1033,7 +1034,6 @@ function hideAllSearchSuggestions() {
   topSearchSuggestions.innerHTML = "";
   sidebarSearchSuggestions.innerHTML = "";
   topSearchGhost.value = "";
-  sidebarSearchGhost.value = "";
   suggestionIndex = -1;
 }
 
@@ -1041,8 +1041,12 @@ function handleSearchKeydown(event) {
   activeSearchSurface = event.currentTarget === sidebarSearch ? "sidebar" : "top";
 
   const { input, ghost, suggestions } = getActiveSearchElements();
-  const items = [...suggestions.querySelectorAll(".search-suggestion")];
-  const hasSuggestionsOpen = !suggestions.classList.contains("hidden") && items.length > 0;
+  const items = suggestions ? [...suggestions.querySelectorAll(".search-suggestion")] : [];
+  const hasSuggestionsOpen = Boolean(
+    suggestions &&
+    !suggestions.classList.contains("hidden") &&
+    items.length > 0
+  );
 
   if (event.key === "Tab" && filters.inlineAutocomplete) {
     const query = input.value;
