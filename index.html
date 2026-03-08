@@ -36,6 +36,25 @@
 
         <div class="filter-block">
           <div class="filter-heading-row">
+
+            <h2 class="filter-heading">Search Options</h2>
+          </div>
+
+          <label class="checkbox-row">
+            <input id="fuzzy-search-toggle" type="checkbox" />
+            <span>Fuzzy</span>
+          </label>
+
+          <label class="checkbox-row">
+            <input id="inline-autocomplete-toggle" type="checkbox" />
+            <span>Tab Autocompletion</span>
+          </label>
+        </div>
+
+        <div class="filter-block">
+          <div class="filter-heading-row">
+
+
             <h2 class="filter-heading">Display</h2>
           </div>
 
@@ -50,7 +69,6 @@
           <select id="group-by-select" class="select-input">
             <option value="none">None</option>
             <option value="type">Type</option>
-            <option value="status">Status</option>
             <option value="tag">Tag</option>
           </select>
 
@@ -76,23 +94,6 @@
           <label class="checkbox-row">
             <input type="checkbox" class="type-filter" value="Phenomenon" />
             <span>Phenomenon</span>
-          </label>
-        </div>
-
-        <div class="filter-block">
-          <div class="filter-heading-row">
-            <h2 class="filter-heading">Status</h2>
-            <button id="clear-status-filters" class="clear-inline-button" type="button">Clear</button>
-          </div>
-
-          <label class="checkbox-row">
-            <input type="checkbox" class="status-filter" value="complete" />
-            <span>Complete</span>
-          </label>
-
-          <label class="checkbox-row">
-            <input type="checkbox" class="status-filter" value="incomplete" />
-            <span>WIP</span>
           </label>
         </div>
 
@@ -131,7 +132,13 @@
           </div>
 
           <div class="topbar-controls">
-            <input id="top-search" class="search-input search-input-large" type="search" placeholder="Search cards..." />
+            <div class="search-shell">
+              <div class="search-inline-shell">
+                <input id="top-search" class="search-input search-input-large search-input-ghost" type="text" aria-hidden="true" tabindex="-1" readonly />
+                <input id="top-search" class="search-input search-input-large search-input-real" type="search" placeholder="Search cards..." autocomplete="off" />
+              </div>
+              <div id="search-suggestions" class="search-suggestions hidden" role="listbox" aria-label="Search suggestions"></div>
+            </div>
           </div>
         </div>
       </header>
@@ -176,7 +183,6 @@
               <button id="modal-copy-link" class="modal-copy-link" type="button" aria-label="Link">
                 Link
               </button>
-              <div id="modal-card-badge" class="modal-status-badge"></div>
             </div>
           </div>
 
