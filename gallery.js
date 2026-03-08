@@ -21,29 +21,43 @@ import {
 } from "./gallery-ui.js";
 
 const STORAGE_KEY = "planechaseGalleryPreferences.v2";
+const ALL_PALETTES = ["standard", "gruvbox", "atom", "dracula", "solarized", "nord", "catppuccin"];
+const THEME_PREFERENCES = ["system", "dark", "light"];
+const VIEW_MODES = ["grid", "single", "stack"];
+const GROUP_MODES = ["none", "tag"];
 
 let allCards = [];
 let filteredCards = [];
 let currentModalIndex = -1;
 let stackActiveRaf = null;
 let suggestionIndex = -1;
+let activeSearchSurface = "top";
+let randomLongPressTimer = null;
+let suppressRandomClick = false;
+let randomIconResetTimer = null;
 
 const resultsCount = document.getElementById("results-count");
 const activeFilters = document.getElementById("active-filters");
 const tagFilterList = document.getElementById("tag-filter-list");
-const searchSuggestions = document.getElementById("search-suggestions");
 
-const topSearch = document.querySelector(".search-input-real");
-const topSearchGhost = document.querySelector(".search-input-ghost");
+const topSearch = document.getElementById("top-search");
+const topSearchGhost = document.getElementById("top-search-ghost");
+const topSearchSuggestions = document.getElementById("top-search-suggestions");
+
 const sidebarSearch = document.getElementById("sidebar-search");
+const sidebarSearchGhost = document.getElementById("sidebar-search-ghost");
+const sidebarSearchSuggestions = document.getElementById("sidebar-search-suggestions");
+
 const fuzzySearchToggle = document.getElementById("fuzzy-search-toggle");
 const inlineAutocompleteToggle = document.getElementById("inline-autocomplete-toggle");
 
 const sidebar = document.getElementById("sidebar");
+const sidebarContent = document.getElementById("sidebar-content");
 const sidebarToggle = document.getElementById("sidebar-toggle");
 const sidebarLip = document.getElementById("sidebar-lip");
 const sidebarBackdrop = document.getElementById("sidebar-backdrop");
 const randomCardButton = document.getElementById("random-card-button");
+const randomCardIcon = document.getElementById("random-card-icon");
 
 const clearTagFiltersButton = document.getElementById("clear-tag-filters");
 const clearAllFiltersButton = document.getElementById("clear-all-filters");
@@ -95,18 +109,8 @@ const themeController = initThemeController({
   initialPalette: preferences.themePalette,
   onChange(theme, palette) {
     persistPreferences();
-
-    const paletteLabel = palette === "gruvbox"
-      ? " Gruvbox"
-      : palette === "atom"
-        ? " Atom"
-        : "";
-
-    const themeLabel = theme === "system"
-      ? "system"
-      : theme;
-
-    showToast(`Theme set to ${themeLabel}${paletteLabel}.`);
+    const paletteLabel = palette === "standard" ? "" : ` ${capitalize(palette)}`;
+    showToast(`Theme set to ${theme}${paletteLabel}.`);
   }
 });
 
@@ -118,9 +122,7 @@ async function init() {
     applyStoredPreferencesToUI();
 
     const response = await fetch("cards.json");
-    if (!response.ok) {
-      throw new Error("Failed to load cards.json");
-    }
+    if (!response.ok) throw new Error("Failed to load cards.json");
 
     const rawCards = await response.json();
     allCards = rawCards.map(enrichCard);
@@ -151,6 +153,8 @@ function applyStoredPreferencesToUI() {
   inlineAutocompleteToggle.checked = filters.inlineAutocomplete;
   topSearch.value = filters.search;
   sidebarSearch.value = filters.search;
+  topSearchGhost.value = "";
+  sidebarSearchGhost.value = "";
   groupTagPickerWrap.classList.toggle("hidden", displayState.groupBy !== "tag");
 }
 
@@ -169,29 +173,33 @@ function updateUrlFromState(options) {
 }
 
 function bindEvents() {
-  topSearch.addEventListener("input", syncSearchInputsFromTop);
-  sidebarSearch.addEventListener("input", syncSearchInputsFromSidebar);
-
   topSearch.addEventListener("focus", () => {
+    activeSearchSurface = "top";
     renderSearchSuggestions();
     updateInlineAutocomplete();
   });
 
-  topSearch.addEventListener("keydown", handleTopSearchKeydown);
+  sidebarSearch.addEventListener("focus", () => {
+    activeSearchSurface = "sidebar";
+    renderSearchSuggestions();
+    updateInlineAutocomplete();
+  });
+
+  topSearch.addEventListener("input", syncSearchInputsFromTop);
+  sidebarSearch.addEventListener("input", syncSearchInputsFromSidebar);
+
+  topSearch.addEventListener("keydown", handleSearchKeydown);
+  sidebarSearch.addEventListener("keydown", handleSearchKeydown);
 
   document.addEventListener("click", (event) => {
     if (!(event.target instanceof Node)) return;
 
-    const insideSearch =
-      topSearch.contains(event.target) ||
-      searchSuggestions.contains(event.target);
+    const insideTopSearch = topSearch.contains(event.target) || topSearchSuggestions.contains(event.target);
+    const insideSidebarSearch = sidebarSearch.contains(event.target) || sidebarSearchSuggestions.contains(event.target);
+    const insideSettings = settingsMenu.contains(event.target) || settingsMenuToggle.contains(event.target);
 
-    const insideSettings =
-      settingsMenu.contains(event.target) ||
-      settingsMenuToggle.contains(event.target);
-
-    if (!insideSearch) {
-      hideSearchSuggestions();
+    if (!insideTopSearch && !insideSidebarSearch) {
+      hideAllSearchSuggestions();
     }
 
     if (!insideSettings) {
@@ -253,16 +261,30 @@ function bindEvents() {
   sidebarLip.addEventListener("click", toggleSidebar);
   sidebarBackdrop.addEventListener("click", closeSidebar);
 
-  settingsMenuToggle.addEventListener("click", () => {
-    toggleSettingsMenu();
-  });
-
+  settingsMenuToggle.addEventListener("click", toggleSettingsMenu);
   settingsClearPreferencesButton.addEventListener("click", clearSavedPreferences);
-  settingsContactDeveloperLink.addEventListener("click", () => {
-    closeSettingsMenu();
+  settingsContactDeveloperLink.addEventListener("click", closeSettingsMenu);
+
+  randomCardButton.addEventListener("click", (event) => {
+    if (suppressRandomClick) {
+      suppressRandomClick = false;
+      event.preventDefault();
+      return;
+    }
+
+    if (event.altKey) {
+      event.preventDefault();
+      triggerChaosMode();
+      return;
+    }
+
+    openRandomCard();
   });
 
-  randomCardButton.addEventListener("click", openRandomCard);
+  randomCardButton.addEventListener("pointerdown", handleRandomPointerDown);
+  randomCardButton.addEventListener("pointerup", clearRandomLongPress);
+  randomCardButton.addEventListener("pointercancel", clearRandomLongPress);
+  randomCardButton.addEventListener("pointerleave", clearRandomLongPress);
 
   modal.addEventListener("click", (event) => {
     if (event.target instanceof HTMLElement && event.target.dataset.closeModal === "true") {
@@ -278,10 +300,8 @@ function bindEvents() {
   modalTagList.addEventListener("click", (event) => {
     const target = event.target;
     if (!(target instanceof HTMLElement)) return;
-
     const tag = target.dataset.tag;
     if (!tag) return;
-
     event.preventDefault();
     event.stopPropagation();
     toggleTagFilter(tag);
@@ -290,18 +310,16 @@ function bindEvents() {
   activeFilters.addEventListener("click", (event) => {
     const target = event.target;
     if (!(target instanceof HTMLElement)) return;
-
     const tag = target.dataset.tag;
     if (!tag) return;
-
     event.preventDefault();
     toggleTagFilter(tag);
   });
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
-      if (!searchSuggestions.classList.contains("hidden")) {
-        hideSearchSuggestions();
+      if (!topSearchSuggestions.classList.contains("hidden") || !sidebarSearchSuggestions.classList.contains("hidden")) {
+        hideAllSearchSuggestions();
         return;
       }
 
@@ -332,6 +350,7 @@ function bindEvents() {
 
       if (!typing) {
         event.preventDefault();
+        activeSearchSurface = "top";
         topSearch.focus();
       }
     }
@@ -365,18 +384,14 @@ function bindEvents() {
       }
     }
 
-    if (event.key.toLowerCase() === "n" && !event.metaKey && !event.ctrlKey && !event.altKey) {
-      if (!modal.classList.contains("hidden")) {
-        event.preventDefault();
-        showNextCard();
-      }
+    if (event.key.toLowerCase() === "n" && !event.metaKey && !event.ctrlKey && !event.altKey && !modal.classList.contains("hidden")) {
+      event.preventDefault();
+      showNextCard();
     }
 
-    if (event.key.toLowerCase() === "p" && !event.metaKey && !event.ctrlKey && !event.altKey) {
-      if (!modal.classList.contains("hidden")) {
-        event.preventDefault();
-        showPreviousCard();
-      }
+    if (event.key.toLowerCase() === "p" && !event.metaKey && !event.ctrlKey && !event.altKey && !modal.classList.contains("hidden")) {
+      event.preventDefault();
+      showPreviousCard();
     }
 
     if (modal.classList.contains("hidden")) return;
@@ -389,9 +404,7 @@ function bindEvents() {
     const key = getCardKeyFromHash();
 
     if (!key) {
-      if (!modal.classList.contains("hidden")) {
-        closeModal(false);
-      }
+      if (!modal.classList.contains("hidden")) closeModal(false);
       return;
     }
 
@@ -421,6 +434,7 @@ function syncSearchInputsFromTop() {
   const value = topSearch.value;
   sidebarSearch.value = value;
   filters.search = value.trim();
+  activeSearchSurface = "top";
   applyFilters();
 }
 
@@ -428,7 +442,30 @@ function syncSearchInputsFromSidebar() {
   const value = sidebarSearch.value;
   topSearch.value = value;
   filters.search = value.trim();
+  activeSearchSurface = "sidebar";
   applyFilters();
+}
+
+function getActiveSearchElements() {
+  return activeSearchSurface === "sidebar"
+    ? {
+        input: sidebarSearch,
+        ghost: sidebarSearchGhost,
+        suggestions: sidebarSearchSuggestions
+      }
+    : {
+        input: topSearch,
+        ghost: topSearchGhost,
+        suggestions: topSearchSuggestions
+      };
+}
+
+function clearInactiveAutocomplete() {
+  if (activeSearchSurface === "sidebar") {
+    topSearchGhost.value = "";
+  } else {
+    sidebarSearchGhost.value = "";
+  }
 }
 
 function openSidebar() {
@@ -441,14 +478,13 @@ function closeSidebar() {
   sidebar.classList.remove("open");
   sidebar.classList.add("collapsed");
   sidebarBackdrop.classList.add("hidden");
+  hideAllSearchSuggestions();
+  sidebarContent.scrollTop = 0;
 }
 
 function toggleSidebar() {
-  if (sidebar.classList.contains("open")) {
-    closeSidebar();
-  } else {
-    openSidebar();
-  }
+  if (sidebar.classList.contains("open")) closeSidebar();
+  else openSidebar();
 }
 
 function openSettingsMenu() {
@@ -459,14 +495,12 @@ function openSettingsMenu() {
 function closeSettingsMenu() {
   settingsMenu.classList.add("hidden");
   settingsMenuToggle.setAttribute("aria-expanded", "false");
+  settingsMenu.scrollTop = 0;
 }
 
 function toggleSettingsMenu() {
-  if (settingsMenu.classList.contains("hidden")) {
-    openSettingsMenu();
-  } else {
-    closeSettingsMenu();
-  }
+  if (settingsMenu.classList.contains("hidden")) openSettingsMenu();
+  else closeSettingsMenu();
 }
 
 function buildTagFilters(cards) {
@@ -526,11 +560,8 @@ function syncTagFilterUI() {
 function toggleTagFilter(tag) {
   const currentKey = getCurrentModalCardKey();
 
-  if (filters.tags.has(tag)) {
-    filters.tags.delete(tag);
-  } else {
-    filters.tags.add(tag);
-  }
+  if (filters.tags.has(tag)) filters.tags.delete(tag);
+  else filters.tags.add(tag);
 
   syncTagFilterUI();
   applyFilters();
@@ -570,9 +601,7 @@ function applyFilters({ updateUrl = true } = {}) {
   renderSearchSuggestions();
   updateInlineAutocomplete();
 
-  if (updateUrl) {
-    updateUrlFromState();
-  }
+  if (updateUrl) updateUrlFromState();
 }
 
 function renderGallery() {
@@ -589,8 +618,7 @@ function renderGallery() {
     wrapper.className = getLayoutClassName();
 
     filteredCards.forEach((card, index) => {
-      const element = createCardElement(card, index);
-      wrapper.appendChild(element);
+      wrapper.appendChild(createCardElement(card, index));
     });
 
     gallery.appendChild(wrapper);
@@ -612,8 +640,7 @@ function renderGallery() {
     inner.className = `${getLayoutClassName()} result-group-body`;
 
     group.cards.forEach((card, index) => {
-      const element = createCardElement(card, index);
-      inner.appendChild(element);
+      inner.appendChild(createCardElement(card, index));
     });
 
     section.innerHTML = `
@@ -667,9 +694,7 @@ function groupCards(cards, mode, selectedTag) {
 }
 
 function addCardToGroup(map, label, ...cards) {
-  if (!map.has(label)) {
-    map.set(label, []);
-  }
+  if (!map.has(label)) map.set(label, []);
   map.get(label).push(...cards);
 }
 
@@ -680,10 +705,7 @@ function createCardElement(card, index = 0) {
   cardButton.setAttribute("aria-label", `Open viewer for ${card.displayName}`);
   cardButton.dataset.cardKey = card.key;
 
-  if (displayState.viewMode === "single") {
-    cardButton.classList.add("single-card-item");
-  }
-
+  if (displayState.viewMode === "single") cardButton.classList.add("single-card-item");
   if (displayState.viewMode === "stack") {
     cardButton.classList.add("stack-card-item");
     cardButton.style.zIndex = String(index + 1);
@@ -693,9 +715,7 @@ function createCardElement(card, index = 0) {
   article.className = "card";
 
   const badgeLayer = renderCardBadgeLayer(card);
-  if (badgeLayer) {
-    article.appendChild(badgeLayer);
-  }
+  if (badgeLayer) article.appendChild(badgeLayer);
 
   const imageWrap = document.createElement("div");
   imageWrap.className = "card-image-wrap";
@@ -733,12 +753,7 @@ function renderCardBadgeLayer(card) {
   const badges = getBadgeTags(card.tags);
   if (badges.length === 0) return null;
 
-  const grouped = {
-    tl: [],
-    tr: [],
-    bl: [],
-    br: []
-  };
+  const grouped = { tl: [], tr: [], bl: [], br: [] };
 
   for (const badge of badges) {
     grouped[badge.corner].push(badge);
@@ -811,10 +826,7 @@ function updateStackActiveCard() {
 
   for (const item of stackItems) {
     const rect = item.getBoundingClientRect();
-
-    if (rect.bottom < 0 || rect.top > window.innerHeight) {
-      continue;
-    }
+    if (rect.bottom < 0 || rect.top > window.innerHeight) continue;
 
     const itemCenter = rect.top + rect.height / 2;
     const distance = Math.abs(itemCenter - viewportCenter);
@@ -825,10 +837,7 @@ function updateStackActiveCard() {
     }
   }
 
-  if (!bestItem) {
-    bestItem = stackItems[0];
-  }
-
+  if (!bestItem) bestItem = stackItems[0];
   bestItem.classList.add("stack-active");
   bestItem.style.zIndex = "50";
 }
@@ -850,28 +859,17 @@ function renderActiveFilters(parsedQuery) {
     });
   }
 
-  for (const value of parsedQuery.tagTerms) {
-    pillData.push({ label: `tag:${value}`, removable: false });
-  }
-
-  for (const value of parsedQuery.negTagTerms) {
-    pillData.push({ label: `-tag:${value}`, removable: false });
-  }
-
-  for (const value of parsedQuery.nameTerms) {
-    pillData.push({ label: `name:${value}`, removable: false });
-  }
-
-  for (const value of parsedQuery.negNameTerms) {
-    pillData.push({ label: `-name:${value}`, removable: false });
-  }
+  for (const value of parsedQuery.tagTerms) pillData.push({ label: `tag:${value}`, removable: false });
+  for (const value of parsedQuery.negTagTerms) pillData.push({ label: `-tag:${value}`, removable: false });
+  for (const value of parsedQuery.nameTerms) pillData.push({ label: `name:${value}`, removable: false });
+  for (const value of parsedQuery.negNameTerms) pillData.push({ label: `-name:${value}`, removable: false });
 
   if (parsedQuery.regexSource) {
     pillData.push({ label: `regex:${parsedQuery.regexSource}`, removable: false });
   }
 
   if (filters.fuzzy) {
-    pillData.push({ label: "Fuzzy: on", removable: false });
+    pillData.push({ label: "Fuzzy", removable: false });
   }
 
   for (const pill of pillData) {
@@ -885,9 +883,7 @@ function renderActiveFilters(parsedQuery) {
       element.dataset.tag = pill.tag;
 
       const badge = parseBadgeTag(pill.tag);
-      if (badge) {
-        element.classList.add(`tone-${badge.color}`);
-      }
+      if (badge) element.classList.add(`tone-${badge.color}`);
     } else {
       element.disabled = true;
     }
@@ -898,17 +894,26 @@ function renderActiveFilters(parsedQuery) {
 
 function renderSearchSuggestions() {
   const query = filters.search.trim();
-  const suggestions = buildSuggestions(query);
+  const { suggestions } = getActiveSearchElements();
+  const allSuggestionBoxes = [topSearchSuggestions, sidebarSearchSuggestions];
 
   suggestionIndex = -1;
-  searchSuggestions.innerHTML = "";
+  suggestions.innerHTML = "";
+  allSuggestionBoxes.forEach((box) => {
+    if (box !== suggestions) {
+      box.classList.add("hidden");
+      box.innerHTML = "";
+    }
+  });
 
-  if (!query || suggestions.length === 0) {
-    hideSearchSuggestions();
+  const results = buildSuggestions(query);
+
+  if (!query || results.length === 0) {
+    suggestions.classList.add("hidden");
     return;
   }
 
-  suggestions.forEach((suggestion, index) => {
+  results.forEach((suggestion, index) => {
     const button = document.createElement("button");
     button.type = "button";
     button.className = "search-suggestion";
@@ -923,10 +928,10 @@ function renderSearchSuggestions() {
       applySuggestion(suggestion);
     });
 
-    searchSuggestions.appendChild(button);
+    suggestions.appendChild(button);
   });
 
-  searchSuggestions.classList.remove("hidden");
+  suggestions.classList.remove("hidden");
 }
 
 function buildSuggestions(query) {
@@ -992,65 +997,62 @@ function getBestCardSuggestion() {
 }
 
 function updateInlineAutocomplete() {
-  if (!filters.inlineAutocomplete) {
-    topSearchGhost.value = "";
-    return;
-  }
+  topSearchGhost.value = "";
+  sidebarSearchGhost.value = "";
 
-  const query = topSearch.value;
-  if (!query.trim()) {
-    topSearchGhost.value = "";
-    return;
-  }
+  if (!filters.inlineAutocomplete) return;
 
-  if (query.includes(":") || /^\/.*\/[gimsuy]*$/.test(query)) {
-    topSearchGhost.value = "";
-    return;
-  }
+  const { input, ghost } = getActiveSearchElements();
+  const query = input.value;
+
+  if (!query.trim()) return;
+  if (query.includes(":") || /^\/.*\/[gimsuy]*$/.test(query)) return;
 
   const bestCard = getBestCardSuggestion();
-  if (!bestCard) {
-    topSearchGhost.value = "";
-    return;
-  }
+  if (!bestCard) return;
 
   const cardName = bestCard.title;
-  if (!cardName.toLowerCase().startsWith(query.toLowerCase()) || cardName.length <= query.length) {
-    topSearchGhost.value = "";
-    return;
-  }
+  if (!cardName.toLowerCase().startsWith(query.toLowerCase()) || cardName.length <= query.length) return;
 
-  topSearchGhost.value = query + cardName.slice(query.length);
+  ghost.value = query + cardName.slice(query.length);
+  clearInactiveAutocomplete();
 }
 
 function applySuggestion(suggestion) {
   topSearch.value = suggestion.value;
   sidebarSearch.value = suggestion.value;
   filters.search = suggestion.value.trim();
-  hideSearchSuggestions();
+  hideAllSearchSuggestions();
   applyFilters();
-  topSearch.blur();
+  getActiveSearchElements().input.blur();
 }
 
-function hideSearchSuggestions() {
-  searchSuggestions.classList.add("hidden");
-  searchSuggestions.innerHTML = "";
+function hideAllSearchSuggestions() {
+  topSearchSuggestions.classList.add("hidden");
+  sidebarSearchSuggestions.classList.add("hidden");
+  topSearchSuggestions.innerHTML = "";
+  sidebarSearchSuggestions.innerHTML = "";
+  topSearchGhost.value = "";
+  sidebarSearchGhost.value = "";
   suggestionIndex = -1;
 }
 
-function handleTopSearchKeydown(event) {
-  const items = [...searchSuggestions.querySelectorAll(".search-suggestion")];
-  const hasSuggestionsOpen = !searchSuggestions.classList.contains("hidden") && items.length > 0;
+function handleSearchKeydown(event) {
+  activeSearchSurface = event.currentTarget === sidebarSearch ? "sidebar" : "top";
+
+  const { input, ghost, suggestions } = getActiveSearchElements();
+  const items = [...suggestions.querySelectorAll(".search-suggestion")];
+  const hasSuggestionsOpen = !suggestions.classList.contains("hidden") && items.length > 0;
 
   if (event.key === "Tab" && filters.inlineAutocomplete) {
-    const query = topSearch.value;
-    const ghost = topSearchGhost.value;
+    const query = input.value;
 
-    if (ghost && ghost.length > query.length && ghost.toLowerCase().startsWith(query.toLowerCase())) {
+    if (ghost.value && ghost.value.length > query.length && ghost.value.toLowerCase().startsWith(query.toLowerCase())) {
       event.preventDefault();
-      topSearch.value = ghost;
-      sidebarSearch.value = ghost;
-      filters.search = ghost.trim();
+      input.value = ghost.value;
+      topSearch.value = ghost.value;
+      sidebarSearch.value = ghost.value;
+      filters.search = ghost.value.trim();
       applyFilters();
       return;
     }
@@ -1081,13 +1083,13 @@ function handleTopSearchKeydown(event) {
     if (bestCard) {
       event.preventDefault();
       openModalByKey(bestCard.cardKey, true);
-      hideSearchSuggestions();
+      hideAllSearchSuggestions();
       return;
     }
   }
 
   if (event.key === "Escape") {
-    hideSearchSuggestions();
+    hideAllSearchSuggestions();
   }
 }
 
@@ -1126,7 +1128,6 @@ async function renderModal(card, updateHash = true) {
   modalSourceLink.href = card.imagePath;
 
   modalTagList.innerHTML = "";
-
   for (const tag of card.tags) {
     modalTagList.appendChild(createTagChipElement(tag, "modal-tag"));
   }
@@ -1139,19 +1140,12 @@ async function renderModal(card, updateHash = true) {
 
   updateModalNavButtons();
 
-  if (updateHash) {
-    updateUrlForCard(card);
-  }
-
+  if (updateHash) updateUrlForCard(card);
   preloadAdjacentImages();
 
   try {
     let response = await fetch(card.transcriptPathMd, { cache: "no-store" });
-
-    if (!response.ok) {
-      response = await fetch(card.transcriptPathTxt, { cache: "no-store" });
-    }
-
+    if (!response.ok) response = await fetch(card.transcriptPathTxt, { cache: "no-store" });
     if (!response.ok) throw new Error("Transcript not found");
 
     const transcript = await response.text();
@@ -1172,9 +1166,7 @@ function closeModal(updateHash = true) {
   modalTagList.innerHTML = "";
   currentModalIndex = -1;
 
-  if (updateHash) {
-    clearCardHash();
-  }
+  if (updateHash) clearCardHash();
 }
 
 function showPreviousCard() {
@@ -1211,6 +1203,104 @@ function openRandomCard() {
   openModalByKey(filteredCards[randomIndex].key, true);
 }
 
+function handleRandomPointerDown(event) {
+  if (event.pointerType === "mouse") return;
+  clearRandomLongPress();
+  randomLongPressTimer = window.setTimeout(() => {
+    suppressRandomClick = true;
+    triggerChaosMode();
+  }, 650);
+}
+
+function clearRandomLongPress() {
+  if (randomLongPressTimer !== null) {
+    window.clearTimeout(randomLongPressTimer);
+    randomLongPressTimer = null;
+  }
+}
+
+function triggerChaosIcon() {
+  if (!randomCardIcon) return;
+
+  randomCardButton.classList.add("is-chaos");
+  randomCardIcon.classList.remove("ms-planeswalker");
+  randomCardIcon.classList.add("ms-chaos");
+
+  window.clearTimeout(randomIconResetTimer);
+  randomIconResetTimer = window.setTimeout(() => {
+    randomCardButton.classList.remove("is-chaos");
+    randomCardIcon.classList.remove("ms-chaos");
+    randomCardIcon.classList.add("ms-planeswalker");
+  }, 1200);
+}
+
+function randomFrom(array) {
+  return array[Math.floor(Math.random() * array.length)];
+}
+
+function sampleTags(max = 3) {
+  const allTags = [...new Set(allCards.flatMap((card) => card.tags))];
+  const count = Math.floor(Math.random() * (max + 1));
+  const selected = new Set();
+
+  while (selected.size < count && allTags.length > 0) {
+    selected.add(randomFrom(allTags));
+  }
+
+  return selected;
+}
+
+function triggerChaosMode() {
+  if (!allCards.length) return;
+
+  triggerChaosIcon();
+
+  const randomTheme = randomFrom(THEME_PREFERENCES);
+  const randomPalette = randomFrom(ALL_PALETTES);
+  themeController.setTheme(randomTheme, {
+    silent: true,
+    paletteOverride: randomPalette,
+    animate: true
+  });
+
+  filters.fuzzy = Math.random() < 0.5;
+  filters.inlineAutocomplete = Math.random() < 0.5;
+  filters.tags = sampleTags(3);
+
+  const searchModeRoll = Math.random();
+  if (searchModeRoll < 0.33) {
+    filters.search = "";
+  } else if (searchModeRoll < 0.66) {
+    filters.search = randomFrom(allCards).displayName;
+  } else {
+    filters.search = `tag:${randomFrom([...new Set(allCards.flatMap((card) => card.tags))])}`;
+  }
+
+  displayState.viewMode = randomFrom(VIEW_MODES);
+  displayState.groupBy = randomFrom(GROUP_MODES);
+  displayState.groupTag = displayState.groupBy === "tag"
+    ? randomFrom([...new Set(allCards.flatMap((card) => card.tags))])
+    : "";
+
+  topSearch.value = filters.search;
+  sidebarSearch.value = filters.search;
+  topSearchGhost.value = "";
+  sidebarSearchGhost.value = "";
+  fuzzySearchToggle.checked = filters.fuzzy;
+  inlineAutocompleteToggle.checked = filters.inlineAutocomplete;
+  viewModeSelect.value = displayState.viewMode;
+  groupBySelect.value = displayState.groupBy;
+  groupTagPickerWrap.classList.toggle("hidden", displayState.groupBy !== "tag");
+  buildGroupTagOptions(allCards);
+  syncTagFilterUI();
+
+  applyFilters();
+  renderGallery();
+  scheduleStackActiveUpdate();
+
+  showToast("Chaos unleashed.");
+}
+
 async function copyCurrentCardLink() {
   if (currentModalIndex < 0 || currentModalIndex >= filteredCards.length) return;
 
@@ -1242,11 +1332,12 @@ function clearSavedPreferences() {
   topSearch.value = "";
   sidebarSearch.value = "";
   topSearchGhost.value = "";
+  sidebarSearchGhost.value = "";
 
   applyStoredPreferencesToUI();
   buildGroupTagOptions(allCards);
   syncTagFilterUI();
-  hideSearchSuggestions();
+  hideAllSearchSuggestions();
   applyFilters();
   closeSettingsMenu();
 
@@ -1260,9 +1351,10 @@ function clearAllFilters() {
   topSearch.value = "";
   sidebarSearch.value = "";
   topSearchGhost.value = "";
+  sidebarSearchGhost.value = "";
 
   syncTagFilterUI();
-  hideSearchSuggestions();
+  hideAllSearchSuggestions();
   applyFilters();
   tryOpenCardFromHash();
 }
@@ -1295,10 +1387,7 @@ function tryOpenCardFromHash() {
 }
 
 function renderTranscriptMarkdown(markdownText) {
-  const rawHtml = marked.parse(markdownText, {
-    breaks: true
-  });
-
+  const rawHtml = marked.parse(markdownText, { breaks: true });
   const safeHtml = DOMPurify.sanitize(rawHtml);
   modalTranscript.innerHTML = enhanceManaSymbols(safeHtml);
 }
@@ -1308,9 +1397,7 @@ function enhanceManaSymbols(html) {
     const symbol = rawSymbol.trim().toLowerCase();
     const classes = getManaClasses(symbol);
 
-    if (!classes) {
-      return `{${escapeHtml(rawSymbol)}}`;
-    }
+    if (!classes) return `{${escapeHtml(rawSymbol)}}`;
 
     return `<i class="${classes}" aria-label="${escapeHtml(rawSymbol.toUpperCase())}" title="${escapeHtml(rawSymbol.toUpperCase())}"></i>`;
   });
@@ -1359,4 +1446,8 @@ function getManaClasses(symbol) {
   }
 
   return null;
+}
+
+function capitalize(value) {
+  return value ? value[0].toUpperCase() + value.slice(1) : value;
 }

@@ -21,7 +21,9 @@ export function loadPreferences(storageKey) {
       fuzzySearch: Boolean(parsed.fuzzySearch),
       inlineAutocomplete: parsed.inlineAutocomplete === undefined ? defaults.inlineAutocomplete : Boolean(parsed.inlineAutocomplete),
       theme: ["system", "dark", "light"].includes(parsed.theme) ? parsed.theme : defaults.theme,
-      themePalette: ["standard", "gruvbox", "atom"].includes(parsed.themePalette) ? parsed.themePalette : defaults.themePalette
+      themePalette: ["standard", "gruvbox", "atom", "dracula", "solarized", "nord", "catppuccin"].includes(parsed.themePalette)
+        ? parsed.themePalette
+        : defaults.themePalette
     };
   } catch {
     return defaults;
@@ -136,10 +138,6 @@ export function readUrlState(filters, displayState) {
     filters.fuzzy = params.get("fuzzy") === "1";
   }
 
-  if (params.has("inline")) {
-    filters.inlineAutocomplete = params.get("inline") === "1";
-  }
-
   const view = params.get("view");
   if (["grid", "single", "stack"].includes(view)) {
     displayState.viewMode = view;
@@ -148,8 +146,6 @@ export function readUrlState(filters, displayState) {
   const groupBy = params.get("groupBy");
   if (["none", "tag"].includes(groupBy)) {
     displayState.groupBy = groupBy;
-  } else if (groupBy === "type") {
-    displayState.groupBy = "none";
   }
 
   if (params.has("groupTag")) {
@@ -170,10 +166,6 @@ export function writeUrlState(filters, displayState, { push = false } = {}) {
 
   if (filters.fuzzy) {
     params.set("fuzzy", "1");
-  }
-
-  if (filters.inlineAutocomplete) {
-    params.set("inline", "1");
   }
 
   if (displayState.viewMode !== "grid") {

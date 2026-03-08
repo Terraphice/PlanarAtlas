@@ -32,10 +32,16 @@
         </button>
       </div>
 
-      <div class="sidebar-content">
+      <div class="sidebar-content" id="sidebar-content">
         <div class="filter-block">
           <label class="filter-label" for="sidebar-search">Search</label>
-          <input id="sidebar-search" class="search-input" type="search" placeholder="Search cards..." />
+          <div class="search-shell search-shell-sidebar">
+            <div class="search-inline-shell">
+              <input id="sidebar-search-ghost" class="search-input search-input-ghost" type="text" aria-hidden="true" tabindex="-1" readonly />
+              <input id="sidebar-search" class="search-input search-input-real" type="search" placeholder="Search cards..." autocomplete="off" />
+            </div>
+            <div id="sidebar-search-suggestions" class="search-suggestions hidden" role="listbox" aria-label="Sidebar search suggestions"></div>
+          </div>
         </div>
 
         <div class="filter-block">
@@ -104,16 +110,16 @@
           <div class="topbar-controls">
             <div class="topbar-actions">
               <button id="random-card-button" class="topbar-random-button" type="button" aria-label="Planeswalk">
-                <i class="ms ms-planeswalker" aria-hidden="true"></i>
+                <i id="random-card-icon" class="ms ms-planeswalker" aria-hidden="true"></i>
                 <span class="sr-only">Planeswalk</span>
               </button>
 
               <div class="search-shell">
                 <div class="search-inline-shell">
-                  <input class="search-input search-input-large search-input-ghost" type="text" aria-hidden="true" tabindex="-1" readonly />
+                  <input id="top-search-ghost" class="search-input search-input-large search-input-ghost" type="text" aria-hidden="true" tabindex="-1" readonly />
                   <input id="top-search" class="search-input search-input-large search-input-real" type="search" placeholder="Search cards..." autocomplete="off" />
                 </div>
-                <div id="search-suggestions" class="search-suggestions hidden" role="listbox" aria-label="Search suggestions"></div>
+                <div id="top-search-suggestions" class="search-suggestions hidden" role="listbox" aria-label="Search suggestions"></div>
               </div>
 
               <div class="topbar-utility-buttons">
@@ -131,7 +137,7 @@
                     </div>
 
                     <div class="settings-menu-section">
-                      <h2 class="settings-menu-title">Advanced Search Syntax</h2>
+                      <h2 class="settings-menu-title">Advanced search syntax</h2>
                       <p class="settings-menu-copy">
                         Use field filters directly in the search box.
                       </p>
@@ -144,15 +150,15 @@
                     </div>
 
                     <div class="settings-menu-section">
-                      <h2 class="settings-menu-title">Keyboard Shortcuts</h2>
+                      <h2 class="settings-menu-title">Keyboard shortcuts</h2>
                       <ul class="settings-menu-list">
-                        <li><kbd>/</kbd> Focus Search</li>
-                        <li><kbd>f</kbd> Toggle Filters</li>
-                        <li><kbd>g</kbd> Gallery</li>
-                        <li><kbd>Tab</kbd> Tab Complete</li>
-                        <li><kbd>n</kbd> / <kbd>→</kbd> Next</li>
-                        <li><kbd>p</kbd> / <kbd>←</kbd> Previous</li>
-                        <li><kbd>Esc</kbd> Close/Exit</li>
+                        <li><kbd>/</kbd> Focus search</li>
+                        <li><kbd>f</kbd> Toggle filters</li>
+                        <li><kbd>g</kbd> Jump to gallery</li>
+                        <li><kbd>Tab</kbd> Accept inline autocomplete</li>
+                        <li><kbd>n</kbd> / <kbd>→</kbd> Next card in modal</li>
+                        <li><kbd>p</kbd> / <kbd>←</kbd> Previous card in modal</li>
+                        <li><kbd>Esc</kbd> Close suggestions, modal, settings, or sidebar</li>
                       </ul>
                     </div>
 
@@ -170,6 +176,12 @@
                       <a id="settings-contact-developer" class="settings-menu-action settings-menu-link" href="mailto:me@terraphice.dev?subject=Planar%20Atlas">
                         Contact
                       </a>
+                    </div>
+
+                    <div class="settings-menu-section settings-menu-fineprint-section">
+                      <p class="settings-menu-fineprint">
+                        Don&#39;t like the style? <strong>HOLD</strong> on! <strong>ALT</strong>ernate themes may be available to those with the knowledge to find them.
+                      </p>
                     </div>
                   </div>
                 </div>
