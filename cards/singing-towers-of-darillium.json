@@ -1,9 +1,10 @@
 {
   "file": "Plane_Singing Towers of Darillium.png",
-  "folder": "complete",
   "tags": [
     "badge:tr:green:Official",
     "Plane",
-    "Darillium"
+    "Darillium",
+    "WHO",
+    "hidden"
   ]
 }

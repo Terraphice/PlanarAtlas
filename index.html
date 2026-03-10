@@ -56,7 +56,7 @@
 
           <label class="checkbox-row">
             <input id="show-hidden-toggle" type="checkbox" />
-            <span>Show hidden</span>
+            <span>Hidden</span>
           </label>
         </div>
 
@@ -120,7 +120,11 @@
               </button>
 
               <button id="deck-button" class="topbar-deck-button" type="button" aria-label="Deck builder">
-                <span class="symbol-glyph deck-btn-icon" aria-hidden="true">◆&#xFE0E;</span>
+                <svg class="deck-btn-icon" aria-hidden="true" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+                  <rect x="5" y="2" width="12" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                  <rect x="3" y="4" width="12" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                  <rect x="1" y="6" width="12" height="14" rx="2" fill="currentColor" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
                 <span id="deck-button-badge" class="deck-button-badge hidden" aria-hidden="true"></span>
               </button>
 
@@ -247,9 +251,16 @@
               <h2 id="modal-card-name" class="modal-name"></h2>
             </div>
             <div class="modal-header-actions">
-              <button id="modal-add-to-deck" class="modal-copy-link modal-deck-btn" type="button" aria-label="Add to deck" data-card-key="">
-                + Deck
-              </button>
+              <div class="modal-deck-wrap">
+                <button id="modal-add-to-deck" class="modal-copy-link modal-deck-btn" type="button" aria-label="Add to deck" data-card-key="">
+                  + Deck
+                </button>
+                <div id="modal-deck-qty" class="modal-deck-qty hidden">
+                  <button id="modal-deck-dec" class="modal-deck-qty-btn" type="button" aria-label="Remove one copy">−</button>
+                  <span id="modal-deck-count" class="modal-deck-qty-count">1</span>
+                  <button id="modal-deck-inc" class="modal-deck-qty-btn" type="button" aria-label="Add one copy">+</button>
+                </div>
+              </div>
               <button id="modal-copy-link" class="modal-copy-link" type="button" aria-label="Link">
                 Link
               </button>
@@ -276,11 +287,28 @@
         <h2 class="deck-panel-title">Deck Builder</h2>
         <span id="deck-total-count" class="deck-total-count">0 cards</span>
       </div>
+      <div class="deck-slot-row" role="group" aria-label="Deck slots">
+        <button class="deck-slot-btn active" data-slot="0" type="button" aria-label="Deck 1">Deck 1</button>
+        <button class="deck-slot-btn" data-slot="1" type="button" aria-label="Deck 2">Deck 2</button>
+        <button class="deck-slot-btn" data-slot="2" type="button" aria-label="Deck 3">Deck 3</button>
+      </div>
       <div class="deck-panel-actions">
         <button id="deck-play-btn" class="deck-action-btn deck-play-btn" type="button">▶ Play</button>
         <button id="deck-link-btn" class="deck-action-btn" type="button">Link</button>
         <button id="deck-export-btn" class="deck-action-btn" type="button">Export</button>
         <button id="deck-import-btn" class="deck-action-btn" type="button">Import</button>
+        <div class="deck-autoimport-wrap">
+          <button id="deck-autoimport-btn" class="deck-action-btn" type="button">Auto</button>
+          <div id="deck-autoimport-menu" class="deck-autoimport-menu hidden">
+            <button class="deck-autoimport-item" data-action="official" type="button">Import Official</button>
+            <button class="deck-autoimport-item" data-action="custom" type="button">Import Custom</button>
+            <button class="deck-autoimport-item" data-action="planes" type="button">Import Planes</button>
+            <button class="deck-autoimport-item" data-action="phenomena" type="button">Import Phenomena</button>
+            <div class="deck-autoimport-divider"></div>
+            <button class="deck-autoimport-item deck-autoimport-tag-toggle" type="button">By Tag ▾</button>
+            <div id="deck-autoimport-tag-list" class="deck-autoimport-tag-list hidden"></div>
+          </div>
+        </div>
         <button id="deck-clear-btn" class="deck-action-btn deck-danger-btn" type="button">Clear</button>
         <button id="deck-close-btn" class="deck-close-btn" type="button" aria-label="Close deck panel">✕</button>
       </div>
@@ -301,9 +329,15 @@
     </div>
 
     <!-- Corner buttons -->
-    <button id="game-btn-tl" class="game-corner-btn game-tl" type="button" aria-label="Roll planar die">
-      <i id="game-die-icon" class="ms ms-d6" aria-hidden="true"></i>
-    </button>
+    <div class="game-tl-group">
+      <button id="game-btn-tl" class="game-corner-btn game-tl" type="button" aria-label="Roll planar die">
+        <i id="game-die-icon" class="ms ms-chaos" aria-hidden="true"></i>
+      </button>
+      <div id="game-cost-display" class="game-cost-display" aria-label="Chaos cost">
+        <span id="game-cost-value" class="game-cost-value">0</span>
+        <button id="game-cost-reset" class="game-cost-reset" type="button" aria-label="Reset cost">↺</button>
+      </div>
+    </div>
     <button id="game-btn-tr" class="game-corner-btn game-tr" type="button" aria-label="Planeswalk">
       <i class="ms ms-planeswalker" aria-hidden="true"></i>
     </button>
@@ -321,11 +355,14 @@
       <button id="game-tools-add-top" class="game-menu-item" type="button">
         <span>Add Top of Library</span>
       </button>
-      <button id="game-view-deck-btn" class="game-menu-item" type="button">View Library</button>
+      <button id="game-tools-return-top" class="game-menu-item" type="button">Return Active to Top</button>
+      <button id="game-tools-return-bottom" class="game-menu-item" type="button">Return Active to Bottom</button>
+      <div class="game-menu-divider"></div>
       <div class="game-menu-search">
-        <label class="game-menu-search-label" for="game-tools-search-input">Search &amp; Play Simultaneously</label>
+        <label class="game-menu-search-label" for="game-tools-search-input">Search &amp; View Library</label>
         <input id="game-tools-search-input" class="game-tools-search-input" type="search" placeholder="Search cards in library…" autocomplete="off" />
         <div id="game-tools-search-results" class="game-tools-search-results"></div>
+        <div id="game-library-view-list" class="game-library-view-list"></div>
       </div>
     </div>
 
@@ -335,15 +372,6 @@
       <button id="game-opt-reset" class="game-menu-item" type="button">Reshuffle &amp; Reset</button>
       <button id="game-opt-deck-builder" class="game-menu-item" type="button">Back to Deck Builder</button>
       <button id="game-opt-exit" class="game-menu-item game-menu-item-danger" type="button">Exit Game</button>
-    </div>
-
-    <!-- Library view panel -->
-    <div id="game-deck-view-panel" class="game-deck-view-panel hidden" role="dialog" aria-label="Remaining library">
-      <div class="game-deck-view-header">
-        <h3 class="game-deck-view-title">Library Order</h3>
-        <button id="game-deck-view-close" class="game-deck-view-close" type="button" aria-label="Close">✕</button>
-      </div>
-      <div id="game-deck-view-list" class="game-deck-view-list"></div>
     </div>
   </div>
 

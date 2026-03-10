@@ -1,9 +1,10 @@
 {
   "file": "Plane_Aplan Mortarium.png",
-  "folder": "complete",
   "tags": [
     "badge:tr:green:Official",
     "Plane",
-    "Alfava Metraxis"
+    "Alfava Metraxis",
+    "WHO",
+    "hidden"
   ]
 }

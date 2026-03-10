@@ -1,19 +1,25 @@
-import { escapeHtml, shuffleArray } from "./gallery-utils.js";
+import { escapeHtml, shuffleArray, isHiddenCard } from "./gallery-utils.js";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-const DECK_STORAGE_KEY = "planar-atlas-deck-v1";
+const DECK_STORAGE_KEY = "planar-atlas-decks-v2";
+const NUM_DECK_SLOTS = 3;
 const MAX_CARD_COUNT = 9;
 
 // ── Module state ──────────────────────────────────────────────────────────────
 
 let allCards = [];
-let deckCards = new Map();
+let allDecks = [new Map(), new Map(), new Map()];
+let currentSlot = 0;
 let deckPanelOpen = false;
 let gameActive = false;
 let gameState = null;
 let showToastFn = null;
 let onDeckChangeFn = null;
+
+function deckCards() {
+  return allDecks[currentSlot];
+}
 
 // ── DOM references ────────────────────────────────────────────────────────────
 
@@ -28,7 +34,14 @@ const deckClearBtn = document.getElementById("deck-clear-btn");
 const deckCloseBtn = document.getElementById("deck-close-btn");
 const deckButton = document.getElementById("deck-button");
 const deckButtonBadge = document.getElementById("deck-button-badge");
+const deckAutoimportBtn = document.getElementById("deck-autoimport-btn");
+const deckAutoimportMenu = document.getElementById("deck-autoimport-menu");
+const deckAutoimportTagList = document.getElementById("deck-autoimport-tag-list");
 const modalAddToDeckBtn = document.getElementById("modal-add-to-deck");
+const modalDeckQty = document.getElementById("modal-deck-qty");
+const modalDeckDec = document.getElementById("modal-deck-dec");
+const modalDeckInc = document.getElementById("modal-deck-inc");
+const modalDeckCount = document.getElementById("modal-deck-count");
 
 const gameView = document.getElementById("game-view");
 const gameCardImage = document.getElementById("game-card-image");
@@ -43,15 +56,16 @@ const gameToolsMenu = document.getElementById("game-tools-menu");
 const gameOptionsMenu = document.getElementById("game-options-menu");
 const gameToolsShuffle = document.getElementById("game-tools-shuffle");
 const gameToolsAddTop = document.getElementById("game-tools-add-top");
+const gameToolsReturnTop = document.getElementById("game-tools-return-top");
+const gameToolsReturnBottom = document.getElementById("game-tools-return-bottom");
 const gameToolsSearchInput = document.getElementById("game-tools-search-input");
 const gameToolsSearchResults = document.getElementById("game-tools-search-results");
+const gameLibraryViewList = document.getElementById("game-library-view-list");
 const gameOptExit = document.getElementById("game-opt-exit");
 const gameOptReset = document.getElementById("game-opt-reset");
 const gameOptDeckBuilder = document.getElementById("game-opt-deck-builder");
-const gameViewDeckBtn = document.getElementById("game-view-deck-btn");
-const gameDeckViewPanel = document.getElementById("game-deck-view-panel");
-const gameDeckViewClose = document.getElementById("game-deck-view-close");
-const gameDeckViewList = document.getElementById("game-deck-view-list");
+const gameCostValue = document.getElementById("game-cost-value");
+const gameCostReset = document.getElementById("game-cost-reset");
 
 // ── Initialization ────────────────────────────────────────────────────────────
 
@@ -60,7 +74,9 @@ export function initDeck({ cards, showToast, onDeckChange }) {
   showToastFn = showToast;
   onDeckChangeFn = onDeckChange;
 
-  deckCards = loadDeckFromStorage();
+  const stored = loadDecksFromStorage();
+  allDecks = stored.decks;
+  currentSlot = stored.slot;
 
   const urlParams = new URLSearchParams(window.location.search);
   const seedParam = urlParams.get("deck");
@@ -69,8 +85,8 @@ export function initDeck({ cards, showToast, onDeckChange }) {
     if (decoded.size > 0) {
       const valid = filterValidDeck(decoded);
       if (valid.size > 0) {
-        deckCards = valid;
-        saveDeckToStorage();
+        allDecks[currentSlot] = valid;
+        saveDecksToStorage();
         const newParams = new URLSearchParams(urlParams);
         newParams.delete("deck");
         const query = newParams.toString();
@@ -81,7 +97,88 @@ export function initDeck({ cards, showToast, onDeckChange }) {
   }
 
   bindDeckEvents();
+  renderDeckSlotButtons();
   updateDeckButton();
+}
+
+// ── Deck slot management ──────────────────────────────────────────────────────
+
+function renderDeckSlotButtons() {
+  const buttons = document.querySelectorAll(".deck-slot-btn");
+  for (const btn of buttons) {
+    const slot = parseInt(btn.dataset.slot, 10);
+    btn.classList.toggle("active", slot === currentSlot);
+    const total = [...allDecks[slot].values()].reduce((a, b) => a + b, 0);
+    btn.textContent = `Deck ${slot + 1}${total > 0 ? ` (${total})` : ""}`;
+  }
+}
+
+function switchDeckSlot(slot) {
+  if (slot === currentSlot) return;
+  currentSlot = slot;
+  saveDecksToStorage();
+  renderDeckSlotButtons();
+  updateDeckButton();
+  if (deckPanelOpen) renderDeckList();
+  updateAllCardOverlays();
+}
+
+// ── Auto-import ───────────────────────────────────────────────────────────────
+
+function buildAutoimportTagList() {
+  if (!deckAutoimportTagList) return;
+  deckAutoimportTagList.innerHTML = "";
+  const allTags = [...new Set(allCards.flatMap((c) => c.tags))].sort((a, b) =>
+    a.localeCompare(b, undefined, { sensitivity: "base" })
+  );
+  for (const tag of allTags) {
+    if (tag.toLowerCase() === "hidden" || tag.startsWith("badge:") || tag.startsWith(":top:badge:")) continue;
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "deck-autoimport-tag-item";
+    btn.textContent = tag;
+    btn.addEventListener("click", (event) => {
+      event.stopPropagation();
+      autoImportCards(tag);
+      deckAutoimportMenu?.classList.add("hidden");
+    });
+    deckAutoimportTagList.appendChild(btn);
+  }
+}
+
+function autoImportCards(filter) {
+  const deck = deckCards();
+  let count = 0;
+  for (const card of allCards) {
+    if (isHiddenCard(card.normalizedTags)) continue;
+    let match = false;
+    switch (filter) {
+      case "official":
+        match = card.normalizedTags.some((t) => t.includes("official"));
+        break;
+      case "custom":
+        match = card.normalizedTags.some((t) => t.includes("custom"));
+        break;
+      case "planes":
+        match = card.type === "Plane";
+        break;
+      case "phenomena":
+        match = card.type === "Phenomenon";
+        break;
+      default:
+        match = card.normalizedTags.includes(filter.toLowerCase());
+    }
+    if (match && !deck.has(card.key)) {
+      deck.set(card.key, 1);
+      count++;
+    }
+  }
+  saveDecksToStorage();
+  updateDeckButton();
+  renderDeckList();
+  updateAllCardOverlays();
+  renderDeckSlotButtons();
+  showToastFn?.(count > 0 ? `Added ${count} card${count !== 1 ? "s" : ""} to deck.` : "No new cards to add.");
 }
 
 // ── Events ────────────────────────────────────────────────────────────────────
@@ -95,9 +192,54 @@ function bindDeckEvents() {
   deckImportBtn?.addEventListener("click", importDeckPrompt);
   deckLinkBtn?.addEventListener("click", shareDeckLink);
 
+  for (const btn of document.querySelectorAll(".deck-slot-btn")) {
+    btn.addEventListener("click", () => switchDeckSlot(parseInt(btn.dataset.slot, 10)));
+  }
+
+  deckAutoimportBtn?.addEventListener("click", (event) => {
+    event.stopPropagation();
+    const hidden = deckAutoimportMenu?.classList.contains("hidden");
+    if (hidden) {
+      buildAutoimportTagList();
+      deckAutoimportMenu?.classList.remove("hidden");
+    } else {
+      deckAutoimportMenu?.classList.add("hidden");
+    }
+  });
+
+  deckAutoimportMenu?.addEventListener("click", (event) => {
+    event.stopPropagation();
+    const item = event.target.closest(".deck-autoimport-item[data-action]");
+    if (!item) return;
+    autoImportCards(item.dataset.action);
+    deckAutoimportMenu?.classList.add("hidden");
+  });
+
+  const tagToggle = deckAutoimportMenu?.querySelector(".deck-autoimport-tag-toggle");
+  tagToggle?.addEventListener("click", (event) => {
+    event.stopPropagation();
+    deckAutoimportTagList?.classList.toggle("hidden");
+  });
+
+  document.addEventListener("click", () => {
+    deckAutoimportMenu?.classList.add("hidden");
+  });
+
   modalAddToDeckBtn?.addEventListener("click", () => {
     const cardKey = modalAddToDeckBtn.dataset.cardKey;
-    if (cardKey) toggleCardInDeck(cardKey);
+    if (!cardKey) return;
+    const count = deckCards().get(cardKey) || 0;
+    if (count === 0) addCardToDeck(cardKey);
+  });
+
+  modalDeckDec?.addEventListener("click", () => {
+    const cardKey = modalAddToDeckBtn?.dataset.cardKey;
+    if (cardKey) removeCardFromDeck(cardKey);
+  });
+
+  modalDeckInc?.addEventListener("click", () => {
+    const cardKey = modalAddToDeckBtn?.dataset.cardKey;
+    if (cardKey) addCardToDeck(cardKey);
   });
 
   gameBtnTr?.addEventListener("click", gamePlaneswalk);
@@ -108,8 +250,8 @@ function bindDeckEvents() {
   gameToolsShuffle?.addEventListener("click", () => {
     if (!gameState) return;
     gameState.remaining = shuffleArray(gameState.remaining);
-    closeAllGameMenus();
     showToastFn?.("Remaining library shuffled.");
+    renderGameLibraryView();
   });
 
   gameToolsAddTop?.addEventListener("click", () => {
@@ -120,20 +262,41 @@ function bindDeckEvents() {
     const top = gameState.remaining.shift();
     gameState.activePlanes.push(top);
     updateGameView();
-    closeAllGameMenus();
     showToastFn?.(`${top.displayName} added simultaneously.`);
+    renderGameLibraryView();
   });
 
-  gameToolsSearchInput?.addEventListener("input", updateGameSearchResults);
-
-  gameViewDeckBtn?.addEventListener("click", () => {
-    closeAllGameMenus();
-    renderGameDeckView();
-    gameDeckViewPanel?.classList.remove("hidden");
+  gameToolsReturnTop?.addEventListener("click", () => {
+    if (!gameState || gameState.activePlanes.length === 0) {
+      showToastFn?.("No active planes to return.");
+      return;
+    }
+    const returned = [...gameState.activePlanes];
+    gameState.remaining.unshift(...returned);
+    gameState.activePlanes = [];
+    gameState.focusedIndex = 0;
+    updateGameView();
+    renderGameLibraryView();
+    showToastFn?.(`Returned ${returned.length} plane${returned.length > 1 ? "s" : ""} to top.`);
   });
 
-  gameDeckViewClose?.addEventListener("click", () => {
-    gameDeckViewPanel?.classList.add("hidden");
+  gameToolsReturnBottom?.addEventListener("click", () => {
+    if (!gameState || gameState.activePlanes.length === 0) {
+      showToastFn?.("No active planes to return.");
+      return;
+    }
+    const returned = [...gameState.activePlanes];
+    gameState.remaining.push(...returned);
+    gameState.activePlanes = [];
+    gameState.focusedIndex = 0;
+    updateGameView();
+    renderGameLibraryView();
+    showToastFn?.(`Returned ${returned.length} plane${returned.length > 1 ? "s" : ""} to bottom.`);
+  });
+
+  gameToolsSearchInput?.addEventListener("input", () => {
+    updateGameSearchResults();
+    renderGameLibraryView();
   });
 
   gameOptExit?.addEventListener("click", exitGame);
@@ -143,15 +306,20 @@ function bindDeckEvents() {
     openDeckPanel();
   });
 
+  gameCostReset?.addEventListener("click", () => {
+    if (gameState) {
+      gameState.chaosCost = 0;
+      updateCostDisplay();
+    }
+  });
+
   gameView?.addEventListener("click", (event) => {
     const target = event.target;
     if (!(target instanceof HTMLElement)) return;
     const inTools = gameToolsMenu?.contains(target) || gameBtnBr?.contains(target);
     const inOptions = gameOptionsMenu?.contains(target) || gameBtnBl?.contains(target);
-    const inDeckView = gameDeckViewPanel?.contains(target) || gameViewDeckBtn?.contains(target);
     if (!inTools) gameToolsMenu?.classList.add("hidden");
     if (!inOptions) gameOptionsMenu?.classList.add("hidden");
-    if (!inDeckView) gameDeckViewPanel?.classList.add("hidden");
   });
 }
 
@@ -173,11 +341,11 @@ function openDeckPanel() {
     deckPanel?.classList.add("open");
   });
 }
-
 export function closeDeckPanel() {
   deckPanelOpen = false;
   deckPanel?.classList.remove("open");
   deckButton?.classList.remove("deck-panel-open");
+  deckAutoimportMenu?.classList.add("hidden");
   onDeckChangeFn?.();
   // Re-hide after transition so it's out of tab order
   const panel = deckPanel;
@@ -198,12 +366,13 @@ function renderDeckList() {
   if (!deckCardList) return;
   deckCardList.innerHTML = "";
 
-  if (deckCards.size === 0) {
+  const deck = deckCards();
+  if (deck.size === 0) {
     deckCardList.innerHTML = `<p class="deck-empty-state">No cards yet. Browse the gallery and use the <strong>+</strong> buttons to add cards.</p>`;
     return;
   }
 
-  const sortedEntries = [...deckCards.entries()]
+  const sortedEntries = [...deck.entries()]
     .map(([key, count]) => ({ key, count, card: allCards.find((c) => c.key === key) }))
     .filter((e) => e.card)
     .sort((a, b) => a.card.displayName.localeCompare(b.card.displayName, undefined, { sensitivity: "base" }));
@@ -241,43 +410,47 @@ function renderDeckList() {
 // ── Deck management ───────────────────────────────────────────────────────────
 
 export function getCardDeckCount(cardKey) {
-  return deckCards.get(cardKey) || 0;
+  return deckCards().get(cardKey) || 0;
 }
 
 export function getDeckTotal() {
-  return [...deckCards.values()].reduce((a, b) => a + b, 0);
+  return [...deckCards().values()].reduce((a, b) => a + b, 0);
 }
 
 export function addCardToDeck(cardKey) {
-  const current = deckCards.get(cardKey) || 0;
+  const deck = deckCards();
+  const current = deck.get(cardKey) || 0;
   if (current >= MAX_CARD_COUNT) {
     showToastFn?.(`Maximum ${MAX_CARD_COUNT} copies per card.`);
     return;
   }
-  deckCards.set(cardKey, current + 1);
-  saveDeckToStorage();
+  deck.set(cardKey, current + 1);
+  saveDecksToStorage();
   updateDeckButton();
   refreshDeckCardItem(cardKey);
   updateCardOverlays(cardKey);
   updateModalDeckButton(cardKey);
+  renderDeckSlotButtons();
 }
 
 export function removeCardFromDeck(cardKey) {
-  const current = deckCards.get(cardKey) || 0;
+  const deck = deckCards();
+  const current = deck.get(cardKey) || 0;
   if (current <= 1) {
-    deckCards.delete(cardKey);
+    deck.delete(cardKey);
   } else {
-    deckCards.set(cardKey, current - 1);
+    deck.set(cardKey, current - 1);
   }
-  saveDeckToStorage();
+  saveDecksToStorage();
   updateDeckButton();
   refreshDeckCardItem(cardKey);
   updateCardOverlays(cardKey);
   updateModalDeckButton(cardKey);
+  renderDeckSlotButtons();
 }
 
 export function toggleCardInDeck(cardKey) {
-  const count = deckCards.get(cardKey) || 0;
+  const count = deckCards().get(cardKey) || 0;
   if (count > 0) {
     removeCardFromDeck(cardKey);
   } else {
@@ -287,11 +460,12 @@ export function toggleCardInDeck(cardKey) {
 
 function clearDeck() {
   if (getDeckTotal() === 0) return;
-  deckCards.clear();
-  saveDeckToStorage();
+  deckCards().clear();
+  saveDecksToStorage();
   updateDeckButton();
   renderDeckList();
   updateAllCardOverlays();
+  renderDeckSlotButtons();
   showToastFn?.("Deck cleared.");
 }
 
@@ -312,12 +486,13 @@ function updateDeckButton() {
 
 function refreshDeckCardItem(cardKey) {
   if (!deckCardList || !deckPanelOpen) return;
-  const count = deckCards.get(cardKey) || 0;
+  const deck = deckCards();
+  const count = deck.get(cardKey) || 0;
   const existing = deckCardList.querySelector(`[data-card-key="${CSS.escape(cardKey)}"]`);
 
   if (count === 0 && existing) {
     existing.remove();
-    if (deckCards.size === 0) {
+    if (deck.size === 0) {
       deckCardList.innerHTML = `<p class="deck-empty-state">No cards yet. Browse the gallery and use the <strong>+</strong> buttons to add cards.</p>`;
     }
     return;
@@ -337,7 +512,7 @@ function refreshDeckCardItem(cardKey) {
 }
 
 function updateCardOverlays(cardKey) {
-  const count = deckCards.get(cardKey) || 0;
+  const count = deckCards().get(cardKey) || 0;
   for (const overlay of document.querySelectorAll(`.deck-card-overlay[data-card-key="${CSS.escape(cardKey)}"]`)) {
     const countEl = overlay.querySelector(".deck-overlay-count");
     if (countEl) countEl.textContent = count;
@@ -353,7 +528,7 @@ function updateAllCardOverlays() {
   for (const overlay of document.querySelectorAll(".deck-card-overlay")) {
     const key = overlay.dataset.cardKey;
     if (!key) continue;
-    const count = deckCards.get(key) || 0;
+    const count = deckCards().get(key) || 0;
     const countEl = overlay.querySelector(".deck-overlay-count");
     if (countEl) countEl.textContent = count;
     const decBtn = overlay.querySelector("[data-action='dec']");
@@ -366,9 +541,15 @@ function updateAllCardOverlays() {
 
 export function updateModalDeckButton(cardKey) {
   if (!modalAddToDeckBtn || modalAddToDeckBtn.dataset.cardKey !== cardKey) return;
-  const count = deckCards.get(cardKey) || 0;
-  modalAddToDeckBtn.textContent = count > 0 ? `In Deck (${count})` : "+ Deck";
+  const count = deckCards().get(cardKey) || 0;
+  modalAddToDeckBtn.textContent = count > 0 ? "In Deck" : "+ Deck";
   modalAddToDeckBtn.classList.toggle("deck-in-deck", count > 0);
+  if (modalDeckQty) {
+    modalDeckQty.classList.toggle("hidden", count === 0);
+    if (modalDeckCount) modalDeckCount.textContent = count;
+    if (modalDeckDec) modalDeckDec.disabled = count <= 0;
+    if (modalDeckInc) modalDeckInc.disabled = count >= MAX_CARD_COUNT;
+  }
 }
 
 export function setModalCardKey(cardKey) {
@@ -465,7 +646,7 @@ function filterValidDeck(map) {
 // ── Import / Export ───────────────────────────────────────────────────────────
 
 function exportDeckSeed() {
-  const seed = encodeDeck(deckCards);
+  const seed = encodeDeck(deckCards());
   if (!seed) { showToastFn?.("Deck is empty."); return; }
   if (navigator.clipboard) {
     navigator.clipboard.writeText(seed).then(() => showToastFn?.("Deck seed copied!")).catch(() => prompt("Copy this deck seed:", seed));
@@ -481,11 +662,12 @@ function importDeckPrompt() {
   if (decoded.size === 0) { showToastFn?.("Invalid deck seed."); return; }
   const valid = filterValidDeck(decoded);
   const skipped = decoded.size - valid.size;
-  deckCards = valid;
-  saveDeckToStorage();
+  allDecks[currentSlot] = valid;
+  saveDecksToStorage();
   updateDeckButton();
   renderDeckList();
   updateAllCardOverlays();
+  renderDeckSlotButtons();
   const total = getDeckTotal();
   if (skipped > 0) {
     showToastFn?.(`Imported ${total} cards (${skipped} unknown card${skipped > 1 ? "s" : ""} skipped).`);
@@ -495,7 +677,7 @@ function importDeckPrompt() {
 }
 
 function shareDeckLink() {
-  const seed = encodeDeck(deckCards);
+  const seed = encodeDeck(deckCards());
   if (!seed) { showToastFn?.("Deck is empty."); return; }
   const url = new URL(window.location.href);
   url.hash = "";
@@ -510,23 +692,31 @@ function shareDeckLink() {
 
 // ── Storage ───────────────────────────────────────────────────────────────────
 
-function loadDeckFromStorage() {
+function loadDecksFromStorage() {
   try {
     const raw = localStorage.getItem(DECK_STORAGE_KEY);
-    if (!raw) return new Map();
+    if (!raw) return { slot: 0, decks: [new Map(), new Map(), new Map()] };
     const parsed = JSON.parse(raw);
-    if (!Array.isArray(parsed)) return new Map();
-    return new Map(
-      parsed.filter(([k, v]) => typeof k === "string" && typeof v === "number" && v > 0 && v <= MAX_CARD_COUNT)
-    );
+    const slot = typeof parsed.slot === "number" && parsed.slot >= 0 && parsed.slot < NUM_DECK_SLOTS ? parsed.slot : 0;
+    const decks = Array.isArray(parsed.decks)
+      ? parsed.decks.slice(0, NUM_DECK_SLOTS).map((d) => {
+          if (!Array.isArray(d)) return new Map();
+          return new Map(d.filter(([k, v]) => typeof k === "string" && typeof v === "number" && v > 0 && v <= MAX_CARD_COUNT));
+        })
+      : [];
+    while (decks.length < NUM_DECK_SLOTS) decks.push(new Map());
+    return { slot, decks };
   } catch {
-    return new Map();
+    return { slot: 0, decks: [new Map(), new Map(), new Map()] };
   }
 }
 
-function saveDeckToStorage() {
+function saveDecksToStorage() {
   try {
-    localStorage.setItem(DECK_STORAGE_KEY, JSON.stringify([...deckCards.entries()]));
+    localStorage.setItem(DECK_STORAGE_KEY, JSON.stringify({
+      slot: currentSlot,
+      decks: allDecks.map((d) => [...d.entries()])
+    }));
   } catch {
     // ignore
   }
@@ -536,7 +726,7 @@ function saveDeckToStorage() {
 
 function buildDeckArray() {
   const result = [];
-  for (const [key, count] of deckCards) {
+  for (const [key, count] of deckCards()) {
     const card = allCards.find((c) => c.key === key);
     if (card) for (let i = 0; i < count; i++) result.push(card);
   }
@@ -553,6 +743,7 @@ function startGame() {
     activePlanes: shuffled.length > 0 ? [shuffled[0]] : [],
     focusedIndex: 0,
     dieRolling: false,
+    chaosCost: 0,
     _dieResetTimer: null
   };
 
@@ -561,6 +752,8 @@ function startGame() {
   document.body.classList.add("game-open");
   gameView?.classList.remove("hidden");
   updateGameView();
+  resetDieIcon();
+  updateCostDisplay();
 }
 
 function exitGame() {
@@ -570,7 +763,6 @@ function exitGame() {
   document.body.classList.remove("game-open");
   gameView?.classList.add("hidden");
   closeAllGameMenus();
-  gameDeckViewPanel?.classList.add("hidden");
 }
 
 function resetGame() {
@@ -582,11 +774,13 @@ function resetGame() {
     activePlanes: shuffled.length > 0 ? [shuffled[0]] : [],
     focusedIndex: 0,
     dieRolling: false,
+    chaosCost: 0,
     _dieResetTimer: null
   };
   updateGameView();
   closeAllGameMenus();
   resetDieIcon();
+  updateCostDisplay();
   showToastFn?.("Deck reshuffled and reset.");
 }
 
@@ -623,6 +817,8 @@ function gameRollDie() {
     const roll = Math.floor(Math.random() * 6) + 1;
     gameState.dieRolling = false;
     gameBtnTl?.classList.remove("game-die-rolling");
+    gameState.chaosCost++;
+    updateCostDisplay();
     applyDieResult(roll);
     gameState._dieResetTimer = setTimeout(() => {
       if (gameState) resetDieIcon();
@@ -634,6 +830,7 @@ function applyDieResult(roll) {
   if (!gameDieIcon) return;
   gameBtnTl?.classList.remove("game-die-chaos", "game-die-walk", "game-die-blank");
   gameDieIcon.className = "";
+  gameDieIcon.textContent = "";
 
   if (roll === 1) {
     gameDieIcon.className = "ms ms-chaos";
@@ -644,19 +841,27 @@ function applyDieResult(roll) {
     gameDieIcon.setAttribute("aria-label", "Planeswalk!");
     gameBtnTl?.classList.add("game-die-walk");
   } else {
-    gameDieIcon.className = "game-die-number";
-    gameDieIcon.textContent = String(roll);
-    gameDieIcon.setAttribute("aria-label", `Rolled ${roll} — no effect`);
+    gameDieIcon.className = "game-die-blank-text";
+    gameDieIcon.textContent = "BLANK";
+    gameDieIcon.setAttribute("aria-label", "No effect");
     gameBtnTl?.classList.add("game-die-blank");
   }
 }
 
 function resetDieIcon() {
   if (!gameDieIcon) return;
-  gameDieIcon.className = "ms ms-d6";
+  gameDieIcon.className = "ms ms-chaos";
   gameDieIcon.textContent = "";
   gameDieIcon.removeAttribute("aria-label");
   gameBtnTl?.classList.remove("game-die-chaos", "game-die-walk", "game-die-blank");
+}
+
+function updateCostDisplay() {
+  if (!gameState) return;
+  const cost = gameState.chaosCost;
+  if (gameCostValue) gameCostValue.textContent = cost;
+  const display = document.getElementById("game-cost-display");
+  if (display) display.classList.toggle("game-cost-visible", cost > 0);
 }
 
 function updateGameView() {
@@ -730,28 +935,35 @@ function syncGameToolsState(remainingCount) {
     const span = gameToolsAddTop.querySelector("span");
     if (span) span.textContent = `Add Top of Library (${remainingCount} left)`;
   }
+  if (gameToolsReturnTop) {
+    gameToolsReturnTop.disabled = !gameState || gameState.activePlanes.length === 0;
+  }
+  if (gameToolsReturnBottom) {
+    gameToolsReturnBottom.disabled = !gameState || gameState.activePlanes.length === 0;
+  }
 }
 
-function renderGameDeckView() {
-  if (!gameDeckViewList || !gameState) return;
-  gameDeckViewList.innerHTML = "";
-
-  if (gameState.remaining.length === 0) {
-    gameDeckViewList.innerHTML = `<p class="game-deck-view-empty">Library is empty.</p>`;
+function renderGameLibraryView() {
+  if (!gameLibraryViewList || !gameState) return;
+  const query = gameToolsSearchInput?.value.trim().toLowerCase() || "";
+  if (query) {
+    gameLibraryViewList.innerHTML = "";
     return;
   }
-
-  const ul = document.createElement("ol");
-  ul.className = "game-deck-view-ol";
-
+  gameLibraryViewList.innerHTML = "";
+  if (gameState.remaining.length === 0) {
+    gameLibraryViewList.innerHTML = `<p class="game-search-empty">Library is empty.</p>`;
+    return;
+  }
+  const ol = document.createElement("ol");
+  ol.className = "game-deck-view-ol";
   for (const card of gameState.remaining) {
     const li = document.createElement("li");
     li.className = "game-deck-view-item";
     li.innerHTML = `<span class="game-deck-view-name">${escapeHtml(card.displayName)}</span><span class="game-deck-view-type">${escapeHtml(card.type)}</span>`;
-    ul.appendChild(li);
+    ol.appendChild(li);
   }
-
-  gameDeckViewList.appendChild(ul);
+  gameLibraryViewList.appendChild(ol);
 }
 
 function updateGameSearchResults() {
@@ -760,7 +972,12 @@ function updateGameSearchResults() {
   const query = gameToolsSearchInput.value.trim().toLowerCase();
   gameToolsSearchResults.innerHTML = "";
 
-  if (!query) return;
+  if (!query) {
+    renderGameLibraryView();
+    return;
+  }
+
+  if (gameLibraryViewList) gameLibraryViewList.innerHTML = "";
 
   const seen = new Set();
   const matches = [];
@@ -802,6 +1019,7 @@ function toggleGameToolsMenu() {
     if (gameToolsSearchInput) gameToolsSearchInput.value = "";
     if (gameToolsSearchResults) gameToolsSearchResults.innerHTML = "";
     syncGameToolsState(gameState?.remaining.length ?? 0);
+    renderGameLibraryView();
   }
 }
 
