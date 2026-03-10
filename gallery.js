@@ -54,6 +54,7 @@ const sidebarSearchGhost = document.getElementById("sidebar-search-ghost");
 const sidebarSearchSuggestions = document.getElementById("sidebar-search-suggestions");
 
 const fuzzySearchToggle = document.getElementById("fuzzy-search-toggle");
+const showHiddenToggle = document.getElementById("show-hidden-toggle");
 const inlineAutocompleteToggle = document.getElementById("inline-autocomplete-toggle");
 
 const sidebar = document.getElementById("sidebar");
@@ -106,7 +107,8 @@ const filters = {
   search: "",
   tags: new Set(),
   fuzzy: preferences.fuzzySearch,
-  inlineAutocomplete: preferences.inlineAutocomplete
+  inlineAutocomplete: preferences.inlineAutocomplete,
+  showHidden: preferences.showHidden
 };
 
 const displayState = {
@@ -163,6 +165,7 @@ function applyStoredPreferencesToUI() {
   viewModeSelect.value = displayState.viewMode;
   groupBySelect.value = displayState.groupBy;
   fuzzySearchToggle.checked = filters.fuzzy;
+  showHiddenToggle.checked = filters.showHidden;
   inlineAutocompleteToggle.checked = filters.inlineAutocomplete;
   topSearch.value = filters.search;
   sidebarSearch.value = filters.search;
@@ -223,6 +226,12 @@ function bindEvents() {
 
   fuzzySearchToggle.addEventListener("change", () => {
     filters.fuzzy = fuzzySearchToggle.checked;
+    persistPreferences();
+    applyFilters();
+  });
+
+  showHiddenToggle.addEventListener("change", () => {
+    filters.showHidden = showHiddenToggle.checked;
     persistPreferences();
     applyFilters();
   });
@@ -528,7 +537,7 @@ function buildTagFilters(cards) {
   );
 
   const topTags = allTags.filter(isTopTag);
-  const regularTags = allTags.filter((tag) => !isTopTag(tag));
+  const regularTags = allTags.filter((tag) => !isTopTag(tag) && tag.toLowerCase() !== "hidden");
 
   tagFilterList.innerHTML = "";
 
@@ -980,8 +989,17 @@ function createCardElement(card, index = 0) {
   const tagsContainer = document.createElement("div");
   tagsContainer.className = "card-tags";
 
-  for (const tag of card.tags.slice(0, 6)) {
+  const MAX_CARD_TAGS = 4;
+  const visibleTags = card.tags.slice(0, MAX_CARD_TAGS);
+  for (const tag of visibleTags) {
     tagsContainer.appendChild(createTagChipElement(tag, "card-tag"));
+  }
+  if (card.tags.length > MAX_CARD_TAGS) {
+    const more = document.createElement("span");
+    more.className = "card-tag card-tag-more";
+    more.textContent = `+${card.tags.length - MAX_CARD_TAGS}`;
+    more.setAttribute("aria-hidden", "true");
+    tagsContainer.appendChild(more);
   }
 
   footer.appendChild(nameRow);
