@@ -53,6 +53,11 @@
             <input id="fuzzy-search-toggle" type="checkbox" />
             <span>Fuzzy</span>
           </label>
+
+          <label class="checkbox-row">
+            <input id="show-hidden-toggle" type="checkbox" />
+            <span>Show hidden</span>
+          </label>
         </div>
 
         <div class="filter-block">
@@ -145,6 +150,7 @@
                         <li><code>tag:Plane</code> — match cards with a tag</li>
                         <li><code>-tag:Phenomenon</code> — exclude a tag</li>
                         <li><code>name:"Spatial Merging"</code> — search by exact name text</li>
+                        <li><code>show:hidden</code> — include hidden cards in results</li>
                         <li><code>/chaos|planeswalker/i</code> — regex search</li>
                       </ul>
                     </div>

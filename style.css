@@ -1262,6 +1262,13 @@ button.active-filter-pill:disabled {
   margin-top: 10px;
 }
 
+.card-tag-more {
+  opacity: 0.55;
+  cursor: default;
+  pointer-events: none;
+  font-style: italic;
+}
+
 .tone-green {
   background: var(--tone-green-bg);
   border-color: var(--tone-green-border);

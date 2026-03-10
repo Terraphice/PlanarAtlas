@@ -5,6 +5,7 @@ export function loadPreferences(storageKey) {
     groupTag: "",
     fuzzySearch: false,
     inlineAutocomplete: true,
+    showHidden: false,
     theme: "system",
     themePalette: "standard",
     pageSize: 20,
@@ -22,6 +23,7 @@ export function loadPreferences(storageKey) {
       groupTag: typeof parsed.groupTag === "string" ? parsed.groupTag : defaults.groupTag,
       fuzzySearch: Boolean(parsed.fuzzySearch),
       inlineAutocomplete: parsed.inlineAutocomplete === undefined ? defaults.inlineAutocomplete : Boolean(parsed.inlineAutocomplete),
+      showHidden: Boolean(parsed.showHidden),
       theme: ["system", "dark", "light"].includes(parsed.theme) ? parsed.theme : defaults.theme,
       themePalette: ["standard", "gruvbox", "atom", "dracula", "solarized", "nord", "catppuccin"].includes(parsed.themePalette)
         ? parsed.themePalette
@@ -44,6 +46,7 @@ export function savePreferences(storageKey, displayState, filters, theme = "syst
         groupTag: displayState.groupTag,
         fuzzySearch: filters.fuzzy,
         inlineAutocomplete: filters.inlineAutocomplete,
+        showHidden: filters.showHidden,
         theme,
         themePalette,
         pageSize: paginationState.pageSize ?? 20,
@@ -141,10 +144,6 @@ export function readUrlState(filters, displayState) {
       .filter(Boolean)
   );
 
-  if (params.has("fuzzy")) {
-    filters.fuzzy = params.get("fuzzy") === "1";
-  }
-
   const view = params.get("view");
   if (["grid", "single", "stack"].includes(view)) {
     displayState.viewMode = view;
@@ -171,10 +170,6 @@ export function writeUrlState(filters, displayState, { push = false } = {}) {
     params.append("tag", tag);
   }
 
-  if (filters.fuzzy) {
-    params.set("fuzzy", "1");
-  }
-
   if (displayState.viewMode !== "grid") {
     params.set("view", displayState.viewMode);
   }
@@ -199,6 +194,10 @@ export function writeUrlState(filters, displayState, { push = false } = {}) {
 }
 
 export function matchesFilters(card, parsedQuery, filters) {
+  if (!filters.showHidden && !parsedQuery.showHidden && isHiddenCard(card.normalizedTags)) {
+    return false;
+  }
+
   if (filters.tags.size > 0) {
     for (const tag of filters.tags) {
       if (!card.normalizedTags.includes(tag.toLowerCase())) {
@@ -289,7 +288,8 @@ export function parseSearchQuery(rawQuery) {
     tagTerms: [],
     negTagTerms: [],
     regex: null,
-    regexSource: null
+    regexSource: null,
+    showHidden: false
   };
 
   if (!rawQuery) return parsed;
@@ -331,6 +331,11 @@ export function parseSearchQuery(rawQuery) {
 
       if (field === "name") {
         (negated ? parsed.negNameTerms : parsed.nameTerms).push(value);
+        continue;
+      }
+
+      if (field === "show" && value === "hidden" && !negated) {
+        parsed.showHidden = true;
         continue;
       }
     }
@@ -413,6 +418,10 @@ export function levenshteinDistance(a, b) {
 
 export function isTopTag(tag) {
   return String(tag).startsWith(":top:");
+}
+
+export function isHiddenCard(normalizedTags) {
+  return normalizedTags.includes("hidden");
 }
 
 export function stripTopPrefix(tag) {
