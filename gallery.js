@@ -25,6 +25,7 @@ const ALL_PALETTES = ["standard", "gruvbox", "atom", "dracula", "solarized", "no
 const THEME_PREFERENCES = ["system", "dark", "light"];
 const VIEW_MODES = ["grid", "single", "stack"];
 const GROUP_MODES = ["none", "tag"];
+const PAGE_SIZES = [10, 20, 50, 100];
 
 let allCards = [];
 let filteredCards = [];
@@ -35,6 +36,7 @@ let activeSearchSurface = "top";
 let randomLongPressTimer = null;
 let suppressRandomClick = false;
 let randomIconResetTimer = null;
+let infiniteScrollObserver = null;
 
 const resultsCount = document.getElementById("results-count");
 const activeFilters = document.getElementById("active-filters");
@@ -86,8 +88,16 @@ const modalTagList = document.getElementById("modal-tag-list");
 const modalCopyLinkButton = document.getElementById("modal-copy-link");
 const gallery = document.getElementById("gallery");
 const toastRegion = document.getElementById("toast-region");
+const paginationControls = document.getElementById("pagination-controls");
 
 const preferences = loadPreferences(STORAGE_KEY);
+
+const paginationState = {
+  currentPage: 1,
+  pageSize: preferences.pageSize,
+  mode: preferences.paginationMode,
+  infiniteLoadedCount: preferences.pageSize
+};
 
 const filters = {
   search: "",
@@ -164,7 +174,8 @@ function persistPreferences() {
     displayState,
     filters,
     themeController.getTheme(),
-    themeController.getPalette()
+    themeController.getPalette(),
+    paginationState
   );
 }
 
@@ -244,6 +255,8 @@ function bindEvents() {
     displayState.groupBy = groupBySelect.value;
     groupTagPickerWrap.classList.toggle("hidden", displayState.groupBy !== "tag");
     persistPreferences();
+    paginationState.currentPage = 1;
+    paginationState.infiniteLoadedCount = paginationState.pageSize;
     renderGallery();
     scheduleStackActiveUpdate();
     updateUrlFromState();
@@ -252,6 +265,8 @@ function bindEvents() {
   groupTagSelect.addEventListener("change", () => {
     displayState.groupTag = groupTagSelect.value;
     persistPreferences();
+    paginationState.currentPage = 1;
+    paginationState.infiniteLoadedCount = paginationState.pageSize;
     renderGallery();
     scheduleStackActiveUpdate();
     updateUrlFromState();
@@ -597,6 +612,9 @@ function applyFilters({ updateUrl = true } = {}) {
   filteredCards = allCards.filter((card) => matchesFilters(card, parsedQuery, filters));
   sortCards(filteredCards);
 
+  paginationState.currentPage = 1;
+  paginationState.infiniteLoadedCount = paginationState.pageSize;
+
   renderActiveFilters(parsedQuery);
   renderGallery();
   renderSearchSuggestions();
@@ -606,57 +624,261 @@ function applyFilters({ updateUrl = true } = {}) {
 }
 
 function renderGallery() {
+  disconnectInfiniteScroll();
   gallery.innerHTML = "";
-  resultsCount.textContent = `${filteredCards.length} ${filteredCards.length === 1 ? "card" : "cards"}`;
 
-  if (filteredCards.length === 0) {
+  const totalCards = filteredCards.length;
+  resultsCount.textContent = `${totalCards} ${totalCards === 1 ? "card" : "cards"}`;
+
+  if (totalCards === 0) {
     gallery.innerHTML = `<p class="empty-state">No cards match the current filters.</p>`;
+    renderPaginationControls(totalCards);
     return;
   }
+
+  const cardsToShow = getPageCards(totalCards);
 
   if (displayState.groupBy === "none") {
     const wrapper = document.createElement("div");
     wrapper.className = getLayoutClassName();
 
-    filteredCards.forEach((card, index) => {
+    cardsToShow.forEach((card, index) => {
       wrapper.appendChild(createCardElement(card, index));
     });
 
     gallery.appendChild(wrapper);
     scheduleStackActiveUpdate();
+  } else {
+    const grouped = groupCards(cardsToShow, displayState.groupBy, displayState.groupTag);
+    const groupsWrap = document.createElement("div");
+    groupsWrap.className = "result-groups";
+
+    for (const group of grouped) {
+      if (!group.cards.length) continue;
+
+      const section = document.createElement("section");
+      section.className = "result-group";
+
+      const inner = document.createElement("div");
+      inner.className = `${getLayoutClassName()} result-group-body`;
+
+      group.cards.forEach((card, index) => {
+        inner.appendChild(createCardElement(card, index));
+      });
+
+      section.innerHTML = `
+        <div class="result-group-header">
+          <h3 class="result-group-title">${escapeHtml(group.label)}</h3>
+          <p class="result-group-meta">${group.cards.length} ${group.cards.length === 1 ? "card" : "cards"}</p>
+        </div>
+      `;
+
+      section.appendChild(inner);
+      groupsWrap.appendChild(section);
+    }
+
+    gallery.appendChild(groupsWrap);
+    scheduleStackActiveUpdate();
+  }
+
+  renderPaginationControls(totalCards);
+
+  if (paginationState.mode === "infinite" && paginationState.infiniteLoadedCount < totalCards) {
+    setupInfiniteScroll();
+  }
+}
+
+function getPageCards(totalCards) {
+  if (paginationState.mode === "infinite") {
+    const count = Math.min(paginationState.infiniteLoadedCount, totalCards);
+    return filteredCards.slice(0, count);
+  }
+  const start = (paginationState.currentPage - 1) * paginationState.pageSize;
+  return filteredCards.slice(start, start + paginationState.pageSize);
+}
+
+function renderPaginationControls(totalCards) {
+  if (!paginationControls) return;
+  paginationControls.innerHTML = "";
+
+  if (totalCards === 0) {
+    paginationControls.classList.add("hidden");
     return;
   }
 
-  const grouped = groupCards(filteredCards, displayState.groupBy, displayState.groupTag);
-  const groupsWrap = document.createElement("div");
-  groupsWrap.className = "result-groups";
+  paginationControls.classList.remove("hidden");
 
-  for (const group of grouped) {
-    if (!group.cards.length) continue;
+  if (paginationState.mode === "paginated") {
+    const totalPages = Math.max(1, Math.ceil(totalCards / paginationState.pageSize));
+    const startCard = (paginationState.currentPage - 1) * paginationState.pageSize + 1;
+    const endCard = Math.min(paginationState.currentPage * paginationState.pageSize, totalCards);
 
-    const section = document.createElement("section");
-    section.className = "result-group";
+    const navRow = document.createElement("div");
+    navRow.className = "pagination-nav";
 
-    const inner = document.createElement("div");
-    inner.className = `${getLayoutClassName()} result-group-body`;
+    const prevBtn = document.createElement("button");
+    prevBtn.type = "button";
+    prevBtn.className = "pagination-btn";
+    prevBtn.setAttribute("aria-label", "Previous page");
+    prevBtn.textContent = "‹ Prev";
+    prevBtn.disabled = paginationState.currentPage <= 1;
+    prevBtn.addEventListener("click", goToPrevPage);
 
-    group.cards.forEach((card, index) => {
-      inner.appendChild(createCardElement(card, index));
-    });
+    const pageLabel = document.createElement("span");
+    pageLabel.className = "pagination-page-label";
+    pageLabel.textContent = `${startCard}–${endCard} of ${totalCards}`;
 
-    section.innerHTML = `
-      <div class="result-group-header">
-        <h3 class="result-group-title">${escapeHtml(group.label)}</h3>
-        <p class="result-group-meta">${group.cards.length} ${group.cards.length === 1 ? "card" : "cards"}</p>
-      </div>
-    `;
+    const pageMeta = document.createElement("span");
+    pageMeta.className = "pagination-page-meta";
+    pageMeta.textContent = `Page ${paginationState.currentPage} of ${totalPages}`;
 
-    section.appendChild(inner);
-    groupsWrap.appendChild(section);
+    const nextBtn = document.createElement("button");
+    nextBtn.type = "button";
+    nextBtn.className = "pagination-btn";
+    nextBtn.setAttribute("aria-label", "Next page");
+    nextBtn.textContent = "Next ›";
+    nextBtn.disabled = paginationState.currentPage >= totalPages;
+    nextBtn.addEventListener("click", goToNextPage);
+
+    navRow.appendChild(prevBtn);
+    navRow.appendChild(pageLabel);
+    navRow.appendChild(pageMeta);
+    navRow.appendChild(nextBtn);
+    paginationControls.appendChild(navRow);
+  } else {
+    const shown = Math.min(paginationState.infiniteLoadedCount, totalCards);
+    const infoRow = document.createElement("div");
+    infoRow.className = "pagination-infinite-info";
+    infoRow.textContent = shown < totalCards
+      ? `Showing ${shown} of ${totalCards} cards`
+      : `All ${totalCards} cards loaded`;
+    paginationControls.appendChild(infoRow);
   }
 
-  gallery.appendChild(groupsWrap);
-  scheduleStackActiveUpdate();
+  const perPageRow = document.createElement("div");
+  perPageRow.className = "pagination-per-page-row";
+
+  const label = document.createElement("label");
+  label.className = "pagination-per-page-label";
+  label.htmlFor = "per-page-select";
+  label.textContent = "Per page:";
+
+  const select = document.createElement("select");
+  select.className = "select-input pagination-per-page-select";
+  select.id = "per-page-select";
+  select.setAttribute("aria-label", "Cards per page");
+
+  const options = [
+    ...PAGE_SIZES.map((n) => ({ value: String(n), label: String(n) })),
+    { value: "infinite", label: "∞ Infinite scroll" }
+  ];
+
+  for (const { value, label: optLabel } of options) {
+    const opt = document.createElement("option");
+    opt.value = value;
+    opt.textContent = optLabel;
+    const selected =
+      (value === "infinite" && paginationState.mode === "infinite") ||
+      (value !== "infinite" && paginationState.mode === "paginated" && parseInt(value, 10) === paginationState.pageSize);
+    if (selected) opt.selected = true;
+    select.appendChild(opt);
+  }
+
+  select.addEventListener("change", handlePerPageChange);
+
+  perPageRow.appendChild(label);
+  perPageRow.appendChild(select);
+  paginationControls.appendChild(perPageRow);
+}
+
+function handlePerPageChange(event) {
+  const value = event.target.value;
+
+  if (value === "infinite") {
+    paginationState.mode = "infinite";
+    paginationState.infiniteLoadedCount = paginationState.pageSize;
+  } else {
+    const newSize = parseInt(value, 10);
+    paginationState.mode = "paginated";
+    paginationState.pageSize = newSize;
+    paginationState.currentPage = 1;
+    paginationState.infiniteLoadedCount = newSize;
+  }
+
+  persistPreferences();
+  renderGallery();
+}
+
+function goToPrevPage() {
+  if (paginationState.currentPage <= 1) return;
+  paginationState.currentPage--;
+  renderGallery();
+  scrollToGalleryTop();
+}
+
+function goToNextPage() {
+  const totalPages = Math.ceil(filteredCards.length / paginationState.pageSize);
+  if (paginationState.currentPage >= totalPages) return;
+  paginationState.currentPage++;
+  renderGallery();
+  scrollToGalleryTop();
+}
+
+function scrollToGalleryTop() {
+  const gallerySection = gallery.closest(".gallery-section");
+  (gallerySection || gallery).scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function setupInfiniteScroll() {
+  disconnectInfiniteScroll();
+
+  const sentinel = document.createElement("div");
+  sentinel.className = "infinite-scroll-sentinel";
+  sentinel.setAttribute("aria-hidden", "true");
+  gallery.appendChild(sentinel);
+
+  infiniteScrollObserver = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting) {
+        loadMoreInfiniteCards();
+      }
+    },
+    { rootMargin: "0px 0px 400px 0px" }
+  );
+
+  infiniteScrollObserver.observe(sentinel);
+}
+
+function disconnectInfiniteScroll() {
+  if (infiniteScrollObserver) {
+    infiniteScrollObserver.disconnect();
+    infiniteScrollObserver = null;
+  }
+}
+
+function loadMoreInfiniteCards() {
+  if (paginationState.infiniteLoadedCount >= filteredCards.length) return;
+
+  const startIndex = paginationState.infiniteLoadedCount;
+  const newCount = Math.min(startIndex + paginationState.pageSize, filteredCards.length);
+  const newCards = filteredCards.slice(startIndex, newCount);
+  paginationState.infiniteLoadedCount = newCount;
+
+  if (displayState.groupBy === "none") {
+    const wrapper = gallery.querySelector(".card-grid, .single-card-layout, .stack-card-layout");
+    if (wrapper) {
+      newCards.forEach((card, i) => wrapper.appendChild(createCardElement(card, startIndex + i)));
+      scheduleStackActiveUpdate();
+      renderPaginationControls(filteredCards.length);
+
+      if (paginationState.infiniteLoadedCount < filteredCards.length) {
+        setupInfiniteScroll();
+      }
+      return;
+    }
+  }
+
+  renderGallery();
 }
 
 function getLayoutClassName() {
@@ -1113,11 +1335,24 @@ function openModalByKey(cardKey, updateHash = true) {
     if (!filteredCards.some((card) => card.key === cardKey)) {
       filteredCards = [...allCards];
       sortCards(filteredCards);
+      paginationState.currentPage = 1;
+      paginationState.infiniteLoadedCount = paginationState.pageSize;
       renderGallery();
     }
 
     index = filteredCards.findIndex((card) => card.key === cardKey);
     if (index === -1) return;
+  }
+
+  if (paginationState.mode === "paginated") {
+    const targetPage = Math.floor(index / paginationState.pageSize) + 1;
+    if (targetPage !== paginationState.currentPage) {
+      paginationState.currentPage = targetPage;
+      renderGallery();
+    }
+  } else if (paginationState.mode === "infinite" && index >= paginationState.infiniteLoadedCount) {
+    paginationState.infiniteLoadedCount = index + 1;
+    renderGallery();
   }
 
   currentModalIndex = index;
@@ -1327,6 +1562,11 @@ function clearSavedPreferences() {
   displayState.viewMode = "grid";
   displayState.groupBy = "none";
   displayState.groupTag = "";
+
+  paginationState.currentPage = 1;
+  paginationState.pageSize = 20;
+  paginationState.mode = "paginated";
+  paginationState.infiniteLoadedCount = 20;
 
   themeController.setTheme("system", {
     silent: true,
