@@ -3111,14 +3111,15 @@ html[data-palette="scryfall"][data-theme="dark"] .sidebar {
 .site-footer {
   padding: 20px 24px 28px;
   margin-top: 8px;
+  border-top: 1px solid color-mix(in srgb, var(--border) 40%, transparent);
 }
 
 .site-footer-legal {
   margin: 0;
   color: var(--text-faint);
   font-size: 0.73rem;
-  line-height: 1.55;
-  opacity: 0.72;
+  line-height: 1.6;
+  opacity: 0.68;
 }
 
 .site-footer-legal a {
@@ -3129,4 +3130,5 @@ html[data-palette="scryfall"][data-theme="dark"] .sidebar {
 
 .site-footer-legal a:hover {
   color: var(--text-soft);
+  opacity: 1;
 }
