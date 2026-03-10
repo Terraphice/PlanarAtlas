@@ -33,7 +33,7 @@ import {
 } from "./deck.js";
 
 const STORAGE_KEY = "planechaseGalleryPreferences.v2";
-const ALL_PALETTES = ["standard", "gruvbox", "atom", "dracula", "solarized", "nord", "catppuccin"];
+const ALL_PALETTES = ["standard", "gruvbox", "atom", "dracula", "solarized", "nord", "catppuccin", "scryfall"];
 const THEME_PREFERENCES = ["system", "dark", "light"];
 const VIEW_MODES = ["grid", "single", "stack"];
 const GROUP_MODES = ["none", "tag"];

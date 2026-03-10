@@ -25,7 +25,7 @@ export function loadPreferences(storageKey) {
       inlineAutocomplete: parsed.inlineAutocomplete === undefined ? defaults.inlineAutocomplete : Boolean(parsed.inlineAutocomplete),
       showHidden: Boolean(parsed.showHidden),
       theme: ["system", "dark", "light"].includes(parsed.theme) ? parsed.theme : defaults.theme,
-      themePalette: ["standard", "gruvbox", "atom", "dracula", "solarized", "nord", "catppuccin"].includes(parsed.themePalette)
+      themePalette: ["standard", "gruvbox", "atom", "dracula", "solarized", "nord", "catppuccin", "scryfall"].includes(parsed.themePalette)
         ? parsed.themePalette
         : defaults.themePalette,
       pageSize: [10, 20, 50, 100].includes(parsed.pageSize) ? parsed.pageSize : defaults.pageSize,
@@ -84,14 +84,15 @@ export function enrichCard(card) {
 
   const normalizedTags = tags.map((tag) => tag.toLowerCase());
 
+  const folder = card.folder || "complete";
   return {
     ...card,
     key: getCardKey(card.file),
     displayName: getDisplayName(card.file),
-    imagePath: `images/cards/${card.folder}/${card.file}`,
+    imagePath: `images/cards/${folder}/${card.file}`,
     thumbPath: `images/thumb/${getCardKey(card.file)}.webp`,
-    transcriptPathMd: `transcripts/cards/${card.folder}/${getCardKey(card.file)}.md`,
-    transcriptPathTxt: `transcripts/cards/${card.folder}/${getCardKey(card.file)}.txt`,
+    transcriptPathMd: `transcripts/cards/${folder}/${getCardKey(card.file)}.md`,
+    transcriptPathTxt: `transcripts/cards/${folder}/${getCardKey(card.file)}.txt`,
     tags,
     normalizedTags,
     type: getCardType(normalizedTags)

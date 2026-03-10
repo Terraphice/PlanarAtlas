@@ -36,17 +36,12 @@ for (const folder of IMAGE_FOLDERS) {
 
     cards.push({
       file: entry.name,
-      folder,
       tags: mergedTags
     });
   }
 }
 
 cards.sort((a, b) => {
-  if (a.folder !== b.folder) {
-    return a.folder.localeCompare(b.folder);
-  }
-
   return a.file.localeCompare(b.file, undefined, {
     numeric: true,
     sensitivity: "base"

@@ -1,5 +1,5 @@
 const STANDARD_THEME_ORDER = ["system", "dark", "light"];
-const HIDDEN_PALETTE_ORDER = ["standard", "gruvbox", "atom", "dracula", "solarized", "nord", "catppuccin"];
+const HIDDEN_PALETTE_ORDER = ["standard", "gruvbox", "atom", "dracula", "solarized", "nord", "catppuccin", "scryfall"];
 const THEME_ICONS = {
   system: "◐",
   dark: "☾",
