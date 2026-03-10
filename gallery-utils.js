@@ -6,7 +6,9 @@ export function loadPreferences(storageKey) {
     fuzzySearch: false,
     inlineAutocomplete: true,
     theme: "system",
-    themePalette: "standard"
+    themePalette: "standard",
+    pageSize: 20,
+    paginationMode: "paginated"
   };
 
   try {
@@ -23,14 +25,16 @@ export function loadPreferences(storageKey) {
       theme: ["system", "dark", "light"].includes(parsed.theme) ? parsed.theme : defaults.theme,
       themePalette: ["standard", "gruvbox", "atom", "dracula", "solarized", "nord", "catppuccin"].includes(parsed.themePalette)
         ? parsed.themePalette
-        : defaults.themePalette
+        : defaults.themePalette,
+      pageSize: [10, 20, 50, 100].includes(parsed.pageSize) ? parsed.pageSize : defaults.pageSize,
+      paginationMode: ["paginated", "infinite"].includes(parsed.paginationMode) ? parsed.paginationMode : defaults.paginationMode
     };
   } catch {
     return defaults;
   }
 }
 
-export function savePreferences(storageKey, displayState, filters, theme = "system", themePalette = "standard") {
+export function savePreferences(storageKey, displayState, filters, theme = "system", themePalette = "standard", paginationState = {}) {
   try {
     localStorage.setItem(
       storageKey,
@@ -41,7 +45,9 @@ export function savePreferences(storageKey, displayState, filters, theme = "syst
         fuzzySearch: filters.fuzzy,
         inlineAutocomplete: filters.inlineAutocomplete,
         theme,
-        themePalette
+        themePalette,
+        pageSize: paginationState.pageSize ?? 20,
+        paginationMode: paginationState.mode ?? "paginated"
       })
     );
   } catch {

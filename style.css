@@ -1522,6 +1522,95 @@ button.active-filter-pill:disabled {
   margin: 0 0.05em;
 }
 
+.pagination-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 20px;
+  margin-top: 20px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.pagination-controls.hidden {
+  display: none;
+}
+
+.pagination-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.pagination-btn {
+  border: 1px solid var(--border);
+  background: var(--bg-elev-2);
+  color: var(--text);
+  border-radius: 12px;
+  padding: 9px 18px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+}
+
+.pagination-btn:hover:not(:disabled),
+.pagination-btn:focus-visible:not(:disabled) {
+  border-color: color-mix(in srgb, var(--accent) 44%, var(--border));
+  background: color-mix(in srgb, var(--bg-elev-2) 84%, var(--accent) 16%);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.14);
+}
+
+.pagination-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.pagination-page-label {
+  font-weight: 700;
+  font-size: 0.94rem;
+}
+
+.pagination-page-meta {
+  color: var(--text-faint);
+  font-size: 0.84rem;
+}
+
+.pagination-infinite-info {
+  text-align: center;
+  color: var(--text-faint);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.pagination-per-page-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.pagination-per-page-label {
+  color: var(--text-soft);
+  font-size: 0.88rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.pagination-per-page-select {
+  width: auto;
+  min-width: 140px;
+  padding: 8px 12px;
+  font-size: 0.88rem;
+}
+
+.infinite-scroll-sentinel {
+  height: 1px;
+  pointer-events: none;
+}
+
 .toast-region {
   position: fixed;
   left: 50%;
@@ -1721,5 +1810,17 @@ button.active-filter-pill:disabled {
   body::after {
     opacity: 0.42;
     filter: blur(56px);
+  }
+
+  .pagination-nav {
+    gap: 10px;
+  }
+
+  .pagination-per-page-row {
+    justify-content: center;
+  }
+
+  .pagination-page-meta {
+    display: none;
   }
 }
