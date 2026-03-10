@@ -65,6 +65,7 @@ const gameOptExit = document.getElementById("game-opt-exit");
 const gameOptReset = document.getElementById("game-opt-reset");
 const gameOptDeckBuilder = document.getElementById("game-opt-deck-builder");
 const gameCostValue = document.getElementById("game-cost-value");
+const gameCostDisplay = document.getElementById("game-cost-display");
 const gameCostReset = document.getElementById("game-cost-reset");
 
 // ── Initialization ────────────────────────────────────────────────────────────
@@ -860,8 +861,7 @@ function updateCostDisplay() {
   if (!gameState) return;
   const cost = gameState.chaosCost;
   if (gameCostValue) gameCostValue.textContent = cost;
-  const display = document.getElementById("game-cost-display");
-  if (display) display.classList.toggle("game-cost-visible", cost > 0);
+  if (gameCostDisplay) gameCostDisplay.classList.toggle("game-cost-visible", cost > 0);
 }
 
 function updateGameView() {
