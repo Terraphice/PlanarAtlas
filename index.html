@@ -119,6 +119,11 @@
                 <span class="sr-only">Planeswalk</span>
               </button>
 
+              <button id="deck-button" class="topbar-deck-button" type="button" aria-label="Deck builder">
+                <span class="symbol-glyph deck-btn-icon" aria-hidden="true">◆&#xFE0E;</span>
+                <span id="deck-button-badge" class="deck-button-badge hidden" aria-hidden="true"></span>
+              </button>
+
               <div class="search-shell">
                 <div class="search-inline-shell">
                   <input id="top-search-ghost" class="search-input search-input-large search-input-ghost" type="text" aria-hidden="true" tabindex="-1" readonly />
@@ -242,6 +247,9 @@
               <h2 id="modal-card-name" class="modal-name"></h2>
             </div>
             <div class="modal-header-actions">
+              <button id="modal-add-to-deck" class="modal-copy-link modal-deck-btn" type="button" aria-label="Add to deck" data-card-key="">
+                + Deck
+              </button>
               <button id="modal-copy-link" class="modal-copy-link" type="button" aria-label="Link">
                 Link
               </button>
@@ -260,6 +268,84 @@
   </div>
 
   <div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Deck builder panel -->
+  <div id="deck-panel" class="deck-panel hidden" role="dialog" aria-label="Deck builder" aria-modal="false">
+    <div class="deck-panel-header">
+      <div class="deck-panel-title-row">
+        <h2 class="deck-panel-title">Deck Builder</h2>
+        <span id="deck-total-count" class="deck-total-count">0 cards</span>
+      </div>
+      <div class="deck-panel-actions">
+        <button id="deck-play-btn" class="deck-action-btn deck-play-btn" type="button">▶ Play</button>
+        <button id="deck-link-btn" class="deck-action-btn" type="button">Link</button>
+        <button id="deck-export-btn" class="deck-action-btn" type="button">Export</button>
+        <button id="deck-import-btn" class="deck-action-btn" type="button">Import</button>
+        <button id="deck-clear-btn" class="deck-action-btn deck-danger-btn" type="button">Clear</button>
+        <button id="deck-close-btn" class="deck-close-btn" type="button" aria-label="Close deck panel">✕</button>
+      </div>
+    </div>
+    <div id="deck-card-list" class="deck-card-list"></div>
+  </div>
+
+  <!-- Planechase game view -->
+  <div id="game-view" class="game-view hidden" role="dialog" aria-label="Planechase game" aria-modal="true">
+
+    <!-- Side panel: simultaneously active planes -->
+    <div id="game-side-panel" class="game-side-panel"></div>
+
+    <!-- Main card area -->
+    <div class="game-main-area">
+      <img id="game-card-image" class="game-card-image" src="" alt="" />
+      <div id="game-card-name" class="game-card-name"></div>
+    </div>
+
+    <!-- Corner buttons -->
+    <button id="game-btn-tl" class="game-corner-btn game-tl" type="button" aria-label="Roll planar die">
+      <i id="game-die-icon" class="ms ms-d6" aria-hidden="true"></i>
+    </button>
+    <button id="game-btn-tr" class="game-corner-btn game-tr" type="button" aria-label="Planeswalk">
+      <i class="ms ms-planeswalker" aria-hidden="true"></i>
+    </button>
+    <button id="game-btn-bl" class="game-corner-btn game-bl" type="button" aria-label="Options">
+      <span class="symbol-glyph" aria-hidden="true">☰&#xFE0E;</span>
+    </button>
+    <button id="game-btn-br" class="game-corner-btn game-br" type="button" aria-label="Tools">
+      <span class="symbol-glyph" aria-hidden="true">⚙&#xFE0E;</span>
+    </button>
+
+    <!-- Tools menu (bottom-right) -->
+    <div id="game-tools-menu" class="game-menu game-menu-br hidden" role="dialog" aria-label="Tools">
+      <h3 class="game-menu-title">Tools</h3>
+      <button id="game-tools-shuffle" class="game-menu-item" type="button">Shuffle Library</button>
+      <button id="game-tools-add-top" class="game-menu-item" type="button">
+        <span>Add Top of Library</span>
+      </button>
+      <button id="game-view-deck-btn" class="game-menu-item" type="button">View Library</button>
+      <div class="game-menu-search">
+        <label class="game-menu-search-label" for="game-tools-search-input">Search &amp; Play Simultaneously</label>
+        <input id="game-tools-search-input" class="game-tools-search-input" type="search" placeholder="Search cards in library…" autocomplete="off" />
+        <div id="game-tools-search-results" class="game-tools-search-results"></div>
+      </div>
+    </div>
+
+    <!-- Options menu (bottom-left) -->
+    <div id="game-options-menu" class="game-menu game-menu-bl hidden" role="dialog" aria-label="Options">
+      <h3 class="game-menu-title">Options</h3>
+      <button id="game-opt-reset" class="game-menu-item" type="button">Reshuffle &amp; Reset</button>
+      <button id="game-opt-deck-builder" class="game-menu-item" type="button">Back to Deck Builder</button>
+      <button id="game-opt-exit" class="game-menu-item game-menu-item-danger" type="button">Exit Game</button>
+    </div>
+
+    <!-- Library view panel -->
+    <div id="game-deck-view-panel" class="game-deck-view-panel hidden" role="dialog" aria-label="Remaining library">
+      <div class="game-deck-view-header">
+        <h3 class="game-deck-view-title">Library Order</h3>
+        <button id="game-deck-view-close" class="game-deck-view-close" type="button" aria-label="Close">✕</button>
+      </div>
+      <div id="game-deck-view-list" class="game-deck-view-list"></div>
+    </div>
+  </div>
 
   <link href="https://cdn.jsdelivr.net/npm/mana-font@latest/css/mana.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>

@@ -21,6 +21,17 @@ import {
   initThemeController
 } from "./gallery-ui.js";
 
+import {
+  initDeck,
+  getCardDeckCount,
+  addCardToDeck,
+  removeCardFromDeck,
+  isDeckPanelOpen,
+  closeDeckPanel,
+  setModalCardKey,
+  isGameActive
+} from "./deck.js";
+
 const STORAGE_KEY = "planechaseGalleryPreferences.v2";
 const ALL_PALETTES = ["standard", "gruvbox", "atom", "dracula", "solarized", "nord", "catppuccin"];
 const THEME_PREFERENCES = ["system", "dark", "light"];
@@ -154,6 +165,14 @@ async function init() {
     syncTagFilterUI();
     applyFilters({ updateUrl: false });
     tryOpenCardFromHash();
+
+    initDeck({
+      cards: allCards,
+      showToast,
+      onDeckChange: () => {
+        gallery.classList.toggle("deck-mode", isDeckPanelOpen());
+      }
+    });
   } catch (error) {
     console.error(error);
     gallery.innerHTML = `<p class="empty-state">Could not load gallery data.</p>`;
@@ -345,6 +364,8 @@ function bindEvents() {
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
+      if (isGameActive()) return; // game handles its own Escape via menus
+
       if (!topSearchSuggestions.classList.contains("hidden")) {
         hideAllSearchSuggestions();
         return;
@@ -362,6 +383,11 @@ function bindEvents() {
 
       if (sidebar.classList.contains("open")) {
         closeSidebar();
+        return;
+      }
+
+      if (isDeckPanelOpen()) {
+        closeDeckPanel();
         return;
       }
     }
@@ -1007,6 +1033,30 @@ function createCardElement(card, index = 0) {
 
   article.appendChild(imageWrap);
   article.appendChild(footer);
+
+  // Deck count overlay — always rendered, visible when deck panel is open
+  const deckOverlay = document.createElement("div");
+  deckOverlay.className = "deck-card-overlay";
+  deckOverlay.dataset.cardKey = card.key;
+
+  const deckCount = getCardDeckCount(card.key);
+  deckOverlay.innerHTML = `
+    <button class="deck-overlay-btn deck-overlay-dec" data-action="dec" aria-label="Remove from deck" type="button"${deckCount <= 0 ? " disabled" : ""}>−</button>
+    <span class="deck-overlay-count">${deckCount}</span>
+    <button class="deck-overlay-btn deck-overlay-inc" data-action="inc" aria-label="Add to deck" type="button"${deckCount >= 9 ? " disabled" : ""}>+</button>
+  `;
+  if (deckCount > 0) deckOverlay.classList.add("deck-has-count");
+
+  deckOverlay.addEventListener("click", (event) => {
+    event.stopPropagation();
+    const btn = event.target.closest("[data-action]");
+    if (!btn) return;
+    if (btn.dataset.action === "inc") addCardToDeck(card.key);
+    else if (btn.dataset.action === "dec") removeCardFromDeck(card.key);
+  });
+
+  article.appendChild(deckOverlay);
+
   cardButton.appendChild(article);
 
   cardButton.addEventListener("click", () => openModalByKey(card.key, true));
@@ -1407,6 +1457,8 @@ async function renderModal(card, updateHash = true) {
   modalType.textContent = card.type;
   modalSourceLink.href = card.imagePath;
 
+  setModalCardKey(card.key);
+
   modalTagList.innerHTML = "";
   for (const tag of card.tags) {
     modalTagList.appendChild(createTagChipElement(tag, "modal-tag"));
@@ -1485,8 +1537,11 @@ function preloadCardImage(card) {
 }
 
 function preloadPageImagesAndTranscripts(cards) {
-  for (const card of cards) {
-    preloadCardImage(card);
+  let i = 0;
+
+  function preloadNext() {
+    if (i >= cards.length) return;
+    const card = cards[i++];
 
     if (!transcriptCache.has(card.key)) {
       transcriptCache.set(card.key, null); // null = fetch in progress; string = completed
@@ -1502,7 +1557,18 @@ function preloadPageImagesAndTranscripts(cards) {
           transcriptCache.set(card.key, "");
         });
     }
+
+    if (card.imagePath) {
+      const img = new Image();
+      img.onload = preloadNext;
+      img.onerror = preloadNext;
+      img.src = card.imagePath;
+    } else {
+      preloadNext();
+    }
   }
+
+  preloadNext();
 }
 
 function startPreloadingAfterThumbnails(cards) {
