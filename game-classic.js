@@ -221,7 +221,6 @@ export function updateCostDisplay() {
 // ── Placeholder ───────────────────────────────────────────────────────────────
 
 export function showGamePlaceholder() {
-  const gameState = st.gameState;
   if (gameCardImage) {
     gameCardImage.src = "images/assets/card-preview.jpg";
     gameCardImage.alt = "Click to planeswalk";
@@ -233,7 +232,7 @@ export function showGamePlaceholder() {
     gameCardImageBtn.classList.remove("active-plane", "active-phenomenon");
   }
   if (classicViewCardBtn) classicViewCardBtn.classList.add("hidden");
-  syncGameToolsState(gameState?.remaining.length ?? 0);
+  syncGameToolsState(st.gameState?.remaining.length ?? 0);
 }
 
 // ── Game view ─────────────────────────────────────────────────────────────────
