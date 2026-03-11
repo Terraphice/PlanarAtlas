@@ -24,6 +24,10 @@ export function getBemPlaneswalkPending() {
   return bemPlaneswalkPending;
 }
 
+export function getBemViewOffset() {
+  return bemViewOffset;
+}
+
 export function resetBemState() {
   bemViewOffset = { dx: 0, dy: 0 };
   bemPlaneswalkPending = false;
@@ -202,6 +206,8 @@ export function bemMovePlayer(nx, ny) {
 
   if (!cell) return;
 
+  ctx.pushHistory?.();
+
   if (cell.placeholder && !cell.card) {
     const { remaining } = gameState;
     const nextCard = bemDrawNonPhenomenon(remaining);
@@ -292,6 +298,8 @@ export function bemResolvePhenomenon() {
     return;
   }
 
+  ctx.pushHistory?.();
+
   const phenomenon = cell.card;
   const nextCard = cell.queuedCard ?? bemDrawNonPhenomenon(remaining);
   delete cell.queuedCard;
@@ -324,6 +332,8 @@ export function bemFillPlaceholder() {
     ctx.showToast("Library is empty.");
     return;
   }
+
+  ctx.pushHistory?.();
 
   const nextCard = bemDrawNonPhenomenon(remaining);
   if (nextCard) {
@@ -684,6 +694,7 @@ export function buildBemCardActions() {
       const key = bemKey(gameState.bemPos.x, gameState.bemPos.y);
       const cell = gameState.bemGrid.get(key);
       if (!cell?.card) return;
+      ctx.pushHistory?.();
       handler(gameState, key, cell, cell.card.displayName);
     }};
   }

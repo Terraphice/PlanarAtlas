@@ -50,6 +50,8 @@ export function gamePlaneswalk() {
   if (!gameState) return;
   if (gameState.mode === "bem") return;
 
+  ctx.pushHistory?.();
+
   const { activePlanes, remaining } = gameState;
 
   for (const card of activePlanes) remaining.push(card);
@@ -159,6 +161,7 @@ export function buildMainCardActions(focusedIdx) {
       action: () => {
         const gameState = getGameState();
         if (!gameState) return;
+        ctx.pushHistory?.();
         const card = gameState.activePlanes.splice(focusedIdx, 1)[0];
         if (!card) return;
         gameState.remaining.unshift(card);
@@ -173,6 +176,7 @@ export function buildMainCardActions(focusedIdx) {
       action: () => {
         const gameState = getGameState();
         if (!gameState) return;
+        ctx.pushHistory?.();
         const card = gameState.activePlanes.splice(focusedIdx, 1)[0];
         if (!card) return;
         gameState.remaining.push(card);
@@ -187,14 +191,8 @@ export function buildMainCardActions(focusedIdx) {
       action: () => {
         const gameState = getGameState();
         if (!gameState) return;
+        ctx.pushHistory?.();
         const card = gameState.activePlanes.splice(focusedIdx, 1)[0];
-        if (!card) return;
-        gameState.remaining.push(card);
-        gameState.remaining = shuffleArray(gameState.remaining);
-        gameState.focusedIndex = Math.min(gameState.focusedIndex, Math.max(0, gameState.activePlanes.length - 1));
-        closeGameReaderView();
-        updateGameView();
-        showToast(`${card.displayName} shuffled into library.`);
       }
     },
     {
@@ -203,13 +201,8 @@ export function buildMainCardActions(focusedIdx) {
       action: () => {
         const gameState = getGameState();
         if (!gameState) return;
+        ctx.pushHistory?.();
         const card = gameState.activePlanes.splice(focusedIdx, 1)[0];
-        if (!card) return;
-        gameState.exiled.push(card);
-        gameState.focusedIndex = Math.min(gameState.focusedIndex, Math.max(0, gameState.activePlanes.length - 1));
-        closeGameReaderView();
-        updateGameView();
-        showToast(`${card.displayName} exiled.`);
       }
     }
   ];
@@ -224,6 +217,7 @@ export function buildSideCardActions(sideIdx) {
       action: () => {
         const gameState = getGameState();
         if (!gameState) return;
+        ctx.pushHistory?.();
         gameState.focusedIndex = sideIdx;
         closeGameReaderView();
         updateGameView();
@@ -234,6 +228,7 @@ export function buildSideCardActions(sideIdx) {
       action: () => {
         const gameState = getGameState();
         if (!gameState) return;
+        ctx.pushHistory?.();
         const card = gameState.activePlanes.splice(sideIdx, 1)[0];
         if (!card) return;
         gameState.remaining.push(...gameState.activePlanes);
@@ -249,6 +244,7 @@ export function buildSideCardActions(sideIdx) {
       action: () => {
         const gameState = getGameState();
         if (!gameState) return;
+        ctx.pushHistory?.();
         const card = gameState.activePlanes.splice(sideIdx, 1)[0];
         if (!card) return;
         gameState.remaining.unshift(card);
@@ -263,6 +259,7 @@ export function buildSideCardActions(sideIdx) {
       action: () => {
         const gameState = getGameState();
         if (!gameState) return;
+        ctx.pushHistory?.();
         const card = gameState.activePlanes.splice(sideIdx, 1)[0];
         if (!card) return;
         gameState.remaining.push(card);
@@ -277,6 +274,7 @@ export function buildSideCardActions(sideIdx) {
       action: () => {
         const gameState = getGameState();
         if (!gameState) return;
+        ctx.pushHistory?.();
         const card = gameState.activePlanes.splice(sideIdx, 1)[0];
         if (!card) return;
         gameState.remaining.push(card);
@@ -293,6 +291,7 @@ export function buildSideCardActions(sideIdx) {
       action: () => {
         const gameState = getGameState();
         if (!gameState) return;
+        ctx.pushHistory?.();
         const card = gameState.activePlanes.splice(sideIdx, 1)[0];
         if (!card) return;
         gameState.exiled.push(card);

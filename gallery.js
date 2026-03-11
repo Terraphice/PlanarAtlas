@@ -34,6 +34,7 @@ import {
   decodeProfileData,
   setPhenomenonAnimation,
   closeGameReaderView,
+  closeTopGameOverlay,
   setRiskyHellriding
 } from "./deck.js";
 
@@ -848,11 +849,7 @@ function bindEvents() {
       }
 
       if (isGameActive()) {
-        const readerView = document.getElementById("game-reader-view");
-        if (readerView && !readerView.classList.contains("hidden")) {
-          closeGameReaderView();
-          return;
-        }
+        if (closeTopGameOverlay()) return;
         return;
       }
 

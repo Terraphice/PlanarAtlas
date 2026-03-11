@@ -29,6 +29,7 @@ import {
   buildBemCardActions,
   buildBemAdjacentCardActions,
   getBemPlaneswalkPending,
+  getBemViewOffset,
   resetBemState
 } from "./game-bem.js";
 
@@ -65,6 +66,11 @@ let riskyHellridingEnabled = true;
 let bemZoomLevel = "default";
 let pendingGameMode = null;
 const readerTranscriptCache = new Map();
+
+// ── Game history ──────────────────────────────────────────────────────────────
+
+const MAX_GAME_HISTORY = 20;
+let gameHistory = [];
 
 // ── BEM (Blind Eternities Map) constants ──────────────────────────────────────
 
@@ -113,6 +119,7 @@ const gameBtnBr = document.getElementById("game-btn-br");
 const gameDieIcon = document.getElementById("game-die-icon");
 const gameToolsMenu = document.getElementById("game-tools-menu");
 const gameOptionsMenu = document.getElementById("game-options-menu");
+const gameToolsUndo = document.getElementById("game-tools-undo");
 const gameToolsShuffle = document.getElementById("game-tools-shuffle");
 const gameToolsAddTop = document.getElementById("game-tools-add-top");
 const gameToolsAddBottom = document.getElementById("game-tools-add-bottom");
@@ -246,6 +253,7 @@ export function initDeck({ cards, showToast, onDeckChange }) {
     closeGameReaderView,
     closeAllGameMenus,
     syncGameToolsState,
+    pushHistory: pushGameHistory,
     gameView,
     bemMapArea,
     gameCardImage,
@@ -276,6 +284,7 @@ export function initDeck({ cards, showToast, onDeckChange }) {
     openGameReaderView,
     closeGameReaderView,
     closeAllGameMenus,
+    pushHistory: pushGameHistory,
     gameBtnTr,
     gameView,
     bemMapArea,
@@ -404,6 +413,86 @@ function autoImportCards(filter) {
   showToastFn?.(count > 0 ? `Added ${count} card${count !== 1 ? "s" : ""} to deck.` : "No new cards to add.");
 }
 
+// ── Game history ──────────────────────────────────────────────────────────────
+
+function cloneGameState(state) {
+  if (!state) return null;
+  const clone = { ...state };
+  clone.remaining = [...state.remaining];
+  clone.activePlanes = [...state.activePlanes];
+  clone.exiled = [...state.exiled];
+  if (state.bemGrid instanceof Map) {
+    const gridClone = new Map();
+    for (const [key, cell] of state.bemGrid) {
+      gridClone.set(key, { ...cell });
+    }
+    clone.bemGrid = gridClone;
+  }
+  if (state.bemPos) clone.bemPos = { ...state.bemPos };
+  if (state.bemHellridedPositions instanceof Set) {
+    clone.bemHellridedPositions = new Set(state.bemHellridedPositions);
+  }
+  clone.dieRolling = false;
+  clone._dieResetTimer = null;
+  return clone;
+}
+
+function pushGameHistory() {
+  if (!gameState) return;
+  if (gameHistory.length >= MAX_GAME_HISTORY) gameHistory.shift();
+  gameHistory.push(cloneGameState(gameState));
+  if (gameToolsUndo) gameToolsUndo.disabled = false;
+}
+
+function undoLastAction() {
+  if (gameHistory.length === 0) {
+    showToastFn?.("Nothing to undo.");
+    return;
+  }
+  const prev = gameHistory.pop();
+  clearTimeout(gameState?._dieResetTimer);
+  gameState = prev;
+  closePlaneswalkerPopup();
+  closeChaosPopup();
+  resetBemState();
+  updateCostDisplay();
+  if (gameState.mode === "bem") {
+    renderBemMap();
+    updateBemInfoBar();
+  } else {
+    updateGameView();
+  }
+  syncBemTrButton();
+  syncGameToolsState(gameState.remaining.length);
+  closeAllGameMenus();
+  if (gameToolsUndo) gameToolsUndo.disabled = gameHistory.length === 0;
+  showToastFn?.("Action undone.");
+}
+
+export function closeTopGameOverlay() {
+  if (!gameReaderView?.classList.contains("hidden")) {
+    closeGameReaderView();
+    return true;
+  }
+  if (!diePlaneswalkerPopup?.classList.contains("hidden")) {
+    closePlaneswalkerPopup();
+    return true;
+  }
+  if (!dieChaosPopup?.classList.contains("hidden")) {
+    closeChaosPopup();
+    return true;
+  }
+  if (!gameRevealOverlay?.classList.contains("hidden")) {
+    closeRevealOverlay();
+    return true;
+  }
+  if (!gameToolsMenu?.classList.contains("hidden") || !gameOptionsMenu?.classList.contains("hidden")) {
+    closeAllGameMenus();
+    return true;
+  }
+  return false;
+}
+
 // ── Events ────────────────────────────────────────────────────────────────────
 
 function bindDeckEvents() {
@@ -509,8 +598,11 @@ function bindDeckEvents() {
   gameBtnBr?.addEventListener("click", toggleGameToolsMenu);
   gameBtnBl?.addEventListener("click", toggleGameOptionsMenu);
 
+  gameToolsUndo?.addEventListener("click", undoLastAction);
+
   gameToolsShuffle?.addEventListener("click", () => {
     if (!gameState) return;
+    pushGameHistory();
     gameState.remaining = shuffleArray(gameState.remaining);
     showToastFn?.("Remaining library shuffled.");
     if (!gameMenuSearchSection?.classList.contains("hidden")) renderGameLibraryView();
@@ -521,6 +613,7 @@ function bindDeckEvents() {
       showToastFn?.("No cards remaining in the library.");
       return;
     }
+    pushGameHistory();
     const top = gameState.remaining.shift();
     gameState.activePlanes.push(top);
     if (gameState.mode === "bem") {
@@ -537,6 +630,7 @@ function bindDeckEvents() {
       showToastFn?.("No cards remaining in the library.");
       return;
     }
+    pushGameHistory();
     const bottom = gameState.remaining.pop();
     gameState.activePlanes.push(bottom);
     if (gameState.mode === "bem") {
@@ -553,6 +647,7 @@ function bindDeckEvents() {
       showToastFn?.("No active planes to return.");
       return;
     }
+    pushGameHistory();
     const returned = [...gameState.activePlanes];
     gameState.remaining.unshift(...returned);
     gameState.activePlanes = [];
@@ -571,6 +666,7 @@ function bindDeckEvents() {
       showToastFn?.("No active planes to return.");
       return;
     }
+    pushGameHistory();
     const returned = [...gameState.activePlanes];
     gameState.remaining.push(...returned);
     gameState.activePlanes = [];
@@ -753,6 +849,89 @@ function bindDeckEvents() {
 
   // BEM arrow key pan
   document.addEventListener("keydown", handleBemArrowKey);
+
+  // Game keyboard shortcuts
+  document.addEventListener("keydown", (event) => {
+    if (!gameActive) return;
+    if (document.body.classList.contains("tutorial-open")) return;
+
+    const active = document.activeElement;
+    const typing = active && (
+      active.tagName === "INPUT" ||
+      active.tagName === "TEXTAREA" ||
+      active.tagName === "SELECT" ||
+      active.isContentEditable
+    );
+    if (typing) return;
+
+    const readerOpen = !gameReaderView?.classList.contains("hidden");
+    const diePopupOpen = !diePlaneswalkerPopup?.classList.contains("hidden");
+    const anyBlockingOverlay = readerOpen ||
+      diePopupOpen ||
+      !dieChaosPopup?.classList.contains("hidden") ||
+      !gameRevealOverlay?.classList.contains("hidden");
+
+    if (event.key === " ") {
+      event.preventDefault();
+      if (!anyBlockingOverlay) gameRollDie();
+      return;
+    }
+
+    if (event.key === "Enter") {
+      if (diePopupOpen) {
+        event.preventDefault();
+        executePlaneswalkerAction();
+        return;
+      }
+      if (!anyBlockingOverlay) {
+        event.preventDefault();
+        if (gameState?.mode === "bem") {
+          const viewOffset = getBemViewOffset();
+          const isPanning = viewOffset.dx !== 0 || viewOffset.dy !== 0;
+          if (getBemPlaneswalkPending() && isPanning) {
+            const nx = gameState.bemPos.x + viewOffset.dx;
+            const ny = gameState.bemPos.y + viewOffset.dy;
+            const dx = viewOffset.dx, dy = viewOffset.dy;
+            const isOrthog = (Math.abs(dx) + Math.abs(dy)) === 1;
+            const isDiag = Math.abs(dx) === 1 && Math.abs(dy) === 1;
+            const cell = gameState.bemGrid.get(bemKey(nx, ny));
+            if ((isOrthog && cell?.faceUp) || (isDiag && cell && !cell.faceUp)) {
+              bemMovePlayer(nx, ny);
+              return;
+            }
+          }
+          const cell = gameState.bemGrid?.get(bemKey(gameState.bemPos.x, gameState.bemPos.y));
+          if (cell?.placeholder && !cell?.card) {
+            bemFillPlaceholder();
+          } else if (cell?.card?.type === "Phenomenon") {
+            bemResolvePhenomenon();
+          } else {
+            toggleBemPlaneswalkMode();
+          }
+        } else {
+          gamePlaneswalk();
+        }
+      }
+      return;
+    }
+
+    if (event.key.toLowerCase() === "i" && !event.metaKey && !event.ctrlKey && !event.altKey) {
+      if (anyBlockingOverlay) return;
+      if (gameState?.mode === "bem") {
+        const cell = gameState.bemGrid?.get(bemKey(gameState.bemPos.x, gameState.bemPos.y));
+        if (cell?.card) openGameReaderView(cell.card, buildBemCardActions());
+      } else if (gameState) {
+        const focused = gameState.activePlanes[gameState.focusedIndex] ?? gameState.activePlanes[0];
+        if (focused) openGameReaderView(focused, buildMainCardActions(gameState.focusedIndex));
+      }
+      return;
+    }
+
+    if (event.key.toLowerCase() === "t" && !event.metaKey && !event.ctrlKey && !event.altKey) {
+      toggleGameToolsMenu();
+      return;
+    }
+  });
 }
 
 // ── Deck panel ────────────────────────────────────────────────────────────────
@@ -1479,6 +1658,8 @@ function startGame() {
 
 function startGameFromState(decoded) {
   clearTimeout(gameState?._dieResetTimer);
+  gameHistory.length = 0;
+  if (gameToolsUndo) gameToolsUndo.disabled = true;
   if (decoded.mode === "bem") {
     gameState = {
       mode: "bem",
@@ -1550,6 +1731,8 @@ function exitGame({ updateHash = true } = {}) {
   clearTimeout(gameState?._dieResetTimer);
   gameActive = false;
   gameState = null;
+  gameHistory.length = 0;
+  if (gameToolsUndo) gameToolsUndo.disabled = true;
   revealedCards = [];
   resetBemState();
   readerOpenedFromReveal = false; // reset before closeGameReaderView so overlay isn't restored on exit
@@ -1573,6 +1756,8 @@ function exitGame({ updateHash = true } = {}) {
 function resetGame() {
   if (!gameState) return;
   clearTimeout(gameState._dieResetTimer);
+  gameHistory.length = 0;
+  if (gameToolsUndo) gameToolsUndo.disabled = true;
   closeAllGameMenus();
   resetDieIcon();
   if (gameState.mode === "bem") {
@@ -1607,6 +1792,7 @@ function gameRollDie() {
     const roll = Math.floor(Math.random() * 6) + 1;
     gameState.dieRolling = false;
     gameBtnTl?.classList.remove("game-die-rolling");
+    pushGameHistory();
     gameState.chaosCost++;
     updateCostDisplay();
     applyDieResult(roll);
@@ -1778,6 +1964,7 @@ function renderGameSidePanel(activePlanes, focusedIndex) {
 
 function syncGameToolsState(remainingCount) {
   const isBem = gameState?.mode === "bem";
+  if (gameToolsUndo) gameToolsUndo.disabled = gameHistory.length === 0;
   if (gameToolsAddTop) {
     gameToolsAddTop.disabled = remainingCount === 0;
     const span = gameToolsAddTop.querySelector("span");
@@ -2023,6 +2210,7 @@ function handleLibraryItemAction(event) {
     return;
   }
 
+  pushGameHistory();
   const card = gameState.remaining.splice(idx, 1)[0];
 
   switch (action) {
@@ -2084,6 +2272,7 @@ function handleSearchResultItemAction(event) {
     return;
   }
 
+  pushGameHistory();
   const card = gameState.remaining.splice(idx, 1)[0];
 
   switch (action) {
@@ -2238,6 +2427,7 @@ function handleRevealCardAction(event) {
     return;
   }
 
+  pushGameHistory();
   const card = revealedCards.splice(revealIdx, 1)[0];
 
   switch (action) {
@@ -2290,6 +2480,7 @@ function handleRevealBulkAction(action) {
     gameRevealOverlay?.classList.add("hidden");
     return;
   }
+  pushGameHistory();
   const count = revealedCards.length;
   switch (action) {
     case "shuffle":
