@@ -71,6 +71,7 @@ const readerTranscriptCache = new Map();
 
 const MAX_GAME_HISTORY = 20;
 let gameHistory = [];
+let gameRedoStack = [];
 
 // ── BEM (Blind Eternities Map) constants ──────────────────────────────────────
 
@@ -120,6 +121,7 @@ const gameDieIcon = document.getElementById("game-die-icon");
 const gameToolsMenu = document.getElementById("game-tools-menu");
 const gameOptionsMenu = document.getElementById("game-options-menu");
 const gameToolsUndo = document.getElementById("game-tools-undo");
+const gameToolsRedo = document.getElementById("game-tools-redo");
 const gameToolsShuffle = document.getElementById("game-tools-shuffle");
 const gameToolsAddTop = document.getElementById("game-tools-add-top");
 const gameToolsAddBottom = document.getElementById("game-tools-add-bottom");
@@ -441,7 +443,9 @@ function pushGameHistory() {
   if (!gameState) return;
   if (gameHistory.length >= MAX_GAME_HISTORY) gameHistory.shift();
   gameHistory.push(cloneGameState(gameState));
+  gameRedoStack = [];
   if (gameToolsUndo) gameToolsUndo.disabled = false;
+  if (gameToolsRedo) gameToolsRedo.disabled = true;
 }
 
 function undoLastAction() {
@@ -449,6 +453,7 @@ function undoLastAction() {
     showToastFn?.("Nothing to undo.");
     return;
   }
+  gameRedoStack.push(cloneGameState(gameState));
   const prev = gameHistory.pop();
   clearTimeout(gameState?._dieResetTimer);
   gameState = prev;
@@ -466,7 +471,35 @@ function undoLastAction() {
   syncGameToolsState(gameState.remaining.length);
   closeAllGameMenus();
   if (gameToolsUndo) gameToolsUndo.disabled = gameHistory.length === 0;
+  if (gameToolsRedo) gameToolsRedo.disabled = false;
   showToastFn?.("Action undone.");
+}
+
+function redoNextAction() {
+  if (gameRedoStack.length === 0) {
+    showToastFn?.("Nothing to redo.");
+    return;
+  }
+  gameHistory.push(cloneGameState(gameState));
+  const next = gameRedoStack.pop();
+  clearTimeout(gameState?._dieResetTimer);
+  gameState = next;
+  closePlaneswalkerPopup();
+  closeChaosPopup();
+  resetBemState();
+  updateCostDisplay();
+  if (gameState.mode === "bem") {
+    renderBemMap();
+    updateBemInfoBar();
+  } else {
+    updateGameView();
+  }
+  syncBemTrButton();
+  syncGameToolsState(gameState.remaining.length);
+  closeAllGameMenus();
+  if (gameToolsUndo) gameToolsUndo.disabled = false;
+  if (gameToolsRedo) gameToolsRedo.disabled = gameRedoStack.length === 0;
+  showToastFn?.("Action redone.");
 }
 
 export function closeTopGameOverlay() {
@@ -599,6 +632,7 @@ function bindDeckEvents() {
   gameBtnBl?.addEventListener("click", toggleGameOptionsMenu);
 
   gameToolsUndo?.addEventListener("click", undoLastAction);
+  gameToolsRedo?.addEventListener("click", redoNextAction);
 
   gameToolsShuffle?.addEventListener("click", () => {
     if (!gameState) return;
@@ -929,6 +963,18 @@ function bindDeckEvents() {
 
     if (event.key.toLowerCase() === "t" && !event.metaKey && !event.ctrlKey && !event.altKey) {
       toggleGameToolsMenu();
+      return;
+    }
+
+    if (event.key.toLowerCase() === "z" && !event.metaKey && !event.ctrlKey && !event.altKey) {
+      if (anyBlockingOverlay) return;
+      undoLastAction();
+      return;
+    }
+
+    if (event.key.toLowerCase() === "r" && !event.metaKey && !event.ctrlKey && !event.altKey) {
+      if (anyBlockingOverlay) return;
+      redoNextAction();
       return;
     }
   });
@@ -1659,7 +1705,9 @@ function startGame() {
 function startGameFromState(decoded) {
   clearTimeout(gameState?._dieResetTimer);
   gameHistory.length = 0;
+  gameRedoStack = [];
   if (gameToolsUndo) gameToolsUndo.disabled = true;
+  if (gameToolsRedo) gameToolsRedo.disabled = true;
   if (decoded.mode === "bem") {
     gameState = {
       mode: "bem",
@@ -1732,7 +1780,9 @@ function exitGame({ updateHash = true } = {}) {
   gameActive = false;
   gameState = null;
   gameHistory.length = 0;
+  gameRedoStack = [];
   if (gameToolsUndo) gameToolsUndo.disabled = true;
+  if (gameToolsRedo) gameToolsRedo.disabled = true;
   revealedCards = [];
   resetBemState();
   readerOpenedFromReveal = false; // reset before closeGameReaderView so overlay isn't restored on exit
@@ -1757,7 +1807,9 @@ function resetGame() {
   if (!gameState) return;
   clearTimeout(gameState._dieResetTimer);
   gameHistory.length = 0;
+  gameRedoStack = [];
   if (gameToolsUndo) gameToolsUndo.disabled = true;
+  if (gameToolsRedo) gameToolsRedo.disabled = true;
   closeAllGameMenus();
   resetDieIcon();
   if (gameState.mode === "bem") {
@@ -1965,6 +2017,7 @@ function renderGameSidePanel(activePlanes, focusedIndex) {
 function syncGameToolsState(remainingCount) {
   const isBem = gameState?.mode === "bem";
   if (gameToolsUndo) gameToolsUndo.disabled = gameHistory.length === 0;
+  if (gameToolsRedo) gameToolsRedo.disabled = gameRedoStack.length === 0;
   if (gameToolsAddTop) {
     gameToolsAddTop.disabled = remainingCount === 0;
     const span = gameToolsAddTop.querySelector("span");
@@ -2579,6 +2632,16 @@ const TUTORIAL_CONTENT = {
   <li>The <strong>Tools</strong> menu lets you manage the library, reveal cards, and use other tools for resolving effects.</li>
   <li>The <strong>Options</strong> menu lets you exit, reset, or save the game state.</li>
 </ul>
+
+<h3>Keybinds</h3>
+<ul>
+  <li><strong>Space</strong> — Roll the planar die.</li>
+  <li><strong>Enter</strong> — Planeswalk.</li>
+  <li><strong>I</strong> — View current card details.</li>
+  <li><strong>T</strong> — Toggle the Tools menu.</li>
+  <li><strong>Z</strong> — Undo last action.</li>
+  <li><strong>R</strong> — Redo next action.</li>
+</ul>
 `
   },
   bem: {
@@ -2612,6 +2675,17 @@ const TUTORIAL_CONTENT = {
   <li>Tap/click any face-up card to view its details.</li>
   <li>On desktop: use <strong>arrow keys</strong> or <strong>middle mouse drag</strong> to pan the view. On mobile: press and drag to pan.</li>
   <li>The <strong>Tools</strong> and <strong>Options</strong> menus work the same as in Classic mode.</li>
+</ul>
+
+<h3>Keybinds</h3>
+<ul>
+  <li><strong>Space</strong> — Roll the planar die.</li>
+  <li><strong>Enter</strong> — Enter Planeswalking mode or confirm movement.</li>
+  <li><strong>↑ ↓ ← →</strong> — Pan the map view.</li>
+  <li><strong>I</strong> — View current card details.</li>
+  <li><strong>T</strong> — Toggle the Tools menu.</li>
+  <li><strong>Z</strong> — Undo last action.</li>
+  <li><strong>R</strong> — Redo next action.</li>
 </ul>
 `
   }
