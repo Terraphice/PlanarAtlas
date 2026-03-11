@@ -4195,11 +4195,6 @@ html[data-palette="scryfall"][data-theme="dark"] .sidebar {
   transition: opacity 140ms ease, transform 140ms ease;
 }
 
-.game-card-image-btn-placeholder .game-card-image {
-  max-width: min(320px, calc(100vw - 180px));
-  max-height: calc(100vh - 260px);
-}
-
 .game-card-image-btn-placeholder:hover {
   opacity: 1;
   transform: scale(1.02);
