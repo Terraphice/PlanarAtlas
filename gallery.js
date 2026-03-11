@@ -40,7 +40,8 @@ import {
   importProfileDecks,
   encodeProfileData,
   decodeProfileData,
-  setPhenomenonAnimation
+  setPhenomenonAnimation,
+  closeGameReaderView
 } from "./deck.js";
 
 const STORAGE_KEY = "planechaseGalleryPreferences.v2";
@@ -456,8 +457,7 @@ function bindEvents() {
         // Close reader view if open
         const readerView = document.getElementById("game-reader-view");
         if (readerView && !readerView.classList.contains("hidden")) {
-          readerView.classList.add("hidden");
-          document.body.classList.remove("game-reader-open");
+          closeGameReaderView();
           return;
         }
         return; // game handles its own Escape via menus
