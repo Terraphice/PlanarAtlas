@@ -232,9 +232,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Phenomenon",
-      "WHO",
-      "hidden",
-      "PUNK"
+      "PUNK",
+      "hidden"
     ]
   },
   {
@@ -768,7 +767,8 @@
       ":top:badge:tr:green:Official",
       "Plane",
       "Necros",
-      "WHO"
+      "WHO",
+      "hidden"
     ]
   },
   {
@@ -1857,7 +1857,8 @@
       ":top:badge:tr:green:Official",
       "Plane",
       "Time",
-      "WHO"
+      "WHO",
+      "Hidden"
     ]
   },
   {
