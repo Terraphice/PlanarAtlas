@@ -26,6 +26,7 @@ const readerTranscriptCache = new Map();
 
 const BEM_VIEW_RADIUS = 3;   // cells visible each side of player
 const BEM_FALLOFF_DIST = 3;  // Chebyshev distance before card falls off deck
+const BEM_FACEDOWN_IMG = "images/assets/card-preview.jpg";
 
 function deckCards() {
   return allDecks[currentSlot];
@@ -1205,6 +1206,7 @@ function resetGame() {
 
 function gamePlaneswalk() {
   if (!gameState) return;
+  if (gameState.mode === "bem") return;
 
   const { activePlanes, remaining } = gameState;
 
@@ -1363,21 +1365,22 @@ function renderGameSidePanel(activePlanes, focusedIndex) {
 }
 
 function syncGameToolsState(remainingCount) {
+  const isBem = gameState?.mode === "bem";
   if (gameToolsAddTop) {
-    gameToolsAddTop.disabled = remainingCount === 0;
+    gameToolsAddTop.disabled = isBem || remainingCount === 0;
     const span = gameToolsAddTop.querySelector("span");
     if (span) span.textContent = `Add Top of Library (${remainingCount} left)`;
   }
   if (gameToolsAddBottom) {
-    gameToolsAddBottom.disabled = remainingCount === 0;
+    gameToolsAddBottom.disabled = isBem || remainingCount === 0;
     const span = gameToolsAddBottom.querySelector("span");
     if (span) span.textContent = `Add Bottom of Library (${remainingCount} left)`;
   }
   if (gameToolsReturnTop) {
-    gameToolsReturnTop.disabled = !gameState || gameState.activePlanes.length === 0;
+    gameToolsReturnTop.disabled = isBem || !gameState || gameState.activePlanes.length === 0;
   }
   if (gameToolsReturnBottom) {
-    gameToolsReturnBottom.disabled = !gameState || gameState.activePlanes.length === 0;
+    gameToolsReturnBottom.disabled = isBem || !gameState || gameState.activePlanes.length === 0;
   }
 }
 
@@ -2177,20 +2180,17 @@ function bemResolvePhenomenon() {
     return;
   }
 
-  remaining.push(cell.card);
-
-  if (remaining.length === 0) {
-    showToastFn?.("No cards left in library to replace the phenomenon.");
-    return;
-  }
-
+  const phenomenon = cell.card;
   const nextCard = bemDrawNonPhenomenon(remaining);
+
+  remaining.push(phenomenon);
+
   if (nextCard) {
     bemGrid.set(key, { card: nextCard, faceUp: true });
-    showToastFn?.(`${cell.card.displayName} resolved. ${nextCard.displayName} appears.`);
+    showToastFn?.(`${phenomenon.displayName} resolved. ${nextCard.displayName} appears.`);
   } else {
     bemGrid.delete(key);
-    showToastFn?.(`${cell.card.displayName} resolved. Library is empty.`);
+    showToastFn?.(`${phenomenon.displayName} resolved. Library is empty.`);
   }
 
   renderBemMap();
@@ -2201,10 +2201,7 @@ function bemResolvePhenomenon() {
 function syncBemTrButton() {
   if (!gameBtnTr) return;
   const isBem = gameState?.mode === "bem";
-  const isPhenomenon = isBem && (() => {
-    const cell = gameState.bemGrid?.get(bemKey(gameState.bemPos.x, gameState.bemPos.y));
-    return cell?.card?.type === "Phenomenon";
-  })();
+  const isPhenomenon = isBem && gameState.bemGrid?.get(bemKey(gameState.bemPos.x, gameState.bemPos.y))?.card?.type === "Phenomenon";
 
   gameBtnTr.classList.toggle("bem-phenomenon-active", !!isPhenomenon);
   gameBtnTr.setAttribute("aria-label", isBem
@@ -2252,7 +2249,8 @@ function renderBemMap() {
       const isOrthog = (Math.abs(dx) + Math.abs(dy)) === 1;
 
       if (!cell) {
-        div.classList.add("bem-cell-void");
+        div.classList.add(isPlayer ? "bem-cell-faceup" : "bem-cell-void");
+        if (isPlayer) div.classList.add("bem-cell-player");
       } else if (cell.faceUp) {
         div.classList.add("bem-cell-faceup");
 
@@ -2284,7 +2282,7 @@ function renderBemMap() {
 
         const img = document.createElement("img");
         img.className = "bem-cell-img";
-        img.src = "images/assets/card-preview.jpg";
+        img.src = BEM_FACEDOWN_IMG;
         img.alt = "Face-down card";
         div.appendChild(img);
 
@@ -2320,6 +2318,8 @@ function updateBemInfoBar() {
       bemStatusLabel.textContent = `${remaining} card${remaining !== 1 ? "s" : ""} remaining in library`;
     }
   }
+
+  syncGameToolsState(gameState.remaining.length);
 }
 
 function handleBemCellClick(event) {
