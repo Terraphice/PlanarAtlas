@@ -3780,6 +3780,21 @@ button.active-filter-pill:disabled {
   background: color-mix(in srgb, var(--bg-elev-2) 80%, transparent);
 }
 
+.game-reveal-thumb-btn {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: opacity 120ms ease;
+}
+
+.game-reveal-thumb-btn:hover {
+  opacity: 0.85;
+}
+
 .game-reveal-thumb {
   display: block;
   width: 100%;

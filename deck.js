@@ -24,6 +24,7 @@ let showToastFn = null;
 let onDeckChangeFn = null;
 let revealedCards = [];
 let revealViewMode = "list";
+let readerOpenedFromReveal = false;
 let easyPlaneswalk = false;
 let readerCardPath = "";
 let bemPlaneswalkPending = false;
@@ -1504,6 +1505,7 @@ function exitGame({ updateHash = true } = {}) {
   revealedCards = [];
   bemPlaneswalkPending = false;
   bemLandOnPhenomenon = false;
+  readerOpenedFromReveal = false; // reset before closeGameReaderView so overlay isn't restored on exit
   document.body.classList.remove("game-open");
   gameView?.classList.add("hidden");
   gameView?.classList.remove("bem-active");
@@ -2054,7 +2056,7 @@ function closeReaderZoom() {
   }
 }
 
-function closeGameReaderView() {
+export function closeGameReaderView() {
   gameReaderView?.classList.add("hidden");
   document.body.classList.remove("game-reader-open");
   closeReaderZoom();
@@ -2062,6 +2064,16 @@ function closeGameReaderView() {
     gameReaderImageWrap.setAttribute("aria-label", "Zoom card image");
     gameReaderImageWrap.setAttribute("aria-pressed", "false");
   }
+  if (readerOpenedFromReveal) {
+    gameRevealOverlay?.classList.remove("hidden");
+    readerOpenedFromReveal = false;
+  }
+}
+
+function openRevealCardInfo(card) {
+  gameRevealOverlay?.classList.add("hidden");
+  readerOpenedFromReveal = true;
+  openGameReaderView(card, []);
 }
 
 function renderGameLibraryView() {
@@ -2323,7 +2335,9 @@ function renderRevealCards() {
     if (isGallery) {
       item.className = "game-reveal-gallery-item";
       item.innerHTML = `
-        <img class="game-reveal-thumb" src="${card.thumbPath}" alt="${escapeHtml(card.displayName)}" />
+        <button class="game-reveal-thumb-btn" data-action="info" data-reveal-idx="${i}" type="button" aria-label="View ${escapeHtml(card.displayName)} details">
+          <img class="game-reveal-thumb" src="${card.thumbPath}" alt="${escapeHtml(card.displayName)}" />
+        </button>
         <div class="game-reveal-card-name">${escapeHtml(card.displayName)}</div>
         <div class="game-reveal-card-type">${escapeHtml(card.type)}</div>
         <div class="game-reveal-card-actions">
@@ -2342,6 +2356,7 @@ function renderRevealCards() {
           <span class="game-reveal-list-type">${escapeHtml(card.type)}</span>
         </div>
         <div class="game-reveal-card-actions game-reveal-list-actions">
+          <button class="game-reveal-action-btn" data-action="info" data-reveal-idx="${i}" title="View card details" type="button">ℹ</button>
           <button class="game-reveal-action-btn" data-action="planeswalk" data-reveal-idx="${i}" title="Planeswalk to this card" type="button">▶</button>
           <button class="game-reveal-action-btn" data-action="active" data-reveal-idx="${i}" title="Add to active cards" type="button">+</button>
           <button class="game-reveal-action-btn" data-action="top" data-reveal-idx="${i}" title="Put on top of library" type="button">↑</button>
@@ -2363,6 +2378,11 @@ function handleRevealCardAction(event) {
   const action = btn.dataset.action;
   const revealIdx = parseInt(btn.dataset.revealIdx, 10);
   if (isNaN(revealIdx) || revealIdx < 0 || revealIdx >= revealedCards.length) return;
+
+  if (action === "info") {
+    openRevealCardInfo(revealedCards[revealIdx]);
+    return;
+  }
 
   const card = revealedCards.splice(revealIdx, 1)[0];
 
