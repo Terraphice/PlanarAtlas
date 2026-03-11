@@ -1,34 +1,33 @@
 {
   "name": "Planar Atlas",
   "short_name": "Planar Atlas",
-  "description": "A feature-complete Planechase tool: browse every plane and phenomenon, build decks, and simulate games in Classic or Blind Eternities Map mode.",
+  "description": "A feature-complete Planechase tool: searchable card gallery, deck builder, and game simulator.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#111827",
-  "theme_color": "#111827",
+  "background_color": "#0f0e17",
+  "theme_color": "#1e1b4b",
   "orientation": "any",
-  "categories": ["games", "entertainment"],
   "icons": [
     {
-      "src": "images/assets/icon-192.png",
+      "src": "images/assets/favicon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "images/assets/icon-512.png",
+      "src": "images/assets/favicon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     }
   ],
+  "categories": ["games", "entertainment"],
   "screenshots": [
     {
       "src": "images/assets/social-preview.jpg",
+      "sizes": "1200x630",
       "type": "image/jpeg",
-      "sizes": "1280x640",
-      "form_factor": "wide"
+      "label": "Planar Atlas gallery view"
     }
-  ],
-  "prefer_related_applications": false
+  ]
 }

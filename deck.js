@@ -1,6 +1,36 @@
 import { escapeHtml, shuffleArray, isHiddenCard, enhanceManaSymbols } from "./gallery-utils.js";
-import { initClassicMode, setBemCallbacks, executePlaneswalkerAction, closePlaneswalkerPopup, closeChaosPopup } from "./game-classic.js";
-import { initBemMode, syncBemTrButton, renderBemMap, updateBemInfoBar, startBemGame, loadBemZoom } from "./game-bem.js";
+
+import {
+  initClassicGame,
+  startClassicGame,
+  gamePlaneswalk,
+  updateClassicGameView,
+  renderClassicSidePanel,
+  buildMainCardActions,
+  buildSideCardActions
+} from "./game-classic.js";
+
+import {
+  initBemGame,
+  startBemGame,
+  bemKey,
+  bemMovePlayer,
+  bemResolvePhenomenon,
+  bemFillPlaceholder,
+  syncBemTrButton,
+  renderBemMap,
+  updateBemInfoBar,
+  handleBemCellClick,
+  toggleBemPlaneswalkMode,
+  handleBemArrowKey,
+  handleBemPointerDown,
+  handleBemPointerMove,
+  handleBemPointerUp,
+  buildBemCardActions,
+  buildBemAdjacentCardActions,
+  getBemPlaneswalkPending,
+  resetBemState
+} from "./game-bem.js";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -8,6 +38,7 @@ const DECK_STORAGE_KEY = "planar-atlas-decks-v2";
 const DECK_NAMES_KEY = "planar-atlas-deck-names-v1";
 const TUTORIAL_CLASSIC_KEY = "planar-atlas-tutorial-classic-v1";
 const TUTORIAL_BEM_KEY = "planar-atlas-tutorial-bem-v1";
+const BEM_ZOOM_KEY = "planar-atlas-bem-zoom-v1";
 const NUM_DECK_SLOTS = 10;
 const MAX_CARD_COUNT = 9;
 
@@ -31,12 +62,12 @@ let easyPlaneswalk = false;
 let readerCardPath = "";
 let phenomenonAnimationEnabled = true;
 let riskyHellridingEnabled = true;
+let bemZoomLevel = "default";
 let pendingGameMode = null;
 const readerTranscriptCache = new Map();
 
-// Game mode modules (populated by initDeck)
-let classicFns = null;
-let bemFns = null;
+// ── BEM (Blind Eternities Map) constants ──────────────────────────────────────
+
 
 function deckCards() {
   return allDecks[currentSlot];
@@ -172,53 +203,6 @@ export function initDeck({ cards, showToast, onDeckChange }) {
   currentSlot = stored.slot;
   deckNames = stored.names;
 
-  // Build shared state proxy for game mode modules
-  const deckState = {
-    get gameActive() { return gameActive; },
-    set gameActive(v) { gameActive = v; },
-    get gameState() { return gameState; },
-    set gameState(v) { gameState = v; },
-    get allCards() { return allCards; },
-    get revealedCards() { return revealedCards; },
-    set revealedCards(v) { revealedCards = v; },
-    get easyPlaneswalk() { return easyPlaneswalk; },
-    get phenomenonAnimationEnabled() { return phenomenonAnimationEnabled; },
-    get riskyHellridingEnabled() { return riskyHellridingEnabled; },
-    get readerOpenedFromReveal() { return readerOpenedFromReveal; },
-    set readerOpenedFromReveal(v) { readerOpenedFromReveal = v; },
-    get readerOpenedFromLibrary() { return readerOpenedFromLibrary; },
-    set readerOpenedFromLibrary(v) { readerOpenedFromLibrary = v; },
-    showToast: (msg) => showToastFn?.(msg)
-  };
-
-  // Shared callbacks for game modules
-  const sharedGameCbs = {
-    closeDeckPanel,
-    getDeckTotal,
-    buildDeckArray,
-    openGameReaderView,
-    closeGameReaderView,
-    renderGameLibraryView,
-    closeAllGameMenus,
-    syncBemTrButton
-  };
-
-  classicFns = initClassicMode(deckState, sharedGameCbs);
-  bemFns = initBemMode(deckState, {
-    ...sharedGameCbs,
-    resetDieIcon: () => classicFns.resetDieIcon(),
-    updateCostDisplay: () => classicFns.updateCostDisplay(),
-    renderGameSidePanel: (planes, idx) => classicFns.renderGameSidePanel(planes, idx),
-    syncGameToolsState: (count) => classicFns.syncGameToolsState(count)
-  });
-
-  setBemCallbacks({
-    bemFillPlaceholder: () => bemFns.bemFillPlaceholder(),
-    bemResolvePhenomenon: () => bemFns.bemResolvePhenomenon(),
-    toggleBemPlaneswalkMode: () => bemFns.toggleBemPlaneswalkMode(),
-    bemKey: bemFns.bemKey
-  });
-
   populateDefaultSlot();
   loadBemZoom();
 
@@ -243,6 +227,62 @@ export function initDeck({ cards, showToast, onDeckChange }) {
   bindDeckEvents();
   renderDeckSlotDropdown();
   updateDeckButton();
+
+  initClassicGame({
+    getGameState: () => gameState,
+    setGameState: (s) => { gameState = s; },
+    setGameActive: (v) => { gameActive = v; },
+    buildDeckArray,
+    getDeckTotal,
+    closeDeckPanel,
+    showGamePlaceholder,
+    resetDieIcon,
+    updateCostDisplay,
+    syncBemTrButton,
+    showToast: (msg) => showToastFn?.(msg),
+    getEasyPlaneswalk: () => easyPlaneswalk,
+    updateGameView,
+    openGameReaderView,
+    closeGameReaderView,
+    closeAllGameMenus,
+    syncGameToolsState,
+    gameView,
+    bemMapArea,
+    gameCardImage,
+    gameCardImageBtn,
+    gameSidePanel,
+    classicViewCardBtn,
+    classicCardNameLabel,
+    classicLibraryLabel
+  });
+
+  initBemGame({
+    getGameState: () => gameState,
+    setGameState: (s) => { gameState = s; },
+    setGameActive: (v) => { gameActive = v; },
+    getGameActive: () => gameActive,
+    buildDeckArray,
+    getDeckTotal,
+    closeDeckPanel,
+    resetDieIcon,
+    updateCostDisplay,
+    syncBemTrButton,
+    getPhenomenonAnimationEnabled: () => phenomenonAnimationEnabled,
+    getRiskyHellridingEnabled: () => riskyHellridingEnabled,
+    getEasyPlaneswalk: () => easyPlaneswalk,
+    showToast: (msg) => showToastFn?.(msg),
+    renderGameSidePanel,
+    syncGameToolsState,
+    openGameReaderView,
+    closeGameReaderView,
+    closeAllGameMenus,
+    gameBtnTr,
+    gameView,
+    bemMapArea,
+    bemMapEl,
+    bemCardNameLabel,
+    bemStatusLabel
+  });
 
   const gameParam = urlParams.get("game");
   if (gameParam) {
@@ -453,19 +493,19 @@ function bindDeckEvents() {
 
   gameBtnTr?.addEventListener("click", () => {
     if (gameState?.mode === "bem") {
-      const cell = gameState.bemGrid?.get(bemFns.bemKey(gameState.bemPos.x, gameState.bemPos.y));
+      const cell = gameState.bemGrid?.get(bemKey(gameState.bemPos.x, gameState.bemPos.y));
       if (cell?.placeholder && !cell?.card) {
-        bemFns.bemFillPlaceholder();
+        bemFillPlaceholder();
       } else if (cell?.card?.type === "Phenomenon") {
-        bemFns.bemResolvePhenomenon();
+        bemResolvePhenomenon();
       } else {
-        bemFns.toggleBemPlaneswalkMode();
+        toggleBemPlaneswalkMode();
       }
     } else {
-      classicFns.gamePlaneswalk();
+      gamePlaneswalk();
     }
   });
-  gameBtnTl?.addEventListener("click", () => classicFns.gameRollDie());
+  gameBtnTl?.addEventListener("click", gameRollDie);
   gameBtnBr?.addEventListener("click", toggleGameToolsMenu);
   gameBtnBl?.addEventListener("click", toggleGameOptionsMenu);
 
@@ -486,7 +526,7 @@ function bindDeckEvents() {
     if (gameState.mode === "bem") {
       updateBemInfoBar();
     } else {
-      classicFns.updateGameView();
+      updateGameView();
     }
     showToastFn?.(`${top.displayName} added simultaneously.`);
     if (!gameMenuSearchSection?.classList.contains("hidden")) renderGameLibraryView();
@@ -502,7 +542,7 @@ function bindDeckEvents() {
     if (gameState.mode === "bem") {
       updateBemInfoBar();
     } else {
-      classicFns.updateGameView();
+      updateGameView();
     }
     showToastFn?.(`${bottom.displayName} added simultaneously.`);
     if (!gameMenuSearchSection?.classList.contains("hidden")) renderGameLibraryView();
@@ -520,7 +560,7 @@ function bindDeckEvents() {
     if (gameState.mode === "bem") {
       updateBemInfoBar();
     } else {
-      classicFns.updateGameView();
+      updateGameView();
     }
     if (!gameMenuSearchSection?.classList.contains("hidden")) renderGameLibraryView();
     showToastFn?.(`Returned ${returned.length} plane${returned.length > 1 ? "s" : ""} to top.`);
@@ -538,7 +578,7 @@ function bindDeckEvents() {
     if (gameState.mode === "bem") {
       updateBemInfoBar();
     } else {
-      classicFns.updateGameView();
+      updateGameView();
     }
     if (!gameMenuSearchSection?.classList.contains("hidden")) renderGameLibraryView();
     showToastFn?.(`Returned ${returned.length} plane${returned.length > 1 ? "s" : ""} to bottom.`);
@@ -608,21 +648,21 @@ function bindDeckEvents() {
   gameCostReset?.addEventListener("click", () => {
     if (gameState) {
       gameState.chaosCost = 0;
-      classicFns.updateCostDisplay();
+      updateCostDisplay();
     }
   });
 
   gameCardImageBtn?.addEventListener("click", () => {
     if (!gameState || gameState.activePlanes.length === 0) {
-      classicFns.gamePlaneswalk();
+      gamePlaneswalk();
       return;
     }
     if (easyPlaneswalk) {
-      classicFns.gamePlaneswalk();
+      gamePlaneswalk();
       return;
     }
     const focused = gameState.activePlanes[gameState.focusedIndex] ?? gameState.activePlanes[0];
-    if (focused) openGameReaderView(focused, classicFns.buildMainCardActions(gameState.focusedIndex));
+    if (focused) openGameReaderView(focused, buildMainCardActions(gameState.focusedIndex));
   });
 
   gameReaderImageWrap?.addEventListener("click", zoomReaderImage);
@@ -655,12 +695,12 @@ function bindDeckEvents() {
 
   gameModeClassicBtn?.addEventListener("click", () => {
     hideGameModeDialog();
-    maybeShowTutorial("classic", () => classicFns.startClassicGame());
+    maybeShowTutorial("classic", startClassicGame);
   });
 
   gameModeBemBtn?.addEventListener("click", () => {
     hideGameModeDialog();
-    maybeShowTutorial("bem", () => bemFns.startBemGame());
+    maybeShowTutorial("bem", startBemGame);
   });
 
   gameModeDialogCancel?.addEventListener("click", hideGameModeDialog);
@@ -668,47 +708,51 @@ function bindDeckEvents() {
 
   gameTutorialClose?.addEventListener("click", () => {
     hideTutorial();
-    if (pendingGameMode === "classic") classicFns.startClassicGame();
-    else if (pendingGameMode === "bem") bemFns.startBemGame();
+    if (pendingGameMode === "classic") startClassicGame();
+    else if (pendingGameMode === "bem") startBemGame();
     pendingGameMode = null;
   });
 
-  bemMapEl?.addEventListener("click", (event) => bemFns.handleBemCellClick(event));
+  bemMapEl?.addEventListener("click", handleBemCellClick);
   bemViewCardBtn?.addEventListener("click", () => {
     if (!gameState?.bemGrid || !gameState?.bemPos) return;
-    const cell = gameState.bemGrid.get(bemFns.bemKey(gameState.bemPos.x, gameState.bemPos.y));
-    if (cell?.card) openGameReaderView(cell.card, bemFns.buildBemCardActions());
+    const cell = gameState.bemGrid.get(bemKey(gameState.bemPos.x, gameState.bemPos.y));
+    if (cell?.card) openGameReaderView(cell.card, buildBemCardActions());
   });
 
   classicViewCardBtn?.addEventListener("click", () => {
     if (!gameState || gameState.mode === "bem") return;
     const focused = gameState.activePlanes[gameState.focusedIndex] ?? gameState.activePlanes[0];
-    if (focused) openGameReaderView(focused, classicFns.buildMainCardActions(gameState.focusedIndex));
+    if (focused) openGameReaderView(focused, buildMainCardActions(gameState.focusedIndex));
   });
 
   // BEM zoom select
   bemZoomSelect?.addEventListener("change", () => {
     const val = bemZoomSelect.value;
-    bemFns.setBemZoom?.(val);
+    if (val === "close" || val === "default" || val === "far") {
+      bemZoomLevel = val;
+      applyBemZoom();
+      try { localStorage.setItem(BEM_ZOOM_KEY, bemZoomLevel); } catch { /* ignore */ }
+    }
   });
 
   // Planeswalk die popup
-  diePlaneswalkerBtn?.addEventListener("click", () => executePlaneswalkerAction());
-  dieRemainBtn?.addEventListener("click", () => closePlaneswalkerPopup());
-  diePlaneswalkerBackdrop?.addEventListener("click", () => closePlaneswalkerPopup());
+  diePlaneswalkerBtn?.addEventListener("click", executePlaneswalkerAction);
+  dieRemainBtn?.addEventListener("click", closePlaneswalkerPopup);
+  diePlaneswalkerBackdrop?.addEventListener("click", closePlaneswalkerPopup);
 
   // Chaos die popup
-  dieChaosCloseBtn?.addEventListener("click", () => closeChaosPopup());
-  dieChaosBackdrop?.addEventListener("click", () => closeChaosPopup());
+  dieChaosCloseBtn?.addEventListener("click", closeChaosPopup);
+  dieChaosBackdrop?.addEventListener("click", closeChaosPopup);
 
   // BEM drag navigation (pan view only, no player movement)
-  bemMapArea?.addEventListener("pointerdown", (event) => bemFns.handleBemPointerDown(event));
-  bemMapArea?.addEventListener("pointermove", (event) => bemFns.handleBemPointerMove(event));
-  bemMapArea?.addEventListener("pointerup", (event) => bemFns.handleBemPointerUp(event));
-  bemMapArea?.addEventListener("pointercancel", (event) => bemFns.handleBemPointerUp(event));
+  bemMapArea?.addEventListener("pointerdown", handleBemPointerDown);
+  bemMapArea?.addEventListener("pointermove", handleBemPointerMove);
+  bemMapArea?.addEventListener("pointerup", handleBemPointerUp);
+  bemMapArea?.addEventListener("pointercancel", handleBemPointerUp);
 
   // BEM arrow key pan
-  document.addEventListener("keydown", (event) => bemFns.handleBemArrowKey(event));
+  document.addEventListener("keydown", handleBemArrowKey);
 }
 
 // ── Deck panel ────────────────────────────────────────────────────────────────
@@ -878,7 +922,10 @@ export function clearAllDecks() {
   );
   localStorage.removeItem(DECK_STORAGE_KEY);
   localStorage.removeItem(DECK_NAMES_KEY);
-  bemFns?.setBemZoom?.("default");
+  localStorage.removeItem(BEM_ZOOM_KEY);
+  bemZoomLevel = "default";
+  applyBemZoom();
+  if (bemZoomSelect) bemZoomSelect.value = "default";
   populateDefaultSlot();
   updateDeckButton();
   renderDeckList();
@@ -1264,7 +1311,7 @@ function decodeGameState(seed) {
       const bemGrid = new Map();
       for (const [x, y, ck, fu, qck, ph] of (obj.g || [])) {
         if (ph) {
-          bemGrid.set(bemFns.bemKey(x, y), { card: null, faceUp: true, placeholder: true });
+          bemGrid.set(bemKey(x, y), { card: null, faceUp: true, placeholder: true });
         } else {
           const card = lookupCard(ck);
           if (card) {
@@ -1273,7 +1320,7 @@ function decodeGameState(seed) {
               const queuedCard = lookupCard(qck);
               if (queuedCard) cellObj.queuedCard = queuedCard;
             }
-            bemGrid.set(bemFns.bemKey(x, y), cellObj);
+            bemGrid.set(bemKey(x, y), cellObj);
           }
         }
       }
@@ -1428,6 +1475,332 @@ function hideGameModeDialog() {
 function startGame() {
   showGameModeDialog();
 }
+
+
+function startGameFromState(decoded) {
+  clearTimeout(gameState?._dieResetTimer);
+  if (decoded.mode === "bem") {
+    gameState = {
+      mode: "bem",
+      remaining: decoded.remaining,
+      exiled: decoded.exiled,
+      chaosCost: decoded.chaosCost,
+      dieRolling: false,
+      _dieResetTimer: null,
+      activePlanes: decoded.activePlanes ?? [],
+      focusedIndex: 0,
+      bemGrid: decoded.bemGrid,
+      bemPos: decoded.bemPos
+    };
+    revealedCards = [];
+
+    gameActive = true;
+    closeDeckPanel();
+    document.body.classList.add("game-open");
+    gameView?.classList.remove("hidden");
+    gameView?.classList.add("bem-active");
+    bemMapArea?.classList.remove("hidden");
+    resetDieIcon();
+    updateCostDisplay();
+    renderBemMap();
+    updateBemInfoBar();
+    syncBemTrButton();
+  } else {
+    gameState = {
+      mode: "classic",
+      remaining: decoded.remaining,
+      activePlanes: decoded.activePlanes,
+      focusedIndex: decoded.focusedIndex,
+      dieRolling: false,
+      chaosCost: decoded.chaosCost,
+      exiled: decoded.exiled,
+      _dieResetTimer: null
+    };
+    revealedCards = decoded.revealed;
+
+    gameActive = true;
+    closeDeckPanel();
+    document.body.classList.add("game-open");
+    gameView?.classList.remove("hidden");
+    gameView?.classList.remove("bem-active");
+    bemMapArea?.classList.add("hidden");
+    resetDieIcon();
+    updateCostDisplay();
+    syncBemTrButton();
+
+    if (gameState.activePlanes.length > 0) {
+      updateGameView();
+    } else {
+      showGamePlaceholder();
+    }
+
+    if (revealedCards.length > 0) {
+      renderRevealCards();
+      updateRevealFooter();
+      gameRevealOverlay?.classList.remove("hidden");
+    }
+  }
+
+  if (window.location.hash !== "#play") {
+    history.pushState(null, "", `${window.location.pathname}${window.location.search}#play`);
+  }
+}
+
+function exitGame({ updateHash = true } = {}) {
+  clearTimeout(gameState?._dieResetTimer);
+  gameActive = false;
+  gameState = null;
+  revealedCards = [];
+  resetBemState();
+  readerOpenedFromReveal = false; // reset before closeGameReaderView so overlay isn't restored on exit
+  document.body.classList.remove("game-open");
+  gameView?.classList.add("hidden");
+  gameView?.classList.remove("bem-active");
+  bemMapArea?.classList.add("hidden");
+  gameRevealOverlay?.classList.add("hidden");
+  closePlaneswalkerPopup();
+  closeChaosPopup();
+  closeGameReaderView();
+  closeAllGameMenus();
+  syncBemTrButton();
+  if (classicViewCardBtn) classicViewCardBtn.classList.add("hidden");
+
+  if (updateHash && window.location.hash === "#play") {
+    history.pushState(null, "", `${window.location.pathname}${window.location.search}`);
+  }
+}
+
+function resetGame() {
+  if (!gameState) return;
+  clearTimeout(gameState._dieResetTimer);
+  closeAllGameMenus();
+  resetDieIcon();
+  if (gameState.mode === "bem") {
+    startBemGame();
+  } else {
+    const shuffled = shuffleArray(buildDeckArray());
+    gameState = {
+      mode: "classic",
+      remaining: shuffled,
+      activePlanes: [],
+      focusedIndex: 0,
+      dieRolling: false,
+      chaosCost: 0,
+      exiled: [],
+      _dieResetTimer: null
+    };
+    showGamePlaceholder();
+    updateCostDisplay();
+    showToastFn?.("Deck reshuffled and reset.");
+  }
+}
+
+
+function gameRollDie() {
+  if (!gameState || gameState.dieRolling) return;
+
+  gameState.dieRolling = true;
+  gameBtnTl?.classList.add("game-die-rolling");
+
+  setTimeout(() => {
+    if (!gameState) return;
+    const roll = Math.floor(Math.random() * 6) + 1;
+    gameState.dieRolling = false;
+    gameBtnTl?.classList.remove("game-die-rolling");
+    gameState.chaosCost++;
+    updateCostDisplay();
+    applyDieResult(roll);
+  }, 500);
+}
+
+function applyDieResult(roll) {
+  if (!gameDieIcon) return;
+  gameBtnTl?.classList.remove("game-die-chaos", "game-die-walk", "game-die-blank");
+  gameDieIcon.className = "";
+  gameDieIcon.textContent = "";
+
+  if (roll === 1) {
+    gameDieIcon.className = "ms ms-chaos";
+    gameDieIcon.setAttribute("aria-label", "Chaos!");
+    gameBtnTl?.classList.add("game-die-chaos");
+  } else if (roll === 6) {
+    gameDieIcon.className = "ms ms-planeswalker";
+    gameDieIcon.setAttribute("aria-label", "Planeswalk!");
+    gameBtnTl?.classList.add("game-die-walk");
+  } else {
+    gameDieIcon.className = "game-die-blank-text";
+    gameDieIcon.textContent = "BLANK";
+    gameDieIcon.setAttribute("aria-label", "No effect");
+    gameBtnTl?.classList.add("game-die-blank");
+  }
+
+  gameDieIcon.classList.remove("game-die-flash");
+  void gameDieIcon.offsetWidth;
+  gameDieIcon.classList.add("game-die-flash");
+
+  if (roll === 1) showChaosPopup();
+  else if (roll === 6) showPlaneswalkerPopup();
+}
+
+function showPlaneswalkerPopup() {
+  diePlaneswalkerPopup?.classList.remove("hidden");
+}
+
+function closePlaneswalkerPopup() {
+  diePlaneswalkerPopup?.classList.add("hidden");
+}
+
+function executePlaneswalkerAction() {
+  closePlaneswalkerPopup();
+  if (!gameState) return;
+  if (gameState.mode === "bem") {
+    const cell = gameState.bemGrid?.get(bemKey(gameState.bemPos.x, gameState.bemPos.y));
+    if (cell?.placeholder && !cell?.card) {
+      bemFillPlaceholder();
+    } else if (cell?.card?.type === "Phenomenon") {
+      bemResolvePhenomenon();
+    } else {
+      toggleBemPlaneswalkMode();
+    }
+  } else {
+    gamePlaneswalk();
+  }
+}
+
+function showChaosPopup() {
+  dieChaosPopup?.classList.remove("hidden");
+}
+
+function closeChaosPopup() {
+  dieChaosPopup?.classList.add("hidden");
+}
+
+function resetDieIcon() {
+  if (!gameDieIcon) return;
+  gameDieIcon.className = "ms ms-chaos";
+  gameDieIcon.textContent = "";
+  gameDieIcon.removeAttribute("aria-label");
+  gameBtnTl?.classList.remove("game-die-chaos", "game-die-walk", "game-die-blank");
+}
+
+function loadBemZoom() {
+  try {
+    const stored = localStorage.getItem(BEM_ZOOM_KEY);
+    if (stored === "close" || stored === "default" || stored === "far") {
+      bemZoomLevel = stored;
+    }
+  } catch {
+    // ignore
+  }
+  if (bemZoomSelect) bemZoomSelect.value = bemZoomLevel;
+  applyBemZoom();
+}
+
+function applyBemZoom() {
+  if (!gameView) return;
+  gameView.classList.remove("bem-zoom-close", "bem-zoom-far");
+  if (bemZoomLevel === "close") gameView.classList.add("bem-zoom-close");
+  else if (bemZoomLevel === "far") gameView.classList.add("bem-zoom-far");
+}
+
+function updateCostDisplay() {
+  if (!gameState) return;
+  const cost = gameState.chaosCost;
+  if (gameCostValue) gameCostValue.textContent = cost;
+  if (gameCostDisplay) gameCostDisplay.classList.toggle("game-cost-visible", cost > 0);
+}
+
+function showGamePlaceholder() {
+  if (gameCardImage) {
+    gameCardImage.src = "images/assets/card-preview.jpg";
+    gameCardImage.alt = "Click to planeswalk";
+  }
+  if (gameSidePanel) gameSidePanel.innerHTML = "";
+  if (gameCardImageBtn) {
+    gameCardImageBtn.setAttribute("aria-label", "Planeswalk");
+    gameCardImageBtn.classList.add("game-card-image-btn-placeholder");
+    gameCardImageBtn.classList.remove("active-plane", "active-phenomenon");
+  }
+  if (classicViewCardBtn) classicViewCardBtn.classList.add("hidden");
+  syncGameToolsState(gameState?.remaining.length ?? 0);
+}
+
+function updateGameView() {
+  if (!gameState) return;
+
+  const { activePlanes, focusedIndex, remaining } = gameState;
+
+  if (gameState.mode === "bem") {
+    renderGameSidePanel(activePlanes, focusedIndex);
+    syncGameToolsState(remaining.length);
+    return;
+  }
+
+  const focused = activePlanes[focusedIndex] ?? activePlanes[0];
+
+  if (!focused) {
+    showGamePlaceholder();
+    return;
+  }
+
+  updateClassicGameView(gameState);
+}
+
+function renderGameSidePanel(activePlanes, focusedIndex) {
+  if (!gameSidePanel) return;
+  gameSidePanel.innerHTML = "";
+
+  const isBem = gameState?.mode === "bem";
+
+  if (isBem) {
+    for (let i = 0; i < activePlanes.length; i++) {
+      const card = activePlanes[i];
+      const idx = i;
+      const sideCard = document.createElement("button");
+      sideCard.type = "button";
+      sideCard.className = "game-side-card";
+      sideCard.setAttribute("aria-label", `View ${card.displayName} (opens card reader)`);
+      sideCard.innerHTML = `
+        <img class="game-side-card-img" src="${card.thumbPath}" alt="${escapeHtml(card.displayName)}" />
+        <div class="game-side-card-label">${escapeHtml(card.displayName)}</div>
+      `;
+      sideCard.addEventListener("click", () => {
+        if (!gameState) return;
+        openGameReaderView(card, buildSideCardActions(idx));
+      });
+      gameSidePanel.appendChild(sideCard);
+    }
+    return;
+  }
+
+  renderClassicSidePanel(activePlanes, focusedIndex);
+}
+
+function syncGameToolsState(remainingCount) {
+  const isBem = gameState?.mode === "bem";
+  if (gameToolsAddTop) {
+    gameToolsAddTop.disabled = remainingCount === 0;
+    const span = gameToolsAddTop.querySelector("span");
+    if (span) span.textContent = `Add Top of Library (${remainingCount} left)`;
+  }
+  if (gameToolsAddBottom) {
+    gameToolsAddBottom.disabled = remainingCount === 0;
+    const span = gameToolsAddBottom.querySelector("span");
+    if (span) span.textContent = `Add Bottom of Library (${remainingCount} left)`;
+  }
+  if (gameToolsReturnTop) {
+    gameToolsReturnTop.disabled = !gameState || (!isBem && gameState.activePlanes.length === 0);
+  }
+  if (gameToolsReturnBottom) {
+    gameToolsReturnBottom.disabled = !gameState || (!isBem && gameState.activePlanes.length === 0);
+  }
+  // Shuffle, search/library, reveal — always enabled when game is active
+  if (gameToolsShuffle) gameToolsShuffle.disabled = !gameState;
+  if (gameLibraryToggle) gameLibraryToggle.disabled = !gameState;
+  if (gameToolsRevealToggle) gameToolsRevealToggle.disabled = !gameState;
+}
+
+
 
 function openGameReaderView(card, actions = []) {
   if (!gameReaderView || !card) return;
@@ -1655,7 +2028,7 @@ function handleLibraryItemAction(event) {
   switch (action) {
     case "planeswalk":
       if (gameState.mode === "bem") {
-        const key = bemFns.bemKey(gameState.bemPos.x, gameState.bemPos.y);
+        const key = bemKey(gameState.bemPos.x, gameState.bemPos.y);
         const cell = gameState.bemGrid.get(key);
         if (cell?.card) gameState.remaining.push(cell.card);
         gameState.bemGrid.set(key, { card, faceUp: true });
@@ -1690,10 +2063,10 @@ function handleLibraryItemAction(event) {
     updateBemInfoBar();
     syncBemTrButton();
   } else {
-    classicFns.updateGameView();
+    updateGameView();
   }
   renderGameLibraryView();
-  classicFns.syncGameToolsState(gameState.remaining.length);
+  syncGameToolsState(gameState.remaining.length);
 }
 
 function handleSearchResultItemAction(event) {
@@ -1716,7 +2089,7 @@ function handleSearchResultItemAction(event) {
   switch (action) {
     case "planeswalk":
       if (gameState.mode === "bem") {
-        const bemCellKey = bemFns.bemKey(gameState.bemPos.x, gameState.bemPos.y);
+        const bemCellKey = bemKey(gameState.bemPos.x, gameState.bemPos.y);
         const cell = gameState.bemGrid.get(bemCellKey);
         if (cell?.card) gameState.remaining.push(cell.card);
         gameState.bemGrid.set(bemCellKey, { card, faceUp: true });
@@ -1751,10 +2124,10 @@ function handleSearchResultItemAction(event) {
     updateBemInfoBar();
     syncBemTrButton();
   } else {
-    classicFns.updateGameView();
+    updateGameView();
   }
   updateGameSearchResults();
-  classicFns.syncGameToolsState(gameState.remaining.length);
+  syncGameToolsState(gameState.remaining.length);
 }
 
 function openRevealCards() {
@@ -1791,7 +2164,7 @@ function closeRevealOverlay() {
     gameState.remaining = shuffleArray(gameState.remaining);
     revealedCards = [];
     showToastFn?.("Remaining revealed cards shuffled back into library.");
-    classicFns.updateGameView();
+    updateGameView();
   }
   gameRevealOverlay?.classList.add("hidden");
 }
@@ -1870,7 +2243,7 @@ function handleRevealCardAction(event) {
   switch (action) {
     case "planeswalk":
       if (gameState.mode === "bem") {
-        const key = bemFns.bemKey(gameState.bemPos.x, gameState.bemPos.y);
+        const key = bemKey(gameState.bemPos.x, gameState.bemPos.y);
         const cell = gameState.bemGrid.get(key);
         if (cell?.card) gameState.remaining.push(cell.card);
         gameState.bemGrid.set(key, { card, faceUp: true });
@@ -1905,7 +2278,7 @@ function handleRevealCardAction(event) {
     updateBemInfoBar();
     syncBemTrButton();
   } else {
-    classicFns.updateGameView();
+    updateGameView();
   }
   renderRevealCards();
   updateRevealFooter();
@@ -1939,7 +2312,7 @@ function handleRevealBulkAction(action) {
   }
   revealedCards = [];
   gameRevealOverlay?.classList.add("hidden");
-  classicFns.updateGameView();
+  updateGameView();
 }
 
 function updateRevealFooter() {
@@ -1969,7 +2342,7 @@ function toggleGameToolsMenu() {
     if (gameLibraryToggle) gameLibraryToggle.textContent = "Search & View Library";
     if (gameToolsSearchInput) gameToolsSearchInput.value = "";
     if (gameToolsSearchResults) gameToolsSearchResults.innerHTML = "";
-    classicFns?.syncGameToolsState(gameState?.remaining.length ?? 0);
+    syncGameToolsState(gameState?.remaining.length ?? 0);
   }
 }
 
@@ -2112,4 +2485,3 @@ export function syncGameHash() {
     if (gameActive) exitGame({ updateHash: false });
   }
 }
-

@@ -1,6 +1,13 @@
 import {
   enrichCard,
-  reconcileSelectedTags
+  sortCards,
+  reconcileSelectedTags,
+  matchesFilters,
+  parseSearchQuery,
+  getTagLabel,
+  getTagToneClass,
+  isTopTag,
+  enhanceManaSymbols
 } from "./gallery-utils.js";
 
 import {
@@ -32,71 +39,36 @@ import {
 
 import {
   STORAGE_KEY,
-  preferences,
   filters,
   displayState,
   paginationState,
-  sharedState,
-  initStateCallbacks,
-  applyFilters,
-  applyStoredPreferencesToUI,
-  persistPreferences,
-  updateUrlFromState,
-  buildTagFilters,
-  buildGroupTagOptions,
-  syncTagFilterUI,
-  toggleTagFilter,
-  clearAllFilters,
-  readStateFromUrl
+  preferences,
+  initStateManager
 } from "./gallery-state.js";
 
-import {
-  initRenderCallbacks,
-  renderGallery,
-  renderActiveFilters,
-  scheduleStackActiveUpdate
-} from "./gallery-render.js";
-
-import {
-  initSearchCallbacks,
-  renderSearchSuggestions,
-  updateInlineAutocomplete,
-  hideAllSearchSuggestions,
-  handleSearchKeydown,
-  syncSearchInputsFromTop,
-  syncSearchInputsFromSidebar,
-  setActiveSearchSurface
-} from "./gallery-search.js";
-
-import {
-  initModalCallbacks,
-  openModalByKey,
-  renderModal,
-  closeModal,
-  showPreviousCard,
-  showNextCard,
-  getCurrentModalCardKey,
-  getCardKeyFromHash,
-  tryOpenCardFromHash,
-  flipModalImage,
-  copyCurrentCardLink
-} from "./gallery-modal.js";
-
-// \u2500\u2500 Constants \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+import { createRenderer } from "./gallery-render.js";
+import { createSearchManager } from "./gallery-search.js";
+import { createModalManager } from "./gallery-modal.js";
 
 const ALL_PALETTES = ["standard", "gruvbox", "atom", "dracula", "solarized", "nord", "catppuccin", "scryfall"];
-const THEME_PREFERENCES = ["system", "dark", "light"];
-const VIEW_MODES = ["grid", "single", "stack", "list"];
-const GROUP_MODES = ["none", "tag"];
 
-// \u2500\u2500 DOM references \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+let allCards = [];
+let filteredCards = [];
+const transcriptCache = new Map();
 
-const toastRegion = document.getElementById("toast-region");
-const themeToggleButton = document.getElementById("theme-toggle");
+// ── DOM references ────────────────────────────────────────────────────────────
+
+const resultsCount = document.getElementById("results-count");
+const activeFiltersEl = document.getElementById("active-filters");
+const tagFilterList = document.getElementById("tag-filter-list");
 
 const topSearch = document.getElementById("top-search");
+const topSearchGhost = document.getElementById("top-search-ghost");
 const topSearchSuggestions = document.getElementById("top-search-suggestions");
+
 const sidebarSearch = document.getElementById("sidebar-search");
+const sidebarSearchGhost = document.getElementById("sidebar-search-ghost");
+const sidebarSearchSuggestions = document.getElementById("sidebar-search-suggestions");
 
 const fuzzySearchToggle = document.getElementById("fuzzy-search-toggle");
 const showHiddenToggle = document.getElementById("show-hidden-toggle");
@@ -109,14 +81,6 @@ const sidebarContent = document.getElementById("sidebar-content");
 const sidebarToggle = document.getElementById("sidebar-toggle");
 const sidebarLip = document.getElementById("sidebar-lip");
 const sidebarBackdrop = document.getElementById("sidebar-backdrop");
-
-const settingsMenuToggle = document.getElementById("settings-menu-toggle");
-const settingsMenu = document.getElementById("settings-menu");
-const settingsClearPreferencesButton = document.getElementById("settings-clear-preferences");
-const settingsContactDeveloperLink = document.getElementById("settings-contact-developer");
-const settingsExportProfileButton = document.getElementById("settings-export-profile");
-const settingsImportProfileButton = document.getElementById("settings-import-profile");
-
 const randomCardButton = document.getElementById("random-card-button");
 const playGameButton = document.getElementById("play-game-button");
 const mainPanel = document.querySelector(".main-panel");
@@ -130,24 +94,37 @@ const groupBySelect = document.getElementById("group-by-select");
 const groupTagPickerWrap = document.getElementById("group-tag-picker-wrap");
 const groupTagSelect = document.getElementById("group-tag-select");
 
+const settingsMenuToggle = document.getElementById("settings-menu-toggle");
+const settingsMenu = document.getElementById("settings-menu");
+const settingsClearPreferencesButton = document.getElementById("settings-clear-preferences");
+const settingsContactDeveloperLink = document.getElementById("settings-contact-developer");
+const settingsExportProfileButton = document.getElementById("settings-export-profile");
+const settingsImportProfileButton = document.getElementById("settings-import-profile");
+const themeToggleButton = document.getElementById("theme-toggle");
+
 const confirmDialog = document.getElementById("confirm-dialog");
 const confirmOkButton = document.getElementById("confirm-ok");
 const confirmCancelButton = document.getElementById("confirm-cancel");
 
 const modal = document.getElementById("card-modal");
 const modalImageWrap = document.getElementById("modal-image-wrap");
+const modalImage = document.getElementById("modal-image");
+const modalFlipHint = document.getElementById("modal-flip-hint");
+const modalName = document.getElementById("modal-card-name");
+const modalType = document.getElementById("modal-card-type");
+const modalTranscript = document.getElementById("modal-transcript");
+const modalSourceLink = document.getElementById("modal-source-link");
+const modalScryfallLink = document.getElementById("modal-scryfall-link");
 const modalCloseButton = document.getElementById("modal-close");
 const modalPrevButton = document.getElementById("modal-prev");
 const modalNextButton = document.getElementById("modal-next");
 const modalTagList = document.getElementById("modal-tag-list");
 const modalCopyLinkButton = document.getElementById("modal-copy-link");
-const activeFiltersEl = document.getElementById("active-filters");
+const gallery = document.getElementById("gallery");
+const toastRegion = document.getElementById("toast-region");
+const paginationControls = document.getElementById("pagination-controls");
 
-// \u2500\u2500 Initialization \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
-
-let randomLongPressTimer = null;
-let suppressRandomClick = false;
-let randomIconResetTimer = null;
+// ── Toast and theme ───────────────────────────────────────────────────────────
 
 const showToast = initToastManager(toastRegion);
 const themeController = initThemeController({
@@ -155,92 +132,213 @@ const themeController = initThemeController({
   initialTheme: preferences.theme,
   initialPalette: preferences.themePalette,
   onChange(theme, palette) {
-    persistPreferences(themeController);
+    stateManager.persistPreferences();
     const paletteLabel = palette === "standard" ? "" : ` ${capitalize(palette)}`;
     showToast(`Theme set to ${theme}${paletteLabel}.`);
   }
 });
 
-function _persistPreferences() {
-  persistPreferences(themeController);
-}
+// ── State manager ─────────────────────────────────────────────────────────────
 
-// Wire cross-module callbacks
-initStateCallbacks({
+const stateManager = initStateManager({
+  themeController,
+  topSearch,
+  sidebarSearch,
+  topSearchGhost,
+  sidebarSearchGhost,
+  fuzzySearchToggle,
+  showHiddenToggle,
+  inlineAutocompleteToggle,
+  phenomenonAnimationToggle,
+  riskyHellridingToggle,
+  viewModeSelect,
+  groupBySelect,
+  groupTagPickerWrap
+});
+
+// ── Search surface state ──────────────────────────────────────────────────────
+
+let activeSearchSurface = "top";
+let suggestionIndex = -1;
+
+// ── Renderer ──────────────────────────────────────────────────────────────────
+
+const renderer = createRenderer({
+  gallery,
+  paginationControls,
+  resultsCount,
+  filters,
+  displayState,
+  paginationState,
+  getFilteredCards: () => filteredCards,
+  getTranscriptCache: () => transcriptCache,
+  callbacks: {
+    toggleTagFilter,
+    openModalByKey: (key, updateHash) => modalManager.openModalByKey(key, updateHash),
+    addCardToDeck,
+    removeCardFromDeck,
+    getCardDeckCount,
+    isDeckPanelOpen,
+    persistPreferences: () => stateManager.persistPreferences(),
+    updateUrlFromState: (opts) => stateManager.updateUrlFromState(opts)
+  }
+});
+
+const {
   renderGallery,
+  renderPaginationControls,
+  renderActiveFilters,
+  createTagChipElement,
+  scheduleStackActiveUpdate,
+  preloadCardImage,
+  disconnectInfiniteScroll
+} = renderer;
+
+// ── Search manager ────────────────────────────────────────────────────────────
+
+const searchManager = createSearchManager({
+  topSearch,
+  topSearchGhost,
+  topSearchSuggestions,
+  sidebarSearch,
+  sidebarSearchGhost,
+  sidebarSearchSuggestions,
+  filters,
+  getFilteredCards: () => filteredCards,
+  getAllCards: () => allCards,
+  getActiveSearchSurface: () => activeSearchSurface,
+  setActiveSearchSurface: (s) => { activeSearchSurface = s; },
+  getSuggestionIndex: () => suggestionIndex,
+  setSuggestionIndex: (i) => { suggestionIndex = i; },
+  callbacks: {
+    applyFilters,
+    openModalByKey: (key, updateHash) => modalManager.openModalByKey(key, updateHash),
+    getTranscriptCache: () => transcriptCache
+  }
+});
+
+const {
   renderSearchSuggestions,
   updateInlineAutocomplete,
-  renderActiveFilters,
-  renderModal,
-  closeModal,
-  getCurrentModalCardKey,
-  hideAllSearchSuggestions
+  hideAllSearchSuggestions,
+  handleSearchKeydown,
+  syncSearchInputsFromTop,
+  syncSearchInputsFromSidebar
+} = searchManager;
+
+// ── Modal manager ─────────────────────────────────────────────────────────────
+
+const modalManager = createModalManager({
+  modal,
+  modalImageWrap,
+  modalImage,
+  modalFlipHint,
+  modalName,
+  modalType,
+  modalTranscript,
+  modalSourceLink,
+  modalScryfallLink,
+  modalPrevButton,
+  modalNextButton,
+  modalTagList,
+  randomCardButton,
+  filters,
+  displayState,
+  paginationState,
+  getFilteredCards: () => filteredCards,
+  getAllCards: () => allCards,
+  getTranscriptCache: () => transcriptCache,
+  callbacks: {
+    setModalCardKey,
+    createTagChipElement,
+    renderGallery,
+    sortCards,
+    setFilteredCards: (cards) => { filteredCards = cards; },
+    preloadCardImage,
+    persistPreferences: () => stateManager.persistPreferences(),
+    updateUrlFromState: (opts) => stateManager.updateUrlFromState(opts),
+    themeController,
+    syncChaosUI(chaosFilters, chaosDisplay) {
+      topSearch.value = chaosFilters.search;
+      sidebarSearch.value = chaosFilters.search;
+      topSearchGhost.value = "";
+      sidebarSearchGhost.value = "";
+      fuzzySearchToggle.checked = chaosFilters.fuzzy;
+      inlineAutocompleteToggle.checked = chaosFilters.inlineAutocomplete;
+      viewModeSelect.value = chaosDisplay.viewMode;
+      groupBySelect.value = chaosDisplay.groupBy;
+      groupTagPickerWrap.classList.toggle("hidden", chaosDisplay.groupBy !== "tag");
+      buildGroupTagOptions(allCards);
+      syncTagFilterUI();
+    },
+    applyFilters,
+    renderGallery,
+    showToast,
+    scheduleStackActiveUpdate
+  }
 });
 
-initRenderCallbacks({
+const {
   openModalByKey,
-  addCardToDeck,
-  removeCardFromDeck,
-  getCardDeckCount,
-  isDeckPanelOpen,
-  persistPreferences: _persistPreferences
-});
+  closeModal,
+  showPreviousCard,
+  showNextCard,
+  flipModalImage,
+  copyCurrentCardLink,
+  openRandomCard,
+  handleRandomPointerDown,
+  clearRandomLongPress,
+  getSuppressRandomClick,
+  clearSuppressRandomClick,
+  tryOpenCardFromHash,
+  getCardKeyFromHash
+} = modalManager;
 
-initSearchCallbacks({ openModalByKey });
-
-initModalCallbacks({
-  renderGallery,
-  setModalCardKey,
-  toggleTagFilter,
-  showToast
-});
+// ── Init ──────────────────────────────────────────────────────────────────────
 
 init();
 
 async function init() {
   try {
-    readStateFromUrl();
-    applyStoredPreferencesToUI();
+    stateManager.readState();
+    stateManager.applyStoredPreferencesToUI();
 
     const response = await fetch("cards.json");
     if (!response.ok) throw new Error("Failed to load cards.json");
 
     const rawCards = await response.json();
-    sharedState.allCards = rawCards.map(enrichCard);
+    allCards = rawCards.map(enrichCard);
 
-    filters.tags = reconcileSelectedTags(filters.tags, sharedState.allCards);
+    filters.tags = reconcileSelectedTags(filters.tags, allCards);
 
     if (displayState.groupTag) {
-      displayState.groupTag = reconcileSelectedTags(
-        new Set([displayState.groupTag]),
-        sharedState.allCards
-      ).values().next().value || "";
+      displayState.groupTag = reconcileSelectedTags(new Set([displayState.groupTag]), allCards).values().next().value || "";
     }
 
-    buildTagFilters(sharedState.allCards);
-    buildGroupTagOptions(sharedState.allCards);
+    buildTagFilters(allCards);
+    buildGroupTagOptions(allCards);
     bindEvents();
     syncTagFilterUI();
     applyFilters({ updateUrl: false, preservePage: true });
     tryOpenCardFromHash();
 
     initDeck({
-      cards: sharedState.allCards,
+      cards: allCards,
       showToast,
       onDeckChange: () => {
         const panelOpen = isDeckPanelOpen();
-        document.getElementById("gallery").classList.toggle("deck-mode", panelOpen);
+        gallery.classList.toggle("deck-mode", panelOpen);
         mainPanel?.classList.toggle("deck-panel-offset", panelOpen);
       }
     });
     setPhenomenonAnimation(filters.phenomenonAnimation);
     setRiskyHellriding(filters.riskyHellriding);
 
-    prefetchAllTranscripts(sharedState.allCards);
+    prefetchAllTranscripts(allCards);
   } catch (error) {
     console.error(error);
-    document.getElementById("gallery").innerHTML = `<p class="empty-state">Could not load gallery data.</p>`;
-    document.getElementById("results-count").textContent = "";
+    gallery.innerHTML = `<p class="empty-state">Could not load gallery data.</p>`;
+    resultsCount.textContent = "";
   }
 }
 
@@ -252,40 +350,331 @@ function prefetchAllTranscripts(cards) {
     if (index >= cards.length) return;
     const card = cards[index++];
 
-    if (sharedState.transcriptCache.has(card.key)) {
-      next();
-      return;
-    }
+    if (transcriptCache.has(card.key)) { next(); return; }
 
-    sharedState.transcriptCache.set(card.key, null);
+    transcriptCache.set(card.key, null);
     fetch(card.transcriptPath)
       .then((r) => (r.ok ? r.text() : ""))
       .then((text) => {
-        sharedState.transcriptCache.set(card.key, text ? text.trim() : "");
+        transcriptCache.set(card.key, text ? text.trim() : "");
         next();
       })
       .catch(() => {
-        sharedState.transcriptCache.set(card.key, "");
+        transcriptCache.set(card.key, "");
         next();
       });
   }
 
-  for (let i = 0; i < CONCURRENCY; i++) {
-    next();
+  for (let i = 0; i < CONCURRENCY; i++) next();
+}
+
+// ── Filters / state ───────────────────────────────────────────────────────────
+
+function applyFilters({ updateUrl = true, preservePage = false } = {}) {
+  const parsedQuery = parseSearchQuery(filters.search);
+
+  filteredCards = allCards.filter((card) => matchesFilters(card, parsedQuery, filters, transcriptCache));
+  sortCards(filteredCards);
+
+  if (!preservePage) {
+    paginationState.currentPage = 1;
+    paginationState.infiniteLoadedCount = paginationState.pageSize;
+  } else {
+    const totalPages = Math.max(1, Math.ceil(filteredCards.length / paginationState.pageSize));
+    paginationState.currentPage = Math.min(paginationState.currentPage, totalPages);
+    paginationState.infiniteLoadedCount = paginationState.pageSize;
+  }
+
+  renderActiveFilters(parsedQuery, activeFiltersEl);
+  renderGallery();
+  renderSearchSuggestions();
+  updateInlineAutocomplete();
+
+  if (updateUrl) stateManager.updateUrlFromState();
+}
+
+// ── Tag filters ───────────────────────────────────────────────────────────────
+
+function buildTagFilters(cards) {
+  const allTags = [...new Set(cards.flatMap((card) => card.tags))].sort((a, b) =>
+    a.localeCompare(b, undefined, { sensitivity: "base" })
+  );
+
+  const topTags = allTags.filter(isTopTag);
+  const regularTags = allTags.filter((tag) => !isTopTag(tag) && tag.toLowerCase() !== "hidden");
+
+  tagFilterList.innerHTML = "";
+
+  for (const tag of topTags) tagFilterList.appendChild(createTagFilterChip(tag));
+
+  if (topTags.length > 0 && regularTags.length > 0) {
+    const divider = document.createElement("div");
+    divider.className = "tag-filter-divider";
+    divider.setAttribute("aria-hidden", "true");
+    tagFilterList.appendChild(divider);
+  }
+
+  for (const tag of regularTags) tagFilterList.appendChild(createTagFilterChip(tag));
+
+  syncTagFilterUI();
+}
+
+function createTagFilterChip(tag) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = getTagToneClass(tag, "tag-chip");
+  button.textContent = getTagLabel(tag);
+  button.dataset.tag = tag;
+  button.addEventListener("click", () => toggleTagFilter(tag));
+  return button;
+}
+
+function buildGroupTagOptions(cards) {
+  const tags = [...new Set(cards.flatMap((card) => card.tags))].sort((a, b) =>
+    a.localeCompare(b, undefined, { sensitivity: "base" })
+  );
+
+  groupTagSelect.innerHTML = `<option value="">Choose a tag...</option>`;
+
+  for (const tag of tags) {
+    const option = document.createElement("option");
+    option.value = tag;
+    option.textContent = getTagLabel(tag);
+    groupTagSelect.appendChild(option);
+  }
+
+  if (displayState.groupTag && tags.includes(displayState.groupTag)) {
+    groupTagSelect.value = displayState.groupTag;
+  } else {
+    displayState.groupTag = "";
+    groupTagSelect.value = "";
+    stateManager.persistPreferences();
   }
 }
 
-// \u2500\u2500 Event binding \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+function syncTagFilterUI() {
+  const chips = [...tagFilterList.querySelectorAll(".tag-chip")];
+  for (const chip of chips) {
+    chip.classList.toggle("active", filters.tags.has(chip.dataset.tag));
+  }
+}
+
+function toggleTagFilter(tag) {
+  const currentKey = getCardKeyFromHash();
+
+  if (filters.tags.has(tag)) filters.tags.delete(tag);
+  else filters.tags.add(tag);
+
+  syncTagFilterUI();
+  applyFilters();
+
+  if (!modal.classList.contains("hidden") && currentKey) {
+    const matchingIndex = filteredCards.findIndex((card) => card.key === currentKey);
+    if (matchingIndex === -1) { closeModal(false); return; }
+    modalManager.renderModal(filteredCards[matchingIndex], false);
+  }
+}
+
+function clearAllFilters() {
+  filters.search = "";
+  filters.tags.clear();
+
+  topSearch.value = "";
+  sidebarSearch.value = "";
+  topSearchGhost.value = "";
+  sidebarSearchGhost.value = "";
+
+  syncTagFilterUI();
+  hideAllSearchSuggestions();
+  applyFilters();
+  tryOpenCardFromHash();
+}
+
+// ── Sidebar ───────────────────────────────────────────────────────────────────
+
+function openSidebar() {
+  sidebar.classList.remove("collapsed");
+  sidebar.classList.add("open");
+  sidebarBackdrop.classList.remove("hidden");
+}
+
+function closeSidebar() {
+  sidebar.classList.remove("open");
+  sidebar.classList.add("collapsed");
+  sidebarBackdrop.classList.add("hidden");
+  hideAllSearchSuggestions();
+  sidebarContent.scrollTop = 0;
+}
+
+function toggleSidebar() {
+  if (sidebar.classList.contains("open")) closeSidebar();
+  else openSidebar();
+}
+
+// ── Settings menu ─────────────────────────────────────────────────────────────
+
+function openSettingsMenu() {
+  settingsMenu.classList.remove("hidden");
+  settingsMenuToggle.setAttribute("aria-expanded", "true");
+}
+
+function closeSettingsMenu() {
+  settingsMenu.classList.add("hidden");
+  settingsMenuToggle.setAttribute("aria-expanded", "false");
+  settingsMenu.scrollTop = 0;
+}
+
+function toggleSettingsMenu() {
+  if (settingsMenu.classList.contains("hidden")) openSettingsMenu();
+  else closeSettingsMenu();
+}
+
+// ── Confirm dialog ────────────────────────────────────────────────────────────
+
+function showClearPrefsConfirm() {
+  closeSettingsMenu();
+  confirmDialog?.classList.remove("hidden");
+  document.body.classList.add("confirm-open");
+}
+
+function hideClearPrefsConfirm() {
+  confirmDialog?.classList.add("hidden");
+  document.body.classList.remove("confirm-open");
+}
+
+function executeClearAll() {
+  hideClearPrefsConfirm();
+
+  localStorage.removeItem(STORAGE_KEY);
+  clearAllDecks();
+  clearTutorialFlags();
+
+  filters.search = "";
+  filters.tags.clear();
+  filters.fuzzy = false;
+  filters.inlineAutocomplete = true;
+  filters.showHidden = false;
+  filters.riskyHellriding = true;
+  setRiskyHellriding(true);
+
+  displayState.viewMode = "grid";
+  displayState.groupBy = "none";
+  displayState.groupTag = "";
+
+  paginationState.currentPage = 1;
+  paginationState.pageSize = 20;
+  paginationState.mode = "paginated";
+  paginationState.infiniteLoadedCount = 20;
+
+  themeController.setTheme("system", { silent: true, paletteOverride: "standard" });
+
+  topSearch.value = "";
+  sidebarSearch.value = "";
+  topSearchGhost.value = "";
+  sidebarSearchGhost.value = "";
+
+  stateManager.applyStoredPreferencesToUI();
+  buildGroupTagOptions(allCards);
+  syncTagFilterUI();
+  hideAllSearchSuggestions();
+  applyFilters();
+
+  showToast("All preferences and decks cleared.");
+}
+
+// ── Profile import/export ─────────────────────────────────────────────────────
+
+function exportProfile() {
+  const prefsObj = {
+    viewMode: displayState.viewMode,
+    groupBy: displayState.groupBy,
+    groupTag: displayState.groupTag,
+    fuzzySearch: filters.fuzzy,
+    inlineAutocomplete: filters.inlineAutocomplete,
+    showHidden: filters.showHidden,
+    theme: themeController.getTheme(),
+    themePalette: themeController.getPalette(),
+    pageSize: paginationState.pageSize,
+    paginationMode: paginationState.mode,
+    phenomenonAnimation: filters.phenomenonAnimation,
+    riskyHellriding: filters.riskyHellriding
+  };
+
+  const seed = encodeProfileData(prefsObj);
+  if (!seed) { showToast("Export failed."); return; }
+
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(seed)
+      .then(() => showToast("Profile seed copied to clipboard."))
+      .catch(() => prompt("Copy your profile seed:", seed));
+  } else {
+    prompt("Copy your profile seed:", seed);
+  }
+  closeSettingsMenu();
+}
+
+function importProfile() {
+  const seed = prompt("Paste a profile seed to import:");
+  if (!seed?.trim()) return;
+
+  const data = decodeProfileData(seed.trim());
+  if (!data || data.v !== 1) { showToast("Invalid profile seed."); return; }
+
+  if (data.p) {
+    const p = data.p;
+    if (["grid", "single", "stack", "list"].includes(p.viewMode)) displayState.viewMode = p.viewMode;
+    if (["none", "tag"].includes(p.groupBy)) displayState.groupBy = p.groupBy;
+    if (typeof p.groupTag === "string") displayState.groupTag = p.groupTag;
+    if (typeof p.fuzzySearch === "boolean") filters.fuzzy = p.fuzzySearch;
+    if (typeof p.inlineAutocomplete === "boolean") filters.inlineAutocomplete = p.inlineAutocomplete;
+    if (typeof p.showHidden === "boolean") filters.showHidden = p.showHidden;
+    if (typeof p.phenomenonAnimation === "boolean") {
+      filters.phenomenonAnimation = p.phenomenonAnimation;
+      setPhenomenonAnimation(filters.phenomenonAnimation);
+    }
+    if (typeof p.riskyHellriding === "boolean") {
+      filters.riskyHellriding = p.riskyHellriding;
+      setRiskyHellriding(filters.riskyHellriding);
+    }
+    if ([10, 20, 50, 100].includes(p.pageSize)) paginationState.pageSize = p.pageSize;
+    if (["paginated", "infinite"].includes(p.paginationMode)) paginationState.mode = p.paginationMode;
+
+    const validThemes = ["system", "dark", "light"];
+    const validPalettes = ["standard", "gruvbox", "atom", "dracula", "solarized", "nord", "catppuccin", "scryfall"];
+    const newTheme = validThemes.includes(p.theme) ? p.theme : "system";
+    const newPalette = validPalettes.includes(p.themePalette) ? p.themePalette : "standard";
+    themeController.setTheme(newTheme, { silent: true, paletteOverride: newPalette });
+  }
+
+  if (data.d) importProfileDecks(data.d);
+
+  stateManager.persistPreferences();
+  stateManager.applyStoredPreferencesToUI();
+  buildGroupTagOptions(allCards);
+  syncTagFilterUI();
+  applyFilters();
+  closeSettingsMenu();
+
+  showToast("Profile imported.");
+}
+
+// ── Utility ───────────────────────────────────────────────────────────────────
+
+function capitalize(value) {
+  return value ? value[0].toUpperCase() + value.slice(1) : value;
+}
+
+// ── Events ────────────────────────────────────────────────────────────────────
 
 function bindEvents() {
   topSearch.addEventListener("focus", () => {
-    setActiveSearchSurface("top");
+    activeSearchSurface = "top";
     renderSearchSuggestions();
     updateInlineAutocomplete();
   });
 
   sidebarSearch.addEventListener("focus", () => {
-    setActiveSearchSurface("sidebar");
+    activeSearchSurface = "sidebar";
     hideAllSearchSuggestions();
     updateInlineAutocomplete();
   });
@@ -303,13 +692,8 @@ function bindEvents() {
     const insideSidebarSearch = sidebarSearch.contains(event.target);
     const insideSettings = settingsMenu.contains(event.target) || settingsMenuToggle.contains(event.target);
 
-    if (!insideTopSearch && !insideSidebarSearch) {
-      hideAllSearchSuggestions();
-    }
-
-    if (!insideSettings) {
-      closeSettingsMenu();
-    }
+    if (!insideTopSearch && !insideSidebarSearch) hideAllSearchSuggestions();
+    if (!insideSettings) closeSettingsMenu();
   });
 
   topbarCopy?.addEventListener("click", () => {
@@ -318,19 +702,19 @@ function bindEvents() {
 
   fuzzySearchToggle.addEventListener("change", () => {
     filters.fuzzy = fuzzySearchToggle.checked;
-    _persistPreferences();
+    stateManager.persistPreferences();
     applyFilters();
   });
 
   showHiddenToggle.addEventListener("change", () => {
     filters.showHidden = showHiddenToggle.checked;
-    _persistPreferences();
+    stateManager.persistPreferences();
     applyFilters();
   });
 
   inlineAutocompleteToggle.addEventListener("change", () => {
     filters.inlineAutocomplete = inlineAutocompleteToggle.checked;
-    _persistPreferences();
+    stateManager.persistPreferences();
     updateInlineAutocomplete();
     applyFilters();
   });
@@ -338,13 +722,13 @@ function bindEvents() {
   phenomenonAnimationToggle?.addEventListener("change", () => {
     filters.phenomenonAnimation = phenomenonAnimationToggle.checked;
     setPhenomenonAnimation(filters.phenomenonAnimation);
-    _persistPreferences();
+    stateManager.persistPreferences();
   });
 
   riskyHellridingToggle?.addEventListener("change", () => {
     filters.riskyHellriding = riskyHellridingToggle.checked;
     setRiskyHellriding(filters.riskyHellriding);
-    _persistPreferences();
+    stateManager.persistPreferences();
   });
 
   clearTagFiltersButton.addEventListener("click", () => {
@@ -361,31 +745,31 @@ function bindEvents() {
 
   viewModeSelect.addEventListener("change", () => {
     displayState.viewMode = viewModeSelect.value;
-    _persistPreferences();
+    stateManager.persistPreferences();
     renderGallery();
     scheduleStackActiveUpdate();
-    updateUrlFromState();
+    stateManager.updateUrlFromState();
   });
 
   groupBySelect.addEventListener("change", () => {
     displayState.groupBy = groupBySelect.value;
     groupTagPickerWrap.classList.toggle("hidden", displayState.groupBy !== "tag");
-    _persistPreferences();
+    stateManager.persistPreferences();
     paginationState.currentPage = 1;
     paginationState.infiniteLoadedCount = paginationState.pageSize;
     renderGallery();
     scheduleStackActiveUpdate();
-    updateUrlFromState();
+    stateManager.updateUrlFromState();
   });
 
   groupTagSelect.addEventListener("change", () => {
     displayState.groupTag = groupTagSelect.value;
-    _persistPreferences();
+    stateManager.persistPreferences();
     paginationState.currentPage = 1;
     paginationState.infiniteLoadedCount = paginationState.pageSize;
     renderGallery();
     scheduleStackActiveUpdate();
-    updateUrlFromState();
+    stateManager.updateUrlFromState();
   });
 
   sidebarToggle.addEventListener("click", closeSidebar);
@@ -404,18 +788,16 @@ function bindEvents() {
   });
 
   randomCardButton.addEventListener("click", (event) => {
-    if (suppressRandomClick) {
-      suppressRandomClick = false;
+    if (getSuppressRandomClick()) {
+      clearSuppressRandomClick();
       event.preventDefault();
       return;
     }
-
     if (event.altKey) {
       event.preventDefault();
-      triggerChaosMode();
+      modalManager.triggerChaosMode();
       return;
     }
-
     openRandomCard();
   });
 
@@ -424,9 +806,7 @@ function bindEvents() {
   randomCardButton.addEventListener("pointercancel", clearRandomLongPress);
   randomCardButton.addEventListener("pointerleave", clearRandomLongPress);
 
-  playGameButton?.addEventListener("click", () => {
-    showGameModeDialog();
-  });
+  playGameButton?.addEventListener("click", () => { showGameModeDialog(); });
 
   modal.addEventListener("click", (event) => {
     if (event.target instanceof HTMLElement && event.target.dataset.closeModal === "true") {
@@ -510,10 +890,9 @@ function bindEvents() {
         active.tagName === "SELECT" ||
         active.isContentEditable
       );
-
       if (!typing) {
         event.preventDefault();
-        setActiveSearchSurface("top");
+        activeSearchSurface = "top";
         topSearch.focus();
       }
     }
@@ -526,10 +905,7 @@ function bindEvents() {
         active.tagName === "SELECT" ||
         active.isContentEditable
       );
-
-      if (!typing) {
-        toggleSidebar();
-      }
+      if (!typing) toggleSidebar();
     }
 
     if (event.key.toLowerCase() === "g" && !event.metaKey && !event.ctrlKey && !event.altKey) {
@@ -540,10 +916,9 @@ function bindEvents() {
         active.tagName === "SELECT" ||
         active.isContentEditable
       );
-
       if (!typing) {
         event.preventDefault();
-        document.getElementById("gallery").scrollIntoView({ behavior: "smooth", block: "start" });
+        gallery.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     }
 
@@ -582,18 +957,15 @@ function bindEvents() {
   window.addEventListener("popstate", () => {
     syncGameHash();
 
-    readStateFromUrl();
-    filters.tags = reconcileSelectedTags(filters.tags, sharedState.allCards);
+    stateManager.readState();
+    filters.tags = reconcileSelectedTags(filters.tags, allCards);
 
     if (displayState.groupTag) {
-      displayState.groupTag = reconcileSelectedTags(
-        new Set([displayState.groupTag]),
-        sharedState.allCards
-      ).values().next().value || "";
+      displayState.groupTag = reconcileSelectedTags(new Set([displayState.groupTag]), allCards).values().next().value || "";
     }
 
-    applyStoredPreferencesToUI();
-    buildGroupTagOptions(sharedState.allCards);
+    stateManager.applyStoredPreferencesToUI();
+    buildGroupTagOptions(allCards);
     syncTagFilterUI();
     applyFilters({ updateUrl: false, preservePage: true });
     tryOpenCardFromHash();
@@ -602,288 +974,3 @@ function bindEvents() {
   window.addEventListener("scroll", scheduleStackActiveUpdate, { passive: true });
   window.addEventListener("resize", scheduleStackActiveUpdate);
 }
-
-// \u2500\u2500 Sidebar \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
-
-function openSidebar() {
-  sidebar.classList.remove("collapsed");
-  sidebar.classList.add("open");
-  sidebarBackdrop.classList.remove("hidden");
-}
-
-function closeSidebar() {
-  sidebar.classList.remove("open");
-  sidebar.classList.add("collapsed");
-  sidebarBackdrop.classList.add("hidden");
-  hideAllSearchSuggestions();
-  sidebarContent.scrollTop = 0;
-}
-
-function toggleSidebar() {
-  if (sidebar.classList.contains("open")) closeSidebar();
-  else openSidebar();
-}
-
-// \u2500\u2500 Settings menu \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
-
-function openSettingsMenu() {
-  settingsMenu.classList.remove("hidden");
-  settingsMenuToggle.setAttribute("aria-expanded", "true");
-}
-
-function closeSettingsMenu() {
-  settingsMenu.classList.add("hidden");
-  settingsMenuToggle.setAttribute("aria-expanded", "false");
-  settingsMenu.scrollTop = 0;
-}
-
-function toggleSettingsMenu() {
-  if (settingsMenu.classList.contains("hidden")) openSettingsMenu();
-  else closeSettingsMenu();
-}
-
-// \u2500\u2500 Confirm dialog \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
-
-function showClearPrefsConfirm() {
-  closeSettingsMenu();
-  confirmDialog?.classList.remove("hidden");
-  document.body.classList.add("confirm-open");
-}
-
-function hideClearPrefsConfirm() {
-  confirmDialog?.classList.add("hidden");
-  document.body.classList.remove("confirm-open");
-}
-
-function executeClearAll() {
-  hideClearPrefsConfirm();
-
-  localStorage.removeItem(STORAGE_KEY);
-  clearAllDecks();
-  clearTutorialFlags();
-
-  filters.search = "";
-  filters.tags.clear();
-  filters.fuzzy = false;
-  filters.inlineAutocomplete = true;
-  filters.showHidden = false;
-  filters.riskyHellriding = true;
-  setRiskyHellriding(true);
-
-  displayState.viewMode = "grid";
-  displayState.groupBy = "none";
-  displayState.groupTag = "";
-
-  paginationState.currentPage = 1;
-  paginationState.pageSize = 20;
-  paginationState.mode = "paginated";
-  paginationState.infiniteLoadedCount = 20;
-
-  themeController.setTheme("system", {
-    silent: true,
-    paletteOverride: "standard"
-  });
-
-  topSearch.value = "";
-  sidebarSearch.value = "";
-  const tsg = document.getElementById("top-search-ghost");
-  const ssg = document.getElementById("sidebar-search-ghost");
-  if (tsg) tsg.value = "";
-  if (ssg) ssg.value = "";
-
-  applyStoredPreferencesToUI();
-  buildGroupTagOptions(sharedState.allCards);
-  syncTagFilterUI();
-  hideAllSearchSuggestions();
-  applyFilters();
-
-  showToast("All preferences and decks cleared.");
-}
-
-// \u2500\u2500 Profile export / import \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
-
-function exportProfile() {
-  const prefsObj = {
-    viewMode: displayState.viewMode,
-    groupBy: displayState.groupBy,
-    groupTag: displayState.groupTag,
-    fuzzySearch: filters.fuzzy,
-    inlineAutocomplete: filters.inlineAutocomplete,
-    showHidden: filters.showHidden,
-    theme: themeController.getTheme(),
-    themePalette: themeController.getPalette(),
-    pageSize: paginationState.pageSize,
-    paginationMode: paginationState.mode,
-    phenomenonAnimation: filters.phenomenonAnimation,
-    riskyHellriding: filters.riskyHellriding
-  };
-
-  const seed = encodeProfileData(prefsObj);
-  if (!seed) { showToast("Export failed."); return; }
-
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(seed)
-      .then(() => showToast("Profile seed copied to clipboard."))
-      .catch(() => prompt("Copy your profile seed:", seed));
-  } else {
-    prompt("Copy your profile seed:", seed);
-  }
-  closeSettingsMenu();
-}
-
-function importProfile() {
-  const seed = prompt("Paste a profile seed to import:");
-  if (!seed?.trim()) return;
-
-  const data = decodeProfileData(seed.trim());
-  if (!data || data.v !== 1) { showToast("Invalid profile seed."); return; }
-
-  if (data.p) {
-    const p = data.p;
-    if (["grid", "single", "stack", "list"].includes(p.viewMode)) displayState.viewMode = p.viewMode;
-    if (["none", "tag"].includes(p.groupBy)) displayState.groupBy = p.groupBy;
-    if (typeof p.groupTag === "string") displayState.groupTag = p.groupTag;
-    if (typeof p.fuzzySearch === "boolean") filters.fuzzy = p.fuzzySearch;
-    if (typeof p.inlineAutocomplete === "boolean") filters.inlineAutocomplete = p.inlineAutocomplete;
-    if (typeof p.showHidden === "boolean") filters.showHidden = p.showHidden;
-    if (typeof p.phenomenonAnimation === "boolean") {
-      filters.phenomenonAnimation = p.phenomenonAnimation;
-      setPhenomenonAnimation(filters.phenomenonAnimation);
-    }
-    if (typeof p.riskyHellriding === "boolean") {
-      filters.riskyHellriding = p.riskyHellriding;
-      setRiskyHellriding(filters.riskyHellriding);
-    }
-    if ([10, 20, 50, 100].includes(p.pageSize)) paginationState.pageSize = p.pageSize;
-    if (["paginated", "infinite"].includes(p.paginationMode)) paginationState.mode = p.paginationMode;
-
-    const validThemes = ["system", "dark", "light"];
-    const validPalettes = ["standard", "gruvbox", "atom", "dracula", "solarized", "nord", "catppuccin", "scryfall"];
-    const newTheme = validThemes.includes(p.theme) ? p.theme : "system";
-    const newPalette = validPalettes.includes(p.themePalette) ? p.themePalette : "standard";
-    themeController.setTheme(newTheme, { silent: true, paletteOverride: newPalette });
-  }
-
-  if (data.d) {
-    importProfileDecks(data.d);
-  }
-
-  _persistPreferences();
-  applyStoredPreferencesToUI();
-  buildGroupTagOptions(sharedState.allCards);
-  syncTagFilterUI();
-  applyFilters();
-  closeSettingsMenu();
-
-  showToast("Profile imported.");
-}
-
-// \u2500\u2500 Random card / chaos mode \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
-
-function openRandomCard() {
-  if (!sharedState.filteredCards.length) return;
-  const randomIndex = Math.floor(Math.random() * sharedState.filteredCards.length);
-  openModalByKey(sharedState.filteredCards[randomIndex].key, true);
-}
-
-function handleRandomPointerDown(event) {
-  if (event.pointerType === "mouse") return;
-  clearRandomLongPress();
-  randomLongPressTimer = window.setTimeout(() => {
-    suppressRandomClick = true;
-    triggerChaosMode();
-  }, 650);
-}
-
-function clearRandomLongPress() {
-  if (randomLongPressTimer !== null) {
-    window.clearTimeout(randomLongPressTimer);
-    randomLongPressTimer = null;
-  }
-}
-
-function triggerChaosIcon() {
-  if (!randomCardButton) return;
-  randomCardButton.classList.add("is-chaos");
-  window.clearTimeout(randomIconResetTimer);
-  randomIconResetTimer = window.setTimeout(() => {
-    randomCardButton.classList.remove("is-chaos");
-  }, 1200);
-}
-
-function randomFrom(array) {
-  return array[Math.floor(Math.random() * array.length)];
-}
-
-function sampleTags(max = 3) {
-  const allTags = [...new Set(sharedState.allCards.flatMap((card) => card.tags))];
-  const count = Math.floor(Math.random() * (max + 1));
-  const selected = new Set();
-
-  while (selected.size < count && allTags.length > 0) {
-    selected.add(randomFrom(allTags));
-  }
-
-  return selected;
-}
-
-function triggerChaosMode() {
-  if (!sharedState.allCards.length) return;
-
-  triggerChaosIcon();
-
-  const randomTheme = randomFrom(THEME_PREFERENCES);
-  const randomPalette = randomFrom(ALL_PALETTES);
-  themeController.setTheme(randomTheme, {
-    silent: true,
-    paletteOverride: randomPalette,
-    animate: true
-  });
-
-  filters.fuzzy = Math.random() < 0.5;
-  filters.inlineAutocomplete = Math.random() < 0.5;
-  filters.tags = sampleTags(3);
-
-  const searchModeRoll = Math.random();
-  if (searchModeRoll < 0.33) {
-    filters.search = "";
-  } else if (searchModeRoll < 0.66) {
-    filters.search = randomFrom(sharedState.allCards).displayName;
-  } else {
-    filters.search = `tag:${randomFrom([...new Set(sharedState.allCards.flatMap((card) => card.tags))])}`;
-  }
-
-  displayState.viewMode = randomFrom(VIEW_MODES);
-  displayState.groupBy = randomFrom(GROUP_MODES);
-  displayState.groupTag = displayState.groupBy === "tag"
-    ? randomFrom([...new Set(sharedState.allCards.flatMap((card) => card.tags))])
-    : "";
-
-  topSearch.value = filters.search;
-  sidebarSearch.value = filters.search;
-  const tsg = document.getElementById("top-search-ghost");
-  const ssg = document.getElementById("sidebar-search-ghost");
-  if (tsg) tsg.value = "";
-  if (ssg) ssg.value = "";
-
-  if (fuzzySearchToggle) fuzzySearchToggle.checked = filters.fuzzy;
-  if (inlineAutocompleteToggle) inlineAutocompleteToggle.checked = filters.inlineAutocomplete;
-  viewModeSelect.value = displayState.viewMode;
-  groupBySelect.value = displayState.groupBy;
-  groupTagPickerWrap.classList.toggle("hidden", displayState.groupBy !== "tag");
-  buildGroupTagOptions(sharedState.allCards);
-  syncTagFilterUI();
-
-  applyFilters();
-  renderGallery();
-  scheduleStackActiveUpdate();
-
-  showToast("Chaos unleashed.");
-}
-
-// \u2500\u2500 Utilities \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
-
-function capitalize(value) {
-  return value ? value[0].toUpperCase() + value.slice(1) : value;
-}
-

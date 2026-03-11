@@ -1,94 +1,110 @@
 const CACHE_NAME = "planar-atlas-v1";
 
-const APP_SHELL = [
+const PRECACHE_ASSETS = [
   "/",
   "/index.html",
   "/style.css",
   "/gallery.js",
-  "/gallery-utils.js",
   "/gallery-ui.js",
-  "/gallery-state.js",
+  "/gallery-utils.js",
   "/gallery-render.js",
   "/gallery-search.js",
   "/gallery-modal.js",
+  "/gallery-state.js",
   "/deck.js",
   "/game-classic.js",
   "/game-bem.js",
+  "/cards.json",
   "/manifest.json",
   "/favicon.svg",
-  "/cards.json"
+  "/images/assets/favicon-192.png",
+  "/images/assets/favicon-512.png",
+  "/images/assets/card-preview.jpg",
+  "https://cdn.jsdelivr.net/npm/marked/marked.min.js",
+  "https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js",
+  "https://cdn.jsdelivr.net/npm/mana-font@latest/css/mana.min.css"
 ];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL))
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(PRECACHE_ASSETS)).then(() => self.skipWaiting())
   );
-  self.skipWaiting();
 });
 
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
-      Promise.all(
-        keys
-          .filter((key) => key !== CACHE_NAME)
-          .map((key) => caches.delete(key))
-      )
-    )
+      Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
+    ).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
 self.addEventListener("fetch", (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
-  if (request.method !== "GET") return;
+  // Skip non-GET requests and chrome-extension URLs
+  if (request.method !== "GET" || url.protocol === "chrome-extension:") return;
 
-  // For same-origin requests only
-  if (url.origin !== self.location.origin) return;
-
-  const path = url.pathname;
-
-  // cards.json: network-first so updates are picked up, fall back to cache
-  if (path.endsWith("/cards.json")) {
+  // For card images and thumbnails: cache-first with network fallback
+  if (url.pathname.startsWith("/images/cards/") || url.pathname.startsWith("/images/thumb/")) {
     event.respondWith(
-      fetch(request)
-        .then((response) => {
+      caches.match(request).then((cached) => {
+        if (cached) return cached;
+        return fetch(request).then((response) => {
           if (response.ok) {
             const clone = response.clone();
             caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
           }
           return response;
-        })
-        .catch(() => caches.match(request))
+        }).catch(() => caches.match("/images/assets/card-preview.jpg").then(r => r || Response.error()));
+      })
     );
     return;
   }
 
-  // App shell (JS, CSS, HTML) + transcripts + images: cache-first
+  // For transcripts: cache-first with network fallback
+  if (url.pathname.startsWith("/transcripts/")) {
+    event.respondWith(
+      caches.match(request).then((cached) => {
+        if (cached) return cached;
+        return fetch(request).then((response) => {
+          if (response.ok) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
+          }
+          return response;
+        }).catch(() => new Response("", { status: 503 }));
+      })
+    );
+    return;
+  }
+
+  // For per-card JSON: cache-first with network fallback
+  if (url.pathname.startsWith("/cards/") && url.pathname.endsWith(".json")) {
+    event.respondWith(
+      caches.match(request).then((cached) => {
+        if (cached) return cached;
+        return fetch(request).then((response) => {
+          if (response.ok) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
+          }
+          return response;
+        }).catch(() => new Response("{}", { status: 503, headers: { "Content-Type": "application/json" } }));
+      })
+    );
+    return;
+  }
+
+  // For everything else: network-first with cache fallback (keeps app shell fresh)
   event.respondWith(
-    caches.match(request).then((cached) => {
-      if (cached) return cached;
-
-      return fetch(request).then((response) => {
-        if (!response.ok) return response;
-
-        // Cache card images, thumbnails, transcripts, and assets
-        const cacheable =
-          path.startsWith("/images/") ||
-          path.startsWith("/transcripts/") ||
-          path.startsWith("/cards/") ||
-          APP_SHELL.includes(path) ||
-          path === "/";
-
-        if (cacheable) {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
-        }
-
-        return response;
-      });
-    })
+    fetch(request).then((response) => {
+      if (response.ok) {
+        const clone = response.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
+      }
+      return response;
+    }).catch(() => caches.match(request))
   );
 });
