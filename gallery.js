@@ -27,7 +27,6 @@ import {
   addCardToDeck,
   removeCardFromDeck,
   isDeckPanelOpen,
-  getDeckTotal,
   closeDeckPanel,
   setModalCardKey,
   isGameActive,
@@ -379,10 +378,6 @@ function bindEvents() {
   randomCardButton.addEventListener("pointerleave", clearRandomLongPress);
 
   playGameButton?.addEventListener("click", () => {
-    if (getDeckTotal() === 0) {
-      showToast("Add cards to your deck first to play.");
-      return;
-    }
     showGameModeDialog();
   });
 
