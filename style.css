@@ -1809,6 +1809,10 @@ button.active-filter-pill:disabled {
   cursor: default;
 }
 
+.pagination-top-btn {
+  flex-shrink: 0;
+}
+
 .pagination-page-label {
   font-weight: 700;
   font-size: 0.88rem;
