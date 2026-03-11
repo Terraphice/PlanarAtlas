@@ -622,18 +622,18 @@ export function createRenderer({
 
       const topBtn = document.createElement("button");
       topBtn.type = "button";
-      topBtn.className = "pagination-btn";
+      topBtn.className = "pagination-btn pagination-top-btn";
       topBtn.setAttribute("aria-label", "Scroll to top");
       topBtn.textContent = "Top";
       topBtn.addEventListener("click", scrollToGalleryTop);
 
-      navRow.appendChild(topBtn);
       navRow.appendChild(firstBtn);
       navRow.appendChild(prevBtn);
       navRow.appendChild(pageLabel);
       navRow.appendChild(pageMeta);
       navRow.appendChild(nextBtn);
       navRow.appendChild(lastBtn);
+      paginationControls.appendChild(topBtn);
       paginationControls.appendChild(navRow);
     } else {
       const shown = Math.min(paginationState.infiniteLoadedCount, totalCards);
