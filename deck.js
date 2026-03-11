@@ -2552,57 +2552,57 @@ const TUTORIAL_CONTENT = {
 <p>In Planechase, players journey across the planes of the Multiverse using a shared deck of <strong>Plane</strong> and <strong>Phenomenon</strong> cards.</p>
 
 <h3>Starting the Game</h3>
-<p>Reveal cards from the top of your planar deck until a Plane is revealed. That Plane becomes active. The rest are placed on the bottom in any order.</p>
+<p>Cards are revealed from the top of the deck until a <strong>Plane</strong> is revealed. That Plane becomes active. The rest are placed on the bottom of the deck in a random order.</p>
 
 <h3>Rolling the Planar Die</h3>
-<p>On your turn, you may roll the planar die at any time. Each additional roll on the same turn costs {1} more than the last (first roll is free, second costs {1}, third costs {2}, etc.).</p>
+<p>On your turn, you may roll the planar die as a sorcery. Each additional roll on the same turn costs {1} more than the last (first roll is free, second costs {1}, third costs {2}, etc.).</p>
 <ul>
   <li><strong>BLANK</strong> — Nothing happens.</li>
   <li>{CHAOS} — The chaos ability of each face-up Plane triggers.</li>
-  <li>{PLANESWALKER} — Planeswalk! The active Plane goes to the bottom of the deck. Reveal cards until a Plane is revealed — that Plane becomes active.</li>
+  <li>{PLANESWALKER} — Planeswalk! The active Plane goes to the bottom of the deck. Reveal the top card of the planar deck, and it becomes active.</li>
 </ul>
 
 <h3>Phenomena</h3>
-<p>When you would planeswalk to a Phenomenon, its triggered ability triggers immediately. Then planeswalk again until you reveal a Plane. Phenomena never stay active — they always lead to another Plane.</p>
+<p>When you planeswalk to (encounter) a Phenomenon, follow the instructions on the card. (Then planeswalk away from the phenomenon.) Phenomena almost never stay active, they always lead to another card.</p>
 
 <h3>Controls</h3>
 <ul>
   <li>Tap the <strong>card image</strong> to view it up close.</li>
   <li>Use the <strong>Planeswalk button</strong> ({PLANESWALKER}) to planeswalk.</li>
   <li>Use the <strong>Planar Die button</strong> ({CHAOS}) to roll.</li>
-  <li>The <strong>Tools</strong> menu lets you manage the library and reveal cards.</li>
+  <li>The <strong>Tools</strong> menu lets you manage the library, reveal cards, and use other tools for resolving effects.</li>
   <li>The <strong>Options</strong> menu lets you exit, reset, or save the game state.</li>
 </ul>
 `
   },
   bem: {
-    title: "✦ Blind Eternities Map",
+    title: "Blind Eternities Map",
     body: `
 <h3>Welcome to the Blind Eternities Map!</h3>
-<p>The Blind Eternities Map is a spatial Planechase variant. Planes are arranged in a living grid — navigate it like an explorer charting unknown territory.</p>
+<p>The Blind Eternities Map is a spatial Planechase variant originally conceived by Gavin Duggan [Wizards of The Coast]. Planes are arranged in a multiversal grid. Navigate across the Blind Eternities, like a true Planeswalker.</p>
 
 <h3>The Grid</h3>
 <p>You start at the center of a 3×3 grid of planes. As you move, the map expands and distant planes cycle back into the deck.</p>
 <ul>
-  <li><strong>Face-up cards</strong> (N/S/E/W neighbors) are visible planes you can move to.</li>
-  <li><strong>Face-down cards</strong> (diagonal corners) are unknown — reachable only by Hellriding.</li>
+  <li><strong>Face-up cards</strong> (directly adjacent neighbors) are visible planes you can move to.</li>
+  <li><strong>Face-down cards</strong> (diagonal corners) are unknown, reachable only by "Hellriding", travelling directly across the Aether!</li>
 </ul>
 
 <h3>Moving</h3>
-<p>Press the <strong>Planeswalk button</strong> to enter movement mode, then click/tap a highlighted neighbor to move there. Orthogonal moves reveal the card as you arrive. In <em>Easy Planeswalking</em> mode, just tap a neighbor to move instantly.</p>
+<p>Press the <strong>Planeswalk button</strong> to enter Planeswalking mode, then click/tap a highlighted neighbor to move there. Orthogonal moves reveal the card as you arrive. In <em>Easy Planeswalking</em> mode, just tap a neighbor to move instantly.</p>
 
 <h3>Hellriding</h3>
-<p>To Hellride, enter movement mode and click/tap a face-down diagonal card. You venture into the unknown! There is a chance you'll encounter a <strong>Phenomenon</strong> before arriving at your destination, adding to the mystery.</p>
+<p>To Hellride, enter movement mode and click/tap a face-down diagonal card. You venture into the unknown! There is a chance you'll encounter a <strong>Phenomenon</strong> before arriving at your destination, so take caution.</p>
 
 <h3>Phenomena</h3>
-<p>When you land on a Phenomenon, the <strong>Planeswalk button</strong> changes — press it to resolve the Phenomenon and reveal the next plane beneath.</p>
+<p>When you land on a Phenomenon, press the <strong>Planeswalk button</strong> to resolve the Phenomenon and reveal the next card of the planar deck.</p>
 
 <h3>The Planar Die</h3>
-<p>Roll the die on your turn (first roll is free, each additional roll costs {1} more). The same Chaos and Planeswalk rules apply as in Classic mode.</p>
+<p>Roll the die on your turn, only at sorcery speed (first roll is free, each additional roll costs {1} more). The same Chaos and Planeswalk rules apply as in Classic mode.</p>
 
 <h3>Controls</h3>
 <ul>
-  <li>Tap/click the <strong>Planeswalk button</strong> to enter/cancel movement mode.</li>
+  <li>Tap/click the <strong>Planeswalk button</strong> to enter/cancel Planeswalking mode.</li>
   <li>Tap/click any face-up card to view its details.</li>
   <li>On desktop: use <strong>arrow keys</strong> or <strong>middle mouse drag</strong> to pan the view. On mobile: press and drag to pan.</li>
   <li>The <strong>Tools</strong> and <strong>Options</strong> menus work the same as in Classic mode.</li>
@@ -2755,7 +2755,7 @@ function startBemGame() {
     history.pushState(null, "", `${window.location.pathname}${window.location.search}#play`);
   }
 
-  showToastFn?.("Blind Eternities Map started. Click adjacent cards to move.");
+  showToastFn?.("The game has begun!");
 }
 
 function bemDiscoverAdjacent() {
@@ -2833,7 +2833,7 @@ function bemMovePlayer(nx, ny) {
       cell.placeholder = false;
       showToastFn?.(`Moving to ${nextCard.displayName}.`);
     } else {
-      showToastFn?.("Moving to empty spot — no planes remain.");
+      showToastFn?.("Moving to empty spot, no planes remain.");
     }
     bemLandOnPhenomenon = cell.card?.type === "Phenomenon" && phenomenonAnimationEnabled;
     gameState.bemPos = { x: nx, y: ny };
@@ -3093,7 +3093,7 @@ function updateBemInfoBar() {
 
   if (cell?.placeholder && !cell?.card) {
     if (bemCardNameLabel) bemCardNameLabel.textContent = "Empty Cell";
-    if (bemStatusLabel) bemStatusLabel.textContent = "Press Planeswalk to reveal a card";
+    if (bemStatusLabel) bemStatusLabel.textContent = "Planeswalk to reveal a card.";
   } else {
     const card = cell?.card;
     if (bemCardNameLabel) {
@@ -3101,7 +3101,7 @@ function updateBemInfoBar() {
     }
     if (bemStatusLabel) {
       if (card?.type === "Phenomenon") {
-        bemStatusLabel.textContent = "⚡ Phenomenon — press Planeswalk to resolve";
+        bemStatusLabel.textContent = "You've encountered a Phenomenon!";
       } else {
         const remaining = gameState.remaining.length;
         bemStatusLabel.textContent = `${remaining} card${remaining !== 1 ? "s" : ""} left`;
@@ -3134,7 +3134,7 @@ function handleBemCellClick(event) {
   if (dx === 0 && dy === 0) {
     // Player's actual cell clicked
     if (easyPlaneswalk) {
-      // In easy mode, clicking the current card acts like the Planeswalk button
+      // In easy planeswalking mode, clicking the current card acts like the Planeswalk button
       if (isPanning) {
         bemViewOffset = { dx: 0, dy: 0 };
         renderBemMap();
