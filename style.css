@@ -4090,3 +4090,398 @@ html[data-palette="scryfall"][data-theme="dark"] .sidebar {
     padding: 10px;
   }
 }
+
+/* ── Game mode selection dialog ─────────────────────────────────────────────── */
+
+.game-mode-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-mode-dialog.hidden {
+  display: none;
+}
+
+.game-mode-dialog-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+}
+
+.game-mode-dialog-panel {
+  position: relative;
+  z-index: 1;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px 24px 20px;
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.55);
+  width: min(480px, calc(100vw - 32px));
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.game-mode-dialog-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+.game-mode-dialog-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.game-mode-option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--bg-elev-2);
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 150ms ease, background 150ms ease, transform 150ms ease;
+}
+
+.game-mode-option:hover,
+.game-mode-option:focus-visible {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, var(--bg-elev-2));
+  transform: translateY(-1px);
+}
+
+.game-mode-option-icon {
+  font-size: 1.4rem;
+  color: var(--accent);
+  margin-bottom: 2px;
+  display: block;
+}
+
+.game-mode-option-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.game-mode-option-desc {
+  font-size: 0.8rem;
+  color: var(--text-faint);
+  line-height: 1.4;
+}
+
+.game-mode-dialog-cancel {
+  align-self: center;
+  background: none;
+  border: none;
+  color: var(--text-faint);
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: color 120ms ease;
+}
+
+.game-mode-dialog-cancel:hover {
+  color: var(--text-soft);
+}
+
+/* ── BEM map area ────────────────────────────────────────────────────────────── */
+
+.bem-map-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  gap: 12px;
+  padding: 70px 16px 60px;
+  overflow: hidden;
+}
+
+.bem-map-area.hidden {
+  display: none;
+}
+
+/* BEM grid: 7×7 cells around the player */
+.bem-map {
+  display: grid;
+  grid-template-columns: repeat(7, var(--bem-cell-w, 82px));
+  grid-template-rows: repeat(7, var(--bem-cell-h, 57px));
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+/* Individual cells */
+.bem-cell {
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  transition: border-color 150ms ease, transform 140ms ease, box-shadow 150ms ease;
+}
+
+.bem-cell-void {
+  background: transparent;
+  border: 1px dashed transparent;
+}
+
+.bem-cell-empty {
+  border: 1px dashed var(--border-soft);
+  background: color-mix(in srgb, var(--bg-elev-2) 40%, transparent);
+}
+
+.bem-cell-faceup {
+  border: 1px solid var(--border);
+  background: var(--bg-elev-2);
+}
+
+.bem-cell-facedown {
+  border: 1px solid var(--border-soft);
+  background: var(--bg-elev-2);
+  cursor: default;
+}
+
+.bem-cell-player {
+  border: 2px solid var(--accent) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 30%, transparent),
+              0 8px 24px rgba(0, 0, 0, 0.4);
+  z-index: 2;
+}
+
+.bem-cell-moveable {
+  cursor: pointer;
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+}
+
+.bem-cell-moveable:hover {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 14%, var(--bg-elev-2));
+  transform: scale(1.04);
+  z-index: 3;
+}
+
+.bem-cell-hellride {
+  cursor: pointer;
+  border-color: color-mix(in srgb, var(--tone-purple-border) 50%, var(--border));
+  background: color-mix(in srgb, var(--tone-purple-bg) 30%, var(--bg-elev-2));
+}
+
+.bem-cell-hellride:hover {
+  border-color: var(--tone-purple-border);
+  background: color-mix(in srgb, var(--tone-purple-bg) 55%, var(--bg-elev-2));
+  transform: scale(1.04);
+  z-index: 3;
+}
+
+.bem-cell-phenomenon {
+  border-color: var(--tone-amber-border) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--tone-amber-border) 28%, transparent),
+              0 8px 24px rgba(0, 0, 0, 0.4) !important;
+}
+
+.bem-cell-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.bem-cell-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2px 3px;
+  font-size: 0.52rem;
+  font-weight: 700;
+  color: var(--text-soft);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: color-mix(in srgb, var(--bg-elev-1) 85%, transparent);
+  backdrop-filter: blur(4px);
+}
+
+.bem-cell-facedown-icon {
+  font-size: 1rem;
+  color: var(--text-faint);
+  opacity: 0.6;
+}
+
+.bem-cell-dir-hint {
+  position: absolute;
+  top: 2px;
+  right: 3px;
+  font-size: 0.55rem;
+  font-weight: 800;
+  color: var(--accent);
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1;
+}
+
+.bem-cell-hellride-hint {
+  position: absolute;
+  top: 2px;
+  right: 3px;
+  font-size: 0.55rem;
+  font-weight: 800;
+  color: var(--tone-purple-text);
+  opacity: 0.9;
+  line-height: 1;
+}
+
+/* BEM info bar */
+.bem-info-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 600px;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.bem-view-card-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--bg-elev-2) 90%, transparent);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  backdrop-filter: blur(8px);
+  transition: border-color 140ms ease, background 140ms ease;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.bem-view-card-btn:hover {
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
+  background: color-mix(in srgb, var(--accent) 10%, var(--bg-elev-2));
+}
+
+.bem-card-name-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
+}
+
+.bem-status-label {
+  font-size: 0.78rem;
+  color: var(--text-faint);
+  font-style: italic;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* BEM-mode: hide classic-only elements */
+.game-view.bem-active .game-main-area {
+  display: none;
+}
+
+.game-view.bem-active .game-side-panel {
+  display: none;
+}
+
+/* Planeswalk (TR) button shows phenomenon indicator in BEM */
+.game-btn-tr.bem-phenomenon-active {
+  border-color: var(--tone-amber-border);
+  background: color-mix(in srgb, var(--tone-amber-bg) 80%, transparent);
+}
+
+.game-btn-tr.bem-phenomenon-active .ms {
+  color: var(--tone-amber-text);
+}
+
+/* ── BEM responsive styles ───────────────────────────────────────────────────── */
+
+@media (max-width: 680px) {
+  .bem-map {
+    --bem-cell-w: 60px;
+    --bem-cell-h: 42px;
+    gap: 3px;
+  }
+
+  .bem-cell-label {
+    font-size: 0.45rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .bem-map {
+    --bem-cell-w: 46px;
+    --bem-cell-h: 32px;
+    gap: 2px;
+  }
+
+  .bem-cell-label {
+    display: none;
+  }
+
+  .bem-cell-dir-hint,
+  .bem-cell-hellride-hint {
+    display: none;
+  }
+}
+
+@media (max-height: 520px) and (orientation: landscape) {
+  .bem-map-area {
+    padding: 48px 8px 8px;
+    gap: 6px;
+  }
+
+  .bem-map {
+    --bem-cell-w: 60px;
+    --bem-cell-h: 42px;
+  }
+}
+
+/* Mobile portrait: BEM grid rotates with the game view */
+@media (pointer: coarse) and (orientation: portrait) {
+  .bem-map-area {
+    padding: 56px 12px 48px;
+    gap: 8px;
+  }
+
+  .bem-map {
+    --bem-cell-w: min(11vh, 82px);
+    --bem-cell-h: min(7.7vh, 57px);
+  }
+
+  .bem-view-card-btn {
+    font-size: 0.78rem;
+    padding: 5px 12px;
+  }
+
+  .bem-card-name-label {
+    max-width: 130px;
+  }
+}

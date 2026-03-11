@@ -359,18 +359,51 @@
     <div id="deck-card-list" class="deck-card-list"></div>
   </div>
 
+  <!-- Game mode selection dialog -->
+  <div id="game-mode-dialog" class="game-mode-dialog hidden" role="dialog" aria-modal="true" aria-label="Choose game mode">
+    <div class="game-mode-dialog-backdrop" id="game-mode-dialog-backdrop"></div>
+    <div class="game-mode-dialog-panel">
+      <h2 class="game-mode-dialog-title">Choose Game Mode</h2>
+      <div class="game-mode-dialog-options">
+        <button id="game-mode-classic-btn" class="game-mode-option" type="button">
+          <span class="game-mode-option-icon"><i class="ms ms-planeswalker" aria-hidden="true"></i></span>
+          <span class="game-mode-option-name">Classic</span>
+          <span class="game-mode-option-desc">Planeswalk through a shuffled deck one card at a time</span>
+        </button>
+        <button id="game-mode-bem-btn" class="game-mode-option" type="button">
+          <span class="game-mode-option-icon">✦&#xFE0E;</span>
+          <span class="game-mode-option-name">Blind Eternities Map</span>
+          <span class="game-mode-option-desc">Navigate a living grid of planes — move, explore, and Hellride</span>
+        </button>
+      </div>
+      <button id="game-mode-dialog-cancel" class="game-mode-dialog-cancel" type="button">Cancel</button>
+    </div>
+  </div>
+
   <!-- Planechase game view -->
   <div id="game-view" class="game-view hidden" role="dialog" aria-label="Planechase game" aria-modal="true">
 
     <!-- Side panel: simultaneously active planes -->
     <div id="game-side-panel" class="game-side-panel"></div>
 
-    <!-- Main card area -->
+    <!-- Main card area (Classic mode) -->
     <div class="game-main-area">
       <button id="game-card-image-btn" class="game-card-image-btn" type="button" aria-label="View card close-up">
         <img id="game-card-image" class="game-card-image" src="" alt="" />
       </button>
       <div id="game-card-name" class="game-card-name"></div>
+    </div>
+
+    <!-- BEM map area -->
+    <div id="bem-map-area" class="bem-map-area hidden">
+      <div id="bem-map" class="bem-map" role="grid" aria-label="Blind Eternities Map"></div>
+      <div id="bem-info-bar" class="bem-info-bar">
+        <button id="bem-view-card-btn" class="bem-view-card-btn" type="button" aria-label="View current card">
+          <i class="ms ms-planeswalker" aria-hidden="true"></i>
+          <span id="bem-card-name" class="bem-card-name-label"></span>
+        </button>
+        <span id="bem-status-label" class="bem-status-label"></span>
+      </div>
     </div>
 
     <!-- Corner buttons -->
