@@ -2046,8 +2046,8 @@ button.active-filter-pill:disabled {
   background: rgba(0, 0, 0, 0.08);
 }
 
-.card-image-wrap:hover .deck-card-overlay,
-.card-link:focus-visible .deck-card-overlay {
+.deck-mode .card-image-wrap:hover .deck-card-overlay,
+.deck-mode .card-link:focus-visible .deck-card-overlay {
   opacity: 1;
   pointer-events: auto;
 }
@@ -2613,6 +2613,10 @@ button.active-filter-pill:disabled {
   padding: 8px 0 4px;
   border-top: 1px solid var(--border-soft);
   margin-top: 4px;
+}
+
+.game-menu-search.hidden {
+  display: none;
 }
 
 .game-menu-search-label {
@@ -3670,6 +3674,10 @@ html[data-palette="scryfall"][data-theme="dark"] .sidebar {
 
 .modal-image-spinning .modal-image {
   animation: modalImageSpin 0.4s ease forwards;
+}
+
+.modal-image-spinning {
+  background-image: none;
 }
 
 .modal-image-flip-overlay {
