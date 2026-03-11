@@ -1,4 +1,6 @@
 import { escapeHtml, shuffleArray, isHiddenCard, enhanceManaSymbols } from "./gallery-utils.js";
+import { initClassicMode, setBemCallbacks, executePlaneswalkerAction, closePlaneswalkerPopup, closeChaosPopup } from "./game-classic.js";
+import { initBemMode, syncBemTrButton, renderBemMap, updateBemInfoBar, startBemGame, loadBemZoom } from "./game-bem.js";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -6,7 +8,6 @@ const DECK_STORAGE_KEY = "planar-atlas-decks-v2";
 const DECK_NAMES_KEY = "planar-atlas-deck-names-v1";
 const TUTORIAL_CLASSIC_KEY = "planar-atlas-tutorial-classic-v1";
 const TUTORIAL_BEM_KEY = "planar-atlas-tutorial-bem-v1";
-const BEM_ZOOM_KEY = "planar-atlas-bem-zoom-v1";
 const NUM_DECK_SLOTS = 10;
 const MAX_CARD_COUNT = 9;
 
@@ -28,24 +29,14 @@ let readerOpenedFromReveal = false;
 let readerOpenedFromLibrary = false;
 let easyPlaneswalk = false;
 let readerCardPath = "";
-let bemPlaneswalkPending = false;
-let bemViewOffset = { dx: 0, dy: 0 };
-let bemDragPointerId = null;
-let bemDragStart = null;
-let bemDragHandled = false;
-let bemLandOnPhenomenon = false;
 let phenomenonAnimationEnabled = true;
 let riskyHellridingEnabled = true;
-let bemZoomLevel = "default";
 let pendingGameMode = null;
 const readerTranscriptCache = new Map();
 
-// ── BEM (Blind Eternities Map) constants ──────────────────────────────────────
-
-const BEM_VIEW_RADIUS = 1;   // cells visible each side of player (3×3 grid)
-const BEM_FALLOFF_DIST = 2;  // Chebyshev distance before card falls off deck
-const BEM_FACEDOWN_IMG = "images/assets/card-preview.jpg";
-const BEM_DRAG_THRESHOLD = 44; // px drag needed to trigger navigation
+// Game mode modules (populated by initDeck)
+let classicFns = null;
+let bemFns = null;
 
 function deckCards() {
   return allDecks[currentSlot];
@@ -180,6 +171,53 @@ export function initDeck({ cards, showToast, onDeckChange }) {
   allDecks = stored.decks;
   currentSlot = stored.slot;
   deckNames = stored.names;
+
+  // Build shared state proxy for game mode modules
+  const deckState = {
+    get gameActive() { return gameActive; },
+    set gameActive(v) { gameActive = v; },
+    get gameState() { return gameState; },
+    set gameState(v) { gameState = v; },
+    get allCards() { return allCards; },
+    get revealedCards() { return revealedCards; },
+    set revealedCards(v) { revealedCards = v; },
+    get easyPlaneswalk() { return easyPlaneswalk; },
+    get phenomenonAnimationEnabled() { return phenomenonAnimationEnabled; },
+    get riskyHellridingEnabled() { return riskyHellridingEnabled; },
+    get readerOpenedFromReveal() { return readerOpenedFromReveal; },
+    set readerOpenedFromReveal(v) { readerOpenedFromReveal = v; },
+    get readerOpenedFromLibrary() { return readerOpenedFromLibrary; },
+    set readerOpenedFromLibrary(v) { readerOpenedFromLibrary = v; },
+    showToast: (msg) => showToastFn?.(msg)
+  };
+
+  // Shared callbacks for game modules
+  const sharedGameCbs = {
+    closeDeckPanel,
+    getDeckTotal,
+    buildDeckArray,
+    openGameReaderView,
+    closeGameReaderView,
+    renderGameLibraryView,
+    closeAllGameMenus,
+    syncBemTrButton
+  };
+
+  classicFns = initClassicMode(deckState, sharedGameCbs);
+  bemFns = initBemMode(deckState, {
+    ...sharedGameCbs,
+    resetDieIcon: () => classicFns.resetDieIcon(),
+    updateCostDisplay: () => classicFns.updateCostDisplay(),
+    renderGameSidePanel: (planes, idx) => classicFns.renderGameSidePanel(planes, idx),
+    syncGameToolsState: (count) => classicFns.syncGameToolsState(count)
+  });
+
+  setBemCallbacks({
+    bemFillPlaceholder: () => bemFns.bemFillPlaceholder(),
+    bemResolvePhenomenon: () => bemFns.bemResolvePhenomenon(),
+    toggleBemPlaneswalkMode: () => bemFns.toggleBemPlaneswalkMode(),
+    bemKey: bemFns.bemKey
+  });
 
   populateDefaultSlot();
   loadBemZoom();
@@ -415,19 +453,19 @@ function bindDeckEvents() {
 
   gameBtnTr?.addEventListener("click", () => {
     if (gameState?.mode === "bem") {
-      const cell = gameState.bemGrid?.get(bemKey(gameState.bemPos.x, gameState.bemPos.y));
+      const cell = gameState.bemGrid?.get(bemFns.bemKey(gameState.bemPos.x, gameState.bemPos.y));
       if (cell?.placeholder && !cell?.card) {
-        bemFillPlaceholder();
+        bemFns.bemFillPlaceholder();
       } else if (cell?.card?.type === "Phenomenon") {
-        bemResolvePhenomenon();
+        bemFns.bemResolvePhenomenon();
       } else {
-        toggleBemPlaneswalkMode();
+        bemFns.toggleBemPlaneswalkMode();
       }
     } else {
-      gamePlaneswalk();
+      classicFns.gamePlaneswalk();
     }
   });
-  gameBtnTl?.addEventListener("click", gameRollDie);
+  gameBtnTl?.addEventListener("click", () => classicFns.gameRollDie());
   gameBtnBr?.addEventListener("click", toggleGameToolsMenu);
   gameBtnBl?.addEventListener("click", toggleGameOptionsMenu);
 
@@ -448,7 +486,7 @@ function bindDeckEvents() {
     if (gameState.mode === "bem") {
       updateBemInfoBar();
     } else {
-      updateGameView();
+      classicFns.updateGameView();
     }
     showToastFn?.(`${top.displayName} added simultaneously.`);
     if (!gameMenuSearchSection?.classList.contains("hidden")) renderGameLibraryView();
@@ -464,7 +502,7 @@ function bindDeckEvents() {
     if (gameState.mode === "bem") {
       updateBemInfoBar();
     } else {
-      updateGameView();
+      classicFns.updateGameView();
     }
     showToastFn?.(`${bottom.displayName} added simultaneously.`);
     if (!gameMenuSearchSection?.classList.contains("hidden")) renderGameLibraryView();
@@ -482,7 +520,7 @@ function bindDeckEvents() {
     if (gameState.mode === "bem") {
       updateBemInfoBar();
     } else {
-      updateGameView();
+      classicFns.updateGameView();
     }
     if (!gameMenuSearchSection?.classList.contains("hidden")) renderGameLibraryView();
     showToastFn?.(`Returned ${returned.length} plane${returned.length > 1 ? "s" : ""} to top.`);
@@ -500,7 +538,7 @@ function bindDeckEvents() {
     if (gameState.mode === "bem") {
       updateBemInfoBar();
     } else {
-      updateGameView();
+      classicFns.updateGameView();
     }
     if (!gameMenuSearchSection?.classList.contains("hidden")) renderGameLibraryView();
     showToastFn?.(`Returned ${returned.length} plane${returned.length > 1 ? "s" : ""} to bottom.`);
@@ -570,21 +608,21 @@ function bindDeckEvents() {
   gameCostReset?.addEventListener("click", () => {
     if (gameState) {
       gameState.chaosCost = 0;
-      updateCostDisplay();
+      classicFns.updateCostDisplay();
     }
   });
 
   gameCardImageBtn?.addEventListener("click", () => {
     if (!gameState || gameState.activePlanes.length === 0) {
-      gamePlaneswalk();
+      classicFns.gamePlaneswalk();
       return;
     }
     if (easyPlaneswalk) {
-      gamePlaneswalk();
+      classicFns.gamePlaneswalk();
       return;
     }
     const focused = gameState.activePlanes[gameState.focusedIndex] ?? gameState.activePlanes[0];
-    if (focused) openGameReaderView(focused, buildMainCardActions(gameState.focusedIndex));
+    if (focused) openGameReaderView(focused, classicFns.buildMainCardActions(gameState.focusedIndex));
   });
 
   gameReaderImageWrap?.addEventListener("click", zoomReaderImage);
@@ -617,12 +655,12 @@ function bindDeckEvents() {
 
   gameModeClassicBtn?.addEventListener("click", () => {
     hideGameModeDialog();
-    maybeShowTutorial("classic", startClassicGame);
+    maybeShowTutorial("classic", () => classicFns.startClassicGame());
   });
 
   gameModeBemBtn?.addEventListener("click", () => {
     hideGameModeDialog();
-    maybeShowTutorial("bem", startBemGame);
+    maybeShowTutorial("bem", () => bemFns.startBemGame());
   });
 
   gameModeDialogCancel?.addEventListener("click", hideGameModeDialog);
@@ -630,51 +668,47 @@ function bindDeckEvents() {
 
   gameTutorialClose?.addEventListener("click", () => {
     hideTutorial();
-    if (pendingGameMode === "classic") startClassicGame();
-    else if (pendingGameMode === "bem") startBemGame();
+    if (pendingGameMode === "classic") classicFns.startClassicGame();
+    else if (pendingGameMode === "bem") bemFns.startBemGame();
     pendingGameMode = null;
   });
 
-  bemMapEl?.addEventListener("click", handleBemCellClick);
+  bemMapEl?.addEventListener("click", (event) => bemFns.handleBemCellClick(event));
   bemViewCardBtn?.addEventListener("click", () => {
     if (!gameState?.bemGrid || !gameState?.bemPos) return;
-    const cell = gameState.bemGrid.get(bemKey(gameState.bemPos.x, gameState.bemPos.y));
-    if (cell?.card) openGameReaderView(cell.card, buildBemCardActions());
+    const cell = gameState.bemGrid.get(bemFns.bemKey(gameState.bemPos.x, gameState.bemPos.y));
+    if (cell?.card) openGameReaderView(cell.card, bemFns.buildBemCardActions());
   });
 
   classicViewCardBtn?.addEventListener("click", () => {
     if (!gameState || gameState.mode === "bem") return;
     const focused = gameState.activePlanes[gameState.focusedIndex] ?? gameState.activePlanes[0];
-    if (focused) openGameReaderView(focused, buildMainCardActions(gameState.focusedIndex));
+    if (focused) openGameReaderView(focused, classicFns.buildMainCardActions(gameState.focusedIndex));
   });
 
   // BEM zoom select
   bemZoomSelect?.addEventListener("change", () => {
     const val = bemZoomSelect.value;
-    if (val === "close" || val === "default" || val === "far") {
-      bemZoomLevel = val;
-      applyBemZoom();
-      try { localStorage.setItem(BEM_ZOOM_KEY, bemZoomLevel); } catch { /* ignore */ }
-    }
+    bemFns.setBemZoom?.(val);
   });
 
   // Planeswalk die popup
-  diePlaneswalkerBtn?.addEventListener("click", executePlaneswalkerAction);
-  dieRemainBtn?.addEventListener("click", closePlaneswalkerPopup);
-  diePlaneswalkerBackdrop?.addEventListener("click", closePlaneswalkerPopup);
+  diePlaneswalkerBtn?.addEventListener("click", () => executePlaneswalkerAction());
+  dieRemainBtn?.addEventListener("click", () => closePlaneswalkerPopup());
+  diePlaneswalkerBackdrop?.addEventListener("click", () => closePlaneswalkerPopup());
 
   // Chaos die popup
-  dieChaosCloseBtn?.addEventListener("click", closeChaosPopup);
-  dieChaosBackdrop?.addEventListener("click", closeChaosPopup);
+  dieChaosCloseBtn?.addEventListener("click", () => closeChaosPopup());
+  dieChaosBackdrop?.addEventListener("click", () => closeChaosPopup());
 
   // BEM drag navigation (pan view only, no player movement)
-  bemMapArea?.addEventListener("pointerdown", handleBemPointerDown);
-  bemMapArea?.addEventListener("pointermove", handleBemPointerMove);
-  bemMapArea?.addEventListener("pointerup", handleBemPointerUp);
-  bemMapArea?.addEventListener("pointercancel", handleBemPointerUp);
+  bemMapArea?.addEventListener("pointerdown", (event) => bemFns.handleBemPointerDown(event));
+  bemMapArea?.addEventListener("pointermove", (event) => bemFns.handleBemPointerMove(event));
+  bemMapArea?.addEventListener("pointerup", (event) => bemFns.handleBemPointerUp(event));
+  bemMapArea?.addEventListener("pointercancel", (event) => bemFns.handleBemPointerUp(event));
 
   // BEM arrow key pan
-  document.addEventListener("keydown", handleBemArrowKey);
+  document.addEventListener("keydown", (event) => bemFns.handleBemArrowKey(event));
 }
 
 // ── Deck panel ────────────────────────────────────────────────────────────────
@@ -844,10 +878,7 @@ export function clearAllDecks() {
   );
   localStorage.removeItem(DECK_STORAGE_KEY);
   localStorage.removeItem(DECK_NAMES_KEY);
-  localStorage.removeItem(BEM_ZOOM_KEY);
-  bemZoomLevel = "default";
-  applyBemZoom();
-  if (bemZoomSelect) bemZoomSelect.value = "default";
+  bemFns?.setBemZoom?.("default");
   populateDefaultSlot();
   updateDeckButton();
   renderDeckList();
@@ -1233,7 +1264,7 @@ function decodeGameState(seed) {
       const bemGrid = new Map();
       for (const [x, y, ck, fu, qck, ph] of (obj.g || [])) {
         if (ph) {
-          bemGrid.set(bemKey(x, y), { card: null, faceUp: true, placeholder: true });
+          bemGrid.set(bemFns.bemKey(x, y), { card: null, faceUp: true, placeholder: true });
         } else {
           const card = lookupCard(ck);
           if (card) {
@@ -1242,7 +1273,7 @@ function decodeGameState(seed) {
               const queuedCard = lookupCard(qck);
               if (queuedCard) cellObj.queuedCard = queuedCard;
             }
-            bemGrid.set(bemKey(x, y), cellObj);
+            bemGrid.set(bemFns.bemKey(x, y), cellObj);
           }
         }
       }
@@ -1396,579 +1427,6 @@ function hideGameModeDialog() {
 
 function startGame() {
   showGameModeDialog();
-}
-
-function startClassicGame() {
-  const total = getDeckTotal();
-  if (total === 0) { showToastFn?.("Add cards to your deck first."); return; }
-
-  const shuffled = shuffleArray(buildDeckArray());
-  gameState = {
-    mode: "classic",
-    remaining: shuffled,
-    activePlanes: [],
-    focusedIndex: 0,
-    dieRolling: false,
-    chaosCost: 0,
-    exiled: [],
-    _dieResetTimer: null
-  };
-
-  gameActive = true;
-  closeDeckPanel();
-  document.body.classList.add("game-open");
-  gameView?.classList.remove("hidden");
-  gameView?.classList.remove("bem-active");
-  bemMapArea?.classList.add("hidden");
-  showGamePlaceholder();
-  resetDieIcon();
-  updateCostDisplay();
-  syncBemTrButton();
-
-  if (window.location.hash !== "#play") {
-    history.pushState(null, "", `${window.location.pathname}${window.location.search}#play`);
-  }
-}
-
-function startGameFromState(decoded) {
-  clearTimeout(gameState?._dieResetTimer);
-  if (decoded.mode === "bem") {
-    gameState = {
-      mode: "bem",
-      remaining: decoded.remaining,
-      exiled: decoded.exiled,
-      chaosCost: decoded.chaosCost,
-      dieRolling: false,
-      _dieResetTimer: null,
-      activePlanes: decoded.activePlanes ?? [],
-      focusedIndex: 0,
-      bemGrid: decoded.bemGrid,
-      bemPos: decoded.bemPos
-    };
-    revealedCards = [];
-
-    gameActive = true;
-    closeDeckPanel();
-    document.body.classList.add("game-open");
-    gameView?.classList.remove("hidden");
-    gameView?.classList.add("bem-active");
-    bemMapArea?.classList.remove("hidden");
-    resetDieIcon();
-    updateCostDisplay();
-    renderBemMap();
-    updateBemInfoBar();
-    syncBemTrButton();
-  } else {
-    gameState = {
-      mode: "classic",
-      remaining: decoded.remaining,
-      activePlanes: decoded.activePlanes,
-      focusedIndex: decoded.focusedIndex,
-      dieRolling: false,
-      chaosCost: decoded.chaosCost,
-      exiled: decoded.exiled,
-      _dieResetTimer: null
-    };
-    revealedCards = decoded.revealed;
-
-    gameActive = true;
-    closeDeckPanel();
-    document.body.classList.add("game-open");
-    gameView?.classList.remove("hidden");
-    gameView?.classList.remove("bem-active");
-    bemMapArea?.classList.add("hidden");
-    resetDieIcon();
-    updateCostDisplay();
-    syncBemTrButton();
-
-    if (gameState.activePlanes.length > 0) {
-      updateGameView();
-    } else {
-      showGamePlaceholder();
-    }
-
-    if (revealedCards.length > 0) {
-      renderRevealCards();
-      updateRevealFooter();
-      gameRevealOverlay?.classList.remove("hidden");
-    }
-  }
-
-  if (window.location.hash !== "#play") {
-    history.pushState(null, "", `${window.location.pathname}${window.location.search}#play`);
-  }
-}
-
-function exitGame({ updateHash = true } = {}) {
-  clearTimeout(gameState?._dieResetTimer);
-  gameActive = false;
-  gameState = null;
-  revealedCards = [];
-  bemPlaneswalkPending = false;
-  bemLandOnPhenomenon = false;
-  readerOpenedFromReveal = false; // reset before closeGameReaderView so overlay isn't restored on exit
-  document.body.classList.remove("game-open");
-  gameView?.classList.add("hidden");
-  gameView?.classList.remove("bem-active");
-  bemMapArea?.classList.add("hidden");
-  gameRevealOverlay?.classList.add("hidden");
-  closePlaneswalkerPopup();
-  closeChaosPopup();
-  closeGameReaderView();
-  closeAllGameMenus();
-  syncBemTrButton();
-  if (classicViewCardBtn) classicViewCardBtn.classList.add("hidden");
-
-  if (updateHash && window.location.hash === "#play") {
-    history.pushState(null, "", `${window.location.pathname}${window.location.search}`);
-  }
-}
-
-function resetGame() {
-  if (!gameState) return;
-  clearTimeout(gameState._dieResetTimer);
-  closeAllGameMenus();
-  resetDieIcon();
-  if (gameState.mode === "bem") {
-    startBemGame();
-  } else {
-    const shuffled = shuffleArray(buildDeckArray());
-    gameState = {
-      mode: "classic",
-      remaining: shuffled,
-      activePlanes: [],
-      focusedIndex: 0,
-      dieRolling: false,
-      chaosCost: 0,
-      exiled: [],
-      _dieResetTimer: null
-    };
-    showGamePlaceholder();
-    updateCostDisplay();
-    showToastFn?.("Deck reshuffled and reset.");
-  }
-}
-
-function gamePlaneswalk() {
-  if (!gameState) return;
-  if (gameState.mode === "bem") return;
-
-  const { activePlanes, remaining } = gameState;
-
-  for (const card of activePlanes) remaining.push(card);
-
-  if (remaining.length === 0) {
-    gameState.activePlanes = [];
-    gameState.focusedIndex = 0;
-    updateGameView();
-    showToastFn?.("No more planes in the library.");
-    return;
-  }
-
-  const nextCard = remaining.shift();
-  gameState.activePlanes = [nextCard];
-  gameState.focusedIndex = 0;
-  updateGameView();
-}
-
-function gameRollDie() {
-  if (!gameState || gameState.dieRolling) return;
-
-  gameState.dieRolling = true;
-  gameBtnTl?.classList.add("game-die-rolling");
-
-  setTimeout(() => {
-    if (!gameState) return;
-    const roll = Math.floor(Math.random() * 6) + 1;
-    gameState.dieRolling = false;
-    gameBtnTl?.classList.remove("game-die-rolling");
-    gameState.chaosCost++;
-    updateCostDisplay();
-    applyDieResult(roll);
-  }, 500);
-}
-
-function applyDieResult(roll) {
-  if (!gameDieIcon) return;
-  gameBtnTl?.classList.remove("game-die-chaos", "game-die-walk", "game-die-blank");
-  gameDieIcon.className = "";
-  gameDieIcon.textContent = "";
-
-  if (roll === 1) {
-    gameDieIcon.className = "ms ms-chaos";
-    gameDieIcon.setAttribute("aria-label", "Chaos!");
-    gameBtnTl?.classList.add("game-die-chaos");
-  } else if (roll === 6) {
-    gameDieIcon.className = "ms ms-planeswalker";
-    gameDieIcon.setAttribute("aria-label", "Planeswalk!");
-    gameBtnTl?.classList.add("game-die-walk");
-  } else {
-    gameDieIcon.className = "game-die-blank-text";
-    gameDieIcon.textContent = "BLANK";
-    gameDieIcon.setAttribute("aria-label", "No effect");
-    gameBtnTl?.classList.add("game-die-blank");
-  }
-
-  gameDieIcon.classList.remove("game-die-flash");
-  void gameDieIcon.offsetWidth;
-  gameDieIcon.classList.add("game-die-flash");
-
-  if (roll === 1) showChaosPopup();
-  else if (roll === 6) showPlaneswalkerPopup();
-}
-
-function showPlaneswalkerPopup() {
-  diePlaneswalkerPopup?.classList.remove("hidden");
-}
-
-function closePlaneswalkerPopup() {
-  diePlaneswalkerPopup?.classList.add("hidden");
-}
-
-function executePlaneswalkerAction() {
-  closePlaneswalkerPopup();
-  if (!gameState) return;
-  if (gameState.mode === "bem") {
-    const cell = gameState.bemGrid?.get(bemKey(gameState.bemPos.x, gameState.bemPos.y));
-    if (cell?.placeholder && !cell?.card) {
-      bemFillPlaceholder();
-    } else if (cell?.card?.type === "Phenomenon") {
-      bemResolvePhenomenon();
-    } else {
-      toggleBemPlaneswalkMode();
-    }
-  } else {
-    gamePlaneswalk();
-  }
-}
-
-function showChaosPopup() {
-  dieChaosPopup?.classList.remove("hidden");
-}
-
-function closeChaosPopup() {
-  dieChaosPopup?.classList.add("hidden");
-}
-
-function resetDieIcon() {
-  if (!gameDieIcon) return;
-  gameDieIcon.className = "ms ms-chaos";
-  gameDieIcon.textContent = "";
-  gameDieIcon.removeAttribute("aria-label");
-  gameBtnTl?.classList.remove("game-die-chaos", "game-die-walk", "game-die-blank");
-}
-
-function loadBemZoom() {
-  try {
-    const stored = localStorage.getItem(BEM_ZOOM_KEY);
-    if (stored === "close" || stored === "default" || stored === "far") {
-      bemZoomLevel = stored;
-    }
-  } catch {
-    // ignore
-  }
-  if (bemZoomSelect) bemZoomSelect.value = bemZoomLevel;
-  applyBemZoom();
-}
-
-function applyBemZoom() {
-  if (!gameView) return;
-  gameView.classList.remove("bem-zoom-close", "bem-zoom-far");
-  if (bemZoomLevel === "close") gameView.classList.add("bem-zoom-close");
-  else if (bemZoomLevel === "far") gameView.classList.add("bem-zoom-far");
-}
-
-function updateCostDisplay() {
-  if (!gameState) return;
-  const cost = gameState.chaosCost;
-  if (gameCostValue) gameCostValue.textContent = cost;
-  if (gameCostDisplay) gameCostDisplay.classList.toggle("game-cost-visible", cost > 0);
-}
-
-function showGamePlaceholder() {
-  if (gameCardImage) {
-    gameCardImage.src = "images/assets/card-preview.jpg";
-    gameCardImage.alt = "Click to planeswalk";
-  }
-  if (gameSidePanel) gameSidePanel.innerHTML = "";
-  if (gameCardImageBtn) {
-    gameCardImageBtn.setAttribute("aria-label", "Planeswalk");
-    gameCardImageBtn.classList.add("game-card-image-btn-placeholder");
-    gameCardImageBtn.classList.remove("active-plane", "active-phenomenon");
-  }
-  if (classicViewCardBtn) classicViewCardBtn.classList.add("hidden");
-  syncGameToolsState(gameState?.remaining.length ?? 0);
-}
-
-function updateGameView() {
-  if (!gameState) return;
-
-  const { activePlanes, focusedIndex, remaining } = gameState;
-
-  if (gameState.mode === "bem") {
-    renderGameSidePanel(activePlanes, focusedIndex);
-    syncGameToolsState(remaining.length);
-    return;
-  }
-
-  const focused = activePlanes[focusedIndex] ?? activePlanes[0];
-
-  if (!focused) {
-    showGamePlaceholder();
-    return;
-  }
-
-  if (gameCardImage) {
-    gameCardImage.src = focused.imagePath;
-    gameCardImage.alt = focused.displayName;
-  }
-  if (gameCardImageBtn) {
-    gameCardImageBtn.setAttribute("aria-label", easyPlaneswalk ? "Planeswalk" : "View card close-up");
-    gameCardImageBtn.classList.remove("game-card-image-btn-placeholder");
-    gameCardImageBtn.classList.toggle("active-plane", focused.type !== "Phenomenon");
-    gameCardImageBtn.classList.toggle("active-phenomenon", focused.type === "Phenomenon");
-  }
-
-  // Update classic view card button
-  if (classicViewCardBtn) {
-    classicViewCardBtn.classList.remove("hidden");
-    if (classicCardNameLabel) classicCardNameLabel.textContent = focused.displayName;
-    if (classicLibraryLabel) classicLibraryLabel.textContent = `${remaining.length} left`;
-  }
-
-  renderGameSidePanel(activePlanes, focusedIndex);
-  syncGameToolsState(remaining.length);
-}
-
-function renderGameSidePanel(activePlanes, focusedIndex) {
-  if (!gameSidePanel) return;
-  gameSidePanel.innerHTML = "";
-
-  const isBem = gameState?.mode === "bem";
-
-  if (isBem) {
-    for (let i = 0; i < activePlanes.length; i++) {
-      const card = activePlanes[i];
-      const idx = i;
-      const sideCard = document.createElement("button");
-      sideCard.type = "button";
-      sideCard.className = "game-side-card";
-      sideCard.setAttribute("aria-label", `View ${card.displayName} (opens card reader)`);
-      sideCard.innerHTML = `
-        <img class="game-side-card-img" src="${card.thumbPath}" alt="${escapeHtml(card.displayName)}" />
-        <div class="game-side-card-label">${escapeHtml(card.displayName)}</div>
-      `;
-      sideCard.addEventListener("click", () => {
-        if (!gameState) return;
-        openGameReaderView(card, buildSideCardActions(idx));
-      });
-      gameSidePanel.appendChild(sideCard);
-    }
-    return;
-  }
-
-  if (activePlanes.length <= 1) return;
-
-  const cycleBtn = document.createElement("button");
-  cycleBtn.type = "button";
-  cycleBtn.className = "game-cycle-btn";
-  cycleBtn.setAttribute("aria-label", "Cycle active planes");
-  cycleBtn.innerHTML = `<span class="game-cycle-icon" aria-hidden="true">↻</span>`;
-  cycleBtn.addEventListener("click", () => {
-    if (!gameState) return;
-    gameState.focusedIndex = (focusedIndex + 1) % activePlanes.length;
-    updateGameView();
-  });
-  gameSidePanel.appendChild(cycleBtn);
-
-  for (let i = 0; i < activePlanes.length; i++) {
-    if (i === focusedIndex) continue;
-    const card = activePlanes[i];
-    const idx = i;
-
-    const sideCard = document.createElement("button");
-    sideCard.type = "button";
-    sideCard.className = "game-side-card";
-    sideCard.setAttribute("aria-label", `View ${card.displayName} (opens card reader)`);
-    sideCard.innerHTML = `
-      <img class="game-side-card-img" src="${card.thumbPath}" alt="${escapeHtml(card.displayName)}" />
-      <div class="game-side-card-label">${escapeHtml(card.displayName)}</div>
-    `;
-    sideCard.addEventListener("click", () => {
-      if (!gameState) return;
-      openGameReaderView(card, buildSideCardActions(idx));
-    });
-    gameSidePanel.appendChild(sideCard);
-  }
-}
-
-function syncGameToolsState(remainingCount) {
-  const isBem = gameState?.mode === "bem";
-  if (gameToolsAddTop) {
-    gameToolsAddTop.disabled = remainingCount === 0;
-    const span = gameToolsAddTop.querySelector("span");
-    if (span) span.textContent = `Add Top of Library (${remainingCount} left)`;
-  }
-  if (gameToolsAddBottom) {
-    gameToolsAddBottom.disabled = remainingCount === 0;
-    const span = gameToolsAddBottom.querySelector("span");
-    if (span) span.textContent = `Add Bottom of Library (${remainingCount} left)`;
-  }
-  if (gameToolsReturnTop) {
-    gameToolsReturnTop.disabled = !gameState || (!isBem && gameState.activePlanes.length === 0);
-  }
-  if (gameToolsReturnBottom) {
-    gameToolsReturnBottom.disabled = !gameState || (!isBem && gameState.activePlanes.length === 0);
-  }
-  // Shuffle, search/library, reveal — always enabled when game is active
-  if (gameToolsShuffle) gameToolsShuffle.disabled = !gameState;
-  if (gameLibraryToggle) gameLibraryToggle.disabled = !gameState;
-  if (gameToolsRevealToggle) gameToolsRevealToggle.disabled = !gameState;
-}
-
-function buildMainCardActions(focusedIdx) {
-  return [
-    {
-      label: "Planeswalk Away",
-      action: () => { closeGameReaderView(); gamePlaneswalk(); }
-    },
-    {
-      label: "Return to Top",
-      action: () => {
-        if (!gameState) return;
-        const card = gameState.activePlanes.splice(focusedIdx, 1)[0];
-        if (!card) return;
-        gameState.remaining.unshift(card);
-        gameState.focusedIndex = Math.min(gameState.focusedIndex, Math.max(0, gameState.activePlanes.length - 1));
-        closeGameReaderView();
-        updateGameView();
-        showToastFn?.(`${card.displayName} returned to top.`);
-      }
-    },
-    {
-      label: "Return to Bottom",
-      action: () => {
-        if (!gameState) return;
-        const card = gameState.activePlanes.splice(focusedIdx, 1)[0];
-        if (!card) return;
-        gameState.remaining.push(card);
-        gameState.focusedIndex = Math.min(gameState.focusedIndex, Math.max(0, gameState.activePlanes.length - 1));
-        closeGameReaderView();
-        updateGameView();
-        showToastFn?.(`${card.displayName} returned to bottom.`);
-      }
-    },
-    {
-      label: "Shuffle Into Library",
-      action: () => {
-        if (!gameState) return;
-        const card = gameState.activePlanes.splice(focusedIdx, 1)[0];
-        if (!card) return;
-        gameState.remaining.push(card);
-        gameState.remaining = shuffleArray(gameState.remaining);
-        gameState.focusedIndex = Math.min(gameState.focusedIndex, Math.max(0, gameState.activePlanes.length - 1));
-        closeGameReaderView();
-        updateGameView();
-        showToastFn?.(`${card.displayName} shuffled into library.`);
-      }
-    },
-    {
-      label: "Exile",
-      danger: true,
-      action: () => {
-        if (!gameState) return;
-        const card = gameState.activePlanes.splice(focusedIdx, 1)[0];
-        if (!card) return;
-        gameState.exiled.push(card);
-        gameState.focusedIndex = Math.min(gameState.focusedIndex, Math.max(0, gameState.activePlanes.length - 1));
-        closeGameReaderView();
-        updateGameView();
-        showToastFn?.(`${card.displayName} exiled.`);
-      }
-    }
-  ];
-}
-
-function buildSideCardActions(sideIdx) {
-  return [
-    {
-      label: "Make Main",
-      action: () => {
-        if (!gameState) return;
-        gameState.focusedIndex = sideIdx;
-        closeGameReaderView();
-        updateGameView();
-      }
-    },
-    {
-      label: "Planeswalk Here",
-      action: () => {
-        if (!gameState) return;
-        const card = gameState.activePlanes.splice(sideIdx, 1)[0];
-        if (!card) return;
-        gameState.remaining.push(...gameState.activePlanes);
-        gameState.activePlanes = [card];
-        gameState.focusedIndex = 0;
-        closeGameReaderView();
-        updateGameView();
-        showToastFn?.(`Planeswalked to ${card.displayName}.`);
-      }
-    },
-    {
-      label: "Return to Top",
-      action: () => {
-        if (!gameState) return;
-        const card = gameState.activePlanes.splice(sideIdx, 1)[0];
-        if (!card) return;
-        gameState.remaining.unshift(card);
-        gameState.focusedIndex = Math.min(gameState.focusedIndex, Math.max(0, gameState.activePlanes.length - 1));
-        closeGameReaderView();
-        updateGameView();
-        showToastFn?.(`${card.displayName} returned to top.`);
-      }
-    },
-    {
-      label: "Return to Bottom",
-      action: () => {
-        if (!gameState) return;
-        const card = gameState.activePlanes.splice(sideIdx, 1)[0];
-        if (!card) return;
-        gameState.remaining.push(card);
-        gameState.focusedIndex = Math.min(gameState.focusedIndex, Math.max(0, gameState.activePlanes.length - 1));
-        closeGameReaderView();
-        updateGameView();
-        showToastFn?.(`${card.displayName} returned to bottom.`);
-      }
-    },
-    {
-      label: "Shuffle Into Library",
-      action: () => {
-        if (!gameState) return;
-        const card = gameState.activePlanes.splice(sideIdx, 1)[0];
-        if (!card) return;
-        gameState.remaining.push(card);
-        gameState.remaining = shuffleArray(gameState.remaining);
-        gameState.focusedIndex = Math.min(gameState.focusedIndex, Math.max(0, gameState.activePlanes.length - 1));
-        closeGameReaderView();
-        updateGameView();
-        showToastFn?.(`${card.displayName} shuffled into library.`);
-      }
-    },
-    {
-      label: "Exile",
-      danger: true,
-      action: () => {
-        if (!gameState) return;
-        const card = gameState.activePlanes.splice(sideIdx, 1)[0];
-        if (!card) return;
-        gameState.exiled.push(card);
-        gameState.focusedIndex = Math.min(gameState.focusedIndex, Math.max(0, gameState.activePlanes.length - 1));
-        closeGameReaderView();
-        updateGameView();
-        showToastFn?.(`${card.displayName} exiled.`);
-      }
-    }
-  ];
 }
 
 function openGameReaderView(card, actions = []) {
@@ -2197,7 +1655,7 @@ function handleLibraryItemAction(event) {
   switch (action) {
     case "planeswalk":
       if (gameState.mode === "bem") {
-        const key = bemKey(gameState.bemPos.x, gameState.bemPos.y);
+        const key = bemFns.bemKey(gameState.bemPos.x, gameState.bemPos.y);
         const cell = gameState.bemGrid.get(key);
         if (cell?.card) gameState.remaining.push(cell.card);
         gameState.bemGrid.set(key, { card, faceUp: true });
@@ -2232,10 +1690,10 @@ function handleLibraryItemAction(event) {
     updateBemInfoBar();
     syncBemTrButton();
   } else {
-    updateGameView();
+    classicFns.updateGameView();
   }
   renderGameLibraryView();
-  syncGameToolsState(gameState.remaining.length);
+  classicFns.syncGameToolsState(gameState.remaining.length);
 }
 
 function handleSearchResultItemAction(event) {
@@ -2258,7 +1716,7 @@ function handleSearchResultItemAction(event) {
   switch (action) {
     case "planeswalk":
       if (gameState.mode === "bem") {
-        const bemCellKey = bemKey(gameState.bemPos.x, gameState.bemPos.y);
+        const bemCellKey = bemFns.bemKey(gameState.bemPos.x, gameState.bemPos.y);
         const cell = gameState.bemGrid.get(bemCellKey);
         if (cell?.card) gameState.remaining.push(cell.card);
         gameState.bemGrid.set(bemCellKey, { card, faceUp: true });
@@ -2293,10 +1751,10 @@ function handleSearchResultItemAction(event) {
     updateBemInfoBar();
     syncBemTrButton();
   } else {
-    updateGameView();
+    classicFns.updateGameView();
   }
   updateGameSearchResults();
-  syncGameToolsState(gameState.remaining.length);
+  classicFns.syncGameToolsState(gameState.remaining.length);
 }
 
 function openRevealCards() {
@@ -2333,7 +1791,7 @@ function closeRevealOverlay() {
     gameState.remaining = shuffleArray(gameState.remaining);
     revealedCards = [];
     showToastFn?.("Remaining revealed cards shuffled back into library.");
-    updateGameView();
+    classicFns.updateGameView();
   }
   gameRevealOverlay?.classList.add("hidden");
 }
@@ -2412,7 +1870,7 @@ function handleRevealCardAction(event) {
   switch (action) {
     case "planeswalk":
       if (gameState.mode === "bem") {
-        const key = bemKey(gameState.bemPos.x, gameState.bemPos.y);
+        const key = bemFns.bemKey(gameState.bemPos.x, gameState.bemPos.y);
         const cell = gameState.bemGrid.get(key);
         if (cell?.card) gameState.remaining.push(cell.card);
         gameState.bemGrid.set(key, { card, faceUp: true });
@@ -2447,7 +1905,7 @@ function handleRevealCardAction(event) {
     updateBemInfoBar();
     syncBemTrButton();
   } else {
-    updateGameView();
+    classicFns.updateGameView();
   }
   renderRevealCards();
   updateRevealFooter();
@@ -2481,7 +1939,7 @@ function handleRevealBulkAction(action) {
   }
   revealedCards = [];
   gameRevealOverlay?.classList.add("hidden");
-  updateGameView();
+  classicFns.updateGameView();
 }
 
 function updateRevealFooter() {
@@ -2511,7 +1969,7 @@ function toggleGameToolsMenu() {
     if (gameLibraryToggle) gameLibraryToggle.textContent = "Search & View Library";
     if (gameToolsSearchInput) gameToolsSearchInput.value = "";
     if (gameToolsSearchResults) gameToolsSearchResults.innerHTML = "";
-    syncGameToolsState(gameState?.remaining.length ?? 0);
+    classicFns?.syncGameToolsState(gameState?.remaining.length ?? 0);
   }
 }
 
@@ -2655,756 +2113,3 @@ export function syncGameHash() {
   }
 }
 
-// ── Blind Eternities Map (BEM) ────────────────────────────────────────────────
-
-function bemKey(x, y) {
-  return `${x},${y}`;
-}
-
-function bemDrawNonPhenomenon(remaining) {
-  let attempts = 0;
-  while (remaining.length > 0 && attempts < remaining.length) {
-    const card = remaining.shift();
-    if (card.type !== "Phenomenon") return card;
-    remaining.push(card);
-    attempts++;
-  }
-  return null;
-}
-
-function startBemGame() {
-  const total = getDeckTotal();
-  if (total === 0) { showToastFn?.("Add cards to your deck first."); return; }
-
-  const shuffled = shuffleArray(buildDeckArray());
-
-  const bemGrid = new Map();
-  const positions = [
-    { dx: 0, dy: 0, faceUp: true },
-    { dx: 1, dy: 0, faceUp: true },
-    { dx: -1, dy: 0, faceUp: true },
-    { dx: 0, dy: 1, faceUp: true },
-    { dx: 0, dy: -1, faceUp: true },
-    { dx: 1, dy: 1, faceUp: false },
-    { dx: -1, dy: 1, faceUp: false },
-    { dx: 1, dy: -1, faceUp: false },
-    { dx: -1, dy: -1, faceUp: false }
-  ];
-
-  for (const { dx, dy, faceUp } of positions) {
-    if (faceUp) {
-      if (shuffled.length === 0) {
-        bemGrid.set(bemKey(dx, dy), { card: null, faceUp: true, placeholder: true });
-        continue;
-      }
-      const card = bemDrawNonPhenomenon(shuffled);
-      if (card) {
-        bemGrid.set(bemKey(dx, dy), { card, faceUp: true });
-      } else {
-        bemGrid.set(bemKey(dx, dy), { card: null, faceUp: true, placeholder: true });
-      }
-    } else {
-      if (shuffled.length === 0) break;
-      const card = shuffled.shift();
-      if (card) bemGrid.set(bemKey(dx, dy), { card, faceUp: false });
-    }
-  }
-
-  bemViewOffset = { dx: 0, dy: 0 };
-  bemPlaneswalkPending = false;
-
-  gameState = {
-    mode: "bem",
-    remaining: shuffled,
-    exiled: [],
-    chaosCost: 0,
-    dieRolling: false,
-    _dieResetTimer: null,
-    activePlanes: [],
-    focusedIndex: 0,
-    bemGrid,
-    bemPos: { x: 0, y: 0 },
-    bemHellridedPositions: new Set()
-  };
-
-  gameActive = true;
-  closeDeckPanel();
-  document.body.classList.add("game-open");
-  gameView?.classList.remove("hidden");
-  gameView?.classList.add("bem-active");
-  bemMapArea?.classList.remove("hidden");
-  resetDieIcon();
-  updateCostDisplay();
-  renderBemMap();
-  updateBemInfoBar();
-  syncBemTrButton();
-
-  if (window.location.hash !== "#play") {
-    history.pushState(null, "", `${window.location.pathname}${window.location.search}#play`);
-  }
-
-  showToastFn?.("The game has begun!");
-}
-
-function bemDiscoverAdjacent() {
-  const { bemGrid, bemPos, remaining } = gameState;
-  const { x: px, y: py } = bemPos;
-
-  const dirs = [
-    { dx: 0, dy: -1, faceUp: true },
-    { dx: 0, dy: 1, faceUp: true },
-    { dx: -1, dy: 0, faceUp: true },
-    { dx: 1, dy: 0, faceUp: true },
-    { dx: -1, dy: -1, faceUp: false },
-    { dx: 1, dy: -1, faceUp: false },
-    { dx: -1, dy: 1, faceUp: false },
-    { dx: 1, dy: 1, faceUp: false }
-  ];
-
-  for (const { dx, dy, faceUp } of dirs) {
-    const nx = px + dx;
-    const ny = py + dy;
-    const key = bemKey(nx, ny);
-    if (!bemGrid.has(key)) {
-      if (faceUp) {
-        const card = bemDrawNonPhenomenon(remaining);
-        if (card) {
-          bemGrid.set(key, { card, faceUp: true });
-        } else {
-          bemGrid.set(key, { card: null, faceUp: true, placeholder: true });
-        }
-      } else if (remaining.length > 0) {
-        const card = remaining.shift();
-        if (card) bemGrid.set(key, { card, faceUp: false });
-      }
-    }
-  }
-}
-
-function bemRemoveFalloff() {
-  const { bemGrid, bemPos, remaining } = gameState;
-  const { x: px, y: py } = bemPos;
-
-  for (const [key, cell] of [...bemGrid.entries()]) {
-    const [cx, cy] = key.split(",").map(Number);
-    const dist = Math.max(Math.abs(cx - px), Math.abs(cy - py));
-    if (dist > BEM_FALLOFF_DIST) {
-      bemGrid.delete(key);
-      if (cell.card && !cell.placeholder) remaining.push(cell.card);
-    }
-  }
-}
-
-function bemClearActivePlanesToBottom() {
-  if (!gameState?.activePlanes?.length) return;
-  gameState.remaining.push(...shuffleArray([...gameState.activePlanes]));
-  gameState.activePlanes = [];
-  gameState.focusedIndex = 0;
-}
-
-function bemMovePlayer(nx, ny) {
-  if (!gameState?.bemGrid || !gameState?.bemPos) return;
-
-  const { bemGrid, bemPos } = gameState;
-  const { x: px, y: py } = bemPos;
-  const dx = nx - px;
-  const dy = ny - py;
-
-  if (Math.abs(dx) > 1 || Math.abs(dy) > 1) return;
-  if (dx === 0 && dy === 0) return;
-
-  const isDiag = Math.abs(dx) === 1 && Math.abs(dy) === 1;
-  const key = bemKey(nx, ny);
-  const cell = bemGrid.get(key);
-
-  if (!cell) return;
-
-  // If moving to a placeholder cell, try to fill it with a new plane from remaining
-  if (cell.placeholder && !cell.card) {
-    const { remaining } = gameState;
-    const nextCard = bemDrawNonPhenomenon(remaining);
-    if (nextCard) {
-      cell.card = nextCard;
-      cell.placeholder = false;
-      showToastFn?.(`Moving to ${nextCard.displayName}.`);
-    } else {
-      showToastFn?.("Moving to empty spot, no planes remain.");
-    }
-    bemLandOnPhenomenon = cell.card?.type === "Phenomenon" && phenomenonAnimationEnabled;
-    gameState.bemPos = { x: nx, y: ny };
-    bemViewOffset = { dx: 0, dy: 0 };
-    bemClearActivePlanesToBottom();
-    const orthDirs = [{ dx: 0, dy: -1 }, { dx: 0, dy: 1 }, { dx: -1, dy: 0 }, { dx: 1, dy: 0 }];
-    for (const { dx: odx, dy: ody } of orthDirs) {
-      const adjCell = bemGrid.get(bemKey(nx + odx, ny + ody));
-      if (adjCell && !adjCell.faceUp) adjCell.faceUp = true;
-    }
-    bemPlaneswalkPending = false;
-    bemRemoveFalloff();
-    bemDiscoverAdjacent();
-    renderBemMap();
-    updateBemInfoBar();
-    syncBemTrButton();
-    closeAllGameMenus();
-    return;
-  }
-
-  if (isDiag) {
-    if (cell.faceUp) {
-      showToastFn?.("Can only Hellride to a face-down diagonal card.");
-      return;
-    }
-
-    // 66.6% chance to encounter a phenomenon before the destination card
-    // (only if the destination card is not already a phenomenon, and this
-    //  position has not already had the hellride check applied this game)
-    const originalCard = cell.card;
-    const alreadyHellrided = gameState.bemHellridedPositions?.has(key);
-    if (riskyHellridingEnabled && originalCard.type !== "Phenomenon" && !alreadyHellrided) {
-      gameState.bemHellridedPositions?.add(key);
-      const phenIdx = gameState.remaining.findIndex(c => c.type === "Phenomenon");
-      if (phenIdx !== -1 && Math.random() < 2 / 3) {
-        const [phenomenon] = gameState.remaining.splice(phenIdx, 1);
-        cell.card = phenomenon;
-        cell.queuedCard = originalCard;
-      }
-    }
-
-    cell.faceUp = true;
-    showToastFn?.(`Hellriding!`);
-  } else {
-    // Orthogonal: auto-flip face-down cards
-    if (!cell.faceUp) cell.faceUp = true;
-    showToastFn?.(`Moving to ${cell.card.displayName}.`);
-  }
-
-  // Track if we land on a phenomenon (for animation)
-  bemLandOnPhenomenon = cell.card?.type === "Phenomenon" && phenomenonAnimationEnabled;
-
-  gameState.bemPos = { x: nx, y: ny };
-  bemViewOffset = { dx: 0, dy: 0 };
-
-  bemClearActivePlanesToBottom();
-
-  // Auto-flip any orthogonal adjacent face-down cards at new position
-  const orthDirs = [{ dx: 0, dy: -1 }, { dx: 0, dy: 1 }, { dx: -1, dy: 0 }, { dx: 1, dy: 0 }];
-  for (const { dx: odx, dy: ody } of orthDirs) {
-    const adjCell = bemGrid.get(bemKey(nx + odx, ny + ody));
-    if (adjCell && !adjCell.faceUp) adjCell.faceUp = true;
-  }
-
-  bemPlaneswalkPending = false;
-  bemRemoveFalloff();
-  bemDiscoverAdjacent();
-
-  renderBemMap();
-  updateBemInfoBar();
-  syncBemTrButton();
-  closeAllGameMenus();
-}
-
-function bemResolvePhenomenon() {
-  if (!gameState?.bemGrid || !gameState?.bemPos) return;
-
-  const { bemGrid, bemPos, remaining } = gameState;
-  const key = bemKey(bemPos.x, bemPos.y);
-  const cell = bemGrid.get(key);
-
-  if (!cell || cell.card.type !== "Phenomenon") {
-    showToastFn?.("No phenomenon to resolve here.");
-    return;
-  }
-
-  const phenomenon = cell.card;
-
-  // If this phenomenon was encountered via hellride, the original card is queued
-  const nextCard = cell.queuedCard ?? bemDrawNonPhenomenon(remaining);
-  delete cell.queuedCard;
-
-  remaining.push(phenomenon);
-
-  if (nextCard) {
-    bemGrid.set(key, { card: nextCard, faceUp: true });
-    showToastFn?.(`${phenomenon.displayName} resolved. ${nextCard.displayName} appears.`);
-  } else {
-    bemGrid.set(key, { card: null, faceUp: true, placeholder: true });
-    showToastFn?.(`${phenomenon.displayName} resolved. No planes remain.`);
-  }
-
-  renderBemMap();
-  updateBemInfoBar();
-  syncBemTrButton();
-}
-
-function bemFillPlaceholder() {
-  if (!gameState?.bemGrid || !gameState?.bemPos) return;
-
-  const { bemGrid, bemPos, remaining } = gameState;
-  const key = bemKey(bemPos.x, bemPos.y);
-  const cell = bemGrid.get(key);
-
-  if (!cell?.placeholder) return;
-
-  if (remaining.length === 0) {
-    showToastFn?.("Library is empty.");
-    return;
-  }
-
-  const nextCard = bemDrawNonPhenomenon(remaining);
-  if (nextCard) {
-    bemLandOnPhenomenon = nextCard.type === "Phenomenon" && phenomenonAnimationEnabled;
-    bemGrid.set(key, { card: nextCard, faceUp: true });
-    showToastFn?.(`${nextCard.displayName} revealed.`);
-  } else {
-    showToastFn?.("No planes remain in the library.");
-  }
-
-  renderBemMap();
-  updateBemInfoBar();
-  syncBemTrButton();
-}
-
-function syncBemTrButton() {
-  if (!gameBtnTr) return;
-  const isBem = gameState?.mode === "bem";
-  const currentCell = isBem ? gameState.bemGrid?.get(bemKey(gameState.bemPos.x, gameState.bemPos.y)) : null;
-  const isPhenomenon = isBem && currentCell?.card?.type === "Phenomenon";
-  const isPlaceholder = isBem && currentCell?.placeholder && !currentCell?.card;
-
-  gameBtnTr.classList.toggle("bem-phenomenon-active", !!isPhenomenon);
-  gameBtnTr.classList.toggle("bem-planeswalk-pending", !!(isBem && bemPlaneswalkPending && !isPlaceholder));
-  gameBtnTr.setAttribute("aria-label", isBem
-    ? (isPhenomenon ? "Resolve Phenomenon"
-      : isPlaceholder ? "Reveal Card"
-      : bemPlaneswalkPending ? "Cancel Planeswalk"
-      : "Planeswalk")
-    : "Planeswalk");
-}
-
-function renderBemMap() {
-  if (!bemMapEl || !gameState?.bemGrid || !gameState?.bemPos) return;
-
-  const { bemGrid, bemPos } = gameState;
-  const { x: px, y: py } = bemPos;
-  const viewX = px + bemViewOffset.dx;
-  const viewY = py + bemViewOffset.dy;
-  const isPanning = bemViewOffset.dx !== 0 || bemViewOffset.dy !== 0;
-
-  bemMapEl.innerHTML = "";
-
-  const R = BEM_VIEW_RADIUS;
-  for (let gy = -R; gy <= R; gy++) {
-    for (let gx = -R; gx <= R; gx++) {
-      const cx = viewX + gx;
-      const cy = viewY + gy;
-      const key = bemKey(cx, cy);
-      const cell = bemGrid.get(key);
-
-      const div = document.createElement("div");
-      div.style.gridColumn = (gx + R + 1).toString();
-      div.style.gridRow = (gy + R + 1).toString();
-      div.className = "bem-cell";
-      div.dataset.x = cx;
-      div.dataset.y = cy;
-
-      // Player-relative offsets (from actual player position)
-      const pdx = cx - px;
-      const pdy = cy - py;
-      const isPlayer = pdx === 0 && pdy === 0;
-      const isDiagToPlayer = Math.abs(pdx) === 1 && Math.abs(pdy) === 1;
-      const isOrthogToPlayer = (Math.abs(pdx) + Math.abs(pdy)) === 1;
-
-      // Planeswalk pending glow (only when not panning)
-      if (bemPlaneswalkPending && !isPlayer && !isPanning) {
-        if (isOrthogToPlayer && cell?.faceUp) div.classList.add("bem-cell-planeswalk-glow");
-        else if (isDiagToPlayer && cell && !cell.faceUp) div.classList.add("bem-cell-hellride-glow");
-      }
-
-      if (!cell) {
-        div.classList.add(isPlayer ? "bem-cell-faceup" : "bem-cell-void");
-        if (isPlayer) div.classList.add("bem-cell-player");
-      } else if (cell.placeholder && !cell.card) {
-        // Placeholder cell: card was removed from this position
-        div.classList.add("bem-cell-placeholder");
-        if (isPlayer) div.classList.add("bem-cell-player");
-        const img = document.createElement("img");
-        img.className = "bem-cell-placeholder-img";
-        img.src = "images/assets/card-preview.jpg";
-        img.alt = "";
-        div.appendChild(img);
-      } else if (cell.faceUp) {
-        div.classList.add("bem-cell-faceup");
-
-        const img = document.createElement("img");
-        img.className = "bem-cell-img";
-        img.src = cell.card.thumbPath;
-        img.alt = cell.card.displayName;
-        div.appendChild(img);
-
-        const lbl = document.createElement("div");
-        lbl.className = "bem-cell-label";
-        lbl.textContent = cell.card.displayName;
-        div.appendChild(lbl);
-
-        if (isPlayer) {
-          div.classList.add("bem-cell-player");
-          if (cell.card.type === "Phenomenon") {
-            div.classList.add("bem-cell-phenomenon");
-            if (bemLandOnPhenomenon) {
-              div.classList.add("bem-cell-phenomenon-landing");
-              bemLandOnPhenomenon = false;
-            }
-          } else {
-            div.classList.add("bem-cell-active-plane");
-          }
-        } else if (isOrthogToPlayer && !isPanning) {
-          if (!bemPlaneswalkPending) div.classList.add("bem-cell-moveable");
-        }
-      } else {
-        div.classList.add("bem-cell-facedown");
-
-        const img = document.createElement("img");
-        img.className = "bem-cell-img";
-        img.src = BEM_FACEDOWN_IMG;
-        img.alt = "Face-down card";
-        div.appendChild(img);
-
-        if (isDiagToPlayer && !isPanning) {
-          if (!bemPlaneswalkPending) div.classList.add("bem-cell-hellride");
-          const hint = document.createElement("span");
-          hint.className = "bem-cell-hellride-hint";
-          hint.textContent = "⚡";
-          div.appendChild(hint);
-        }
-      }
-
-      bemMapEl.appendChild(div);
-    }
-  }
-}
-
-function updateBemInfoBar() {
-  if (!gameState?.bemGrid || !gameState?.bemPos) return;
-
-  const cell = gameState.bemGrid.get(bemKey(gameState.bemPos.x, gameState.bemPos.y));
-
-  if (cell?.placeholder && !cell?.card) {
-    if (bemCardNameLabel) bemCardNameLabel.textContent = "Empty Cell";
-    if (bemStatusLabel) bemStatusLabel.textContent = "Planeswalk to reveal a card.";
-  } else {
-    const card = cell?.card;
-    if (bemCardNameLabel) {
-      bemCardNameLabel.textContent = card ? card.displayName : "";
-    }
-    if (bemStatusLabel) {
-      if (card?.type === "Phenomenon") {
-        bemStatusLabel.textContent = "You've encountered a Phenomenon!";
-      } else {
-        const remaining = gameState.remaining.length;
-        bemStatusLabel.textContent = `${remaining} card${remaining !== 1 ? "s" : ""} left`;
-      }
-    }
-  }
-
-  renderGameSidePanel(gameState.activePlanes, gameState.focusedIndex);
-  syncGameToolsState(gameState.remaining.length);
-}
-
-function handleBemCellClick(event) {
-  if (!gameState || gameState.mode !== "bem") return;
-  if (bemDragHandled) {
-    bemDragHandled = false;
-    return;
-  }
-  const cell = event.target.closest(".bem-cell");
-  if (!cell) return;
-
-  const nx = parseInt(cell.dataset.x, 10);
-  const ny = parseInt(cell.dataset.y, 10);
-  if (isNaN(nx) || isNaN(ny)) return;
-
-  const { x: px, y: py } = gameState.bemPos;
-  const dx = nx - px;
-  const dy = ny - py;
-  const isPanning = bemViewOffset.dx !== 0 || bemViewOffset.dy !== 0;
-
-  if (dx === 0 && dy === 0) {
-    // Player's actual cell clicked
-    if (easyPlaneswalk) {
-      // In easy planeswalking mode, clicking the current card acts like the Planeswalk button
-      if (isPanning) {
-        bemViewOffset = { dx: 0, dy: 0 };
-        renderBemMap();
-        showToastFn?.("Returned to your position.");
-        return;
-      }
-      const currentCell = gameState.bemGrid.get(bemKey(nx, ny));
-      if (currentCell?.placeholder && !currentCell?.card) {
-        bemFillPlaceholder();
-      } else if (currentCell?.card?.type === "Phenomenon") {
-        bemResolvePhenomenon();
-      } else {
-        toggleBemPlaneswalkMode();
-      }
-      return;
-    }
-    // Normal mode: open detail view for current card
-    const gridCell = gameState.bemGrid.get(bemKey(nx, ny));
-    if (gridCell?.card) openGameReaderView(gridCell.card, buildBemCardActions());
-    return;
-  }
-
-  if (bemPlaneswalkPending) {
-    if (isPanning) {
-      bemViewOffset = { dx: 0, dy: 0 };
-      renderBemMap();
-      showToastFn?.("Returned to your position. Select a direction to planeswalk.");
-      return;
-    }
-    const isOrthog = (Math.abs(dx) + Math.abs(dy)) === 1;
-    const isDiag = Math.abs(dx) === 1 && Math.abs(dy) === 1;
-    const gridCell = gameState.bemGrid.get(bemKey(nx, ny));
-    if ((isOrthog && gridCell?.faceUp) || (isDiag && gridCell && !gridCell.faceUp)) {
-      bemMovePlayer(nx, ny);
-    } else {
-      // Cancel planeswalk mode on clicking non-valid cell
-      bemPlaneswalkPending = false;
-      renderBemMap();
-      syncBemTrButton();
-    }
-    return;
-  }
-
-  if (easyPlaneswalk) {
-    if (isPanning) {
-      bemViewOffset = { dx: 0, dy: 0 };
-      renderBemMap();
-      showToastFn?.("Returned to your position. Tap an adjacent card to move.");
-      return;
-    }
-    // Easy mode: click adjacent card to move there
-    const isValidMove = (Math.abs(dx) + Math.abs(dy) === 1) || (Math.abs(dx) === 1 && Math.abs(dy) === 1);
-    if (isValidMove) {
-      bemMovePlayer(nx, ny);
-    } else {
-      // Non-adjacent cell in easy mode → open detail view
-      const gridCell = gameState.bemGrid.get(bemKey(nx, ny));
-      if (gridCell?.card && gridCell.faceUp) openGameReaderView(gridCell.card, buildBemAdjacentCardActions(nx, ny));
-    }
-    return;
-  }
-
-  // Normal mode: click any face-up card to view details
-  const gridCell = gameState.bemGrid.get(bemKey(nx, ny));
-  if (gridCell?.card && gridCell.faceUp) {
-    openGameReaderView(gridCell.card, buildBemAdjacentCardActions(nx, ny));
-  }
-}
-
-function toggleBemPlaneswalkMode() {
-  if (!gameState?.bemGrid) return;
-  const isPanning = bemViewOffset.dx !== 0 || bemViewOffset.dy !== 0;
-  if (isPanning) {
-    bemViewOffset = { dx: 0, dy: 0 };
-    renderBemMap();
-    showToastFn?.("Returned to your position. Planeswalk again to continue.");
-    return;
-  }
-  bemPlaneswalkPending = !bemPlaneswalkPending;
-  renderBemMap();
-  syncBemTrButton();
-  if (bemPlaneswalkPending) {
-    showToastFn?.("Choose an adjacent card to planeswalk to.");
-  }
-}
-
-// ── BEM drag navigation ───────────────────────────────────────────────────────
-
-function handleBemArrowKey(event) {
-  if (!gameActive || gameState?.mode !== "bem") return;
-  if (document.body.classList.contains("game-reader-open")) return;
-  if (document.body.classList.contains("tutorial-open")) return;
-  let panDx = 0, panDy = 0;
-  switch (event.key) {
-    case "ArrowLeft":  panDx = -1; break;
-    case "ArrowRight": panDx = 1;  break;
-    case "ArrowUp":    panDy = -1; break;
-    case "ArrowDown":  panDy = 1;  break;
-    default: return;
-  }
-  event.preventDefault();
-
-  // Block panning to cells with no card at all
-  const { x: px, y: py } = gameState.bemPos;
-  const newViewX = px + bemViewOffset.dx + panDx;
-  const newViewY = py + bemViewOffset.dy + panDy;
-  if (!gameState.bemGrid.has(bemKey(newViewX, newViewY))) return;
-
-  bemViewOffset = { dx: bemViewOffset.dx + panDx, dy: bemViewOffset.dy + panDy };
-  renderBemMap();
-}
-
-function handleBemPointerDown(event) {
-  if (!gameState?.bemGrid) return;
-  if (bemDragPointerId !== null) return;
-  // On desktop (mouse), only allow middle-button drag; touch can always drag
-  if (event.pointerType === "mouse" && event.button !== 1) return;
-  bemDragPointerId = event.pointerId;
-  bemDragStart = { x: event.clientX, y: event.clientY };
-  bemDragHandled = false;
-}
-
-function handleBemPointerMove(event) {
-  if (event.pointerId !== bemDragPointerId || !bemDragStart || !gameState?.bemGrid) return;
-  const dx = event.clientX - bemDragStart.x;
-  const dy = event.clientY - bemDragStart.y;
-  const adx = Math.abs(dx);
-  const ady = Math.abs(dy);
-  if (adx < BEM_DRAG_THRESHOLD && ady < BEM_DRAG_THRESHOLD) return;
-
-  bemDragHandled = true;
-  bemDragPointerId = null;
-  bemDragStart = null;
-
-  // Drag pans the view without moving the player
-  let panDx = 0;
-  let panDy = 0;
-
-  // On portrait mobile the game view is rotated -90deg, so physical x/y axes
-  // are swapped relative to game grid coordinates. Adjust panning accordingly.
-  const isPortraitMobile = event.pointerType !== "mouse" && window.innerHeight > window.innerWidth;
-
-  if (isPortraitMobile) {
-    if (adx >= ady) {
-      panDy = dx > 0 ? -1 : 1;
-    } else {
-      panDx = dy > 0 ? 1 : -1;
-    }
-  } else {
-    if (adx >= ady) {
-      panDx = dx > 0 ? -1 : 1;
-    } else {
-      panDy = dy > 0 ? -1 : 1;
-    }
-  }
-
-  // Block panning to cells with no card at all
-  const { x: px, y: py } = gameState.bemPos;
-  const newViewX = px + bemViewOffset.dx + panDx;
-  const newViewY = py + bemViewOffset.dy + panDy;
-  if (!gameState.bemGrid.has(bemKey(newViewX, newViewY))) return;
-
-  bemViewOffset = { dx: bemViewOffset.dx + panDx, dy: bemViewOffset.dy + panDy };
-  renderBemMap();
-}
-
-function handleBemPointerUp(event) {
-  if (event.pointerId === bemDragPointerId) {
-    bemDragPointerId = null;
-    bemDragStart = null;
-  }
-}
-
-function buildBemCardActions() {
-  return [
-    {
-      label: "Return to Library",
-      action: () => {
-        if (!gameState?.bemGrid || !gameState?.bemPos) return;
-        const key = bemKey(gameState.bemPos.x, gameState.bemPos.y);
-        const cell = gameState.bemGrid.get(key);
-        if (!cell?.card) return;
-        const cardName = cell.card.displayName;
-        gameState.remaining.push(cell.card);
-        gameState.bemGrid.set(key, { card: null, faceUp: true, placeholder: true });
-        closeGameReaderView();
-        renderBemMap();
-        updateBemInfoBar();
-        syncBemTrButton();
-        showToastFn?.(`${cardName} returned to library.`);
-      }
-    },
-    {
-      label: "Return to Top",
-      action: () => {
-        if (!gameState?.bemGrid || !gameState?.bemPos) return;
-        const key = bemKey(gameState.bemPos.x, gameState.bemPos.y);
-        const cell = gameState.bemGrid.get(key);
-        if (!cell?.card) return;
-        const cardName = cell.card.displayName;
-        gameState.remaining.unshift(cell.card);
-        gameState.bemGrid.set(key, { card: null, faceUp: true, placeholder: true });
-        closeGameReaderView();
-        renderBemMap();
-        updateBemInfoBar();
-        syncBemTrButton();
-        showToastFn?.(`${cardName} returned to top.`);
-      }
-    },
-    {
-      label: "Return to Bottom",
-      action: () => {
-        if (!gameState?.bemGrid || !gameState?.bemPos) return;
-        const key = bemKey(gameState.bemPos.x, gameState.bemPos.y);
-        const cell = gameState.bemGrid.get(key);
-        if (!cell?.card) return;
-        const cardName = cell.card.displayName;
-        gameState.remaining.push(cell.card);
-        gameState.bemGrid.set(key, { card: null, faceUp: true, placeholder: true });
-        closeGameReaderView();
-        renderBemMap();
-        updateBemInfoBar();
-        syncBemTrButton();
-        showToastFn?.(`${cardName} returned to bottom.`);
-      }
-    },
-    {
-      label: "Shuffle Into Library",
-      action: () => {
-        if (!gameState?.bemGrid || !gameState?.bemPos) return;
-        const key = bemKey(gameState.bemPos.x, gameState.bemPos.y);
-        const cell = gameState.bemGrid.get(key);
-        if (!cell?.card) return;
-        const cardName = cell.card.displayName;
-        gameState.remaining.push(cell.card);
-        gameState.remaining = shuffleArray(gameState.remaining);
-        gameState.bemGrid.set(key, { card: null, faceUp: true, placeholder: true });
-        closeGameReaderView();
-        renderBemMap();
-        updateBemInfoBar();
-        syncBemTrButton();
-        showToastFn?.(`${cardName} shuffled into library.`);
-      }
-    },
-    {
-      label: "Exile",
-      danger: true,
-      action: () => {
-        if (!gameState?.bemGrid || !gameState?.bemPos) return;
-        const key = bemKey(gameState.bemPos.x, gameState.bemPos.y);
-        const cell = gameState.bemGrid.get(key);
-        if (!cell?.card) return;
-        const cardName = cell.card.displayName;
-        gameState.exiled.push(cell.card);
-        gameState.bemGrid.set(key, { card: null, faceUp: true, placeholder: true });
-        closeGameReaderView();
-        renderBemMap();
-        updateBemInfoBar();
-        syncBemTrButton();
-        showToastFn?.(`${cardName} exiled.`);
-      }
-    }
-  ];
-}
-
-function buildBemAdjacentCardActions(nx, ny) {
-  return [
-    {
-      label: "Planeswalk Here",
-      action: () => {
-        closeGameReaderView();
-        bemMovePlayer(nx, ny);
-      }
-    }
-  ];
-}

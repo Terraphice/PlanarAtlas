@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#2a3a5c"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </radialGradient>
+    <radialGradient id="glow" cx="50%" cy="40%" r="45%">
+      <stop offset="0%" stop-color="#7c9ef0" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#7c9ef0" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="32" height="32" rx="6" fill="url(#bg)"/>
+  <rect width="32" height="32" rx="6" fill="url(#glow)"/>
+  <!-- Planeswalker spark symbol: outer ring -->
+  <circle cx="16" cy="15" r="10" fill="none" stroke="#8ba8e8" stroke-width="1.2" opacity="0.7"/>
+  <!-- Inner diamond / spark -->
+  <polygon points="16,6 20,13 16,20 12,13" fill="#a0baf8" opacity="0.9"/>
+  <polygon points="16,10 18.5,15 16,20 13.5,15" fill="#c8d8ff"/>
+  <!-- Horizon line (the Plane) -->
+  <ellipse cx="16" cy="22" rx="8" ry="2.2" fill="#6080c8" opacity="0.5"/>
+  <ellipse cx="16" cy="22" rx="4.5" ry="1.1" fill="#8ba8e8" opacity="0.6"/>
+</svg>
