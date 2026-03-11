@@ -3343,6 +3343,10 @@ button.active-filter-pill:disabled {
   order: -1;
 }
 
+.game-tl-group .game-btn-label {
+  margin-top: 6px;
+}
+
 /* ── Game cost display ───────────────────────────────────────────────────────── */
 
 .game-cost-display {

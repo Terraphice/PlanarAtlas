@@ -13,7 +13,9 @@ import {
   getBadgeTags,
   parseBadgeTag,
   isTopTag,
-  escapeHtml
+  escapeHtml,
+  getManaClasses,
+  enhanceManaSymbols
 } from "./gallery-utils.js";
 
 import {
@@ -2203,62 +2205,6 @@ function renderTranscriptMarkdown(markdownText) {
   const rawHtml = marked.parse(markdownText, { breaks: true });
   const safeHtml = DOMPurify.sanitize(rawHtml);
   modalTranscript.innerHTML = enhanceManaSymbols(safeHtml);
-}
-
-function enhanceManaSymbols(html) {
-  return html.replace(/\{([^}]+)\}/g, (_, rawSymbol) => {
-    const symbol = rawSymbol.trim().toLowerCase();
-    const classes = getManaClasses(symbol);
-
-    if (!classes) return `{${escapeHtml(rawSymbol)}}`;
-
-    return `<i class="${classes}" aria-label="${escapeHtml(rawSymbol.toUpperCase())}" title="${escapeHtml(rawSymbol.toUpperCase())}"></i>`;
-  });
-}
-
-function getManaClasses(symbol) {
-  const raw = symbol.replace(/\s+/g, "");
-
-  const aliases = {
-    t: "tap",
-    q: "untap",
-    planeswalk: "planeswalker"
-  };
-
-  const normalized = aliases[raw] || raw;
-
-  const direct = new Set([
-    "w", "u", "b", "r", "g", "c",
-    "x", "y", "z",
-    "tap", "untap",
-    "chaos",
-    "planeswalker"
-  ]);
-
-  if (direct.has(normalized)) {
-    return normalized === "tap" || normalized === "untap" || normalized === "planeswalker"
-      ? `ms ms-${normalized}`
-      : `ms ms-${normalized} ms-cost`;
-  }
-
-  if (/^(0|[1-9]|10|11|12|13|14|15|16|17|18|19|20|100|1000000|infinity|1\/2)$/.test(normalized)) {
-    const converted = normalized === "1/2" ? "1-2" : normalized;
-    return `ms ms-${converted} ms-cost`;
-  }
-
-  if (/^[wubrgc]\/[wubrgc]$/.test(normalized)) {
-    return `ms ms-${normalized.replace("/", "")} ms-cost`;
-  }
-
-  if (/^2\/[wubrg]$/.test(normalized)) {
-    return `ms ms-${normalized.replace("/", "")} ms-cost`;
-  }
-
-  if (/^[wubrg]\/p$/.test(normalized)) {
-    return `ms ms-${normalized.replace("/", "")} ms-cost`;
-  }
-
-  return null;
 }
 
 function capitalize(value) {

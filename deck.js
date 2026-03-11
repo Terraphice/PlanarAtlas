@@ -1,4 +1,4 @@
-import { escapeHtml, shuffleArray, isHiddenCard } from "./gallery-utils.js";
+import { escapeHtml, shuffleArray, isHiddenCard, enhanceManaSymbols } from "./gallery-utils.js";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -2312,8 +2312,8 @@ const TUTORIAL_CONTENT = {
 <p>On your turn, you may roll the planar die at any time. Each additional roll on the same turn costs {1} more than the last (first roll is free, second costs {1}, third costs {2}, etc.).</p>
 <ul>
   <li><strong>BLANK</strong> — Nothing happens.</li>
-  <li><strong>CHAOS</strong> — The chaos ability of each face-up Plane triggers.</li>
-  <li><strong>PLANESWALKER</strong> — Planeswalk! The active Plane goes to the bottom of the deck. Reveal cards until a Plane is revealed — that Plane becomes active.</li>
+  <li>{CHAOS} — The chaos ability of each face-up Plane triggers.</li>
+  <li>{PLANESWALKER} — Planeswalk! The active Plane goes to the bottom of the deck. Reveal cards until a Plane is revealed — that Plane becomes active.</li>
 </ul>
 
 <h3>Phenomena</h3>
@@ -2322,8 +2322,8 @@ const TUTORIAL_CONTENT = {
 <h3>Controls</h3>
 <ul>
   <li>Tap the <strong>card image</strong> to view it up close.</li>
-  <li>Use the <strong>Planeswalk button</strong> (PLANESWALKER icon) to planeswalk.</li>
-  <li>Use the <strong>Planar Die button</strong> (CHAOS icon) to roll.</li>
+  <li>Use the <strong>Planeswalk button</strong> ({PLANESWALKER}) to planeswalk.</li>
+  <li>Use the <strong>Planar Die button</strong> ({CHAOS}) to roll.</li>
   <li>The <strong>Tools</strong> menu lets you manage the library and reveal cards.</li>
   <li>The <strong>Options</strong> menu lets you exit, reset, or save the game state.</li>
 </ul>
@@ -2383,7 +2383,7 @@ function showTutorial(mode) {
   if (!content || !gameTutorialOverlay) return;
 
   if (gameTutorialTitle) gameTutorialTitle.textContent = content.title;
-  if (gameTutorialBody) gameTutorialBody.innerHTML = content.body;
+  if (gameTutorialBody) gameTutorialBody.innerHTML = enhanceManaSymbols(content.body);
 
   gameTutorialOverlay.classList.remove("hidden");
   document.body.classList.add("tutorial-open");
