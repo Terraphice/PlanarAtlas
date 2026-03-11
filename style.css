@@ -4195,6 +4195,11 @@ html[data-palette="scryfall"][data-theme="dark"] .sidebar {
   transition: opacity 140ms ease, transform 140ms ease;
 }
 
+.game-card-image-btn-placeholder .game-card-image {
+  max-width: min(320px, calc(100vw - 180px));
+  max-height: calc(100vh - 260px);
+}
+
 .game-card-image-btn-placeholder:hover {
   opacity: 1;
   transform: scale(1.02);
@@ -4848,6 +4853,15 @@ html[data-palette="scryfall"][data-theme="dark"] .sidebar {
   color: var(--text-faint);
   opacity: 0.35;
   user-select: none;
+}
+
+.bem-cell-placeholder-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+  opacity: 0.4;
 }
 
 /* Phenomenon landing animation */
