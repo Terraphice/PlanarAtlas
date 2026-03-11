@@ -33,6 +33,7 @@ import {
   syncGameHash,
   showGameModeDialog,
   clearAllDecks,
+  clearTutorialFlags,
   getAllDecksForProfile,
   importProfileDecks,
   encodeProfileData,
@@ -1926,6 +1927,7 @@ function executeClearAll() {
 
   localStorage.removeItem(STORAGE_KEY);
   clearAllDecks();
+  clearTutorialFlags();
 
   filters.search = "";
   filters.tags.clear();

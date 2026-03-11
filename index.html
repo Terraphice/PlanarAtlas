@@ -107,49 +107,40 @@
     <div class="main-panel">
       <header class="topbar">
         <div class="topbar-inner">
-          <div class="topbar-left">
+          <div class="topbar-left-group">
             <div class="topbar-copy">
               <div class="brand-kicker">Terraphice's</div>
               <h1 class="page-title">Planar Atlas</h1>
             </div>
-          </div>
+            <div class="topbar-left-buttons">
+              <button id="play-game-button" class="topbar-random-button topbar-play-button" type="button" aria-label="Play Planechase" title="Play">
+                <i class="ms ms-planeswalker" aria-hidden="true"></i>
+                <span class="sr-only">Play</span>
+              </button>
 
-          <div class="topbar-controls">
-            <div class="topbar-actions">
-              <div class="topbar-left-buttons">
-                <button id="random-card-button" class="topbar-random-button" type="button" aria-label="Chaos" title="Chaos">
-                  <i id="random-card-icon" class="ms ms-chaos" aria-hidden="true"></i>
-                  <span class="sr-only">Chaos</span>
+              <button id="random-card-button" class="topbar-random-button" type="button" aria-label="Chaos" title="Chaos">
+                <i id="random-card-icon" class="ms ms-chaos" aria-hidden="true"></i>
+                <span class="sr-only">Chaos</span>
+              </button>
+
+              <button id="deck-button" class="topbar-deck-button" type="button" aria-label="Deck builder" title="Deck">
+                <svg class="deck-btn-icon" aria-hidden="true" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+                  <rect x="5" y="2" width="12" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                  <rect x="3" y="4" width="12" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                  <rect x="1" y="6" width="12" height="14" rx="2" fill="currentColor" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+                <span id="deck-button-badge" class="deck-button-badge hidden" aria-hidden="true"></span>
+              </button>
+
+              <button id="theme-toggle" class="topbar-icon-button theme-toggle" type="button" aria-label="Theme" title="Theme">
+                <span class="theme-toggle-glyph symbol-glyph" aria-hidden="true">◐&#xFE0E;</span>
+                <span class="sr-only">Theme</span>
+              </button>
+
+              <div class="settings-menu-wrap">
+                <button id="settings-menu-toggle" class="topbar-icon-button" type="button" aria-label="Open site settings" title="Settings">
+                  <span class="symbol-glyph">⚙&#xFE0E;</span>
                 </button>
-
-                <button id="play-game-button" class="topbar-random-button topbar-play-button" type="button" aria-label="Play Planechase" title="Play">
-                  <i class="ms ms-planeswalker" aria-hidden="true"></i>
-                  <span class="sr-only">Play</span>
-                </button>
-
-                <button id="deck-button" class="topbar-deck-button" type="button" aria-label="Deck builder" title="Deck">
-                  <svg class="deck-btn-icon" aria-hidden="true" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
-                    <rect x="5" y="2" width="12" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/>
-                    <rect x="3" y="4" width="12" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/>
-                    <rect x="1" y="6" width="12" height="14" rx="2" fill="currentColor" stroke="currentColor" stroke-width="1.5"/>
-                  </svg>
-                  <span id="deck-button-badge" class="deck-button-badge hidden" aria-hidden="true"></span>
-                </button>
-              </div>
-
-              <div class="search-shell">
-                <div class="search-inline-shell">
-                  <input id="top-search-ghost" class="search-input search-input-large search-input-ghost" type="text" aria-hidden="true" tabindex="-1" readonly />
-                  <input id="top-search" class="search-input search-input-large search-input-real" type="search" placeholder="Search cards..." autocomplete="off" />
-                </div>
-                <div id="top-search-suggestions" class="search-suggestions hidden" role="listbox" aria-label="Search suggestions"></div>
-              </div>
-
-              <div class="topbar-utility-buttons">
-                <div class="settings-menu-wrap">
-                  <button id="settings-menu-toggle" class="topbar-icon-button" type="button" aria-label="Open site settings" title="Settings">
-                    <span class="symbol-glyph">⚙&#xFE0E;</span>
-                  </button>
 
                   <div id="settings-menu" class="settings-menu hidden" role="dialog" aria-label="Site settings">
                     <div class="settings-menu-section">
@@ -207,12 +198,12 @@
                           ↓ Import Profile
                         </button>
                       </div>
-                      <div class="settings-menu-action-row settings-menu-action-row-icons">
-                        <button id="settings-clear-preferences" class="settings-menu-action settings-menu-action-icon settings-menu-action-danger" type="button" title="Reset all preferences and decks" aria-label="Reset all preferences and decks">
-                          🗑
+                      <div class="settings-menu-action-row">
+                        <button id="settings-clear-preferences" class="settings-menu-action settings-menu-action-half settings-menu-action-danger" type="button" title="Reset all preferences and decks" aria-label="Reset all preferences and decks">
+                          🗑 Reset All
                         </button>
-                        <a id="settings-contact-developer" class="settings-menu-action settings-menu-action-icon settings-menu-link" href="mailto:me@terraphice.dev?subject=Planar%20Atlas" title="Contact developer" aria-label="Contact developer">
-                          ✉
+                        <a id="settings-contact-developer" class="settings-menu-action settings-menu-action-half settings-menu-link" href="mailto:me@terraphice.dev?subject=Planar%20Atlas" title="Contact developer" aria-label="Contact developer">
+                          ✉ Contact
                         </a>
                       </div>
                     </div>
@@ -224,14 +215,20 @@
                     </div>
                   </div>
                 </div>
-
-                <button id="theme-toggle" class="topbar-icon-button theme-toggle" type="button" aria-label="Theme" title="Theme">
-                  <span class="theme-toggle-glyph symbol-glyph" aria-hidden="true">◐&#xFE0E;</span>
-                  <span class="sr-only">Theme</span>
-                </button>
-              </div>
             </div>
           </div>
+
+          <div class="topbar-search-group">
+            <div class="search-shell">
+              <div class="search-inline-shell">
+                <input id="top-search-ghost" class="search-input search-input-large search-input-ghost" type="text" aria-hidden="true" tabindex="-1" readonly />
+                <input id="top-search" class="search-input search-input-large search-input-real" type="search" placeholder="Search cards..." autocomplete="off" />
+              </div>
+              <div id="top-search-suggestions" class="search-suggestions hidden" role="listbox" aria-label="Search suggestions"></div>
+            </div>
+          </div>
+
+          <div class="topbar-right-spacer" aria-hidden="true"></div>
         </div>
       </header>
 
@@ -356,6 +353,7 @@
       <div class="deck-panel-title-row">
         <h2 class="deck-panel-title">Deck Builder</h2>
         <span id="deck-total-count" class="deck-total-count">0 cards</span>
+        <button id="deck-close-btn" class="deck-close-btn" type="button" aria-label="Close deck panel">✕</button>
       </div>
       <div class="deck-slot-row" role="group" aria-label="Deck slots">
         <select id="deck-slot-select" class="deck-slot-select" aria-label="Select deck slot"></select>
@@ -379,7 +377,6 @@
           </div>
         </div>
         <button id="deck-clear-btn" class="deck-action-btn deck-danger-btn" type="button">Clear</button>
-        <button id="deck-close-btn" class="deck-close-btn" type="button" aria-label="Close deck panel">✕</button>
       </div>
     </div>
     <div id="deck-card-list" class="deck-card-list"></div>
@@ -417,7 +414,6 @@
       <button id="game-card-image-btn" class="game-card-image-btn" type="button" aria-label="View card close-up">
         <img id="game-card-image" class="game-card-image" src="" alt="" />
       </button>
-      <div id="game-card-name" class="game-card-name"></div>
       <button id="classic-view-card-btn" class="classic-view-card-btn hidden" type="button" aria-label="View current card details">
         <i class="ms ms-planeswalker" aria-hidden="true"></i>
         <span id="classic-card-name-label" class="classic-card-name-label"></span>
@@ -444,18 +440,32 @@
       </button>
       <div id="game-cost-display" class="game-cost-display" aria-label="Chaos cost">
         <span id="game-cost-value" class="game-cost-value">0</span>
+        <span class="game-cost-divider" aria-hidden="true"></span>
         <button id="game-cost-reset" class="game-cost-reset" type="button" aria-label="Reset cost">↺</button>
       </div>
+      <span class="game-btn-label">Planar Die</span>
     </div>
-    <button id="game-btn-tr" class="game-corner-btn game-tr" type="button" aria-label="Planeswalk">
-      <i class="ms ms-planeswalker" aria-hidden="true"></i>
-    </button>
-    <button id="game-btn-bl" class="game-corner-btn game-bl" type="button" aria-label="Options">
-      <span class="symbol-glyph" aria-hidden="true">☰&#xFE0E;</span>
-    </button>
-    <button id="game-btn-br" class="game-corner-btn game-br" type="button" aria-label="Tools">
-      <span class="symbol-glyph" aria-hidden="true">⚙&#xFE0E;</span>
-    </button>
+
+    <div class="game-tr-group">
+      <button id="game-btn-tr" class="game-corner-btn game-tr" type="button" aria-label="Planeswalk">
+        <i class="ms ms-planeswalker" aria-hidden="true"></i>
+      </button>
+      <span class="game-btn-label">Planeswalk</span>
+    </div>
+
+    <div class="game-bl-group">
+      <span class="game-btn-label game-btn-label-top">Options</span>
+      <button id="game-btn-bl" class="game-corner-btn game-bl" type="button" aria-label="Options">
+        <span class="symbol-glyph" aria-hidden="true">☰&#xFE0E;</span>
+      </button>
+    </div>
+
+    <div class="game-br-group">
+      <span class="game-btn-label game-btn-label-top">Tools</span>
+      <button id="game-btn-br" class="game-corner-btn game-br" type="button" aria-label="Tools">
+        <span class="symbol-glyph" aria-hidden="true">⚙&#xFE0E;</span>
+      </button>
+    </div>
 
     <!-- Tools menu (bottom-right) -->
     <div id="game-tools-menu" class="game-menu game-menu-br hidden" role="dialog" aria-label="Tools">
@@ -542,6 +552,18 @@
       <div class="confirm-actions">
         <button id="confirm-cancel" class="confirm-btn confirm-cancel" type="button">Cancel</button>
         <button id="confirm-ok" class="confirm-btn confirm-ok" type="button">Reset All</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Game mode tutorial overlay -->
+  <div id="game-tutorial-overlay" class="game-tutorial-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="game-tutorial-title">
+    <div class="game-tutorial-backdrop"></div>
+    <div class="game-tutorial-panel">
+      <h2 id="game-tutorial-title" class="game-tutorial-title"></h2>
+      <div id="game-tutorial-body" class="game-tutorial-body"></div>
+      <div class="game-tutorial-footer">
+        <button id="game-tutorial-close" class="game-tutorial-close-btn" type="button">Let's Play!</button>
       </div>
     </div>
   </div>
