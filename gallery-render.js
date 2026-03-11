@@ -559,6 +559,14 @@ export function createRenderer({
       const navRow = document.createElement("div");
       navRow.className = "pagination-nav";
 
+      const firstBtn = document.createElement("button");
+      firstBtn.type = "button";
+      firstBtn.className = "pagination-btn";
+      firstBtn.setAttribute("aria-label", "First page");
+      firstBtn.textContent = "First";
+      firstBtn.disabled = paginationState.currentPage <= 1;
+      firstBtn.addEventListener("click", goToFirstPage);
+
       const prevBtn = document.createElement("button");
       prevBtn.type = "button";
       prevBtn.className = "pagination-btn";
@@ -583,10 +591,20 @@ export function createRenderer({
       nextBtn.disabled = paginationState.currentPage >= totalPages;
       nextBtn.addEventListener("click", goToNextPage);
 
+      const lastBtn = document.createElement("button");
+      lastBtn.type = "button";
+      lastBtn.className = "pagination-btn";
+      lastBtn.setAttribute("aria-label", "Last page");
+      lastBtn.textContent = "Last";
+      lastBtn.disabled = paginationState.currentPage >= totalPages;
+      lastBtn.addEventListener("click", goToLastPage);
+
+      navRow.appendChild(firstBtn);
       navRow.appendChild(prevBtn);
       navRow.appendChild(pageLabel);
       navRow.appendChild(pageMeta);
       navRow.appendChild(nextBtn);
+      navRow.appendChild(lastBtn);
       paginationControls.appendChild(navRow);
     } else {
       const shown = Math.min(paginationState.infiniteLoadedCount, totalCards);
@@ -650,6 +668,14 @@ export function createRenderer({
     renderGallery();
   }
 
+  function goToFirstPage() {
+    if (paginationState.currentPage <= 1) return;
+    paginationState.currentPage = 1;
+    renderGallery();
+    scrollToGalleryTop();
+    callbacks.updateUrlFromState({ push: true });
+  }
+
   function goToPrevPage() {
     if (paginationState.currentPage <= 1) return;
     paginationState.currentPage--;
@@ -663,6 +689,16 @@ export function createRenderer({
     const totalPages = Math.ceil(filteredCards.length / paginationState.pageSize);
     if (paginationState.currentPage >= totalPages) return;
     paginationState.currentPage++;
+    renderGallery();
+    scrollToGalleryTop();
+    callbacks.updateUrlFromState({ push: true });
+  }
+
+  function goToLastPage() {
+    const filteredCards = getFilteredCards();
+    const totalPages = Math.ceil(filteredCards.length / paginationState.pageSize);
+    if (paginationState.currentPage >= totalPages) return;
+    paginationState.currentPage = totalPages;
     renderGallery();
     scrollToGalleryTop();
     callbacks.updateUrlFromState({ push: true });
