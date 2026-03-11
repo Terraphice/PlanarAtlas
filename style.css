@@ -644,34 +644,40 @@ html[data-palette="gruvbox"][data-theme="dark"] .sidebar {
 }
 
 .topbar-inner {
-  padding: 18px 24px;
-  display: flex;
-  gap: 20px;
+  padding: 14px 24px;
+  display: grid;
+  grid-template-columns: 1fr minmax(200px, 480px) 1fr;
+  gap: 16px;
   align-items: center;
-  justify-content: space-between;
 }
 
-.topbar-left {
+.topbar-left-group {
   display: flex;
   align-items: center;
+  gap: 12px;
+  justify-content: flex-start;
   min-width: 0;
 }
 
 .topbar-copy {
   min-width: 0;
+  flex-shrink: 1;
 }
 
-.topbar-controls {
-  min-width: 320px;
-  max-width: 900px;
-  width: 100%;
-}
-
-.topbar-actions {
+.topbar-search-group {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
   width: 100%;
+}
+
+.topbar-search-group .search-shell {
+  flex: 1;
+  max-width: 100%;
+}
+
+.topbar-right-spacer {
+  /* Empty, mirrors left group for centering */
 }
 
 .topbar-left-buttons {
@@ -711,15 +717,11 @@ html[data-palette="gruvbox"][data-theme="dark"] .sidebar {
   filter: drop-shadow(0 0 10px color-mix(in srgb, var(--accent) 50%, transparent));
 }
 
-.topbar-play-button {
-  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
-  color: var(--accent);
-}
-
 .topbar-play-button:hover,
 .topbar-play-button:focus-visible {
   background: color-mix(in srgb, var(--accent) 14%, var(--bg-elev-2));
   border-color: var(--accent);
+  color: var(--accent);
 }
 
 .topbar-icon-button {
@@ -768,11 +770,8 @@ html[data-palette="gruvbox"][data-theme="dark"] .sidebar {
   filter: blur(0.5px);
 }
 
-.topbar-utility-buttons {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
+.topbar-right-spacer {
+  /* Empty, mirrors left group for centering */
 }
 
 .search-shell {
@@ -967,14 +966,7 @@ html[data-palette="gruvbox"][data-theme="dark"] .sidebar {
 }
 
 .settings-menu-action-icon {
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.1rem;
-  flex-shrink: 0;
+  flex: 1;
 }
 
 .settings-menu-action-danger {
@@ -1932,16 +1924,12 @@ button.active-filter-pill:disabled {
 
 @media (max-width: 740px) {
   .topbar-inner {
-    flex-direction: column;
-    align-items: stretch;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 10px 14px;
   }
 
-  .topbar-controls {
-    min-width: 0;
-    max-width: none;
-  }
-
-  .topbar-actions {
+  .topbar-left-group {
     flex-wrap: wrap;
     gap: 8px;
   }
@@ -1951,15 +1939,12 @@ button.active-filter-pill:disabled {
     flex: 0 0 auto;
   }
 
-  .search-shell {
-    order: 3;
+  .topbar-search-group {
     width: 100%;
-    flex: 1 1 100%;
   }
 
-  .topbar-utility-buttons {
-    order: 2;
-    margin-left: auto;
+  .topbar-right-spacer {
+    display: none;
   }
 
   .content {
@@ -2642,6 +2627,11 @@ button.active-filter-pill:disabled {
 .game-bl { bottom: 16px; left: 16px; }
 .game-br { bottom: 16px; right: 16px; }
 
+/* Die button when in tl-group: connected to cost display below */
+.game-tl-group .game-btn-tl.game-die-chaos {
+  border-radius: 16px 16px 0 0;
+}
+
 /* Die states */
 
 .game-btn-tl .ms {
@@ -3032,17 +3022,31 @@ button.active-filter-pill:disabled {
     font-size: 1.4rem;
   }
 
-  .game-tl { top: 12px; left: 12px; }
-  .game-tr { top: 12px; right: 12px; }
-  .game-bl { bottom: 12px; left: 12px; }
-  .game-br { bottom: 12px; right: 12px; }
+  .game-tl-group { top: 12px; left: 12px; }
+  .game-tr-group { top: 12px; right: 12px; }
+  .game-bl-group { bottom: 12px; left: 12px; }
+  .game-br-group { bottom: 12px; right: 12px; }
 
-  .game-menu-br { bottom: 72px; }
-  .game-menu-bl { bottom: 72px; }
+  .game-cost-display { width: 50px; }
+
+  .game-menu-br { bottom: 80px; }
+  .game-menu-bl { bottom: 80px; }
 
   .game-side-card {
     width: 60px;
   }
+}
+
+/* ── Active card highlights ──────────────────────────────────────────────────── */
+
+.game-card-image-btn.active-plane .game-card-image {
+  box-shadow: 0 0 0 3px #4ade80, 0 0 30px rgba(74, 222, 128, 0.4), 0 24px 60px rgba(0, 0, 0, 0.6);
+  border-radius: 14px;
+}
+
+.game-card-image-btn.active-phenomenon .game-card-image {
+  box-shadow: 0 0 0 3px #c084fc, 0 0 30px rgba(192, 132, 252, 0.4), 0 24px 60px rgba(0, 0, 0, 0.6);
+  border-radius: 14px;
 }
 
 /* ── Deck button SVG icon ────────────────────────────────────────────────────── */
@@ -3243,7 +3247,7 @@ button.active-filter-pill:disabled {
   color: var(--accent);
 }
 
-/* ── Game cost display ───────────────────────────────────────────────────────── */
+/* ── Game corner button groups and labels ──────────────────────────────────── */
 
 .game-tl-group {
   position: absolute;
@@ -3252,53 +3256,137 @@ button.active-filter-pill:disabled {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 0;
   z-index: 10;
 }
 
 .game-tl-group .game-corner-btn {
   position: static;
+  border-radius: 16px 16px 0 0;
 }
+
+.game-tr-group {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  z-index: 10;
+}
+
+.game-tr-group .game-corner-btn {
+  position: static;
+}
+
+.game-bl-group {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  z-index: 10;
+}
+
+.game-bl-group .game-corner-btn {
+  position: static;
+}
+
+.game-br-group {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  z-index: 10;
+}
+
+.game-br-group .game-corner-btn {
+  position: static;
+}
+
+.game-btn-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+
+.game-btn-label-top {
+  order: -1;
+}
+
+/* ── Game cost display ───────────────────────────────────────────────────────── */
 
 .game-cost-display {
   display: flex;
-  align-items: center;
-  gap: 4px;
-  background: color-mix(in srgb, var(--bg-elev-1) 88%, transparent);
-  border: 1px solid var(--border-soft);
-  border-radius: 20px;
-  padding: 2px 8px;
+  align-items: stretch;
+  width: 58px;
+  height: 0;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--bg-elev-2) 88%, transparent);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 16px 16px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 200ms ease;
+  transition: height 200ms ease, opacity 200ms ease;
 }
 
 .game-cost-display.game-cost-visible {
+  height: 34px;
   opacity: 1;
   pointer-events: auto;
 }
 
 .game-cost-value {
-  font-size: 0.82rem;
-  font-weight: 700;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 800;
   color: var(--text-soft);
-  min-width: 14px;
-  text-align: center;
+  min-width: 0;
+}
+
+.game-cost-divider {
+  width: 1px;
+  background: var(--border);
+  flex-shrink: 0;
 }
 
 .game-cost-reset {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: none;
   border: none;
   color: var(--text-faint);
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 1rem;
   padding: 0;
   line-height: 1;
-  transition: color 120ms ease;
+  transition: color 120ms ease, background 120ms ease;
+  min-width: 0;
 }
 
 .game-cost-reset:hover {
   color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
 }
 
 /* ── Game library view inline ────────────────────────────────────────────────── */
@@ -3786,23 +3874,35 @@ button.active-filter-pill:disabled {
     left: 8px;
   }
 
+  .game-tr-group {
+    top: 8px;
+    right: 8px;
+  }
+
+  .game-bl-group {
+    bottom: 8px;
+    left: 8px;
+  }
+
+  .game-br-group {
+    bottom: 8px;
+    right: 8px;
+  }
+
   .game-corner-btn {
     width: 44px;
     height: 44px;
     font-size: 1.2rem;
   }
 
-  .game-tl { top: 8px; left: 8px; }
-  .game-tr { top: 8px; right: 8px; }
-  .game-bl { bottom: 8px; left: 8px; }
-  .game-br { bottom: 8px; right: 8px; }
+  .game-cost-display { width: 44px; }
 
   .game-menu {
     max-height: 80vh;
   }
 
-  .game-menu-br { bottom: 60px; }
-  .game-menu-bl { bottom: 60px; }
+  .game-menu-br { bottom: 70px; }
+  .game-menu-bl { bottom: 70px; }
 }
 
 /* ── Mobile portrait: rotate game view to landscape ──────────────────────────── */
@@ -3843,15 +3943,27 @@ button.active-filter-pill:disabled {
     font-size: 1.3rem;
   }
 
-  .game-tl { top: 10px; left: 10px; }
-  .game-tr { top: 10px; right: 10px; }
-  .game-bl { bottom: 10px; left: 10px; }
-  .game-br { bottom: 10px; right: 10px; }
-
   .game-tl-group {
     top: 10px;
     left: 10px;
   }
+
+  .game-tr-group {
+    top: 10px;
+    right: 10px;
+  }
+
+  .game-bl-group {
+    bottom: 10px;
+    left: 10px;
+  }
+
+  .game-br-group {
+    bottom: 10px;
+    right: 10px;
+  }
+
+  .game-cost-display { width: 50px; }
 
   .game-menu {
     max-height: min(calc(100vw - 80px), 480px);
@@ -4558,50 +4670,50 @@ html[data-palette="scryfall"][data-theme="dark"] .sidebar {
 }
 
 .bem-cell-player {
-  border: 2px solid var(--accent) !important;
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 30%, transparent),
+  border: 2px solid #4ade80 !important;
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.35),
               0 8px 24px rgba(0, 0, 0, 0.4);
   z-index: 2;
 }
 
 .bem-cell-moveable {
   cursor: pointer;
-  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+  border-color: rgba(96, 165, 250, 0.5);
 }
 
 .bem-cell-moveable:hover {
-  border-color: var(--accent);
-  background: color-mix(in srgb, var(--accent) 14%, var(--bg-elev-2));
+  border-color: #60a5fa;
+  background: color-mix(in srgb, #60a5fa 14%, var(--bg-elev-2));
   transform: scale(1.04);
   z-index: 3;
 }
 
 .bem-cell-hellride {
   cursor: pointer;
-  border-color: color-mix(in srgb, var(--tone-purple-border) 50%, var(--border));
-  background: color-mix(in srgb, var(--tone-purple-bg) 30%, var(--bg-elev-2));
+  border-color: rgba(251, 146, 60, 0.55);
+  background: color-mix(in srgb, rgba(239, 68, 68, 0.15) 60%, var(--bg-elev-2));
 }
 
 .bem-cell-hellride:hover {
-  border-color: var(--tone-purple-border);
-  background: color-mix(in srgb, var(--tone-purple-bg) 55%, var(--bg-elev-2));
+  border-color: #f97316;
+  background: color-mix(in srgb, rgba(239, 68, 68, 0.25) 70%, var(--bg-elev-2));
   transform: scale(1.04);
   z-index: 3;
 }
 
 .bem-cell-phenomenon {
-  border-color: var(--tone-amber-border) !important;
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--tone-amber-border) 28%, transparent),
+  border: 2px solid #c084fc !important;
+  box-shadow: 0 0 0 2px rgba(192, 132, 252, 0.35),
               0 8px 24px rgba(0, 0, 0, 0.4) !important;
 }
 
-/* Planeswalk pending glow */
+/* Planeswalk pending glow — cool blue for valid moves */
 .bem-cell-planeswalk-glow {
-  border-color: var(--accent) !important;
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 50%, transparent),
-              0 0 18px color-mix(in srgb, var(--accent) 40%, transparent);
+  border-color: #60a5fa !important;
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.55),
+              0 0 18px rgba(96, 165, 250, 0.45);
   cursor: pointer;
-  animation: bemGlowPulse 1.4s ease infinite;
+  animation: bemBluePulse 1.4s ease infinite;
 }
 
 .bem-cell-planeswalk-glow:hover {
@@ -4609,17 +4721,30 @@ html[data-palette="scryfall"][data-theme="dark"] .sidebar {
   z-index: 3;
 }
 
+/* Hellride glow — spooky red/flame for face-down diagonals */
 .bem-cell-hellride-glow {
-  border-color: var(--tone-purple-border) !important;
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--tone-purple-border) 50%, transparent),
-              0 0 18px color-mix(in srgb, var(--tone-purple-border) 40%, transparent);
+  border-color: #f97316 !important;
+  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.55),
+              0 0 22px rgba(239, 68, 68, 0.5),
+              0 0 40px rgba(239, 68, 68, 0.2);
   cursor: pointer;
-  animation: bemGlowPulse 1.4s ease infinite;
+  animation: bemFirePulse 1.4s ease infinite;
+  background: color-mix(in srgb, rgba(239, 68, 68, 0.12) 70%, var(--bg-elev-2));
 }
 
-@keyframes bemGlowPulse {
-  0%, 100% { box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 50%, transparent), 0 0 18px color-mix(in srgb, var(--accent) 40%, transparent); }
-  50% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 70%, transparent), 0 0 28px color-mix(in srgb, var(--accent) 60%, transparent); }
+.bem-cell-hellride-glow:hover {
+  transform: scale(1.06);
+  z-index: 3;
+}
+
+@keyframes bemBluePulse {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.55), 0 0 18px rgba(96, 165, 250, 0.45); }
+  50% { box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.75), 0 0 30px rgba(96, 165, 250, 0.65); }
+}
+
+@keyframes bemFirePulse {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.55), 0 0 22px rgba(239, 68, 68, 0.5), 0 0 40px rgba(239, 68, 68, 0.2); }
+  50% { box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.75), 0 0 32px rgba(239, 68, 68, 0.7), 0 0 55px rgba(239, 68, 68, 0.35); }
 }
 
 /* Planeswalk pending state on TR button */
@@ -5050,4 +5175,139 @@ html[data-palette="scryfall"][data-theme="dark"] .sidebar {
   background: color-mix(in srgb, var(--tone-red-bg) 80%, black 20%);
   transform: translateY(-1px);
   box-shadow: 0 6px 18px color-mix(in srgb, var(--tone-red-border) 30%, transparent);
+}
+
+/* ── Tutorial overlay ─────────────────────────────────────────────────────────── */
+
+.game-tutorial-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 8000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.game-tutorial-overlay.hidden {
+  display: none;
+}
+
+.game-tutorial-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(6px);
+}
+
+.game-tutorial-panel {
+  position: relative;
+  z-index: 1;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px 28px 24px;
+  max-width: min(560px, calc(100vw - 32px));
+  max-height: min(80vh, 600px);
+  width: 100%;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: confirm-pop 220ms ease;
+}
+
+.game-tutorial-title {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
+}
+
+.game-tutorial-body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  color: var(--text-soft);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.game-tutorial-body h3 {
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 800;
+  margin: 16px 0 4px;
+}
+
+.game-tutorial-body h3:first-child {
+  margin-top: 0;
+}
+
+.game-tutorial-body p {
+  margin: 0 0 10px;
+}
+
+.game-tutorial-body ul {
+  margin: 4px 0 10px;
+  padding-left: 20px;
+}
+
+.game-tutorial-body li {
+  margin-bottom: 4px;
+}
+
+.game-tutorial-body strong {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.game-tutorial-footer {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.game-tutorial-close-btn {
+  padding: 10px 24px;
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: opacity 140ms ease, transform 140ms ease;
+}
+
+.game-tutorial-close-btn:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+/* Tutorial overlay in portrait mobile — rotate with game view */
+@media (pointer: coarse) and (orientation: portrait) {
+  .game-tutorial-overlay {
+    top: calc((100vh - 100vw) / 2);
+    right: auto;
+    bottom: auto;
+    left: calc((100vw - 100vh) / 2);
+    width: 100vh;
+    height: 100vw;
+    transform: rotate(-90deg);
+    transform-origin: center center;
+    padding: 10px;
+  }
+
+  .game-tutorial-panel {
+    max-height: min(85vw, 520px);
+  }
+}
+
+/* ── Deck panel close button in title row ─────────────────────────────────────── */
+
+.deck-panel-title-row {
+  align-items: center;
 }

@@ -5,6 +5,8 @@ import { escapeHtml, shuffleArray, isHiddenCard } from "./gallery-utils.js";
 const DECK_STORAGE_KEY = "planar-atlas-decks-v2";
 const DECK_NAMES_KEY = "planar-atlas-deck-names-v1";
 const DECK_INIT_FLAG_KEY = "planar-atlas-deck-init-v1";
+const TUTORIAL_CLASSIC_KEY = "planar-atlas-tutorial-classic-v1";
+const TUTORIAL_BEM_KEY = "planar-atlas-tutorial-bem-v1";
 const NUM_DECK_SLOTS = 10;
 const MAX_CARD_COUNT = 9;
 
@@ -28,6 +30,7 @@ let bemPlaneswalkPending = false;
 let bemDragPointerId = null;
 let bemDragStart = null;
 let bemDragHandled = false;
+let pendingGameMode = null;
 const readerTranscriptCache = new Map();
 
 // ── BEM (Blind Eternities Map) constants ──────────────────────────────────────
@@ -145,6 +148,11 @@ const classicViewCardBtn = document.getElementById("classic-view-card-btn");
 const classicCardNameLabel = document.getElementById("classic-card-name-label");
 const classicLibraryLabel = document.getElementById("classic-library-label");
 
+const gameTutorialOverlay = document.getElementById("game-tutorial-overlay");
+const gameTutorialTitle = document.getElementById("game-tutorial-title");
+const gameTutorialBody = document.getElementById("game-tutorial-body");
+const gameTutorialClose = document.getElementById("game-tutorial-close");
+
 // ── Initialization ────────────────────────────────────────────────────────────
 
 export function initDeck({ cards, showToast, onDeckChange }) {
@@ -206,7 +214,7 @@ export function initDeck({ cards, showToast, onDeckChange }) {
 
 // ── Deck slot management ──────────────────────────────────────────────────────
 
-function renderDeckSlotDropdown() {
+function renderDeckSlotDropdown({ updateNameInput = true } = {}) {
   if (!deckSlotSelect) return;
   deckSlotSelect.innerHTML = "";
   for (let i = 0; i < NUM_DECK_SLOTS; i++) {
@@ -217,7 +225,7 @@ function renderDeckSlotDropdown() {
     opt.textContent = `${deckNames[i]}${total > 0 ? ` (${total})` : ""}`;
     deckSlotSelect.appendChild(opt);
   }
-  if (deckSlotNameInput) {
+  if (updateNameInput && deckSlotNameInput) {
     deckSlotNameInput.value = deckNames[currentSlot];
   }
 }
@@ -327,10 +335,20 @@ function bindDeckEvents() {
   });
 
   deckSlotNameInput?.addEventListener("input", () => {
-    const name = deckSlotNameInput.value.trim() || `Deck ${currentSlot + 1}`;
-    deckNames[currentSlot] = name;
+    const rawValue = deckSlotNameInput.value;
+    deckNames[currentSlot] = rawValue.trim() || `Deck ${currentSlot + 1}`;
     saveDeckNamesToStorage();
-    renderDeckSlotDropdown();
+    const savedValue = rawValue;
+    renderDeckSlotDropdown({ updateNameInput: false });
+    if (deckSlotNameInput) deckSlotNameInput.value = savedValue;
+  });
+
+  deckSlotNameInput?.addEventListener("blur", () => {
+    if (deckSlotNameInput && !deckSlotNameInput.value.trim()) {
+      deckNames[currentSlot] = `Deck ${currentSlot + 1}`;
+      saveDeckNamesToStorage();
+      renderDeckSlotDropdown();
+    }
   });
 
   deckPanelLip?.addEventListener("click", () => {
@@ -575,16 +593,23 @@ function bindDeckEvents() {
 
   gameModeClassicBtn?.addEventListener("click", () => {
     hideGameModeDialog();
-    startClassicGame();
+    maybeShowTutorial("classic", startClassicGame);
   });
 
   gameModeBemBtn?.addEventListener("click", () => {
     hideGameModeDialog();
-    startBemGame();
+    maybeShowTutorial("bem", startBemGame);
   });
 
   gameModeDialogCancel?.addEventListener("click", hideGameModeDialog);
   gameModeDialogBackdrop?.addEventListener("click", hideGameModeDialog);
+
+  gameTutorialClose?.addEventListener("click", () => {
+    hideTutorial();
+    if (pendingGameMode === "classic") startClassicGame();
+    else if (pendingGameMode === "bem") startBemGame();
+    pendingGameMode = null;
+  });
 
   bemMapEl?.addEventListener("click", handleBemCellClick);
   bemViewCardBtn?.addEventListener("click", () => {
@@ -1099,7 +1124,9 @@ function encodeGameState() {
     const grid = [];
     for (const [key, cell] of gameState.bemGrid.entries()) {
       const [x, y] = key.split(",").map(Number);
-      grid.push([x, y, compressKey(cell.card.key), cell.faceUp ? 1 : 0]);
+      const entry = [x, y, compressKey(cell.card.key), cell.faceUp ? 1 : 0];
+      if (cell.queuedCard) entry.push(compressKey(cell.queuedCard.key));
+      grid.push(entry);
     }
     const obj = {
       m: "bem",
@@ -1147,9 +1174,16 @@ function decodeGameState(seed) {
       const exiled = (obj.e || []).map(lookupCard).filter(Boolean);
       const chaosCost = typeof obj.c === "number" ? Math.max(0, obj.c) : 0;
       const bemGrid = new Map();
-      for (const [x, y, ck, fu] of (obj.g || [])) {
+      for (const [x, y, ck, fu, qck] of (obj.g || [])) {
         const card = lookupCard(ck);
-        if (card) bemGrid.set(bemKey(x, y), { card, faceUp: fu === 1 });
+        if (card) {
+          const cellObj = { card, faceUp: fu === 1 };
+          if (qck) {
+            const queuedCard = lookupCard(qck);
+            if (queuedCard) cellObj.queuedCard = queuedCard;
+          }
+          bemGrid.set(bemKey(x, y), cellObj);
+        }
       }
       const bemPos = {
         x: typeof obj.px === "number" ? obj.px : 0,
@@ -1535,11 +1569,11 @@ function showGamePlaceholder() {
     gameCardImage.src = "images/assets/card-preview.jpg";
     gameCardImage.alt = "Click to planeswalk";
   }
-  if (gameCardName) gameCardName.textContent = "";
   if (gameSidePanel) gameSidePanel.innerHTML = "";
   if (gameCardImageBtn) {
     gameCardImageBtn.setAttribute("aria-label", "Planeswalk");
     gameCardImageBtn.classList.add("game-card-image-btn-placeholder");
+    gameCardImageBtn.classList.remove("active-plane", "active-phenomenon");
   }
   if (classicViewCardBtn) classicViewCardBtn.classList.add("hidden");
   syncGameToolsState(gameState?.remaining.length ?? 0);
@@ -1560,12 +1594,11 @@ function updateGameView() {
     gameCardImage.src = focused.imagePath;
     gameCardImage.alt = focused.displayName;
   }
-  if (gameCardName) {
-    gameCardName.textContent = focused.displayName;
-  }
   if (gameCardImageBtn) {
     gameCardImageBtn.setAttribute("aria-label", easyPlaneswalk ? "Planeswalk (or Shift+click to view)" : "View card close-up");
     gameCardImageBtn.classList.remove("game-card-image-btn-placeholder");
+    gameCardImageBtn.classList.toggle("active-plane", focused.type !== "Phenomenon");
+    gameCardImageBtn.classList.toggle("active-phenomenon", focused.type === "Phenomenon");
   }
 
   // Update classic view card button
@@ -1620,22 +1653,21 @@ function renderGameSidePanel(activePlanes, focusedIndex) {
 
 function syncGameToolsState(remainingCount) {
   const isBem = gameState?.mode === "bem";
-  // In BEM, "add to active" and "return active" don't apply, but shuffle/search/reveal do
   if (gameToolsAddTop) {
-    gameToolsAddTop.disabled = isBem || remainingCount === 0;
+    gameToolsAddTop.disabled = remainingCount === 0;
     const span = gameToolsAddTop.querySelector("span");
     if (span) span.textContent = `Add Top of Library (${remainingCount} left)`;
   }
   if (gameToolsAddBottom) {
-    gameToolsAddBottom.disabled = isBem || remainingCount === 0;
+    gameToolsAddBottom.disabled = remainingCount === 0;
     const span = gameToolsAddBottom.querySelector("span");
     if (span) span.textContent = `Add Bottom of Library (${remainingCount} left)`;
   }
   if (gameToolsReturnTop) {
-    gameToolsReturnTop.disabled = isBem || !gameState || gameState.activePlanes.length === 0;
+    gameToolsReturnTop.disabled = !gameState || (!isBem && gameState.activePlanes.length === 0);
   }
   if (gameToolsReturnBottom) {
-    gameToolsReturnBottom.disabled = isBem || !gameState || gameState.activePlanes.length === 0;
+    gameToolsReturnBottom.disabled = !gameState || (!isBem && gameState.activePlanes.length === 0);
   }
   // Shuffle, search/library, reveal — always enabled when game is active
   if (gameToolsShuffle) gameToolsShuffle.disabled = !gameState;
@@ -2261,6 +2293,114 @@ function closeAllGameMenus() {
   gameOptionsMenu?.classList.add("hidden");
 }
 
+// ── Tutorial overlay ──────────────────────────────────────────────────────────
+
+const TUTORIAL_CONTENT = {
+  classic: {
+    title: "⚔ Classic Planechase",
+    body: `
+<h3>Welcome to Planechase!</h3>
+<p>In Planechase, players journey across the planes of the Multiverse using a shared deck of <strong>Plane</strong> and <strong>Phenomenon</strong> cards.</p>
+
+<h3>Starting the Game</h3>
+<p>Reveal cards from the top of your planar deck until a Plane is revealed. That Plane becomes active. The rest are placed on the bottom in any order.</p>
+
+<h3>Rolling the Planar Die</h3>
+<p>On your turn, you may roll the planar die at any time. Each additional roll on the same turn costs {1} more than the last (first roll is free, second costs {1}, third costs {2}, etc.).</p>
+<ul>
+  <li><strong>BLANK</strong> — Nothing happens.</li>
+  <li><strong>CHAOS</strong> — The chaos ability of each face-up Plane triggers.</li>
+  <li><strong>PLANESWALKER</strong> — Planeswalk! The active Plane goes to the bottom of the deck. Reveal cards until a Plane is revealed — that Plane becomes active.</li>
+</ul>
+
+<h3>Phenomena</h3>
+<p>When you would planeswalk to a Phenomenon, its triggered ability triggers immediately. Then planeswalk again until you reveal a Plane. Phenomena never stay active — they always lead to another Plane.</p>
+
+<h3>Controls</h3>
+<ul>
+  <li>Tap the <strong>card image</strong> to view it up close.</li>
+  <li>Use the <strong>Planeswalk button</strong> (PLANESWALKER icon) to planeswalk.</li>
+  <li>Use the <strong>Planar Die button</strong> (CHAOS icon) to roll.</li>
+  <li>The <strong>Tools</strong> menu lets you manage the library and reveal cards.</li>
+  <li>The <strong>Options</strong> menu lets you exit, reset, or save the game state.</li>
+</ul>
+`
+  },
+  bem: {
+    title: "✦ Blind Eternities Map",
+    body: `
+<h3>Welcome to the Blind Eternities Map!</h3>
+<p>The Blind Eternities Map is a spatial Planechase variant. Planes are arranged in a living grid — navigate it like an explorer charting unknown territory.</p>
+
+<h3>The Grid</h3>
+<p>You start at the center of a 3×3 grid of planes. As you move, the map expands and distant planes cycle back into the deck.</p>
+<ul>
+  <li><strong>Face-up cards</strong> (N/S/E/W neighbors) are visible planes you can move to.</li>
+  <li><strong>Face-down cards</strong> (diagonal corners) are unknown — reachable only by Hellriding.</li>
+</ul>
+
+<h3>Moving</h3>
+<p>Press the <strong>Planeswalk button</strong> to enter movement mode, then click/tap a highlighted neighbor to move there. Orthogonal moves reveal the card as you arrive. In <em>Easy Planeswalking</em> mode, just tap a neighbor to move instantly.</p>
+
+<h3>Hellriding</h3>
+<p>To Hellride, enter movement mode and click/tap a face-down diagonal card. You venture into the unknown! There is a chance you'll encounter a <strong>Phenomenon</strong> before arriving at your destination, adding to the mystery.</p>
+
+<h3>Phenomena</h3>
+<p>When you land on a Phenomenon, the <strong>Planeswalk button</strong> changes — press it to resolve the Phenomenon and reveal the next plane beneath.</p>
+
+<h3>The Planar Die</h3>
+<p>Roll the die on your turn (first roll is free, each additional roll costs {1} more). The same Chaos and Planeswalk rules apply as in Classic mode.</p>
+
+<h3>Controls</h3>
+<ul>
+  <li>Tap the <strong>Planeswalk button</strong> to enter/cancel movement mode.</li>
+  <li>Tap any face-up card to view its details.</li>
+  <li>The <strong>Tools</strong> and <strong>Options</strong> menus work the same as in Classic mode.</li>
+</ul>
+`
+  }
+};
+
+function maybeShowTutorial(mode, callback) {
+  const key = mode === "bem" ? TUTORIAL_BEM_KEY : TUTORIAL_CLASSIC_KEY;
+  let seen = false;
+  try { seen = !!localStorage.getItem(key); } catch { /* ignore */ }
+
+  if (seen) {
+    callback();
+    return;
+  }
+
+  pendingGameMode = mode;
+  showTutorial(mode);
+}
+
+function showTutorial(mode) {
+  const content = TUTORIAL_CONTENT[mode];
+  if (!content || !gameTutorialOverlay) return;
+
+  if (gameTutorialTitle) gameTutorialTitle.textContent = content.title;
+  if (gameTutorialBody) gameTutorialBody.innerHTML = content.body;
+
+  gameTutorialOverlay.classList.remove("hidden");
+  document.body.classList.add("tutorial-open");
+}
+
+function hideTutorial() {
+  gameTutorialOverlay?.classList.add("hidden");
+  document.body.classList.remove("tutorial-open");
+
+  const key = pendingGameMode === "bem" ? TUTORIAL_BEM_KEY : TUTORIAL_CLASSIC_KEY;
+  try { localStorage.setItem(key, "1"); } catch { /* ignore */ }
+}
+
+export function clearTutorialFlags() {
+  try {
+    localStorage.removeItem(TUTORIAL_CLASSIC_KEY);
+    localStorage.removeItem(TUTORIAL_BEM_KEY);
+  } catch { /* ignore */ }
+}
+
 export function isGameActive() {
   return gameActive;
 }
@@ -2420,8 +2560,21 @@ function bemMovePlayer(nx, ny) {
       showToastFn?.("Can only Hellride to a face-down diagonal card.");
       return;
     }
+
+    // 66.6% chance to encounter a phenomenon before the destination card
+    // (only if the destination card is not already a phenomenon)
+    const originalCard = cell.card;
+    if (originalCard.type !== "Phenomenon") {
+      const phenIdx = gameState.remaining.findIndex(c => c.type === "Phenomenon");
+      if (phenIdx !== -1 && Math.random() < 2 / 3) {
+        const [phenomenon] = gameState.remaining.splice(phenIdx, 1);
+        cell.card = phenomenon;
+        cell.queuedCard = originalCard;
+      }
+    }
+
     cell.faceUp = true;
-    showToastFn?.(`Hellriding to ${cell.card.displayName}!`);
+    showToastFn?.(`Hellriding!`);
   } else {
     // Orthogonal: auto-flip face-down cards
     if (!cell.faceUp) cell.faceUp = true;
@@ -2435,6 +2588,7 @@ function bemMovePlayer(nx, ny) {
   for (const { dx: odx, dy: ody } of orthDirs) {
     const adjCell = bemGrid.get(bemKey(nx + odx, ny + ody));
     if (adjCell && !adjCell.faceUp) adjCell.faceUp = true;
+
   }
 
   bemPlaneswalkPending = false;
@@ -2460,7 +2614,10 @@ function bemResolvePhenomenon() {
   }
 
   const phenomenon = cell.card;
-  const nextCard = bemDrawNonPhenomenon(remaining);
+
+  // If this phenomenon was encountered via hellride, the original card is queued
+  const nextCard = cell.queuedCard ?? bemDrawNonPhenomenon(remaining);
+  delete cell.queuedCard;
 
   remaining.push(phenomenon);
 
@@ -2648,19 +2805,25 @@ function handleBemCellClick(event) {
   }
 
   if (easyPlaneswalk) {
-    // Easy mode: click to move, alt/shift click to view details
+    // Easy mode: shift/alt-click for detail view; tap/click to planeswalk (if valid move)
     if (event.shiftKey || event.altKey) {
       const gridCell = gameState.bemGrid.get(bemKey(nx, ny));
-      if (gridCell?.card) openGameReaderView(gridCell.card, buildBemCardActions());
+      if (gridCell?.card && gridCell.faceUp) openGameReaderView(gridCell.card, buildBemAdjacentCardActions(nx, ny));
       return;
     }
-    bemMovePlayer(nx, ny);
+    // Only planeswalk if it's a valid move (adjacent cell)
+    const isValidMove = (Math.abs(dx) + Math.abs(dy) === 1) || (Math.abs(dx) === 1 && Math.abs(dy) === 1);
+    if (isValidMove) {
+      bemMovePlayer(nx, ny);
+    }
     return;
   }
 
-  // Normal mode: click any adjacent card to view details
+  // Normal mode: click any face-up card to view details
   const gridCell = gameState.bemGrid.get(bemKey(nx, ny));
-  if (gridCell?.card) openGameReaderView(gridCell.card, buildBemCardActions());
+  if (gridCell?.card && gridCell.faceUp) {
+    openGameReaderView(gridCell.card, buildBemAdjacentCardActions(nx, ny));
+  }
 }
 
 function toggleBemPlaneswalkMode() {
@@ -2796,6 +2959,19 @@ function buildBemCardActions() {
         updateBemInfoBar();
         syncBemTrButton();
         showToastFn?.(`${cell.card.displayName} exiled.`);
+      }
+    }
+  ];
+}
+
+
+function buildBemAdjacentCardActions(nx, ny) {
+  return [
+    {
+      label: "Planeswalk Here",
+      action: () => {
+        closeGameReaderView();
+        bemMovePlayer(nx, ny);
       }
     }
   ];
