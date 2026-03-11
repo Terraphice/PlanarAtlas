@@ -1267,6 +1267,7 @@ button.active-filter-pill:disabled {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+  position: relative;
 }
 
 .card-image {
@@ -1315,11 +1316,12 @@ button.active-filter-pill:disabled {
 
 .card-tags {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 6px;
   margin-top: 10px;
   position: relative;
   z-index: 5;
+  overflow: hidden;
 }
 
 .card-tag-more {
@@ -2020,67 +2022,69 @@ button.active-filter-pill:disabled {
 
 .deck-card-overlay {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0;
-  padding: 6px 8px;
-  background: color-mix(in srgb, var(--bg-elev-1) 90%, transparent);
-  backdrop-filter: blur(6px);
-  border-top: 1px solid var(--border-soft);
-  border-radius: 0 0 14px 14px;
+  border-radius: 14px;
   opacity: 0;
   pointer-events: none;
   transition: opacity 140ms ease;
   z-index: 4;
+  background: rgba(0, 0, 0, 0.08);
 }
 
-.gallery-host.deck-mode .deck-card-overlay {
+.card-image-wrap:hover .deck-card-overlay,
+.card-link:focus-visible .deck-card-overlay {
   opacity: 1;
   pointer-events: auto;
 }
 
-.deck-overlay-btn {
-  width: 28px;
-  height: 28px;
-  border: 1px solid var(--border);
-  background: var(--bg-elev-2);
-  color: var(--text);
-  border-radius: 8px;
+.deck-overlay-add-btn {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
   cursor: pointer;
-  font-size: 1.1rem;
-  font-weight: 700;
-  line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 120ms ease, border-color 120ms ease;
-  flex-shrink: 0;
+  flex-direction: column;
+  gap: 0;
+  backdrop-filter: blur(6px);
+  transition: background 120ms ease, transform 120ms ease, border-color 120ms ease;
 }
 
-.deck-overlay-btn:hover:not(:disabled) {
-  background: color-mix(in srgb, var(--accent) 18%, var(--bg-elev-2));
-  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
+.deck-overlay-add-btn:hover {
+  background: rgba(0, 0, 0, 0.65);
+  transform: scale(1.08);
 }
 
-.deck-overlay-btn:disabled {
-  opacity: 0.3;
-  cursor: default;
+.deck-overlay-plus {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1;
+  transition: transform 120ms ease;
+}
+
+.deck-card-overlay.deck-has-count .deck-overlay-plus {
+  font-size: 1.1rem;
+  line-height: 1;
 }
 
 .deck-overlay-count {
-  min-width: 28px;
-  text-align: center;
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: var(--text-faint);
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.9);
 }
 
-.deck-card-overlay.deck-has-count .deck-overlay-count {
-  color: var(--accent);
+.deck-card-overlay.deck-has-count .deck-overlay-add-btn {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 60%, rgba(0, 0, 0, 0.5));
 }
 
 /* ── Deck panel ──────────────────────────────────────────────────────────────── */
@@ -3131,4 +3135,191 @@ html[data-palette="scryfall"][data-theme="dark"] .sidebar {
 .site-footer-legal a:hover {
   color: var(--text-soft);
   opacity: 1;
+}
+
+/* ── Modal image flip animation ──────────────────────────────────────────────── */
+
+.modal-image-wrap {
+  position: relative;
+  cursor: pointer;
+}
+
+@keyframes modalImageSpin {
+  0% { transform: scaleX(1); }
+  50% { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+
+.modal-image-spinning .modal-image {
+  animation: modalImageSpin 0.4s ease forwards;
+}
+
+.modal-image-flip-overlay {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  color: rgba(255, 255, 255, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  opacity: 0;
+  transition: opacity 160ms ease;
+  pointer-events: none;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.modal-image-wrap:hover .modal-image-flip-overlay {
+  opacity: 1;
+}
+
+.modal-image-flipped .modal-image-flip-overlay {
+  opacity: 0.6;
+  background: color-mix(in srgb, var(--accent) 40%, rgba(0, 0, 0, 0.4));
+  border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+}
+
+/* ── Die roll flash animation ────────────────────────────────────────────────── */
+
+@keyframes gameDieFlash {
+  0% { transform: scale(0.5); opacity: 0.3; }
+  60% { transform: scale(1.25); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.game-die-flash {
+  animation: gameDieFlash 0.28s ease forwards;
+}
+
+/* ── Game card image button ───────────────────────────────────────────────────── */
+
+.game-card-image-btn {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: zoom-in;
+  display: block;
+  line-height: 0;
+}
+
+/* ── Game reader view ─────────────────────────────────────────────────────────── */
+
+.game-reader-view {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.game-reader-view.hidden {
+  display: none;
+}
+
+.game-reader-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 7, 10, 0.92);
+  backdrop-filter: blur(8px);
+  cursor: zoom-out;
+}
+
+.game-reader-image {
+  position: relative;
+  z-index: 1;
+  max-width: min(95vw, 900px);
+  max-height: calc(100vh - 32px);
+  width: auto;
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.8);
+  object-fit: contain;
+}
+
+.game-reader-close {
+  position: absolute;
+  z-index: 2;
+  top: 16px;
+  right: 16px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.6);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 120ms ease;
+}
+
+.game-reader-close:hover {
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+}
+
+/* ── Mobile: sidebar and deck panel ──────────────────────────────────────────── */
+
+@media (max-width: 480px) {
+  :root {
+    --sidebar-width: 300px;
+  }
+
+  .sidebar {
+    width: min(84vw, 300px);
+  }
+
+  .topbar-actions {
+    gap: 6px;
+  }
+
+  .deck-panel {
+    width: 100vw;
+    max-width: 100vw;
+    height: 70svh;
+    top: auto;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    border-left: none;
+    border-top: 1px solid color-mix(in srgb, var(--border) 58%, transparent);
+    border-radius: 20px 20px 0 0;
+    transform: translateY(100%);
+    box-shadow: 0 -4px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  .deck-panel.open {
+    transform: translateY(0);
+  }
+
+  .deck-panel-header {
+    padding: 12px 14px;
+  }
+
+  .deck-panel-actions {
+    gap: 4px;
+  }
+
+  .deck-action-btn {
+    padding: 5px 8px;
+    font-size: 0.76rem;
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 10px;
+  }
+
+  .content {
+    padding: 10px;
+  }
 }

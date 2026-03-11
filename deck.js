@@ -44,6 +44,7 @@ const modalDeckInc = document.getElementById("modal-deck-inc");
 const modalDeckCount = document.getElementById("modal-deck-count");
 
 const gameView = document.getElementById("game-view");
+const gameCardImageBtn = document.getElementById("game-card-image-btn");
 const gameCardImage = document.getElementById("game-card-image");
 const gameCardName = document.getElementById("game-card-name");
 const gameSidePanel = document.getElementById("game-side-panel");
@@ -56,17 +57,24 @@ const gameToolsMenu = document.getElementById("game-tools-menu");
 const gameOptionsMenu = document.getElementById("game-options-menu");
 const gameToolsShuffle = document.getElementById("game-tools-shuffle");
 const gameToolsAddTop = document.getElementById("game-tools-add-top");
+const gameToolsAddBottom = document.getElementById("game-tools-add-bottom");
 const gameToolsReturnTop = document.getElementById("game-tools-return-top");
 const gameToolsReturnBottom = document.getElementById("game-tools-return-bottom");
 const gameToolsSearchInput = document.getElementById("game-tools-search-input");
 const gameToolsSearchResults = document.getElementById("game-tools-search-results");
 const gameLibraryViewList = document.getElementById("game-library-view-list");
+const gameMenuSearchSection = document.getElementById("game-menu-search-section");
+const gameLibraryToggle = document.getElementById("game-tools-library-toggle");
 const gameOptExit = document.getElementById("game-opt-exit");
 const gameOptReset = document.getElementById("game-opt-reset");
 const gameOptDeckBuilder = document.getElementById("game-opt-deck-builder");
 const gameCostValue = document.getElementById("game-cost-value");
 const gameCostDisplay = document.getElementById("game-cost-display");
 const gameCostReset = document.getElementById("game-cost-reset");
+const gameReaderView = document.getElementById("game-reader-view");
+const gameReaderImage = document.getElementById("game-reader-image");
+const gameReaderClose = document.getElementById("game-reader-close");
+const gameReaderBackdrop = document.getElementById("game-reader-backdrop");
 
 // ── Initialization ────────────────────────────────────────────────────────────
 
@@ -252,7 +260,7 @@ function bindDeckEvents() {
     if (!gameState) return;
     gameState.remaining = shuffleArray(gameState.remaining);
     showToastFn?.("Remaining library shuffled.");
-    renderGameLibraryView();
+    if (!gameMenuSearchSection?.classList.contains("hidden")) renderGameLibraryView();
   });
 
   gameToolsAddTop?.addEventListener("click", () => {
@@ -264,7 +272,19 @@ function bindDeckEvents() {
     gameState.activePlanes.push(top);
     updateGameView();
     showToastFn?.(`${top.displayName} added simultaneously.`);
-    renderGameLibraryView();
+    if (!gameMenuSearchSection?.classList.contains("hidden")) renderGameLibraryView();
+  });
+
+  gameToolsAddBottom?.addEventListener("click", () => {
+    if (!gameState || gameState.remaining.length === 0) {
+      showToastFn?.("No cards remaining in the library.");
+      return;
+    }
+    const bottom = gameState.remaining.pop();
+    gameState.activePlanes.push(bottom);
+    updateGameView();
+    showToastFn?.(`${bottom.displayName} added simultaneously.`);
+    if (!gameMenuSearchSection?.classList.contains("hidden")) renderGameLibraryView();
   });
 
   gameToolsReturnTop?.addEventListener("click", () => {
@@ -277,7 +297,7 @@ function bindDeckEvents() {
     gameState.activePlanes = [];
     gameState.focusedIndex = 0;
     updateGameView();
-    renderGameLibraryView();
+    if (!gameMenuSearchSection?.classList.contains("hidden")) renderGameLibraryView();
     showToastFn?.(`Returned ${returned.length} plane${returned.length > 1 ? "s" : ""} to top.`);
   });
 
@@ -291,8 +311,22 @@ function bindDeckEvents() {
     gameState.activePlanes = [];
     gameState.focusedIndex = 0;
     updateGameView();
-    renderGameLibraryView();
+    if (!gameMenuSearchSection?.classList.contains("hidden")) renderGameLibraryView();
     showToastFn?.(`Returned ${returned.length} plane${returned.length > 1 ? "s" : ""} to bottom.`);
+  });
+
+  gameLibraryToggle?.addEventListener("click", () => {
+    const isHidden = gameMenuSearchSection?.classList.contains("hidden");
+    if (isHidden) {
+      gameMenuSearchSection?.classList.remove("hidden");
+      if (gameToolsSearchInput) gameToolsSearchInput.value = "";
+      if (gameToolsSearchResults) gameToolsSearchResults.innerHTML = "";
+      renderGameLibraryView();
+      if (gameLibraryToggle) gameLibraryToggle.textContent = "Hide Library";
+    } else {
+      gameMenuSearchSection?.classList.add("hidden");
+      if (gameLibraryToggle) gameLibraryToggle.textContent = "Search & View Library";
+    }
   });
 
   gameToolsSearchInput?.addEventListener("input", () => {
@@ -313,6 +347,11 @@ function bindDeckEvents() {
       updateCostDisplay();
     }
   });
+
+  gameCardImageBtn?.addEventListener("click", openGameReaderView);
+
+  gameReaderClose?.addEventListener("click", closeGameReaderView);
+  gameReaderBackdrop?.addEventListener("click", closeGameReaderView);
 
   gameView?.addEventListener("click", (event) => {
     const target = event.target;
@@ -516,11 +555,7 @@ function updateCardOverlays(cardKey) {
   const count = deckCards().get(cardKey) || 0;
   for (const overlay of document.querySelectorAll(`.deck-card-overlay[data-card-key="${CSS.escape(cardKey)}"]`)) {
     const countEl = overlay.querySelector(".deck-overlay-count");
-    if (countEl) countEl.textContent = count;
-    const decBtn = overlay.querySelector("[data-action='dec']");
-    if (decBtn) decBtn.disabled = count <= 0;
-    const incBtn = overlay.querySelector("[data-action='inc']");
-    if (incBtn) incBtn.disabled = count >= MAX_CARD_COUNT;
+    if (countEl) countEl.textContent = count > 0 ? count : "";
     overlay.classList.toggle("deck-has-count", count > 0);
   }
 }
@@ -531,11 +566,7 @@ function updateAllCardOverlays() {
     if (!key) continue;
     const count = deckCards().get(key) || 0;
     const countEl = overlay.querySelector(".deck-overlay-count");
-    if (countEl) countEl.textContent = count;
-    const decBtn = overlay.querySelector("[data-action='dec']");
-    if (decBtn) decBtn.disabled = count <= 0;
-    const incBtn = overlay.querySelector("[data-action='inc']");
-    if (incBtn) incBtn.disabled = count >= MAX_CARD_COUNT;
+    if (countEl) countEl.textContent = count > 0 ? count : "";
     overlay.classList.toggle("deck-has-count", count > 0);
   }
 }
@@ -740,8 +771,8 @@ function startGame() {
 
   const shuffled = shuffleArray(buildDeckArray());
   gameState = {
-    remaining: shuffled.slice(1),
-    activePlanes: shuffled.length > 0 ? [shuffled[0]] : [],
+    remaining: shuffled,
+    activePlanes: [],
     focusedIndex: 0,
     dieRolling: false,
     chaosCost: 0,
@@ -752,7 +783,7 @@ function startGame() {
   closeDeckPanel();
   document.body.classList.add("game-open");
   gameView?.classList.remove("hidden");
-  updateGameView();
+  showGamePlaceholder();
   resetDieIcon();
   updateCostDisplay();
 }
@@ -771,14 +802,14 @@ function resetGame() {
   clearTimeout(gameState._dieResetTimer);
   const shuffled = shuffleArray(buildDeckArray());
   gameState = {
-    remaining: shuffled.slice(1),
-    activePlanes: shuffled.length > 0 ? [shuffled[0]] : [],
+    remaining: shuffled,
+    activePlanes: [],
     focusedIndex: 0,
     dieRolling: false,
     chaosCost: 0,
     _dieResetTimer: null
   };
-  updateGameView();
+  showGamePlaceholder();
   closeAllGameMenus();
   resetDieIcon();
   updateCostDisplay();
@@ -811,7 +842,6 @@ function gameRollDie() {
 
   gameState.dieRolling = true;
   gameBtnTl?.classList.add("game-die-rolling");
-  clearTimeout(gameState._dieResetTimer);
 
   setTimeout(() => {
     if (!gameState) return;
@@ -821,9 +851,6 @@ function gameRollDie() {
     gameState.chaosCost++;
     updateCostDisplay();
     applyDieResult(roll);
-    gameState._dieResetTimer = setTimeout(() => {
-      if (gameState) resetDieIcon();
-    }, 3000);
   }, 500);
 }
 
@@ -847,6 +874,10 @@ function applyDieResult(roll) {
     gameDieIcon.setAttribute("aria-label", "No effect");
     gameBtnTl?.classList.add("game-die-blank");
   }
+
+  gameDieIcon.classList.remove("game-die-flash");
+  void gameDieIcon.offsetWidth;
+  gameDieIcon.classList.add("game-die-flash");
 }
 
 function resetDieIcon() {
@@ -864,6 +895,16 @@ function updateCostDisplay() {
   if (gameCostDisplay) gameCostDisplay.classList.toggle("game-cost-visible", cost > 0);
 }
 
+function showGamePlaceholder() {
+  if (gameCardImage) {
+    gameCardImage.src = "images/assets/card-preview.jpg";
+    gameCardImage.alt = "Press Planeswalk to begin";
+  }
+  if (gameCardName) gameCardName.textContent = "Press ▶ to planeswalk";
+  if (gameSidePanel) gameSidePanel.innerHTML = "";
+  syncGameToolsState(gameState?.remaining.length ?? 0);
+}
+
 function updateGameView() {
   if (!gameState) return;
 
@@ -871,9 +912,7 @@ function updateGameView() {
   const focused = activePlanes[focusedIndex] ?? activePlanes[0];
 
   if (!focused) {
-    if (gameCardImage) { gameCardImage.src = ""; gameCardImage.alt = ""; }
-    if (gameCardName) gameCardName.textContent = "No planes remaining";
-    if (gameSidePanel) gameSidePanel.innerHTML = "";
+    showGamePlaceholder();
     return;
   }
 
@@ -935,12 +974,34 @@ function syncGameToolsState(remainingCount) {
     const span = gameToolsAddTop.querySelector("span");
     if (span) span.textContent = `Add Top of Library (${remainingCount} left)`;
   }
+  if (gameToolsAddBottom) {
+    gameToolsAddBottom.disabled = remainingCount === 0;
+    const span = gameToolsAddBottom.querySelector("span");
+    if (span) span.textContent = `Add Bottom of Library (${remainingCount} left)`;
+  }
   if (gameToolsReturnTop) {
     gameToolsReturnTop.disabled = !gameState || gameState.activePlanes.length === 0;
   }
   if (gameToolsReturnBottom) {
     gameToolsReturnBottom.disabled = !gameState || gameState.activePlanes.length === 0;
   }
+}
+
+function openGameReaderView() {
+  if (!gameState) return;
+  const src = gameCardImage?.src;
+  if (!src || src === window.location.href) return;
+  if (gameReaderImage) {
+    gameReaderImage.src = src;
+    gameReaderImage.alt = gameCardImage?.alt ?? "";
+  }
+  gameReaderView?.classList.remove("hidden");
+  document.body.classList.add("game-reader-open");
+}
+
+function closeGameReaderView() {
+  gameReaderView?.classList.add("hidden");
+  document.body.classList.remove("game-reader-open");
 }
 
 function renderGameLibraryView() {
@@ -1016,10 +1077,11 @@ function toggleGameToolsMenu() {
   closeAllGameMenus();
   if (isHidden) {
     gameToolsMenu?.classList.remove("hidden");
+    gameMenuSearchSection?.classList.add("hidden");
+    if (gameLibraryToggle) gameLibraryToggle.textContent = "Search & View Library";
     if (gameToolsSearchInput) gameToolsSearchInput.value = "";
     if (gameToolsSearchResults) gameToolsSearchResults.innerHTML = "";
     syncGameToolsState(gameState?.remaining.length ?? 0);
-    renderGameLibraryView();
   }
 }
 

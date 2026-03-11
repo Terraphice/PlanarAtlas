@@ -91,7 +91,9 @@ const settingsContactDeveloperLink = document.getElementById("settings-contact-d
 const themeToggleButton = document.getElementById("theme-toggle");
 
 const modal = document.getElementById("card-modal");
+const modalImageWrap = document.getElementById("modal-image-wrap");
 const modalImage = document.getElementById("modal-image");
+const modalFlipHint = document.getElementById("modal-flip-hint");
 const modalName = document.getElementById("modal-card-name");
 const modalType = document.getElementById("modal-card-type");
 const modalTranscript = document.getElementById("modal-transcript");
@@ -105,6 +107,9 @@ const modalCopyLinkButton = document.getElementById("modal-copy-link");
 const gallery = document.getElementById("gallery");
 const toastRegion = document.getElementById("toast-region");
 const paginationControls = document.getElementById("pagination-controls");
+
+let modalImageFlipped = false;
+let modalCurrentCardImagePath = "";
 
 const preferences = loadPreferences(STORAGE_KEY);
 
@@ -377,6 +382,8 @@ function bindEvents() {
   modalNextButton.addEventListener("click", showNextCard);
   modalCopyLinkButton.addEventListener("click", copyCurrentCardLink);
 
+  modalImageWrap?.addEventListener("click", flipModalImage);
+
   modalTagList.addEventListener("click", (event) => {
     const target = event.target;
     if (!(target instanceof HTMLElement)) return;
@@ -398,7 +405,16 @@ function bindEvents() {
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
-      if (isGameActive()) return; // game handles its own Escape via menus
+      if (isGameActive()) {
+        // Close reader view if open
+        const readerView = document.getElementById("game-reader-view");
+        if (readerView && !readerView.classList.contains("hidden")) {
+          readerView.classList.add("hidden");
+          document.body.classList.remove("game-reader-open");
+          return;
+        }
+        return; // game handles its own Escape via menus
+      }
 
       if (!topSearchSuggestions.classList.contains("hidden")) {
         hideAllSearchSuggestions();
@@ -1036,6 +1052,29 @@ function createCardElement(card, index = 0) {
   imageWrap.className = "card-image-wrap";
   imageWrap.innerHTML = `<img class="card-image" src="${card.thumbPath}" alt="${escapeHtml(card.displayName)}" loading="lazy" />`;
 
+  // Deck image overlay — always rendered, shown on hover
+  const deckOverlay = document.createElement("div");
+  deckOverlay.className = "deck-card-overlay";
+  deckOverlay.dataset.cardKey = card.key;
+
+  const deckCount = getCardDeckCount(card.key);
+  deckOverlay.innerHTML = `
+    <button class="deck-overlay-add-btn" data-action="toggle" aria-label="Toggle in deck" type="button">
+      <span class="deck-overlay-plus">+</span>
+      <span class="deck-overlay-count">${deckCount > 0 ? deckCount : ""}</span>
+    </button>
+  `;
+  if (deckCount > 0) deckOverlay.classList.add("deck-has-count");
+
+  deckOverlay.addEventListener("click", (event) => {
+    event.stopPropagation();
+    const count = getCardDeckCount(card.key);
+    if (count > 0) removeCardFromDeck(card.key);
+    else addCardToDeck(card.key);
+  });
+
+  imageWrap.appendChild(deckOverlay);
+
   const footer = document.createElement("div");
   footer.className = "card-footer";
 
@@ -1049,15 +1088,26 @@ function createCardElement(card, index = 0) {
   const tagsContainer = document.createElement("div");
   tagsContainer.className = "card-tags";
 
-  const MAX_CARD_TAGS = 4;
-  const visibleTags = card.tags.slice(0, MAX_CARD_TAGS);
+  const MAX_TAG_CHARS = 35;
+  let charCount = 0;
+  const visibleTags = [];
+  for (const tag of card.tags) {
+    const label = getTagLabel(tag);
+    if (visibleTags.length === 0 || charCount + label.length <= MAX_TAG_CHARS) {
+      visibleTags.push(tag);
+      charCount += label.length;
+    } else {
+      break;
+    }
+  }
   for (const tag of visibleTags) {
     tagsContainer.appendChild(createTagChipElement(tag, "card-tag"));
   }
-  if (card.tags.length > MAX_CARD_TAGS) {
+  const hiddenCount = card.tags.length - visibleTags.length;
+  if (hiddenCount > 0) {
     const more = document.createElement("span");
     more.className = "card-tag card-tag-more";
-    more.textContent = `+${card.tags.length - MAX_CARD_TAGS}`;
+    more.textContent = `+${hiddenCount}`;
     more.setAttribute("aria-hidden", "true");
     tagsContainer.appendChild(more);
   }
@@ -1068,32 +1118,12 @@ function createCardElement(card, index = 0) {
   article.appendChild(imageWrap);
   article.appendChild(footer);
 
-  // Deck count overlay — always rendered, visible when deck panel is open
-  const deckOverlay = document.createElement("div");
-  deckOverlay.className = "deck-card-overlay";
-  deckOverlay.dataset.cardKey = card.key;
-
-  const deckCount = getCardDeckCount(card.key);
-  deckOverlay.innerHTML = `
-    <button class="deck-overlay-btn deck-overlay-dec" data-action="dec" aria-label="Remove from deck" type="button"${deckCount <= 0 ? " disabled" : ""}>−</button>
-    <span class="deck-overlay-count">${deckCount}</span>
-    <button class="deck-overlay-btn deck-overlay-inc" data-action="inc" aria-label="Add to deck" type="button"${deckCount >= 9 ? " disabled" : ""}>+</button>
-  `;
-  if (deckCount > 0) deckOverlay.classList.add("deck-has-count");
-
-  deckOverlay.addEventListener("click", (event) => {
-    event.stopPropagation();
-    const btn = event.target.closest("[data-action]");
-    if (!btn) return;
-    if (btn.dataset.action === "inc") addCardToDeck(card.key);
-    else if (btn.dataset.action === "dec") removeCardFromDeck(card.key);
-  });
-
-  article.appendChild(deckOverlay);
-
   cardButton.appendChild(article);
 
-  cardButton.addEventListener("click", () => openModalByKey(card.key, true));
+  cardButton.addEventListener("click", () => {
+    if (isDeckPanelOpen()) return;
+    openModalByKey(card.key, true);
+  });
   return cardButton;
 }
 
@@ -1491,6 +1521,9 @@ function openModalByKey(cardKey, updateHash = true) {
 }
 
 async function renderModal(card, updateHash = true) {
+  modalImageFlipped = false;
+  modalCurrentCardImagePath = card.imagePath;
+  modalImageWrap?.classList.remove("modal-image-flipped");
   modalImage.src = "";
   modalImage.alt = card.displayName;
   modalImage.src = card.imagePath;
@@ -1898,4 +1931,28 @@ function getManaClasses(symbol) {
 
 function capitalize(value) {
   return value ? value[0].toUpperCase() + value.slice(1) : value;
+}
+
+function flipModalImage() {
+  if (!modalImage || !modalImageWrap) return;
+
+  const wasFlipped = modalImageFlipped;
+  modalImageFlipped = !wasFlipped;
+
+  modalImageWrap.classList.add("modal-image-spinning");
+
+  setTimeout(() => {
+    if (wasFlipped) {
+      modalImage.src = modalCurrentCardImagePath;
+      modalImage.alt = modalName.textContent;
+    } else {
+      modalImage.src = "images/assets/card-preview.jpg";
+      modalImage.alt = "Card back";
+    }
+    modalImageWrap.classList.toggle("modal-image-flipped", modalImageFlipped);
+  }, 200);
+
+  setTimeout(() => {
+    modalImageWrap.classList.remove("modal-image-spinning");
+  }, 400);
 }

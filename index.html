@@ -248,8 +248,9 @@
 
       <div class="modal-layout">
         <div class="modal-image-column">
-          <div class="modal-image-wrap">
+          <div class="modal-image-wrap" id="modal-image-wrap">
             <img id="modal-image" class="modal-image" src="" alt="" />
+            <div class="modal-image-flip-overlay" id="modal-flip-hint" aria-hidden="true">↺</div>
           </div>
           <div class="modal-source-links">
             <a id="modal-source-link" class="modal-source-link" href="" target="_blank" rel="noopener noreferrer">
@@ -293,6 +294,13 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- Game card reader view -->
+  <div id="game-reader-view" class="game-reader-view hidden" role="dialog" aria-label="Card reader" aria-modal="true">
+    <div class="game-reader-backdrop" id="game-reader-backdrop"></div>
+    <img id="game-reader-image" class="game-reader-image" src="" alt="" />
+    <button id="game-reader-close" class="game-reader-close" type="button" aria-label="Close reader">×</button>
   </div>
 
   <div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="true"></div>
@@ -341,7 +349,9 @@
 
     <!-- Main card area -->
     <div class="game-main-area">
-      <img id="game-card-image" class="game-card-image" src="" alt="" />
+      <button id="game-card-image-btn" class="game-card-image-btn" type="button" aria-label="View card close-up">
+        <img id="game-card-image" class="game-card-image" src="" alt="" />
+      </button>
       <div id="game-card-name" class="game-card-name"></div>
     </div>
 
@@ -372,11 +382,14 @@
       <button id="game-tools-add-top" class="game-menu-item" type="button">
         <span>Add Top of Library</span>
       </button>
+      <button id="game-tools-add-bottom" class="game-menu-item" type="button">
+        <span>Add Bottom of Library</span>
+      </button>
       <button id="game-tools-return-top" class="game-menu-item" type="button">Return Active to Top</button>
       <button id="game-tools-return-bottom" class="game-menu-item" type="button">Return Active to Bottom</button>
       <div class="game-menu-divider"></div>
-      <div class="game-menu-search">
-        <label class="game-menu-search-label" for="game-tools-search-input">Search &amp; View Library</label>
+      <button id="game-tools-library-toggle" class="game-menu-item" type="button">Search &amp; View Library</button>
+      <div id="game-menu-search-section" class="game-menu-search hidden">
         <input id="game-tools-search-input" class="game-tools-search-input" type="search" placeholder="Search cards in library…" autocomplete="off" />
         <div id="game-tools-search-results" class="game-tools-search-results"></div>
         <div id="game-library-view-list" class="game-library-view-list"></div>
