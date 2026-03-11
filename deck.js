@@ -906,19 +906,37 @@ function applyOverlayCount(overlay, count) {
   if (decBtn) decBtn.disabled = count === 0;
 }
 
+function applyListRowCount(row, count) {
+  const countEl = row.querySelector(".list-deck-count");
+  const decBtn = row.querySelector("[data-action='dec']");
+  if (countEl) countEl.textContent = count > 0 ? String(count) : "·";
+  if (decBtn) decBtn.disabled = count === 0;
+}
+
 function updateCardOverlays(cardKey) {
   const count = deckCards().get(cardKey) || 0;
   for (const overlay of document.querySelectorAll(`.deck-card-overlay[data-card-key="${CSS.escape(cardKey)}"]`)) {
     applyOverlayCount(overlay, count);
   }
+  for (const row of document.querySelectorAll(`.list-card-row[data-card-key="${CSS.escape(cardKey)}"]`)) {
+    applyListRowCount(row, count);
+  }
 }
 
 function updateAllCardOverlays() {
+  const allKeys = new Set();
   for (const overlay of document.querySelectorAll(".deck-card-overlay")) {
     const key = overlay.dataset.cardKey;
     if (!key) continue;
     const count = deckCards().get(key) || 0;
     applyOverlayCount(overlay, count);
+    allKeys.add(key);
+  }
+  for (const row of document.querySelectorAll(".list-card-row[data-card-key]")) {
+    const key = row.dataset.cardKey;
+    if (!key) continue;
+    const count = deckCards().get(key) || 0;
+    applyListRowCount(row, count);
   }
 }
 

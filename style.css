@@ -999,13 +999,6 @@ html[data-palette="gruvbox"][data-theme="dark"] .sidebar {
   transform: translateY(-1px);
 }
 
-.settings-menu-action-danger:hover,
-.settings-menu-action-danger:focus-visible {
-  border-color: var(--tone-red-border);
-  background: var(--tone-red-bg);
-  color: var(--tone-red-text);
-}
-
 .settings-menu-link {
   display: inline-flex;
   text-decoration: none;
@@ -1422,6 +1415,7 @@ button.active-filter-pill:disabled {
   text-overflow: ellipsis;
   white-space: nowrap;
   min-width: 0;
+  flex: 1 1 0;
 }
 
 .card-type {
