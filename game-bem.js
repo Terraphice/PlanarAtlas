@@ -137,21 +137,20 @@ function startBemPanAnimation(fromDx, fromDy) {
   if (!bemMapEl) return;
   bemAnimating = true;
   bemMapEl.style.transition = "none";
-  bemMapEl.style.transform = `translate(${fromDx * 33.333}%, ${fromDy * 33.333}%)`;
-  // Use double rAF so the browser paints the "from" position before starting
-  // the slide transition, avoiding a visual jerk from the offsetWidth reflow trick.
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      if (!bemAnimating) return;
-      bemMapEl.style.transition = "transform 300ms ease";
-      bemMapEl.style.transform = "translate(0, 0)";
-      bemMapEl.addEventListener("transitionend", function onEnd() {
-        bemMapEl.removeEventListener("transitionend", onEnd);
-        bemMapEl.style.transition = "";
-        bemMapEl.style.transform = "";
-        bemAnimating = false;
-      });
-    });
+  // Negate fromDx/fromDy: to show the OLD card in the viewport centre we must
+  // shift the newly-rendered map in the opposite direction of travel so that
+  // the adjacent column containing the old card slides into view.
+  bemMapEl.style.transform = `translate(${-fromDx * 33.333}%, ${-fromDy * 33.333}%)`;
+  // Force a synchronous reflow so the browser commits the initial transform
+  // before we enable the transition, preventing it from being skipped.
+  bemMapEl.getBoundingClientRect();
+  bemMapEl.style.transition = "transform 300ms ease";
+  bemMapEl.style.transform = "translate(0, 0)";
+  bemMapEl.addEventListener("transitionend", function onEnd() {
+    bemMapEl.removeEventListener("transitionend", onEnd);
+    bemMapEl.style.transition = "";
+    bemMapEl.style.transform = "";
+    bemAnimating = false;
   });
 }
 
