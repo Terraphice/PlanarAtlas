@@ -86,9 +86,7 @@ const gameCardImageBtn = document.getElementById("game-card-image-btn");
 const gameSidePanel = document.getElementById("game-side-panel");
 const classicViewCardBtn = document.getElementById("classic-view-card-btn");
 const classicCardNameLabel = document.getElementById("classic-card-name-label");
-const classicLibraryLabel = document.getElementById("classic-library-label");
 const bemCardNameLabel = document.getElementById("bem-card-name");
-const bemStatusLabel = document.getElementById("bem-status-label");
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -655,7 +653,6 @@ export function initDeck({ cards, showToast, onDeckChange }) {
     gameSidePanel,
     classicViewCardBtn,
     classicCardNameLabel,
-    classicLibraryLabel,
   });
 
   initBemGame({
@@ -687,7 +684,6 @@ export function initDeck({ cards, showToast, onDeckChange }) {
     bemMapArea,
     bemMapEl,
     bemCardNameLabel,
-    bemStatusLabel,
   });
 
   const urlParams = new URLSearchParams(window.location.search);

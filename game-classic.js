@@ -96,7 +96,7 @@ export function gamePlaneswalk() {
 // ── Classic view rendering ────────────────────────────────────────────────────
 
 export function updateClassicGameView(gameState) {
-  const { openGameReaderView, buildMainCardActions, syncGameToolsState, showToast, gameCardImage, gameCardImageBtn, classicViewCardBtn, classicCardNameLabel, classicLibraryLabel, gameSidePanel } = ctx;
+  const { openGameReaderView, buildMainCardActions, syncGameToolsState, showToast, gameCardImage, gameCardImageBtn, classicViewCardBtn, classicCardNameLabel, gameSidePanel } = ctx;
 
   const { activePlanes, focusedIndex, remaining } = gameState;
   const focused = activePlanes[focusedIndex] ?? activePlanes[0];
@@ -118,7 +118,6 @@ export function updateClassicGameView(gameState) {
   if (classicViewCardBtn) {
     classicViewCardBtn.classList.remove("hidden");
     if (classicCardNameLabel) classicCardNameLabel.textContent = focused.displayName;
-    if (classicLibraryLabel) classicLibraryLabel.textContent = `${remaining.length} left`;
   }
 
   renderClassicSidePanel(activePlanes, focusedIndex);

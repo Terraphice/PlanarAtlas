@@ -579,7 +579,7 @@ export function renderBemMap() {
 // ── BEM info bar ──────────────────────────────────────────────────────────────
 
 export function updateBemInfoBar() {
-  const { bemCardNameLabel, bemStatusLabel } = ctx;
+  const { bemCardNameLabel } = ctx;
   const gameState = ctx.getGameState();
   if (!gameState?.bemGrid || !gameState?.bemPos) return;
 
@@ -587,18 +587,9 @@ export function updateBemInfoBar() {
 
   if (cell?.placeholder && !cell?.card) {
     if (bemCardNameLabel) bemCardNameLabel.textContent = "Empty Cell";
-    if (bemStatusLabel) bemStatusLabel.textContent = "Planeswalk to reveal a card.";
   } else {
     const card = cell?.card;
     if (bemCardNameLabel) bemCardNameLabel.textContent = card ? card.displayName : "";
-    if (bemStatusLabel) {
-      if (card?.type === "Phenomenon") {
-        bemStatusLabel.textContent = "You've encountered a Phenomenon!";
-      } else {
-        const remaining = gameState.remaining.length;
-        bemStatusLabel.textContent = `${remaining} card${remaining !== 1 ? "s" : ""} left`;
-      }
-    }
   }
 
   ctx.renderGameSidePanel(gameState.activePlanes, gameState.focusedIndex);
