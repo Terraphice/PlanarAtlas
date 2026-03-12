@@ -509,7 +509,7 @@
   padding: 0 20px;
   height: 58px;
   min-height: 58px;
-  border: 1px solid var(--border);
+  border: 2px solid #4ade80;
   border-radius: 16px;
   background: color-mix(in srgb, var(--bg-elev-2) 88%, transparent);
   color: var(--text);
@@ -517,16 +517,23 @@
   font-size: 1rem;
   font-weight: 700;
   backdrop-filter: blur(10px);
-  transition: border-color 140ms ease, background 140ms ease;
+  transition: border-color 140ms ease, background 140ms ease, box-shadow 140ms ease;
   white-space: nowrap;
   overflow: hidden;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 10;
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.35),
+              0 0 14px rgba(74, 222, 128, 0.3),
+              0 8px 20px rgba(0, 0, 0, 0.3);
   max-width: calc(100vw - 200px);
 }
 
 .classic-view-card-btn:hover {
-  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
-  background: color-mix(in srgb, var(--accent) 10%, var(--bg-elev-2));
+  border-color: #4ade80;
+  background: color-mix(in srgb, rgba(74, 222, 128, 0.14) 70%, var(--bg-elev-2));
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.45),
+              0 0 18px rgba(74, 222, 128, 0.4),
+              0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .classic-view-card-btn.hidden {
@@ -538,13 +545,6 @@
   text-overflow: ellipsis;
   flex: 1 1 auto;
   min-width: 0;
-}
-
-.classic-library-label {
-  font-size: 0.82rem;
-  color: var(--text-faint);
-  font-style: italic;
-  flex-shrink: 0;
 }
 
 /* Corner buttons */
@@ -3088,6 +3088,7 @@ html[data-palette="scryfall"][data-theme="dark"] .sidebar {
   align-items: center;
   justify-content: center;
   padding: 0 80px;
+  z-index: 10;
 }
 
 .bem-view-card-btn {
@@ -3097,7 +3098,7 @@ html[data-palette="scryfall"][data-theme="dark"] .sidebar {
   padding: 0 20px;
   height: 58px;
   min-height: 58px;
-  border: 1px solid var(--border);
+  border: 2px solid #4ade80;
   border-radius: 16px;
   background: color-mix(in srgb, var(--bg-elev-2) 90%, transparent);
   color: var(--text);
@@ -3105,16 +3106,21 @@ html[data-palette="scryfall"][data-theme="dark"] .sidebar {
   font-size: 1rem;
   font-weight: 700;
   backdrop-filter: blur(8px);
-  transition: border-color 140ms ease, background 140ms ease;
+  transition: border-color 140ms ease, background 140ms ease, box-shadow 140ms ease;
   white-space: nowrap;
   overflow: hidden;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.35),
+              0 0 14px rgba(74, 222, 128, 0.3),
+              0 8px 20px rgba(0, 0, 0, 0.3);
   max-width: calc(100% - 32px);
 }
 
 .bem-view-card-btn:hover {
-  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
-  background: color-mix(in srgb, var(--accent) 10%, var(--bg-elev-2));
+  border-color: #4ade80;
+  background: color-mix(in srgb, rgba(74, 222, 128, 0.14) 70%, var(--bg-elev-2));
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.45),
+              0 0 18px rgba(74, 222, 128, 0.4),
+              0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .bem-card-name-label {
@@ -3123,16 +3129,6 @@ html[data-palette="scryfall"][data-theme="dark"] .sidebar {
   flex: 1 1 auto;
   min-width: 0;
   max-width: 280px;
-}
-
-.bem-status-label {
-  font-size: 0.82rem;
-  color: var(--text-faint);
-  font-style: italic;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  flex-shrink: 0;
 }
 
 /* BEM-mode: hide classic-only elements */
