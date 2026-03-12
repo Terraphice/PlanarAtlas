@@ -64,22 +64,43 @@ export function savePreferences(storageKey, displayState, filters, theme = "syst
   }
 }
 
+/**
+ * Derives a card's storage key from its filename (strips extension).
+ * @param {string} filename - The card's filename (e.g. "Plane_Akoum.png").
+ * @returns {string} The card key (e.g. "Plane_Akoum").
+ */
 export function getCardKey(filename) {
   return filename.replace(/\.[^.]+$/, "");
 }
 
+/**
+ * Derives the human-readable display name from a card filename.
+ * Strips the type prefix ("Plane_" / "Phenomenon_"), extension, and converts underscores to spaces.
+ * @param {string} filename - The card's filename (e.g. "Plane_Akoum.png").
+ * @returns {string} The display name (e.g. "Akoum").
+ */
 export function getDisplayName(filename) {
   const withoutExtension = filename.replace(/\.[^.]+$/, "");
   const withoutTypePrefix = withoutExtension.replace(/^(Plane|Phenomenon)[-_ ]+/i, "");
   return withoutTypePrefix.replace(/[_-]+/g, " ").trim();
 }
 
+/**
+ * Determines a card's type from its normalized (lowercased) tags.
+ * @param {string[]} tags - Normalized lowercase tag array.
+ * @returns {"Plane" | "Phenomenon" | "Unknown"} The card type.
+ */
 export function getCardType(tags) {
   if (tags.includes("plane")) return "Plane";
   if (tags.includes("phenomenon")) return "Phenomenon";
   return "Unknown";
 }
 
+/**
+ * Enriches a raw card object from cards.json with derived fields.
+ * @param {{ file: string, folder: string, tags: string[] }} card - Raw card data.
+ * @returns {object} Enriched card with key, displayName, type, imagePath, thumbPath, transcriptPath, tags, normalizedTags.
+ */
 export function enrichCard(card) {
   const tags = Array.isArray(card.tags)
     ? card.tags
@@ -317,6 +338,12 @@ export function matchesParsedQuery(card, parsedQuery, filters, transcriptCache =
   return true;
 }
 
+/**
+ * Parses a raw search query string into structured filter terms.
+ * Supports plain text, name:, tag:, type:, oracle:, negation (-), quoted phrases, and /regex/.
+ * @param {string} rawQuery - The raw search query string.
+ * @returns {{textTerms: string[], negTextTerms: string[], nameTerms: string[], negNameTerms: string[], tagTerms: string[], negTagTerms: string[], oracleTerms: string[], negOracleTerms: string[], regex: RegExp | null, regexSource: string | null, showHidden: boolean}} Parsed query object.
+ */
 export function parseSearchQuery(rawQuery) {
   const parsed = {
     textTerms: [],
@@ -393,6 +420,12 @@ export function parseSearchQuery(rawQuery) {
   return parsed;
 }
 
+/**
+ * Checks whether a haystack string approximately contains a needle, using Levenshtein distance.
+ * @param {string} haystack - The string to search within.
+ * @param {string} needle - The string to search for.
+ * @returns {boolean} True if needle is found (exactly or within fuzzy threshold).
+ */
 export function fuzzyIncludes(haystack, needle) {
   if (!needle) return true;
   if (haystack.includes(needle)) return true;
@@ -439,6 +472,12 @@ export function getFuzzyThreshold(length) {
   return 3;
 }
 
+/**
+ * Computes the Levenshtein edit distance between two strings.
+ * @param {string} a - First string.
+ * @param {string} b - Second string.
+ * @returns {number} The edit distance between a and b.
+ */
 export function levenshteinDistance(a, b) {
   const rows = a.length + 1;
   const cols = b.length + 1;
@@ -508,6 +547,11 @@ export function stripQuotes(value) {
   return value.replace(/^"(.*)"$/, "$1").trim();
 }
 
+/**
+ * Escapes HTML special characters to prevent XSS in innerHTML contexts.
+ * @param {string} value - The string to escape.
+ * @returns {string} HTML-escaped string.
+ */
 export function escapeHtml(value) {
   return value
     .replaceAll("&", "&amp;")
@@ -517,6 +561,13 @@ export function escapeHtml(value) {
     .replaceAll("'", "&#39;");
 }
 
+/**
+ * Returns a new array with the same elements as arr in a random (Fisher-Yates) order.
+ * Does not mutate the original array.
+ * @template T
+ * @param {T[]} arr - The array to shuffle.
+ * @returns {T[]} A new shuffled array.
+ */
 export function shuffleArray(arr) {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
