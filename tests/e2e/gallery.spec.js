@@ -49,7 +49,7 @@ test.describe("Gallery", () => {
       errors.push(err.message);
     });
     await page.goto("/");
-    await page.waitForTimeout(2000);
+    await page.waitForLoadState("networkidle");
     expect(errors).toEqual([]);
   });
 
@@ -74,10 +74,8 @@ test.describe("Gallery", () => {
 
     // Click lip to expand sidebar
     await lip.click();
-    await page.waitForTimeout(300);
 
     // Sidebar should no longer be collapsed
-    const classList = await sidebar.getAttribute("class");
-    expect(classList).not.toContain("collapsed");
+    await expect(sidebar).not.toHaveClass(/collapsed/, { timeout: 3000 });
   });
 });
