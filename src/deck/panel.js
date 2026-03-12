@@ -47,6 +47,7 @@ const modalDeckCount = document.getElementById("modal-deck-count");
  */
 export function initDeckPanel(context) {
   ctx = context;
+  if (modalDeckCount) modalDeckCount.max = ctx.MAX_CARD_COUNT;
   bindDeckPanelEvents();
 }
 
@@ -323,7 +324,6 @@ export function updateModalDeckButton(cardKey) {
   if (modalDeckCount && modalDeckCount !== document.activeElement) {
     modalDeckCount.value = count;
   }
-  if (modalDeckCount) modalDeckCount.max = ctx.MAX_CARD_COUNT;
   if (modalDeckDec) modalDeckDec.disabled = count <= 0;
   if (modalDeckInc) modalDeckInc.disabled = count >= ctx.MAX_CARD_COUNT;
   modalDeckWrap.classList.toggle("deck-in-deck", count > 0);
@@ -472,8 +472,7 @@ function applyModalDeckInput() {
   const cardKey = modalDeckWrap.dataset.cardKey;
   if (!cardKey) return;
   const raw = parseInt(modalDeckCount.value, 10);
-  const clamped = isNaN(raw) ? 0 : Math.max(0, Math.min(ctx.MAX_CARD_COUNT, raw));
-  ctx.setCardDeckCount(cardKey, clamped);
+  ctx.setCardDeckCount(cardKey, isNaN(raw) ? 0 : raw);
 }
 
 // ── Event binding ─────────────────────────────────────────────────────────────
