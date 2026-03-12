@@ -56,27 +56,6 @@
   display: none;
 }
 
-/* ── Modal deck button ───────────────────────────────────────────────────────── */
-
-.modal-deck-btn {
-  background: var(--bg-elev-2);
-  border-color: var(--border);
-  color: var(--text-soft);
-  font-weight: 700;
-  transition: border-color 160ms ease, background 160ms ease, color 160ms ease;
-}
-
-.modal-deck-btn:hover {
-  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
-  color: var(--text);
-}
-
-.modal-deck-btn.deck-in-deck {
-  border-color: color-mix(in srgb, var(--accent) 55%, transparent);
-  background: color-mix(in srgb, var(--accent) 14%, var(--bg-elev-2));
-  color: var(--accent);
-}
-
 /* ── Card deck overlay ───────────────────────────────────────────────────────── */
 
 .deck-card-overlay {
@@ -1169,28 +1148,25 @@
 
 .modal-deck-wrap {
   display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 4px;
-}
-
-.modal-deck-qty {
-  display: flex;
   align-items: center;
-  gap: 4px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--bg-elev-2);
+  transition: border-color 160ms ease, background 160ms ease;
 }
 
-.modal-deck-qty.hidden {
-  display: none;
+.modal-deck-wrap.deck-in-deck {
+  border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+  background: color-mix(in srgb, var(--accent) 14%, var(--bg-elev-2));
 }
 
 .modal-deck-qty-btn {
-  width: 26px;
-  height: 26px;
-  border: 1px solid var(--border);
-  background: var(--bg-elev-2);
-  color: var(--text);
-  border-radius: 6px;
+  width: 32px;
+  height: 34px;
+  border: none;
+  background: transparent;
+  color: var(--text-soft);
   cursor: pointer;
   font-size: 1rem;
   font-weight: 700;
@@ -1198,13 +1174,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 120ms ease;
+  transition: background 120ms ease, color 120ms ease;
   flex-shrink: 0;
 }
 
 .modal-deck-qty-btn:hover:not(:disabled) {
-  background: color-mix(in srgb, var(--accent) 18%, var(--bg-elev-2));
-  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+  color: var(--text);
 }
 
 .modal-deck-qty-btn:disabled {
@@ -1212,12 +1188,30 @@
   cursor: default;
 }
 
-.modal-deck-qty-count {
-  min-width: 24px;
+.modal-deck-qty-input {
+  width: 2.5em;
   text-align: center;
-  font-size: 0.9rem;
-  font-weight: 700;
+  border: none;
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  background: transparent;
   color: var(--accent);
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 4px 0;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.modal-deck-qty-input::-webkit-outer-spin-button,
+.modal-deck-qty-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.modal-deck-qty-input:focus {
+  outline: none;
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
 }
 
 /* ── Game corner button groups and labels ──────────────────────────────────── */
