@@ -1654,6 +1654,10 @@ button.active-filter-pill:disabled {
   opacity: 0.72;
 }
 
+.modal-scryfall-link.hidden {
+  display: none;
+}
+
 .modal-info-column {
   padding: 26px 24px 24px;
 }
