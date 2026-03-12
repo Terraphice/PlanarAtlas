@@ -252,7 +252,7 @@ export function renderGameSidePanel(activePlanes, focusedIndex) {
       const idx = i;
       const sideCard = document.createElement("button");
       sideCard.type = "button";
-      sideCard.className = "game-side-card";
+      sideCard.className = "game-side-card" + (card.type === "Phenomenon" ? " game-side-card-phenomenon" : " game-side-card-plane");
       sideCard.setAttribute("aria-label", `View ${card.displayName} (opens card reader)`);
       sideCard.innerHTML = `
         <img class="game-side-card-img" src="${card.thumbPath}" alt="${escapeHtml(card.displayName)}" />
