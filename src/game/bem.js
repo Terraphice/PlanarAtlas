@@ -821,13 +821,6 @@ export function buildBemCardActions() {
       closeGameReaderView(); renderBemMap(); updateBemInfoBar(); syncBemTrButton();
       showToast(`${name} returned to bottom.`);
     }),
-    makeAction("Shuffle Into Library", (gs, key, cell, name) => {
-      gs.remaining.push(cell.card);
-      gs.remaining = shuffleArray(gs.remaining);
-      gs.bemGrid.set(key, { card: null, faceUp: true, placeholder: true });
-      closeGameReaderView(); renderBemMap(); updateBemInfoBar(); syncBemTrButton();
-      showToast(`${name} shuffled into library.`);
-    }),
     makeAction("Exile", (gs, key, cell, name) => {
       gs.exiled.push(cell.card);
       gs.bemGrid.set(key, { card: null, faceUp: true, placeholder: true });

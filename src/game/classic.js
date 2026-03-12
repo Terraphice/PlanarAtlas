@@ -229,22 +229,6 @@ export function buildMainCardActions(focusedIdx) {
       }
     },
     {
-      label: "Shuffle Into Library",
-      action: () => {
-        const gameState = getGameState();
-        if (!gameState) return;
-        ctx.pushHistory?.();
-        const card = gameState.activePlanes.splice(focusedIdx, 1)[0];
-        if (!card) return;
-        gameState.remaining.push(card);
-        gameState.remaining = shuffleArray(gameState.remaining);
-        gameState.focusedIndex = Math.min(gameState.focusedIndex, Math.max(0, gameState.activePlanes.length - 1));
-        closeGameReaderView();
-        updateGameView();
-        showToast(`${card.displayName} shuffled into library.`);
-      }
-    },
-    {
       label: "Exile",
       danger: true,
       action: () => {
