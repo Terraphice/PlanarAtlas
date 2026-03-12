@@ -690,6 +690,26 @@
   transform: scale(1.05);
 }
 
+.game-side-card-plane {
+  border-color: rgba(74, 222, 128, 0.6);
+  box-shadow: 0 0 0 1px rgba(74, 222, 128, 0.3), 0 0 10px rgba(74, 222, 128, 0.2);
+}
+
+.game-side-card-plane:hover {
+  border-color: #4ade80;
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.45), 0 0 14px rgba(74, 222, 128, 0.3);
+}
+
+.game-side-card-phenomenon {
+  border-color: rgba(192, 132, 252, 0.6);
+  box-shadow: 0 0 0 1px rgba(192, 132, 252, 0.3), 0 0 10px rgba(192, 132, 252, 0.2);
+}
+
+.game-side-card-phenomenon:hover {
+  border-color: #c084fc;
+  box-shadow: 0 0 0 2px rgba(192, 132, 252, 0.45), 0 0 14px rgba(192, 132, 252, 0.3);
+}
+
 .game-side-card-img {
   display: block;
   width: 100%;
@@ -1317,11 +1337,11 @@
   display: flex;
   align-items: stretch;
   height: 38px;
-  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
+  border: 1px solid rgba(192, 132, 252, 0.55);
   border-radius: 12px;
   background: color-mix(in srgb, var(--bg-elev-2) 94%, var(--accent) 6%);
   backdrop-filter: blur(12px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.28);
+  box-shadow: 0 0 0 2px rgba(192, 132, 252, 0.25), 0 0 14px rgba(192, 132, 252, 0.2), 0 4px 16px rgba(0, 0, 0, 0.28);
   overflow: hidden;
   animation: phenomenonBannerRowIn 220ms ease both;
 }

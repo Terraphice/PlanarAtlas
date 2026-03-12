@@ -154,7 +154,7 @@ export function renderClassicSidePanel(activePlanes, focusedIndex) {
 
     const sideCard = document.createElement("button");
     sideCard.type = "button";
-    sideCard.className = "game-side-card";
+    sideCard.className = "game-side-card" + (card.type === "Phenomenon" ? " game-side-card-phenomenon" : " game-side-card-plane");
     sideCard.setAttribute("aria-label", `View ${card.displayName} (opens card reader)`);
     sideCard.innerHTML = `
       <img class="game-side-card-img" src="${card.thumbPath}" alt="${escapeHtml(card.displayName)}" />
@@ -175,6 +175,23 @@ export function buildMainCardActions(focusedIdx) {
   const { getGameState, closeGameReaderView, updateGameView, showToast } = ctx;
 
   return [
+    {
+      label: "Add",
+      action: () => {
+        const gameState = getGameState();
+        if (!gameState) return;
+        if (gameState.remaining.length === 0) {
+          showToast("No cards remaining in the library.");
+          return;
+        }
+        ctx.pushHistory?.();
+        const top = gameState.remaining.shift();
+        gameState.activePlanes.push(top);
+        closeGameReaderView();
+        updateGameView();
+        showToast(`${top.displayName} added simultaneously.`);
+      }
+    },
     {
       label: "Planeswalk Away",
       action: () => { closeGameReaderView(); gamePlaneswalk(); }

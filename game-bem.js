@@ -816,6 +816,12 @@ export function buildBemCardActions() {
   }
 
   return [
+    makeAction("Add", (gs, key, cell, name) => {
+      gs.activePlanes.push(cell.card);
+      gs.bemGrid.set(key, { card: null, faceUp: true, placeholder: true });
+      closeGameReaderView(); renderBemMap(); updateBemInfoBar(); syncBemTrButton();
+      showToast(`${name} added simultaneously.`);
+    }),
     makeAction("Return to Library", (gs, key, cell, name) => {
       gs.remaining.push(cell.card);
       gs.bemGrid.set(key, { card: null, faceUp: true, placeholder: true });
