@@ -326,15 +326,10 @@
               <h2 id="modal-card-name" class="modal-name"></h2>
             </div>
             <div class="modal-header-actions">
-              <div class="modal-deck-wrap">
-                <button id="modal-add-to-deck" class="modal-copy-link modal-deck-btn" type="button" aria-label="Add to deck" data-card-key="">
-                  + Deck
-                </button>
-                <div id="modal-deck-qty" class="modal-deck-qty hidden">
-                  <button id="modal-deck-dec" class="modal-deck-qty-btn" type="button" aria-label="Remove one copy">−</button>
-                  <span id="modal-deck-count" class="modal-deck-qty-count">1</span>
-                  <button id="modal-deck-inc" class="modal-deck-qty-btn" type="button" aria-label="Add one copy">+</button>
-                </div>
+              <div class="modal-deck-wrap" data-card-key="">
+                <button id="modal-deck-dec" class="modal-deck-qty-btn" type="button" aria-label="Remove one copy">−</button>
+                <input id="modal-deck-count" class="modal-deck-qty-input" type="number" min="0" max="9" value="0" inputmode="numeric" aria-label="Deck quantity" />
+                <button id="modal-deck-inc" class="modal-deck-qty-btn" type="button" aria-label="Add one copy">+</button>
               </div>
               <button id="modal-copy-link" class="modal-copy-link" type="button" aria-label="Link">
                 Link

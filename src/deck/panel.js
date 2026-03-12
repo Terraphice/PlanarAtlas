@@ -33,8 +33,7 @@ const deckAutoimportTagList = document.getElementById("deck-autoimport-tag-list"
 const deckSlotSelect = document.getElementById("deck-slot-select");
 const deckSlotNameInput = document.getElementById("deck-slot-name-input");
 const deckPanelLip = document.getElementById("deck-panel-lip");
-const modalAddToDeckBtn = document.getElementById("modal-add-to-deck");
-const modalDeckQty = document.getElementById("modal-deck-qty");
+const modalDeckWrap = document.querySelector(".modal-deck-wrap");
 const modalDeckDec = document.getElementById("modal-deck-dec");
 const modalDeckInc = document.getElementById("modal-deck-inc");
 const modalDeckCount = document.getElementById("modal-deck-count");
@@ -48,6 +47,7 @@ const modalDeckCount = document.getElementById("modal-deck-count");
  */
 export function initDeckPanel(context) {
   ctx = context;
+  if (modalDeckCount) modalDeckCount.max = ctx.MAX_CARD_COUNT;
   bindDeckPanelEvents();
 }
 
@@ -315,29 +315,27 @@ export function updateAllCardOverlays() {
 // ── Modal deck button ─────────────────────────────────────────────────────────
 
 /**
- * Updates the modal's "+ Deck" / "In Deck" button state for a given card.
+ * Updates the modal deck quantity control for a given card.
  * @param {string} cardKey
  */
 export function updateModalDeckButton(cardKey) {
-  if (!modalAddToDeckBtn || modalAddToDeckBtn.dataset.cardKey !== cardKey) return;
+  if (!modalDeckWrap || modalDeckWrap.dataset.cardKey !== cardKey) return;
   const count = ctx.deckCards().get(cardKey) || 0;
-  modalAddToDeckBtn.textContent = count > 0 ? "In Deck" : "+ Deck";
-  modalAddToDeckBtn.classList.toggle("deck-in-deck", count > 0);
-  if (modalDeckQty) {
-    modalDeckQty.classList.toggle("hidden", count === 0);
-    if (modalDeckCount) modalDeckCount.textContent = count;
-    if (modalDeckDec) modalDeckDec.disabled = count <= 0;
-    if (modalDeckInc) modalDeckInc.disabled = count >= ctx.MAX_CARD_COUNT;
+  if (modalDeckCount && modalDeckCount !== document.activeElement) {
+    modalDeckCount.value = count;
   }
+  if (modalDeckDec) modalDeckDec.disabled = count <= 0;
+  if (modalDeckInc) modalDeckInc.disabled = count >= ctx.MAX_CARD_COUNT;
+  modalDeckWrap.classList.toggle("deck-in-deck", count > 0);
 }
 
 /**
- * Sets the card key tracked by the modal deck button and refreshes its display.
+ * Sets the card key tracked by the modal deck control and refreshes its display.
  * @param {string} cardKey
  */
 export function setModalCardKey(cardKey) {
-  if (!modalAddToDeckBtn) return;
-  modalAddToDeckBtn.dataset.cardKey = cardKey;
+  if (!modalDeckWrap) return;
+  modalDeckWrap.dataset.cardKey = cardKey;
   updateModalDeckButton(cardKey);
 }
 
@@ -467,6 +465,16 @@ export function shareDeckLink() {
   }
 }
 
+// ── Modal deck input ──────────────────────────────────────────────────────────
+
+function applyModalDeckInput() {
+  if (!modalDeckCount || !modalDeckWrap) return;
+  const cardKey = modalDeckWrap.dataset.cardKey;
+  if (!cardKey) return;
+  const raw = parseInt(modalDeckCount.value, 10);
+  ctx.setCardDeckCount(cardKey, isNaN(raw) ? 0 : raw);
+}
+
 // ── Event binding ─────────────────────────────────────────────────────────────
 
 function bindDeckPanelEvents() {
@@ -541,20 +549,24 @@ function bindDeckPanelEvents() {
     deckAutoimportMenu?.classList.add("hidden");
   });
 
-  modalAddToDeckBtn?.addEventListener("click", () => {
-    const cardKey = modalAddToDeckBtn.dataset.cardKey;
-    if (!cardKey) return;
-    const count = ctx.deckCards().get(cardKey) || 0;
-    if (count === 0) ctx.addCardToDeck(cardKey);
-  });
-
   modalDeckDec?.addEventListener("click", () => {
-    const cardKey = modalAddToDeckBtn?.dataset.cardKey;
+    const cardKey = modalDeckWrap?.dataset.cardKey;
     if (cardKey) ctx.removeCardFromDeck(cardKey);
   });
 
   modalDeckInc?.addEventListener("click", () => {
-    const cardKey = modalAddToDeckBtn?.dataset.cardKey;
+    const cardKey = modalDeckWrap?.dataset.cardKey;
     if (cardKey) ctx.addCardToDeck(cardKey);
+  });
+
+  modalDeckCount?.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      applyModalDeckInput();
+      modalDeckCount.blur();
+    }
+  });
+
+  modalDeckCount?.addEventListener("blur", () => {
+    applyModalDeckInput();
   });
 }

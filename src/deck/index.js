@@ -232,6 +232,22 @@ export function toggleCardInDeck(cardKey) {
   else addCardToDeck(cardKey);
 }
 
+export function setCardDeckCount(cardKey, count) {
+  const deck = deckCards();
+  const clamped = Math.max(0, Math.min(MAX_CARD_COUNT, count));
+  if (clamped === 0) {
+    deck.delete(cardKey);
+  } else {
+    deck.set(cardKey, clamped);
+  }
+  saveDecksToStorage();
+  updateDeckButton();
+  refreshDeckCardItem(cardKey);
+  updateCardOverlays(cardKey);
+  updateModalDeckButton(cardKey);
+  renderDeckSlotDropdown();
+}
+
 function clearDeck() {
   if (getDeckTotal() === 0) return;
   deckCards().clear();
@@ -574,6 +590,7 @@ export function initDeck({ cards, showToast, onDeckChange }) {
     onDeckChange: () => onDeckChangeFn?.(),
     addCardToDeck,
     removeCardFromDeck,
+    setCardDeckCount,
     clearDeck,
     showGameModeDialog,
     filterValidDeck,
