@@ -877,11 +877,6 @@ export function renderLibraryCards() {
   }
 }
 
-/** @deprecated Use renderLibraryCards instead. */
-export function renderGameLibraryView() {
-  renderLibraryCards();
-}
-
 /**
  * Switches the library overlay between list and gallery display modes.
  * @param {"list" | "gallery"} mode
