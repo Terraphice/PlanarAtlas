@@ -2697,8 +2697,8 @@ html[data-palette="scryfall"][data-theme="dark"] .sidebar {
   display: none;
 }
 
-/* BEM grid: 3×3 cells around the player — sized so center fills view and
-   adjacent cards peek in from the edges (≈ 1/3 visible each side). */
+/* BEM grid: dynamically sized to hold all active cells plus one edge layer,
+   centred on the current view position. The grid template is set by JS. */
 .bem-map {
   --bem-cell-w: min(
     calc((100vw - 12px) * 0.6),
@@ -2730,6 +2730,13 @@ html[data-palette="scryfall"][data-theme="dark"] .sidebar {
 .bem-cell-void {
   background: transparent;
   border: 1px dashed transparent;
+}
+
+.bem-cell-edge {
+  border: 1px solid var(--border-soft);
+  background: var(--bg-elev-2);
+  opacity: 0.35;
+  pointer-events: none;
 }
 
 .bem-cell-empty {
@@ -3152,7 +3159,7 @@ html[data-palette="scryfall"][data-theme="dark"] .sidebar {
   --bem-cell-h: calc(var(--bem-cell-w) / 1.4);
 }
 
-/* Far zoom: all 3×3 cells visible at once */
+/* Far zoom: cells sized so the inner 3×3 area fills the viewport */
 .game-view.bem-zoom-far .bem-map {
   --bem-cell-w: min(
     calc((100vw - 24px) / 3),

@@ -14,6 +14,7 @@ let bemDragHandled = false;
 let bemLandOnPhenomenon = false;
 let bemPlaneswalkPending = false;
 let bemAnimating = false;
+let bemCurrentR = 1;
 
 export function initBemGame(context) {
   ctx = context;
@@ -140,7 +141,9 @@ function startBemPanAnimation(fromDx, fromDy) {
   // Negate fromDx/fromDy: to show the OLD card in the viewport centre we must
   // shift the newly-rendered map in the opposite direction of travel so that
   // the adjacent column containing the old card slides into view.
-  bemMapEl.style.transform = `translate(${-fromDx * 33.333}%, ${-fromDy * 33.333}%)`;
+  // The percentage is relative to the grid's own size: 1 cell = 100/(2R+1)%.
+  const cellPct = 100 / (2 * bemCurrentR + 1);
+  bemMapEl.style.transform = `translate(${-fromDx * cellPct}%, ${-fromDy * cellPct}%)`;
   // Force a synchronous reflow so the browser commits the initial transform
   // before we enable the transition, preventing it from being skipped.
   bemMapEl.getBoundingClientRect();
@@ -434,7 +437,34 @@ export function renderBemMap() {
 
   bemMapEl.innerHTML = "";
 
-  const R = BEM_VIEW_RADIUS;
+  // Compute bounds of all active cells relative to the view centre
+  let actMinGx = 0, actMaxGx = 0, actMinGy = 0, actMaxGy = 0;
+  if (bemGrid.size > 0) {
+    actMinGx = Infinity; actMaxGx = -Infinity;
+    actMinGy = Infinity; actMaxGy = -Infinity;
+    for (const key of bemGrid.keys()) {
+      const [cx, cy] = key.split(",").map(Number);
+      const gx = cx - viewX;
+      const gy = cy - viewY;
+      if (gx < actMinGx) actMinGx = gx;
+      if (gx > actMaxGx) actMaxGx = gx;
+      if (gy < actMinGy) actMinGy = gy;
+      if (gy > actMaxGy) actMaxGy = gy;
+    }
+  }
+
+  // Expand by 1 for the placeholder edge layer; make symmetric for CSS grid centering
+  const R = Math.max(Math.abs(actMinGx - 1), actMaxGx + 1, Math.abs(actMinGy - 1), actMaxGy + 1);
+  bemCurrentR = R;
+
+  // Extended bounding box including the edge layer
+  const edgeMinGx = actMinGx - 1, edgeMaxGx = actMaxGx + 1;
+  const edgeMinGy = actMinGy - 1, edgeMaxGy = actMaxGy + 1;
+
+  // Update grid template dynamically to accommodate all active cells plus edge layer
+  bemMapEl.style.gridTemplateColumns = `repeat(${2 * R + 1}, var(--bem-cell-w))`;
+  bemMapEl.style.gridTemplateRows = `repeat(${2 * R + 1}, var(--bem-cell-h))`;
+
   for (let gy = -R; gy <= R; gy++) {
     for (let gx = -R; gx <= R; gx++) {
       const cx = viewX + gx;
@@ -461,8 +491,18 @@ export function renderBemMap() {
       }
 
       if (!cell) {
-        div.classList.add(isPlayer ? "bem-cell-faceup" : "bem-cell-void");
-        if (isPlayer) div.classList.add("bem-cell-player");
+        const inActiveBounds = gx >= actMinGx && gx <= actMaxGx && gy >= actMinGy && gy <= actMaxGy;
+        const inEdgeBounds = gx >= edgeMinGx && gx <= edgeMaxGx && gy >= edgeMinGy && gy <= edgeMaxGy;
+        if (inEdgeBounds && !inActiveBounds) {
+          div.classList.add("bem-cell-edge");
+          const img = document.createElement("img");
+          img.className = "bem-cell-img";
+          img.src = BEM_FACEDOWN_IMG;
+          img.alt = "";
+          div.appendChild(img);
+        } else {
+          div.classList.add("bem-cell-void");
+        }
       } else if (cell.placeholder && !cell.card) {
         div.classList.add("bem-cell-placeholder");
         if (isPlayer) div.classList.add("bem-cell-player");
