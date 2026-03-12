@@ -21,3 +21,7 @@ Desktop.ini
 *.swp
 *.swo
 *~
+
+# Test artifacts
+test-results/
+playwright-report/
