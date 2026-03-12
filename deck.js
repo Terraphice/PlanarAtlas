@@ -226,6 +226,12 @@ export function removeCardFromDeck(cardKey) {
   renderDeckSlotDropdown();
 }
 
+export function toggleCardInDeck(cardKey) {
+  const count = deckCards().get(cardKey) || 0;
+  if (count > 0) removeCardFromDeck(cardKey);
+  else addCardToDeck(cardKey);
+}
+
 function clearDeck() {
   if (getDeckTotal() === 0) return;
   deckCards().clear();
@@ -547,6 +553,7 @@ export function initDeck({ cards, showToast, onDeckChange }) {
     deckCards: () => deckCards(),
     getAllDecks: () => allDecks,
     setAllDecks: (d) => { allDecks = d; },
+    setCurrentDeckMap: (map) => { allDecks[currentSlot] = map; },
     getCurrentSlot: () => currentSlot,
     setCurrentSlot: (s) => { currentSlot = s; },
     getDeckNames: () => deckNames,

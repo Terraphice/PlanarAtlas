@@ -182,6 +182,7 @@ export function renderDeckList() {
  */
 export function switchDeckSlot(slot) {
   if (slot < 0 || slot >= ctx.NUM_DECK_SLOTS) return;
+  if (slot === ctx.getCurrentSlot()) return;
   ctx.setCurrentSlot(slot);
   ctx.saveDecksToStorage();
   renderDeckList();
@@ -347,46 +348,58 @@ function buildAutoimportTagList() {
   if (!deckAutoimportTagList) return;
   deckAutoimportTagList.innerHTML = "";
   const allCards = ctx.getAllCards();
-  const tagSet = new Set();
-  for (const card of allCards) {
-    for (const tag of card.tags) {
-      const norm = tag.toLowerCase();
-      if (!norm.startsWith("badge:") && norm !== "hidden" && norm !== "plane" && norm !== "phenomenon") {
-        tagSet.add(tag);
-      }
-    }
-  }
-  const sorted = [...tagSet].sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }));
-  for (const tag of sorted) {
+  const allTags = [...new Set(allCards.flatMap((c) => c.tags))].sort((a, b) =>
+    a.localeCompare(b, undefined, { sensitivity: "base" })
+  );
+  for (const tag of allTags) {
+    if (tag.toLowerCase() === "hidden" || tag.startsWith("badge:") || tag.startsWith(":top:badge:")) continue;
     const btn = document.createElement("button");
     btn.type = "button";
-    btn.className = "deck-autoimport-item";
-    btn.dataset.action = `tag:${tag}`;
+    btn.className = "deck-autoimport-tag-item";
     btn.textContent = tag;
+    btn.addEventListener("click", (event) => {
+      event.stopPropagation();
+      autoImportCards(`tag:${tag}`);
+      deckAutoimportMenu?.classList.add("hidden");
+    });
     deckAutoimportTagList.appendChild(btn);
   }
 }
 
 /**
  * Auto-imports cards matching a filter into the current deck slot.
- * @param {"all" | "plane" | "phenomenon" | `tag:${string}`} filter
+ * Named filters: "official", "custom", "planes", "phenomena".
+ * Prefixed filter: "tag:<tagName>" imports all cards with that tag (case-insensitive).
+ * @param {string} filter - The filter string.
  */
 function autoImportCards(filter) {
   const allCards = ctx.getAllCards();
   const deck = ctx.deckCards();
 
   let candidates;
-  if (filter === "all") {
-    candidates = allCards.filter((c) => !isHiddenCard(c.normalizedTags));
-  } else if (filter === "plane") {
-    candidates = allCards.filter((c) => c.type === "Plane" && !isHiddenCard(c.normalizedTags));
-  } else if (filter === "phenomenon") {
-    candidates = allCards.filter((c) => c.type === "Phenomenon" && !isHiddenCard(c.normalizedTags));
-  } else if (filter.startsWith("tag:")) {
-    const tag = filter.slice(4).toLowerCase();
-    candidates = allCards.filter((c) => c.normalizedTags.includes(tag) && !isHiddenCard(c.normalizedTags));
-  } else {
-    return;
+  switch (filter) {
+    case "all":
+      candidates = allCards.filter((c) => !isHiddenCard(c.normalizedTags));
+      break;
+    case "official":
+      candidates = allCards.filter((c) => !isHiddenCard(c.normalizedTags) && c.normalizedTags.some((t) => t.includes("official")));
+      break;
+    case "custom":
+      candidates = allCards.filter((c) => !isHiddenCard(c.normalizedTags) && c.normalizedTags.some((t) => t.includes("custom")));
+      break;
+    case "planes":
+      candidates = allCards.filter((c) => c.type === "Plane" && !isHiddenCard(c.normalizedTags));
+      break;
+    case "phenomena":
+      candidates = allCards.filter((c) => c.type === "Phenomenon" && !isHiddenCard(c.normalizedTags));
+      break;
+    default:
+      if (filter.startsWith("tag:")) {
+        const tag = filter.slice(4).toLowerCase();
+        candidates = allCards.filter((c) => c.normalizedTags.includes(tag) && !isHiddenCard(c.normalizedTags));
+      } else {
+        candidates = allCards.filter((c) => !isHiddenCard(c.normalizedTags) && c.normalizedTags.includes(filter.toLowerCase()));
+      }
   }
 
   let added = 0;
@@ -402,7 +415,7 @@ function autoImportCards(filter) {
   renderDeckList();
   updateAllCardOverlays();
   renderDeckSlotDropdown();
-  ctx.showToast(`Added ${added} card${added !== 1 ? "s" : ""} to deck.`);
+  ctx.showToast(added > 0 ? `Added ${added} card${added !== 1 ? "s" : ""} to deck.` : "No new cards to add.");
 }
 
 // ── Import / Export ───────────────────────────────────────────────────────────
@@ -426,7 +439,7 @@ export function importDeckPrompt() {
   if (decoded.size === 0) { ctx.showToast("Invalid deck seed."); return; }
   const valid = ctx.filterValidDeck(decoded);
   const skipped = decoded.size - valid.size;
-  ctx.getAllDecks()[ctx.getCurrentSlot()] = valid;
+  ctx.setCurrentDeckMap(valid);
   ctx.saveDecksToStorage();
   updateDeckButton();
   renderDeckList();
