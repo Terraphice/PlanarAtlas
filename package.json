@@ -3,6 +3,10 @@
   "scripts": {
     "generate": "node generate-cards.js",
     "sync": "node sync-cards.js",
-    "test": "node scripts/smoke-test.js"
+    "test": "node scripts/smoke-test.js",
+    "test:codec": "node scripts/test-codec.js",
+    "test:utils": "node scripts/test-utils.js",
+    "test:unit": "node scripts/test-codec.js && node scripts/test-utils.js",
+    "lint": "eslint ."
   }
 }
