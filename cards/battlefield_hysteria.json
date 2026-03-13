@@ -1,0 +1,12 @@
+{
+  "id": "battlefield_hysteria",
+  "name": "Battlefield Hysteria",
+  "type": "Phenomenon",
+  "image": "cards/images/Battlefield Hysteria.png",
+  "thumb": "cards/thumbs/Battlefield Hysteria.webp",
+  "transcript": "cards/transcripts/Battlefield Hysteria.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "PBT"
+  ]
+}

@@ -33,14 +33,13 @@ function section(name) {
 // ── compressKey / decompressKey ───────────────────────────────────────────────
 
 section("compressKey");
-assert(compressKey("plane_akoum") === "pakoum", "plane_ prefix becomes 'p'");
-assert(compressKey("plane_") === "p", "plane_ with empty rest");
-assert(compressKey("phenomenon_interplanar_tunnel") === "ninterplanar_tunnel", "phenomenon_ prefix becomes 'n'");
-assert(compressKey("customcard") === "ucustomcard", "Unknown prefix becomes 'u'");
-assert(compressKey("") === "u", "Empty string gets 'u' prefix");
+assert(compressKey("akoum") === "akoum", "identity: akoum");
+assert(compressKey("interplanar_tunnel") === "interplanar_tunnel", "identity: interplanar_tunnel");
+assert(compressKey("atlas_consultation") === "atlas_consultation", "identity: atlas_consultation");
+assert(compressKey("") === "", "identity: empty string");
 
-section("decompressKey");
-assert(decompressKey("pakoum") === "plane_akoum", "Restores plane_ prefix");
+section("decompressKey (legacy d1: expansion only)");
+assert(decompressKey("pakoum") === "plane_akoum", "Restores plane_ prefix from d1: compressed key");
 assert(decompressKey("ninterplanar_tunnel") === "phenomenon_interplanar_tunnel", "Restores phenomenon_ prefix");
 assert(decompressKey("ucustomcard") === "customcard", "Restores no-prefix key");
 assert(decompressKey("p") === null, "Single 'p' (no rest) returns null (length < 2)");
@@ -51,30 +50,34 @@ assert(decompressKey(undefined) === null, "undefined returns null");
 
 section("compressKey / decompressKey roundtrip");
 const roundtripKeys = [
-  "plane_akoum",
-  "plane_the_library_of_leng",
-  "phenomenon_interplanar_tunnel",
-  "customcard",
+  "akoum",
+  "the_library_of_leng",
+  "interplanar_tunnel",
+  "atlas_consultation",
 ];
 for (const key of roundtripKeys) {
-  assert(decompressKey(compressKey(key)) === key, `Roundtrip: ${key}`);
+  assert(compressKey(key) === key, `compressKey identity: ${key}`);
 }
 
 // ── remapLegacyKey ────────────────────────────────────────────────────────────
 
 section("remapLegacyKey");
-assert(remapLegacyKey("Plane_Akoum") === "plane_akoum", "Plane_ prefix remapped");
-assert(remapLegacyKey("Phenomenon_Interplanar_Tunnel") === "phenomenon_interplanar_tunnel", "Phenomenon_ prefix remapped");
-assert(remapLegacyKey("Plane_The Library of Leng") === "plane_the_library_of_leng", "Spaces become underscores");
-assert(remapLegacyKey("Plane_Atlas Consultation") === "plane_atlas_consultation", "Multi-word name");
+assert(remapLegacyKey("Plane_Akoum") === "akoum", "Plane_ prefix remapped");
+assert(remapLegacyKey("Phenomenon_Interplanar_Tunnel") === "interplanar_tunnel", "Phenomenon_ prefix remapped");
+assert(remapLegacyKey("Plane_The Library of Leng") === "the_library_of_leng", "Spaces become underscores");
+assert(remapLegacyKey("Plane_Atlas Consultation") === "atlas_consultation", "Multi-word name");
+assert(remapLegacyKey("plane_akoum") === "akoum", "Intermediate plane_ prefix remapped");
+assert(remapLegacyKey("phenomenon_interplanar_tunnel") === "interplanar_tunnel", "Intermediate phenomenon_ prefix remapped");
+assert(remapLegacyKey("akoum") === "akoum", "New format: no-op");
+assert(remapLegacyKey("atlas_consultation") === "atlas_consultation", "New format: no-op");
 
 // ── toBase64Url / fromBase64Url ───────────────────────────────────────────────
 
 section("toBase64Url / fromBase64Url");
 const texts = [
   "hello world",
-  "d2:pakoum,ninterplanar_tunnel",
-  '{"mode":"classic","r":["pakoum"]}',
+  "d2:akoum,interplanar_tunnel",
+  '{"mode":"classic","r":["akoum"]}',
   "Special chars: +/=",
 ];
 for (const text of texts) {
@@ -91,11 +94,11 @@ section("encodeDeck");
 const emptyMap = new Map();
 assert(encodeDeck(emptyMap) === "", "Empty map encodes to empty string");
 
-const singleCard = new Map([["plane_akoum", 1]]);
+const singleCard = new Map([["akoum", 1]]);
 const seed1 = encodeDeck(singleCard);
 assert(seed1.startsWith("d2:"), "Encoded seed starts with 'd2:'");
 
-const twoCards = new Map([["plane_akoum", 2], ["phenomenon_interplanar_tunnel", 1]]);
+const twoCards = new Map([["akoum", 2], ["interplanar_tunnel", 1]]);
 const seed2 = encodeDeck(twoCards);
 assert(seed2.startsWith("d2:"), "Two-card seed starts with 'd2:'");
 
@@ -107,9 +110,9 @@ assert(decodeDeck("d2:!!!").size === 0, "Malformed base64 decodes to empty map")
 
 section("encodeDeck / decodeDeck roundtrip");
 const decks = [
-  new Map([["plane_akoum", 1]]),
-  new Map([["plane_akoum", 2], ["phenomenon_interplanar_tunnel", 1]]),
-  new Map([["plane_akoum", 1], ["plane_bant", 3], ["phenomenon_spatial_merging", 2]]),
+  new Map([["akoum", 1]]),
+  new Map([["akoum", 2], ["interplanar_tunnel", 1]]),
+  new Map([["akoum", 1], ["bant", 3], ["spatial_merging", 2]]),
 ];
 for (const deck of decks) {
   const encoded = encodeDeck(deck);
@@ -121,17 +124,24 @@ for (const deck of decks) {
 }
 
 section("decodeDeck: count clamping");
-const clampDeck = new Map([["plane_akoum", 9]]);
+const clampDeck = new Map([["akoum", 9]]);
 const clampSeed = encodeDeck(clampDeck);
 const clampDecoded = decodeDeck(clampSeed, 5);
-assert((clampDecoded.get("plane_akoum") ?? 0) <= 5, "maxCardCount=5 clamps count to ≤5");
+assert((clampDecoded.get("akoum") ?? 0) <= 5, "maxCardCount=5 clamps count to ≤5");
 
 section("decodeDeck: backward compat (d1: legacy seeds)");
 const legacyRaw = "pAkoum,nInterplanar_Tunnel";
 const legacySeed = "d1:" + toBase64Url(legacyRaw);
 const legacyDecoded = decodeDeck(legacySeed);
-assert(legacyDecoded.has("plane_akoum"), "d1: seed: Plane_Akoum remapped to plane_akoum");
-assert(legacyDecoded.has("phenomenon_interplanar_tunnel"), "d1: seed: Phenomenon_Interplanar_Tunnel remapped");
+assert(legacyDecoded.has("akoum"), "d1: seed: Plane_Akoum remapped to akoum");
+assert(legacyDecoded.has("interplanar_tunnel"), "d1: seed: Phenomenon_Interplanar_Tunnel remapped");
+
+section("decodeDeck: backward compat (d2: intermediate plane_xxx seeds)");
+const intermediateRaw = "plane_akoum,phenomenon_interplanar_tunnel";
+const intermediateSeed = "d2:" + toBase64Url(intermediateRaw);
+const intermediateDecoded = decodeDeck(intermediateSeed);
+assert(intermediateDecoded.has("akoum"), "d2: intermediate: plane_akoum remapped to akoum");
+assert(intermediateDecoded.has("interplanar_tunnel"), "d2: intermediate: phenomenon_interplanar_tunnel remapped");
 
 // ── Summary ───────────────────────────────────────────────────────────────────
 

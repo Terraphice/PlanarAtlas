@@ -1,0 +1,14 @@
+{
+  "id": "tember_city",
+  "name": "Tember City",
+  "type": "Plane",
+  "image": "cards/images/Tember City.png",
+  "thumb": "cards/thumbs/Tember City.webp",
+  "transcript": "cards/transcripts/Tember City.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Kinshala",
+    "OPCA"
+  ],
+  "scryfallId": null
+}

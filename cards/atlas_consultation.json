@@ -1,0 +1,12 @@
+{
+  "id": "atlas_consultation",
+  "name": "Atlas Consultation",
+  "type": "Phenomenon",
+  "image": "cards/images/Atlas Consultation.png",
+  "thumb": "cards/thumbs/Atlas Consultation.webp",
+  "transcript": "cards/transcripts/Atlas Consultation.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "PBT"
+  ]
+}

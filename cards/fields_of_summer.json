@@ -1,0 +1,14 @@
+{
+  "id": "fields_of_summer",
+  "name": "Fields of Summer",
+  "type": "Plane",
+  "image": "cards/images/Fields of Summer.png",
+  "thumb": "cards/thumbs/Fields of Summer.webp",
+  "transcript": "cards/transcripts/Fields of Summer.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Moag",
+    "OPCA"
+  ],
+  "scryfallId": null
+}

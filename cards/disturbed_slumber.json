@@ -1,0 +1,12 @@
+{
+  "id": "disturbed_slumber",
+  "name": "Disturbed Slumber",
+  "type": "Phenomenon",
+  "image": "cards/images/Disturbed Slumber.png",
+  "thumb": "cards/thumbs/Disturbed Slumber.webp",
+  "transcript": "cards/transcripts/Disturbed Slumber.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "PBT"
+  ]
+}

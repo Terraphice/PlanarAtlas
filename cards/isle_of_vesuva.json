@@ -1,0 +1,14 @@
+{
+  "id": "isle_of_vesuva",
+  "name": "Isle of Vesuva",
+  "type": "Plane",
+  "image": "cards/images/Isle of Vesuva.png",
+  "thumb": "cards/thumbs/Isle of Vesuva.webp",
+  "transcript": "cards/transcripts/Isle of Vesuva.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Dominaria",
+    "MOC"
+  ],
+  "scryfallId": null
+}

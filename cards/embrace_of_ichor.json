@@ -1,0 +1,12 @@
+{
+  "id": "embrace_of_ichor",
+  "name": "Embrace of Ichor",
+  "type": "Phenomenon",
+  "image": "cards/images/Embrace of Ichor.png",
+  "thumb": "cards/thumbs/Embrace of Ichor.webp",
+  "transcript": "cards/transcripts/Embrace of Ichor.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "PBT"
+  ]
+}

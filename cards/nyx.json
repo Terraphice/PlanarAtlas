@@ -1,0 +1,14 @@
+{
+  "id": "nyx",
+  "name": "Nyx",
+  "type": "Plane",
+  "image": "cards/images/Nyx.png",
+  "thumb": "cards/thumbs/Nyx.webp",
+  "transcript": "cards/transcripts/Nyx.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Theros",
+    "MOC"
+  ],
+  "scryfallId": null
+}

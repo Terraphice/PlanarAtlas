@@ -51,14 +51,13 @@ function section(name) {
 // ── Helper: build a raw card in the new schema ────────────────────────────────
 
 function makeCard({ id, name, type, tags = [] }) {
-  const stem = `${type}_${name.replace(/ /g, "_")}`;
   return {
     id,
     name,
     type,
-    image: `cards/images/${stem}.png`,
-    thumb: `cards/thumbs/${stem}.webp`,
-    transcript: `cards/transcripts/${stem}.md`,
+    image: `cards/images/${name}.png`,
+    thumb: `cards/thumbs/${name}.webp`,
+    transcript: `cards/transcripts/${name}.md`,
     tags
   };
 }
@@ -67,30 +66,30 @@ function makeCard({ id, name, type, tags = [] }) {
 
 section("enrichCard");
 const rawAkoum = makeCard({
-  id: "plane_akoum",
+  id: "akoum",
   name: "Akoum",
   type: "Plane",
   tags: ["Zendikar", "badge:tr:green:Official"]
 });
 const enriched = enrichCard(rawAkoum);
-assert(enriched.id === "plane_akoum", "id is set");
+assert(enriched.id === "akoum", "id is set");
 assert(enriched.name === "Akoum", "name is set");
 assert(enriched.displayName === "Akoum", "displayName alias equals name");
 assert(enriched.type === "Plane", "type is set");
-assert(enriched.imagePath === "cards/images/Plane_Akoum.png", "imagePath from image field");
-assert(enriched.thumbPath === "cards/thumbs/Plane_Akoum.webp", "thumbPath from thumb field");
-assert(enriched.transcriptPath === "cards/transcripts/Plane_Akoum.md", "transcriptPath from transcript field");
+assert(enriched.imagePath === "cards/images/Akoum.png", "imagePath from image field");
+assert(enriched.thumbPath === "cards/thumbs/Akoum.webp", "thumbPath from thumb field");
+assert(enriched.transcriptPath === "cards/transcripts/Akoum.md", "transcriptPath from transcript field");
 assert(Array.isArray(enriched.tags), "tags is an array");
 assert(Array.isArray(enriched.normalizedTags), "normalizedTags is an array");
 assert(enriched.normalizedTags[0] === "zendikar", "normalizedTags are lowercased");
 
 const rawOfficial = {
-  id: "plane_bant",
+  id: "bant",
   name: "Bant",
   type: "Plane",
-  image: "cards/images/Plane_Bant.png",
-  thumb: "cards/thumbs/Plane_Bant.webp",
-  transcript: "cards/transcripts/Plane_Bant.md",
+  image: "cards/images/Bant.png",
+  thumb: "cards/thumbs/Bant.webp",
+  transcript: "cards/transcripts/Bant.md",
   tags: [":top:badge:tr:green:Official"],
   scryfallId: null
 };
@@ -101,9 +100,9 @@ assert(enrichedOfficial.scryfallId === null, "scryfallId null passes through");
 
 section("sortCards");
 const unsorted = [
-  enrichCard(makeCard({ id: "plane_zendikar", name: "Zendikar", type: "Plane" })),
-  enrichCard(makeCard({ id: "plane_akoum", name: "Akoum", type: "Plane" })),
-  enrichCard(makeCard({ id: "plane_bant", name: "Bant", type: "Plane" })),
+  enrichCard(makeCard({ id: "zendikar", name: "Zendikar", type: "Plane" })),
+  enrichCard(makeCard({ id: "akoum", name: "Akoum", type: "Plane" })),
+  enrichCard(makeCard({ id: "bant", name: "Bant", type: "Plane" })),
 ];
 sortCards(unsorted);
 assert(unsorted[0].name === "Akoum", "First after sort: Akoum");
@@ -114,8 +113,8 @@ assert(unsorted[2].name === "Zendikar", "Third after sort: Zendikar");
 
 section("reconcileSelectedTags");
 const cards = [
-  enrichCard(makeCard({ id: "plane_a", name: "A", type: "Plane", tags: ["Zendikar", "Official"] })),
-  enrichCard(makeCard({ id: "plane_b", name: "B", type: "Plane", tags: ["Ravnica"] })),
+  enrichCard(makeCard({ id: "a", name: "A", type: "Plane", tags: ["Zendikar", "Official"] })),
+  enrichCard(makeCard({ id: "b", name: "B", type: "Plane", tags: ["Ravnica"] })),
 ];
 const reconciled = reconcileSelectedTags(new Set(["zendikar", "ravnica"]), cards);
 assert(reconciled.has("Zendikar"), "Reconciled 'zendikar' → 'Zendikar' (canonical)");
@@ -314,12 +313,12 @@ assert(deepEqual(multiQuery.negTagTerms, ["custom"]), "Multi-term: negTagTerms")
 
 section("matchesParsedQuery");
 const testCard = enrichCard({
-  id: "plane_akoum",
+  id: "akoum",
   name: "Akoum",
   type: "Plane",
-  image: "cards/images/Plane_Akoum.png",
-  thumb: "cards/thumbs/Plane_Akoum.webp",
-  transcript: "cards/transcripts/Plane_Akoum.md",
+  image: "cards/images/Akoum.png",
+  thumb: "cards/thumbs/Akoum.webp",
+  transcript: "cards/transcripts/Akoum.md",
   tags: ["Zendikar", "badge:tr:green:Official"]
 });
 const baseFilters = { fuzzy: false, showHidden: false, tags: new Set() };

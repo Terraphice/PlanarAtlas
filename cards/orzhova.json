@@ -1,0 +1,14 @@
+{
+  "id": "orzhova",
+  "name": "Orzhova",
+  "type": "Plane",
+  "image": "cards/images/Orzhova.png",
+  "thumb": "cards/thumbs/Orzhova.webp",
+  "transcript": "cards/transcripts/Orzhova.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Ravnica",
+    "OPCA"
+  ],
+  "scryfallId": null
+}

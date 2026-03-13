@@ -1,0 +1,14 @@
+{
+  "id": "high_and_dry_black_market",
+  "name": "High and Dry Black Market",
+  "type": "Phenomenon",
+  "image": "cards/images/High and Dry Black Market.png",
+  "thumb": "cards/thumbs/High and Dry Black Market.webp",
+  "transcript": "cards/transcripts/High and Dry Black Market.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "PUNK",
+    "hidden"
+  ],
+  "scryfallId": null
+}

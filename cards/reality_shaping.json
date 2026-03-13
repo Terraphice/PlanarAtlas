@@ -1,0 +1,13 @@
+{
+  "id": "reality_shaping",
+  "name": "Reality Shaping",
+  "type": "Phenomenon",
+  "image": "cards/images/Reality Shaping.png",
+  "thumb": "cards/thumbs/Reality Shaping.webp",
+  "transcript": "cards/transcripts/Reality Shaping.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "MOC"
+  ],
+  "scryfallId": null
+}

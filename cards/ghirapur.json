@@ -1,0 +1,14 @@
+{
+  "id": "ghirapur",
+  "name": "Ghirapur",
+  "type": "Plane",
+  "image": "cards/images/Ghirapur.png",
+  "thumb": "cards/thumbs/Ghirapur.webp",
+  "transcript": "cards/transcripts/Ghirapur.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Avishkar",
+    "MOC"
+  ],
+  "scryfallId": null
+}

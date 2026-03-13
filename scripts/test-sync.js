@@ -25,10 +25,10 @@ function section(name) {
 // ── getCardJsonFilename ───────────────────────────────────────────────────────
 
 section("getCardJsonFilename");
-assert(getCardJsonFilename("plane_akoum") === "plane_akoum.json", "plane_akoum → plane_akoum.json");
-assert(getCardJsonFilename("phenomenon_atlas_consultation") === "phenomenon_atlas_consultation.json", "phenomenon id → .json");
-assert(getCardJsonFilename("plane_the_library_of_leng") === "plane_the_library_of_leng.json", "multi-word id");
-assert(getCardJsonFilename("phenomenon_interplanar_tunnel") === "phenomenon_interplanar_tunnel.json", "phenomenon id");
+assert(getCardJsonFilename("akoum") === "akoum.json", "akoum → akoum.json");
+assert(getCardJsonFilename("atlas_consultation") === "atlas_consultation.json", "phenomenon id → .json");
+assert(getCardJsonFilename("the_library_of_leng") === "the_library_of_leng.json", "multi-word id");
+assert(getCardJsonFilename("interplanar_tunnel") === "interplanar_tunnel.json", "phenomenon id");
 
 // ── Summary ───────────────────────────────────────────────────────────────────
 

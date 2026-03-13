@@ -154,7 +154,7 @@ function loadDecksFromStorage() {
           return new Map(d
             .filter(([k, v]) => typeof k === "string" && typeof v === "number" && v > 0 && v <= MAX_CARD_COUNT)
             .map(([k, v]) => {
-              const remapped = (k.startsWith("Plane_") || k.startsWith("Phenomenon_")) ? remapLegacyKey(k) : k;
+              const remapped = remapLegacyKey(k);
               return [remapped, v];
             })
           );

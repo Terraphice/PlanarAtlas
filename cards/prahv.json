@@ -1,0 +1,14 @@
+{
+  "id": "prahv",
+  "name": "Prahv",
+  "type": "Plane",
+  "image": "cards/images/Prahv.png",
+  "thumb": "cards/thumbs/Prahv.webp",
+  "transcript": "cards/transcripts/Prahv.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Ravnica",
+    "OPCA"
+  ],
+  "scryfallId": null
+}

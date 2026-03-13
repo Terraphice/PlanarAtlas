@@ -1,0 +1,12 @@
+{
+  "id": "great_desparking",
+  "name": "Great Desparking",
+  "type": "Phenomenon",
+  "image": "cards/images/Great Desparking.png",
+  "thumb": "cards/thumbs/Great Desparking.webp",
+  "transcript": "cards/transcripts/Great Desparking.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "PBT"
+  ]
+}

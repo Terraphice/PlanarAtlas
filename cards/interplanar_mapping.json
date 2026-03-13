@@ -1,0 +1,12 @@
+{
+  "id": "interplanar_mapping",
+  "name": "Interplanar Mapping",
+  "type": "Phenomenon",
+  "image": "cards/images/Interplanar Mapping.png",
+  "thumb": "cards/thumbs/Interplanar Mapping.webp",
+  "transcript": "cards/transcripts/Interplanar Mapping.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "PBT"
+  ]
+}

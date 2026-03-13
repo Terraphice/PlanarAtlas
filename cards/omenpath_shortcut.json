@@ -1,0 +1,12 @@
+{
+  "id": "omenpath_shortcut",
+  "name": "Omenpath Shortcut",
+  "type": "Phenomenon",
+  "image": "cards/images/Omenpath Shortcut.png",
+  "thumb": "cards/thumbs/Omenpath Shortcut.webp",
+  "transcript": "cards/transcripts/Omenpath Shortcut.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "PBT"
+  ]
+}

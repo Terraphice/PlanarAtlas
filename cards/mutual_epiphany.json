@@ -1,0 +1,13 @@
+{
+  "id": "mutual_epiphany",
+  "name": "Mutual Epiphany",
+  "type": "Phenomenon",
+  "image": "cards/images/Mutual Epiphany.png",
+  "thumb": "cards/thumbs/Mutual Epiphany.webp",
+  "transcript": "cards/transcripts/Mutual Epiphany.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "MOC"
+  ],
+  "scryfallId": null
+}

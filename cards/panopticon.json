@@ -1,0 +1,14 @@
+{
+  "id": "panopticon",
+  "name": "Panopticon",
+  "type": "Plane",
+  "image": "cards/images/Panopticon.png",
+  "thumb": "cards/thumbs/Panopticon.webp",
+  "transcript": "cards/transcripts/Panopticon.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Mirrodin",
+    "MOC"
+  ],
+  "scryfallId": null
+}

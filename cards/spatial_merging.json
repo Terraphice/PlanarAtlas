@@ -1,0 +1,13 @@
+{
+  "id": "spatial_merging",
+  "name": "Spatial Merging",
+  "type": "Phenomenon",
+  "image": "cards/images/Spatial Merging.png",
+  "thumb": "cards/thumbs/Spatial Merging.webp",
+  "transcript": "cards/transcripts/Spatial Merging.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "MOC"
+  ],
+  "scryfallId": null
+}

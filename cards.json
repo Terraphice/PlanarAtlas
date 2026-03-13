@@ -1,35 +1,35 @@
 [
   {
-    "id": "phenomenon_atlas_consultation",
+    "id": "atlas_consultation",
     "name": "Atlas Consultation",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Atlas Consultation.png",
-    "thumb": "cards/thumbs/Phenomenon_Atlas Consultation.webp",
-    "transcript": "cards/transcripts/Phenomenon_Atlas Consultation.md",
+    "image": "cards/images/Atlas Consultation.png",
+    "thumb": "cards/thumbs/Atlas Consultation.webp",
+    "transcript": "cards/transcripts/Atlas Consultation.md",
     "tags": [
       ":top:badge:tr:amber:Custom",
       "PBT"
     ]
   },
   {
-    "id": "phenomenon_battlefield_hysteria",
+    "id": "battlefield_hysteria",
     "name": "Battlefield Hysteria",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Battlefield Hysteria.png",
-    "thumb": "cards/thumbs/Phenomenon_Battlefield Hysteria.webp",
-    "transcript": "cards/transcripts/Phenomenon_Battlefield Hysteria.md",
+    "image": "cards/images/Battlefield Hysteria.png",
+    "thumb": "cards/thumbs/Battlefield Hysteria.webp",
+    "transcript": "cards/transcripts/Battlefield Hysteria.md",
     "tags": [
       ":top:badge:tr:amber:Custom",
       "PBT"
     ]
   },
   {
-    "id": "phenomenon_caught_in_a_parallel_universe",
+    "id": "caught_in_a_parallel_universe",
     "name": "Caught in a Parallel Universe",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Caught in a Parallel Universe.png",
-    "thumb": "cards/thumbs/Phenomenon_Caught in a Parallel Universe.webp",
-    "transcript": "cards/transcripts/Phenomenon_Caught in a Parallel Universe.md",
+    "image": "cards/images/Caught in a Parallel Universe.png",
+    "thumb": "cards/thumbs/Caught in a Parallel Universe.webp",
+    "transcript": "cards/transcripts/Caught in a Parallel Universe.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "WHO",
@@ -38,12 +38,12 @@
     "scryfallId": null
   },
   {
-    "id": "phenomenon_chaotic_aether",
+    "id": "chaotic_aether",
     "name": "Chaotic Aether",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Chaotic Aether.png",
-    "thumb": "cards/thumbs/Phenomenon_Chaotic Aether.webp",
-    "transcript": "cards/transcripts/Phenomenon_Chaotic Aether.md",
+    "image": "cards/images/Chaotic Aether.png",
+    "thumb": "cards/thumbs/Chaotic Aether.webp",
+    "transcript": "cards/transcripts/Chaotic Aether.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "MOC"
@@ -51,72 +51,72 @@
     "scryfallId": null
   },
   {
-    "id": "phenomenon_cleansing_dawn",
+    "id": "cleansing_dawn",
     "name": "Cleansing Dawn",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Cleansing Dawn.png",
-    "thumb": "cards/thumbs/Phenomenon_Cleansing Dawn.webp",
-    "transcript": "cards/transcripts/Phenomenon_Cleansing Dawn.md",
+    "image": "cards/images/Cleansing Dawn.png",
+    "thumb": "cards/thumbs/Cleansing Dawn.webp",
+    "transcript": "cards/transcripts/Cleansing Dawn.md",
     "tags": [
       ":top:badge:tr:amber:Custom",
       "PBT"
     ]
   },
   {
-    "id": "phenomenon_corrupting_dusk",
+    "id": "corrupting_dusk",
     "name": "Corrupting Dusk",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Corrupting Dusk.png",
-    "thumb": "cards/thumbs/Phenomenon_Corrupting Dusk.webp",
-    "transcript": "cards/transcripts/Phenomenon_Corrupting Dusk.md",
+    "image": "cards/images/Corrupting Dusk.png",
+    "thumb": "cards/thumbs/Corrupting Dusk.webp",
+    "transcript": "cards/transcripts/Corrupting Dusk.md",
     "tags": [
       ":top:badge:tr:amber:Custom",
       "PBT"
     ]
   },
   {
-    "id": "phenomenon_disturbed_slumber",
+    "id": "disturbed_slumber",
     "name": "Disturbed Slumber",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Disturbed Slumber.png",
-    "thumb": "cards/thumbs/Phenomenon_Disturbed Slumber.webp",
-    "transcript": "cards/transcripts/Phenomenon_Disturbed Slumber.md",
+    "image": "cards/images/Disturbed Slumber.png",
+    "thumb": "cards/thumbs/Disturbed Slumber.webp",
+    "transcript": "cards/transcripts/Disturbed Slumber.md",
     "tags": [
       ":top:badge:tr:amber:Custom",
       "PBT"
     ]
   },
   {
-    "id": "phenomenon_embrace_of_ichor",
+    "id": "embrace_of_ichor",
     "name": "Embrace of Ichor",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Embrace of Ichor.png",
-    "thumb": "cards/thumbs/Phenomenon_Embrace of Ichor.webp",
-    "transcript": "cards/transcripts/Phenomenon_Embrace of Ichor.md",
+    "image": "cards/images/Embrace of Ichor.png",
+    "thumb": "cards/thumbs/Embrace of Ichor.webp",
+    "transcript": "cards/transcripts/Embrace of Ichor.md",
     "tags": [
       ":top:badge:tr:amber:Custom",
       "PBT"
     ]
   },
   {
-    "id": "phenomenon_fateful_return",
+    "id": "fateful_return",
     "name": "Fateful Return",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Fateful Return.png",
-    "thumb": "cards/thumbs/Phenomenon_Fateful Return.webp",
-    "transcript": "cards/transcripts/Phenomenon_Fateful Return.md",
+    "image": "cards/images/Fateful Return.png",
+    "thumb": "cards/thumbs/Fateful Return.webp",
+    "transcript": "cards/transcripts/Fateful Return.md",
     "tags": [
       ":top:badge:tr:amber:Custom",
       "PBT"
     ]
   },
   {
-    "id": "phenomenon_fixed_point_in_time",
+    "id": "fixed_point_in_time",
     "name": "Fixed Point in Time",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Fixed Point in Time.png",
-    "thumb": "cards/thumbs/Phenomenon_Fixed Point in Time.webp",
-    "transcript": "cards/transcripts/Phenomenon_Fixed Point in Time.md",
+    "image": "cards/images/Fixed Point in Time.png",
+    "thumb": "cards/thumbs/Fixed Point in Time.webp",
+    "transcript": "cards/transcripts/Fixed Point in Time.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "WHO",
@@ -125,36 +125,36 @@
     "scryfallId": null
   },
   {
-    "id": "phenomenon_glimpse_of_fate",
+    "id": "glimpse_of_fate",
     "name": "Glimpse of Fate",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Glimpse of Fate.png",
-    "thumb": "cards/thumbs/Phenomenon_Glimpse of Fate.webp",
-    "transcript": "cards/transcripts/Phenomenon_Glimpse of Fate.md",
+    "image": "cards/images/Glimpse of Fate.png",
+    "thumb": "cards/thumbs/Glimpse of Fate.webp",
+    "transcript": "cards/transcripts/Glimpse of Fate.md",
     "tags": [
       ":top:badge:tr:amber:Custom",
       "PBT"
     ]
   },
   {
-    "id": "phenomenon_great_desparking",
+    "id": "great_desparking",
     "name": "Great Desparking",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Great Desparking.png",
-    "thumb": "cards/thumbs/Phenomenon_Great Desparking.webp",
-    "transcript": "cards/transcripts/Phenomenon_Great Desparking.md",
+    "image": "cards/images/Great Desparking.png",
+    "thumb": "cards/thumbs/Great Desparking.webp",
+    "transcript": "cards/transcripts/Great Desparking.md",
     "tags": [
       ":top:badge:tr:amber:Custom",
       "PBT"
     ]
   },
   {
-    "id": "phenomenon_high_and_dry_black_market",
+    "id": "high_and_dry_black_market",
     "name": "High and Dry Black Market",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_High and Dry Black Market.png",
-    "thumb": "cards/thumbs/Phenomenon_High and Dry Black Market.webp",
-    "transcript": "cards/transcripts/Phenomenon_High and Dry Black Market.md",
+    "image": "cards/images/High and Dry Black Market.png",
+    "thumb": "cards/thumbs/High and Dry Black Market.webp",
+    "transcript": "cards/transcripts/High and Dry Black Market.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "PUNK",
@@ -163,12 +163,12 @@
     "scryfallId": null
   },
   {
-    "id": "phenomenon_human-time_lord_meta_crisis",
+    "id": "human-time_lord_meta_crisis",
     "name": "Human—Time Lord Meta Crisis",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Human—Time Lord Meta-Crisis.png",
-    "thumb": "cards/thumbs/Phenomenon_Human—Time Lord Meta-Crisis.webp",
-    "transcript": "cards/transcripts/Phenomenon_Human—Time Lord Meta-Crisis.md",
+    "image": "cards/images/Human—Time Lord Meta-Crisis.png",
+    "thumb": "cards/thumbs/Human—Time Lord Meta-Crisis.webp",
+    "transcript": "cards/transcripts/Human—Time Lord Meta-Crisis.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "WHO",
@@ -177,36 +177,36 @@
     "scryfallId": null
   },
   {
-    "id": "phenomenon_ichor_trail",
+    "id": "ichor_trail",
     "name": "Ichor Trail",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Ichor Trail.png",
-    "thumb": "cards/thumbs/Phenomenon_Ichor Trail.webp",
-    "transcript": "cards/transcripts/Phenomenon_Ichor Trail.md",
+    "image": "cards/images/Ichor Trail.png",
+    "thumb": "cards/thumbs/Ichor Trail.webp",
+    "transcript": "cards/transcripts/Ichor Trail.md",
     "tags": [
       ":top:badge:tr:amber:Custom",
       "PBT"
     ]
   },
   {
-    "id": "phenomenon_interplanar_mapping",
+    "id": "interplanar_mapping",
     "name": "Interplanar Mapping",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Interplanar Mapping.png",
-    "thumb": "cards/thumbs/Phenomenon_Interplanar Mapping.webp",
-    "transcript": "cards/transcripts/Phenomenon_Interplanar Mapping.md",
+    "image": "cards/images/Interplanar Mapping.png",
+    "thumb": "cards/thumbs/Interplanar Mapping.webp",
+    "transcript": "cards/transcripts/Interplanar Mapping.md",
     "tags": [
       ":top:badge:tr:amber:Custom",
       "PBT"
     ]
   },
   {
-    "id": "phenomenon_interplanar_tunnel",
+    "id": "interplanar_tunnel",
     "name": "Interplanar Tunnel",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Interplanar Tunnel.png",
-    "thumb": "cards/thumbs/Phenomenon_Interplanar Tunnel.webp",
-    "transcript": "cards/transcripts/Phenomenon_Interplanar Tunnel.md",
+    "image": "cards/images/Interplanar Tunnel.png",
+    "thumb": "cards/thumbs/Interplanar Tunnel.webp",
+    "transcript": "cards/transcripts/Interplanar Tunnel.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "OPCA"
@@ -214,12 +214,12 @@
     "scryfallId": null
   },
   {
-    "id": "phenomenon_mad_labs",
+    "id": "mad_labs",
     "name": "Mad Labs",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Mad Labs.png",
-    "thumb": "cards/thumbs/Phenomenon_Mad Labs.webp",
-    "transcript": "cards/transcripts/Phenomenon_Mad Labs.md",
+    "image": "cards/images/Mad Labs.png",
+    "thumb": "cards/thumbs/Mad Labs.webp",
+    "transcript": "cards/transcripts/Mad Labs.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "PUNK",
@@ -228,12 +228,12 @@
     "scryfallId": null
   },
   {
-    "id": "phenomenon_morphic_tide",
+    "id": "morphic_tide",
     "name": "Morphic Tide",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Morphic Tide.png",
-    "thumb": "cards/thumbs/Phenomenon_Morphic Tide.webp",
-    "transcript": "cards/transcripts/Phenomenon_Morphic Tide.md",
+    "image": "cards/images/Morphic Tide.png",
+    "thumb": "cards/thumbs/Morphic Tide.webp",
+    "transcript": "cards/transcripts/Morphic Tide.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "OPCA"
@@ -241,12 +241,12 @@
     "scryfallId": null
   },
   {
-    "id": "phenomenon_mutual_epiphany",
+    "id": "mutual_epiphany",
     "name": "Mutual Epiphany",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Mutual Epiphany.png",
-    "thumb": "cards/thumbs/Phenomenon_Mutual Epiphany.webp",
-    "transcript": "cards/transcripts/Phenomenon_Mutual Epiphany.md",
+    "image": "cards/images/Mutual Epiphany.png",
+    "thumb": "cards/thumbs/Mutual Epiphany.webp",
+    "transcript": "cards/transcripts/Mutual Epiphany.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "MOC"
@@ -254,12 +254,12 @@
     "scryfallId": null
   },
   {
-    "id": "phenomenon_omenpath_instability",
+    "id": "omenpath_instability",
     "name": "Omenpath Instability",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Omenpath Instability.png",
-    "thumb": "cards/thumbs/Phenomenon_Omenpath Instability.webp",
-    "transcript": "cards/transcripts/Phenomenon_Omenpath Instability.md",
+    "image": "cards/images/Omenpath Instability.png",
+    "thumb": "cards/thumbs/Omenpath Instability.webp",
+    "transcript": "cards/transcripts/Omenpath Instability.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "PUNK",
@@ -268,24 +268,24 @@
     "scryfallId": null
   },
   {
-    "id": "phenomenon_omenpath_shortcut",
+    "id": "omenpath_shortcut",
     "name": "Omenpath Shortcut",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Omenpath Shortcut.png",
-    "thumb": "cards/thumbs/Phenomenon_Omenpath Shortcut.webp",
-    "transcript": "cards/transcripts/Phenomenon_Omenpath Shortcut.md",
+    "image": "cards/images/Omenpath Shortcut.png",
+    "thumb": "cards/thumbs/Omenpath Shortcut.webp",
+    "transcript": "cards/transcripts/Omenpath Shortcut.md",
     "tags": [
       ":top:badge:tr:amber:Custom",
       "PBT"
     ]
   },
   {
-    "id": "phenomenon_pin_trading",
+    "id": "pin_trading",
     "name": "Pin Trading",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Pin Trading.png",
-    "thumb": "cards/thumbs/Phenomenon_Pin Trading.webp",
-    "transcript": "cards/transcripts/Phenomenon_Pin Trading.md",
+    "image": "cards/images/Pin Trading.png",
+    "thumb": "cards/thumbs/Pin Trading.webp",
+    "transcript": "cards/transcripts/Pin Trading.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "PUNK",
@@ -294,12 +294,12 @@
     "scryfallId": null
   },
   {
-    "id": "phenomenon_planewide_disaster",
+    "id": "planewide_disaster",
     "name": "Planewide Disaster",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Planewide Disaster.png",
-    "thumb": "cards/thumbs/Phenomenon_Planewide Disaster.webp",
-    "transcript": "cards/transcripts/Phenomenon_Planewide Disaster.md",
+    "image": "cards/images/Planewide Disaster.png",
+    "thumb": "cards/thumbs/Planewide Disaster.webp",
+    "transcript": "cards/transcripts/Planewide Disaster.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "MOC"
@@ -307,12 +307,12 @@
     "scryfallId": null
   },
   {
-    "id": "phenomenon_probability_flux",
+    "id": "probability_flux",
     "name": "Probability Flux",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Probability Flux.png",
-    "thumb": "cards/thumbs/Phenomenon_Probability Flux.webp",
-    "transcript": "cards/transcripts/Phenomenon_Probability Flux.md",
+    "image": "cards/images/Probability Flux.png",
+    "thumb": "cards/thumbs/Probability Flux.webp",
+    "transcript": "cards/transcripts/Probability Flux.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "PUNK",
@@ -321,12 +321,12 @@
     "scryfallId": null
   },
   {
-    "id": "phenomenon_reality_shaping",
+    "id": "reality_shaping",
     "name": "Reality Shaping",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Reality Shaping.png",
-    "thumb": "cards/thumbs/Phenomenon_Reality Shaping.webp",
-    "transcript": "cards/transcripts/Phenomenon_Reality Shaping.md",
+    "image": "cards/images/Reality Shaping.png",
+    "thumb": "cards/thumbs/Reality Shaping.webp",
+    "transcript": "cards/transcripts/Reality Shaping.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "MOC"
@@ -334,12 +334,12 @@
     "scryfallId": null
   },
   {
-    "id": "phenomenon_royal_booster",
+    "id": "royal_booster",
     "name": "Royal Booster",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Royal Booster.png",
-    "thumb": "cards/thumbs/Phenomenon_Royal Booster.webp",
-    "transcript": "cards/transcripts/Phenomenon_Royal Booster.md",
+    "image": "cards/images/Royal Booster.png",
+    "thumb": "cards/thumbs/Royal Booster.webp",
+    "transcript": "cards/transcripts/Royal Booster.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "PUNK",
@@ -348,24 +348,24 @@
     "scryfallId": null
   },
   {
-    "id": "phenomenon_sleeper_agent",
+    "id": "sleeper_agent",
     "name": "Sleeper Agent",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Sleeper Agent.png",
-    "thumb": "cards/thumbs/Phenomenon_Sleeper Agent.webp",
-    "transcript": "cards/transcripts/Phenomenon_Sleeper Agent.md",
+    "image": "cards/images/Sleeper Agent.png",
+    "thumb": "cards/thumbs/Sleeper Agent.webp",
+    "transcript": "cards/transcripts/Sleeper Agent.md",
     "tags": [
       ":top:badge:tr:amber:Custom",
       "PBT"
     ]
   },
   {
-    "id": "phenomenon_spatial_merging",
+    "id": "spatial_merging",
     "name": "Spatial Merging",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Spatial Merging.png",
-    "thumb": "cards/thumbs/Phenomenon_Spatial Merging.webp",
-    "transcript": "cards/transcripts/Phenomenon_Spatial Merging.md",
+    "image": "cards/images/Spatial Merging.png",
+    "thumb": "cards/thumbs/Spatial Merging.webp",
+    "transcript": "cards/transcripts/Spatial Merging.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "MOC"
@@ -373,24 +373,24 @@
     "scryfallId": null
   },
   {
-    "id": "phenomenon_surging_vitality",
+    "id": "surging_vitality",
     "name": "Surging Vitality",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Surging Vitality.png",
-    "thumb": "cards/thumbs/Phenomenon_Surging Vitality.webp",
-    "transcript": "cards/transcripts/Phenomenon_Surging Vitality.md",
+    "image": "cards/images/Surging Vitality.png",
+    "thumb": "cards/thumbs/Surging Vitality.webp",
+    "transcript": "cards/transcripts/Surging Vitality.md",
     "tags": [
       ":top:badge:tr:amber:Custom",
       "PBT"
     ]
   },
   {
-    "id": "phenomenon_team_up",
+    "id": "team_up",
     "name": "Team Up!",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Team-Up!.png",
-    "thumb": "cards/thumbs/Phenomenon_Team-Up!.webp",
-    "transcript": "cards/transcripts/Phenomenon_Team-Up!.md",
+    "image": "cards/images/Team-Up!.png",
+    "thumb": "cards/thumbs/Team-Up!.webp",
+    "transcript": "cards/transcripts/Team-Up!.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "PUNK",
@@ -399,12 +399,12 @@
     "scryfallId": null
   },
   {
-    "id": "phenomenon_time_distortion",
+    "id": "time_distortion",
     "name": "Time Distortion",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Time Distortion.png",
-    "thumb": "cards/thumbs/Phenomenon_Time Distortion.webp",
-    "transcript": "cards/transcripts/Phenomenon_Time Distortion.md",
+    "image": "cards/images/Time Distortion.png",
+    "thumb": "cards/thumbs/Time Distortion.webp",
+    "transcript": "cards/transcripts/Time Distortion.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "OPCA"
@@ -412,24 +412,24 @@
     "scryfallId": null
   },
   {
-    "id": "phenomenon_time_spiral",
+    "id": "time_spiral",
     "name": "Time Spiral",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Time Spiral.png",
-    "thumb": "cards/thumbs/Phenomenon_Time Spiral.webp",
-    "transcript": "cards/transcripts/Phenomenon_Time Spiral.md",
+    "image": "cards/images/Time Spiral.png",
+    "thumb": "cards/thumbs/Time Spiral.webp",
+    "transcript": "cards/transcripts/Time Spiral.md",
     "tags": [
       ":top:badge:tr:amber:Custom",
       "PBT"
     ]
   },
   {
-    "id": "phenomenon_unknown_event",
+    "id": "unknown_event",
     "name": "Unknown Event",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Unknown Event.png",
-    "thumb": "cards/thumbs/Phenomenon_Unknown Event.webp",
-    "transcript": "cards/transcripts/Phenomenon_Unknown Event.md",
+    "image": "cards/images/Unknown Event.png",
+    "thumb": "cards/thumbs/Unknown Event.webp",
+    "transcript": "cards/transcripts/Unknown Event.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "PUNK",
@@ -438,12 +438,12 @@
     "scryfallId": null
   },
   {
-    "id": "phenomenon_unleash_the_flux",
+    "id": "unleash_the_flux",
     "name": "Unleash the Flux",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Unleash the Flux.png",
-    "thumb": "cards/thumbs/Phenomenon_Unleash the Flux.webp",
-    "transcript": "cards/transcripts/Phenomenon_Unleash the Flux.md",
+    "image": "cards/images/Unleash the Flux.png",
+    "thumb": "cards/thumbs/Unleash the Flux.webp",
+    "transcript": "cards/transcripts/Unleash the Flux.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "WHO",
@@ -452,12 +452,12 @@
     "scryfallId": null
   },
   {
-    "id": "phenomenon_year_end_review",
+    "id": "year_end_review",
     "name": "Year End Review",
     "type": "Phenomenon",
-    "image": "cards/images/Phenomenon_Year-End Review.png",
-    "thumb": "cards/thumbs/Phenomenon_Year-End Review.webp",
-    "transcript": "cards/transcripts/Phenomenon_Year-End Review.md",
+    "image": "cards/images/Year-End Review.png",
+    "thumb": "cards/thumbs/Year-End Review.webp",
+    "transcript": "cards/transcripts/Year-End Review.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "PUNK",
@@ -466,12 +466,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_academy_at_tolaria_west",
+    "id": "academy_at_tolaria_west",
     "name": "Academy at Tolaria West",
     "type": "Plane",
-    "image": "cards/images/Plane_Academy at Tolaria West.png",
-    "thumb": "cards/thumbs/Plane_Academy at Tolaria West.webp",
-    "transcript": "cards/transcripts/Plane_Academy at Tolaria West.md",
+    "image": "cards/images/Academy at Tolaria West.png",
+    "thumb": "cards/thumbs/Academy at Tolaria West.webp",
+    "transcript": "cards/transcripts/Academy at Tolaria West.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Dominaria",
@@ -480,12 +480,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_agyrem",
+    "id": "agyrem",
     "name": "Agyrem",
     "type": "Plane",
-    "image": "cards/images/Plane_Agyrem.png",
-    "thumb": "cards/thumbs/Plane_Agyrem.webp",
-    "transcript": "cards/transcripts/Plane_Agyrem.md",
+    "image": "cards/images/Agyrem.png",
+    "thumb": "cards/thumbs/Agyrem.webp",
+    "transcript": "cards/transcripts/Agyrem.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Ravnica",
@@ -494,12 +494,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_akoum",
+    "id": "akoum",
     "name": "Akoum",
     "type": "Plane",
-    "image": "cards/images/Plane_Akoum.png",
-    "thumb": "cards/thumbs/Plane_Akoum.webp",
-    "transcript": "cards/transcripts/Plane_Akoum.md",
+    "image": "cards/images/Akoum.png",
+    "thumb": "cards/thumbs/Akoum.webp",
+    "transcript": "cards/transcripts/Akoum.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Zendikar",
@@ -508,12 +508,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_amys_home",
+    "id": "amys_home",
     "name": "Amy's Home",
     "type": "Plane",
-    "image": "cards/images/Plane_Amy's Home.png",
-    "thumb": "cards/thumbs/Plane_Amy's Home.webp",
-    "transcript": "cards/transcripts/Plane_Amy's Home.md",
+    "image": "cards/images/Amy's Home.png",
+    "thumb": "cards/thumbs/Amy's Home.webp",
+    "transcript": "cards/transcripts/Amy's Home.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Earth",
@@ -523,12 +523,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_antarctic_research_base",
+    "id": "antarctic_research_base",
     "name": "Antarctic Research Base",
     "type": "Plane",
-    "image": "cards/images/Plane_Antarctic Research Base.png",
-    "thumb": "cards/thumbs/Plane_Antarctic Research Base.webp",
-    "transcript": "cards/transcripts/Plane_Antarctic Research Base.md",
+    "image": "cards/images/Antarctic Research Base.png",
+    "thumb": "cards/thumbs/Antarctic Research Base.webp",
+    "transcript": "cards/transcripts/Antarctic Research Base.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Earth",
@@ -538,12 +538,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_aplan_mortarium",
+    "id": "aplan_mortarium",
     "name": "Aplan Mortarium",
     "type": "Plane",
-    "image": "cards/images/Plane_Aplan Mortarium.png",
-    "thumb": "cards/thumbs/Plane_Aplan Mortarium.webp",
-    "transcript": "cards/transcripts/Plane_Aplan Mortarium.md",
+    "image": "cards/images/Aplan Mortarium.png",
+    "thumb": "cards/thumbs/Aplan Mortarium.webp",
+    "transcript": "cards/transcripts/Aplan Mortarium.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Alfava Metraxis",
@@ -553,12 +553,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_aretopolis",
+    "id": "aretopolis",
     "name": "Aretopolis",
     "type": "Plane",
-    "image": "cards/images/Plane_Aretopolis.png",
-    "thumb": "cards/thumbs/Plane_Aretopolis.webp",
-    "transcript": "cards/transcripts/Plane_Aretopolis.md",
+    "image": "cards/images/Aretopolis.png",
+    "thumb": "cards/thumbs/Aretopolis.webp",
+    "transcript": "cards/transcripts/Aretopolis.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Kephalai",
@@ -567,12 +567,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_artist_alley",
+    "id": "artist_alley",
     "name": "Artist Alley",
     "type": "Plane",
-    "image": "cards/images/Plane_Artist Alley.png",
-    "thumb": "cards/thumbs/Plane_Artist Alley.webp",
-    "transcript": "cards/transcripts/Plane_Artist Alley.md",
+    "image": "cards/images/Artist Alley.png",
+    "thumb": "cards/thumbs/Artist Alley.webp",
+    "transcript": "cards/transcripts/Artist Alley.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "PUNK",
@@ -581,12 +581,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_asmoranomardicadaistinaculdacars_kitchen",
+    "id": "asmoranomardicadaistinaculdacars_kitchen",
     "name": "Asmoranomardicadaistinaculdacar's Kitchen",
     "type": "Plane",
-    "image": "cards/images/Plane_Asmoranomardicadaistinaculdacar's Kitchen.png",
-    "thumb": "cards/thumbs/Plane_Asmoranomardicadaistinaculdacar's Kitchen.webp",
-    "transcript": "cards/transcripts/Plane_Asmoranomardicadaistinaculdacar's Kitchen.md",
+    "image": "cards/images/Asmoranomardicadaistinaculdacar's Kitchen.png",
+    "thumb": "cards/thumbs/Asmoranomardicadaistinaculdacar's Kitchen.webp",
+    "transcript": "cards/transcripts/Asmoranomardicadaistinaculdacar's Kitchen.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Hell",
@@ -596,12 +596,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_astral_arena",
+    "id": "astral_arena",
     "name": "Astral Arena",
     "type": "Plane",
-    "image": "cards/images/Plane_Astral Arena.png",
-    "thumb": "cards/thumbs/Plane_Astral Arena.webp",
-    "transcript": "cards/transcripts/Plane_Astral Arena.md",
+    "image": "cards/images/Astral Arena.png",
+    "thumb": "cards/thumbs/Astral Arena.webp",
+    "transcript": "cards/transcripts/Astral Arena.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Kolbahan",
@@ -610,12 +610,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_bad_wolf_bay",
+    "id": "bad_wolf_bay",
     "name": "Bad Wolf Bay",
     "type": "Plane",
-    "image": "cards/images/Plane_Bad Wolf Bay.png",
-    "thumb": "cards/thumbs/Plane_Bad Wolf Bay.webp",
-    "transcript": "cards/transcripts/Plane_Bad Wolf Bay.md",
+    "image": "cards/images/Bad Wolf Bay.png",
+    "thumb": "cards/thumbs/Bad Wolf Bay.webp",
+    "transcript": "cards/transcripts/Bad Wolf Bay.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Earth",
@@ -625,12 +625,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_bant",
+    "id": "bant",
     "name": "Bant",
     "type": "Plane",
-    "image": "cards/images/Plane_Bant.png",
-    "thumb": "cards/thumbs/Plane_Bant.webp",
-    "transcript": "cards/transcripts/Plane_Bant.md",
+    "image": "cards/images/Bant.png",
+    "thumb": "cards/thumbs/Bant.webp",
+    "transcript": "cards/transcripts/Bant.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Alara",
@@ -639,12 +639,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_besieged_viking_village",
+    "id": "besieged_viking_village",
     "name": "Besieged Viking Village",
     "type": "Plane",
-    "image": "cards/images/Plane_Besieged Viking Village.png",
-    "thumb": "cards/thumbs/Plane_Besieged Viking Village.webp",
-    "transcript": "cards/transcripts/Plane_Besieged Viking Village.md",
+    "image": "cards/images/Besieged Viking Village.png",
+    "thumb": "cards/thumbs/Besieged Viking Village.webp",
+    "transcript": "cards/transcripts/Besieged Viking Village.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Earth",
@@ -654,12 +654,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_bicycle_rack",
+    "id": "bicycle_rack",
     "name": "Bicycle Rack",
     "type": "Plane",
-    "image": "cards/images/Plane_Bicycle Rack.png",
-    "thumb": "cards/thumbs/Plane_Bicycle Rack.webp",
-    "transcript": "cards/transcripts/Plane_Bicycle Rack.md",
+    "image": "cards/images/Bicycle Rack.png",
+    "thumb": "cards/thumbs/Bicycle Rack.webp",
+    "transcript": "cards/transcripts/Bicycle Rack.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Amsterdam",
@@ -669,12 +669,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_black_lotus_lounge",
+    "id": "black_lotus_lounge",
     "name": "Black Lotus Lounge",
     "type": "Plane",
-    "image": "cards/images/Plane_Black Lotus Lounge.png",
-    "thumb": "cards/thumbs/Plane_Black Lotus Lounge.webp",
-    "transcript": "cards/transcripts/Plane_Black Lotus Lounge.md",
+    "image": "cards/images/Black Lotus Lounge.png",
+    "thumb": "cards/thumbs/Black Lotus Lounge.webp",
+    "transcript": "cards/transcripts/Black Lotus Lounge.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "PUNK",
@@ -683,12 +683,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_bloodhill_bastion",
+    "id": "bloodhill_bastion",
     "name": "Bloodhill Bastion",
     "type": "Plane",
-    "image": "cards/images/Plane_Bloodhill Bastion.png",
-    "thumb": "cards/thumbs/Plane_Bloodhill Bastion.webp",
-    "transcript": "cards/transcripts/Plane_Bloodhill Bastion.md",
+    "image": "cards/images/Bloodhill Bastion.png",
+    "thumb": "cards/thumbs/Bloodhill Bastion.webp",
+    "transcript": "cards/transcripts/Bloodhill Bastion.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Equilor",
@@ -697,12 +697,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_bowie_base_one",
+    "id": "bowie_base_one",
     "name": "Bowie Base One",
     "type": "Plane",
-    "image": "cards/images/Plane_Bowie Base One.png",
-    "thumb": "cards/thumbs/Plane_Bowie Base One.webp",
-    "transcript": "cards/transcripts/Plane_Bowie Base One.md",
+    "image": "cards/images/Bowie Base One.png",
+    "thumb": "cards/thumbs/Bowie Base One.webp",
+    "transcript": "cards/transcripts/Bowie Base One.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Mars",
@@ -712,12 +712,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_celestine_reef",
+    "id": "celestine_reef",
     "name": "Celestine Reef",
     "type": "Plane",
-    "image": "cards/images/Plane_Celestine Reef.png",
-    "thumb": "cards/thumbs/Plane_Celestine Reef.webp",
-    "transcript": "cards/transcripts/Plane_Celestine Reef.md",
+    "image": "cards/images/Celestine Reef.png",
+    "thumb": "cards/thumbs/Celestine Reef.webp",
+    "transcript": "cards/transcripts/Celestine Reef.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Luvion",
@@ -726,12 +726,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_circus_of_the_sun",
+    "id": "circus_of_the_sun",
     "name": "Circus of the Sun",
     "type": "Plane",
-    "image": "cards/images/Plane_Circus of the Sun.png",
-    "thumb": "cards/thumbs/Plane_Circus of the Sun.webp",
-    "transcript": "cards/transcripts/Plane_Circus of the Sun.md",
+    "image": "cards/images/Circus of the Sun.png",
+    "thumb": "cards/thumbs/Circus of the Sun.webp",
+    "transcript": "cards/transcripts/Circus of the Sun.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Las Vegas",
@@ -741,12 +741,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_city_hall",
+    "id": "city_hall",
     "name": "City Hall",
     "type": "Plane",
-    "image": "cards/images/Plane_City Hall.png",
-    "thumb": "cards/thumbs/Plane_City Hall.webp",
-    "transcript": "cards/transcripts/Plane_City Hall.md",
+    "image": "cards/images/City Hall.png",
+    "thumb": "cards/thumbs/City Hall.webp",
+    "transcript": "cards/transcripts/City Hall.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Chicago",
@@ -756,12 +756,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_city_of_the_daleks",
+    "id": "city_of_the_daleks",
     "name": "City of the Daleks",
     "type": "Plane",
-    "image": "cards/images/Plane_City of the Daleks.png",
-    "thumb": "cards/thumbs/Plane_City of the Daleks.webp",
-    "transcript": "cards/transcripts/Plane_City of the Daleks.md",
+    "image": "cards/images/City of the Daleks.png",
+    "thumb": "cards/thumbs/City of the Daleks.webp",
+    "transcript": "cards/transcripts/City of the Daleks.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Skaro",
@@ -771,12 +771,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_clamilton_estate",
+    "id": "clamilton_estate",
     "name": "Clamilton Estate",
     "type": "Plane",
-    "image": "cards/images/Plane_Clamilton Estate.png",
-    "thumb": "cards/thumbs/Plane_Clamilton Estate.webp",
-    "transcript": "cards/transcripts/Plane_Clamilton Estate.md",
+    "image": "cards/images/Clamilton Estate.png",
+    "thumb": "cards/thumbs/Clamilton Estate.webp",
+    "transcript": "cards/transcripts/Clamilton Estate.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Clamhattan",
@@ -786,12 +786,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_cliffside_market",
+    "id": "cliffside_market",
     "name": "Cliffside Market",
     "type": "Plane",
-    "image": "cards/images/Plane_Cliffside Market.png",
-    "thumb": "cards/thumbs/Plane_Cliffside Market.webp",
-    "transcript": "cards/transcripts/Plane_Cliffside Market.md",
+    "image": "cards/images/Cliffside Market.png",
+    "thumb": "cards/thumbs/Cliffside Market.webp",
+    "transcript": "cards/transcripts/Cliffside Market.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Mercadia",
@@ -800,12 +800,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_coal_hill_school",
+    "id": "coal_hill_school",
     "name": "Coal Hill School",
     "type": "Plane",
-    "image": "cards/images/Plane_Coal Hill School.png",
-    "thumb": "cards/thumbs/Plane_Coal Hill School.webp",
-    "transcript": "cards/transcripts/Plane_Coal Hill School.md",
+    "image": "cards/images/Coal Hill School.png",
+    "thumb": "cards/thumbs/Coal Hill School.webp",
+    "transcript": "cards/transcripts/Coal Hill School.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Earth",
@@ -815,12 +815,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_dalek_intensive_care",
+    "id": "dalek_intensive_care",
     "name": "Dalek Intensive Care",
     "type": "Plane",
-    "image": "cards/images/Plane_Dalek Intensive Care.png",
-    "thumb": "cards/thumbs/Plane_Dalek Intensive Care.webp",
-    "transcript": "cards/transcripts/Plane_Dalek Intensive Care.md",
+    "image": "cards/images/Dalek Intensive Care.png",
+    "thumb": "cards/thumbs/Dalek Intensive Care.webp",
+    "transcript": "cards/transcripts/Dalek Intensive Care.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "The Dalek Asylum",
@@ -830,12 +830,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_deceptive_divination",
+    "id": "deceptive_divination",
     "name": "Deceptive Divination",
     "type": "Plane",
-    "image": "cards/images/Plane_Deceptive Divination.png",
-    "thumb": "cards/thumbs/Plane_Deceptive Divination.webp",
-    "transcript": "cards/transcripts/Plane_Deceptive Divination.md",
+    "image": "cards/images/Deceptive Divination.png",
+    "thumb": "cards/thumbs/Deceptive Divination.webp",
+    "transcript": "cards/transcripts/Deceptive Divination.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Secret Lair",
@@ -845,12 +845,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_edge_of_malacol",
+    "id": "edge_of_malacol",
     "name": "Edge of Malacol",
     "type": "Plane",
-    "image": "cards/images/Plane_Edge of Malacol.png",
-    "thumb": "cards/thumbs/Plane_Edge of Malacol.webp",
-    "transcript": "cards/transcripts/Plane_Edge of Malacol.md",
+    "image": "cards/images/Edge of Malacol.png",
+    "thumb": "cards/thumbs/Edge of Malacol.webp",
+    "transcript": "cards/transcripts/Edge of Malacol.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Belenon",
@@ -859,12 +859,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_eloren_wilds",
+    "id": "eloren_wilds",
     "name": "Eloren Wilds",
     "type": "Plane",
-    "image": "cards/images/Plane_Eloren Wilds.png",
-    "thumb": "cards/thumbs/Plane_Eloren Wilds.webp",
-    "transcript": "cards/transcripts/Plane_Eloren Wilds.md",
+    "image": "cards/images/Eloren Wilds.png",
+    "thumb": "cards/thumbs/Eloren Wilds.webp",
+    "transcript": "cards/transcripts/Eloren Wilds.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Shandalar",
@@ -873,12 +873,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_elvish_impersonation_contest",
+    "id": "elvish_impersonation_contest",
     "name": "Elvish Impersonation Contest",
     "type": "Plane",
-    "image": "cards/images/Plane_Elvish Impersonation Contest.png",
-    "thumb": "cards/thumbs/Plane_Elvish Impersonation Contest.webp",
-    "transcript": "cards/transcripts/Plane_Elvish Impersonation Contest.md",
+    "image": "cards/images/Elvish Impersonation Contest.png",
+    "thumb": "cards/thumbs/Elvish Impersonation Contest.webp",
+    "transcript": "cards/transcripts/Elvish Impersonation Contest.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Las Vegas",
@@ -888,12 +888,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_enigma_ridges",
+    "id": "enigma_ridges",
     "name": "Enigma Ridges",
     "type": "Plane",
-    "image": "cards/images/Plane_Enigma Ridges.png",
-    "thumb": "cards/thumbs/Plane_Enigma Ridges.webp",
-    "transcript": "cards/transcripts/Plane_Enigma Ridges.md",
+    "image": "cards/images/Enigma Ridges.png",
+    "thumb": "cards/thumbs/Enigma Ridges.webp",
+    "transcript": "cards/transcripts/Enigma Ridges.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Echoir",
@@ -902,12 +902,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_esper",
+    "id": "esper",
     "name": "Esper",
     "type": "Plane",
-    "image": "cards/images/Plane_Esper.png",
-    "thumb": "cards/thumbs/Plane_Esper.webp",
-    "transcript": "cards/transcripts/Plane_Esper.md",
+    "image": "cards/images/Esper.png",
+    "thumb": "cards/thumbs/Esper.webp",
+    "transcript": "cards/transcripts/Esper.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Alara",
@@ -916,12 +916,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_event_horizon",
+    "id": "event_horizon",
     "name": "Event Horizon",
     "type": "Plane",
-    "image": "cards/images/Plane_Event Horizon.png",
-    "thumb": "cards/thumbs/Plane_Event Horizon.webp",
-    "transcript": "cards/transcripts/Plane_Event Horizon.md",
+    "image": "cards/images/Event Horizon.png",
+    "thumb": "cards/thumbs/Event Horizon.webp",
+    "transcript": "cards/transcripts/Event Horizon.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Blind Eternities",
@@ -931,12 +931,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_fblthp_completely_utterly_totally_lost",
+    "id": "fblthp_completely_utterly_totally_lost",
     "name": "Fblthp  Completely, Utterly, Totally Lost",
     "type": "Plane",
-    "image": "cards/images/Plane_Fblthp_ Completely, Utterly, Totally Lost.png",
-    "thumb": "cards/thumbs/Plane_Fblthp_ Completely, Utterly, Totally Lost.webp",
-    "transcript": "cards/transcripts/Plane_Fblthp_ Completely, Utterly, Totally Lost.md",
+    "image": "cards/images/Fblthp_ Completely, Utterly, Totally Lost.png",
+    "thumb": "cards/thumbs/Fblthp_ Completely, Utterly, Totally Lost.webp",
+    "transcript": "cards/transcripts/Fblthp_ Completely, Utterly, Totally Lost.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Secret Lair",
@@ -946,12 +946,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_feeding_grounds",
+    "id": "feeding_grounds",
     "name": "Feeding Grounds",
     "type": "Plane",
-    "image": "cards/images/Plane_Feeding Grounds.png",
-    "thumb": "cards/thumbs/Plane_Feeding Grounds.webp",
-    "transcript": "cards/transcripts/Plane_Feeding Grounds.md",
+    "image": "cards/images/Feeding Grounds.png",
+    "thumb": "cards/thumbs/Feeding Grounds.webp",
+    "transcript": "cards/transcripts/Feeding Grounds.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Muraganda",
@@ -960,12 +960,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_fields_of_summer",
+    "id": "fields_of_summer",
     "name": "Fields of Summer",
     "type": "Plane",
-    "image": "cards/images/Plane_Fields of Summer.png",
-    "thumb": "cards/thumbs/Plane_Fields of Summer.webp",
-    "transcript": "cards/transcripts/Plane_Fields of Summer.md",
+    "image": "cards/images/Fields of Summer.png",
+    "thumb": "cards/thumbs/Fields of Summer.webp",
+    "transcript": "cards/transcripts/Fields of Summer.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Moag",
@@ -974,12 +974,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_finally_left_handed_magic_cards",
+    "id": "finally_left_handed_magic_cards",
     "name": "Finally! Left Handed Magic Cards",
     "type": "Plane",
-    "image": "cards/images/Plane_Finally! Left-Handed Magic Cards.png",
-    "thumb": "cards/thumbs/Plane_Finally! Left-Handed Magic Cards.webp",
-    "transcript": "cards/transcripts/Plane_Finally! Left-Handed Magic Cards.md",
+    "image": "cards/images/Finally! Left-Handed Magic Cards.png",
+    "thumb": "cards/thumbs/Finally! Left-Handed Magic Cards.webp",
+    "transcript": "cards/transcripts/Finally! Left-Handed Magic Cards.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Secret Lair",
@@ -989,12 +989,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_furnace_layer",
+    "id": "furnace_layer",
     "name": "Furnace Layer",
     "type": "Plane",
-    "image": "cards/images/Plane_Furnace Layer.png",
-    "thumb": "cards/thumbs/Plane_Furnace Layer.webp",
-    "transcript": "cards/transcripts/Plane_Furnace Layer.md",
+    "image": "cards/images/Furnace Layer.png",
+    "thumb": "cards/thumbs/Furnace Layer.webp",
+    "transcript": "cards/transcripts/Furnace Layer.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "New Phyrexia",
@@ -1003,12 +1003,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_gamalgoth_first_city",
+    "id": "gamalgoth_first_city",
     "name": "Gamalgoth First City",
     "type": "Plane",
-    "image": "cards/images/Plane_Gamalgoth First City.png",
-    "thumb": "cards/thumbs/Plane_Gamalgoth First City.webp",
-    "transcript": "cards/transcripts/Plane_Gamalgoth First City.md",
+    "image": "cards/images/Gamalgoth First City.png",
+    "thumb": "cards/thumbs/Gamalgoth First City.webp",
+    "transcript": "cards/transcripts/Gamalgoth First City.md",
     "tags": [
       ":top:badge:tr:amber:Custom",
       "Phyrexia",
@@ -1016,12 +1016,12 @@
     ]
   },
   {
-    "id": "plane_game_knights_live",
+    "id": "game_knights_live",
     "name": "Game Knights Live",
     "type": "Plane",
-    "image": "cards/images/Plane_Game Knights Live.png",
-    "thumb": "cards/thumbs/Plane_Game Knights Live.webp",
-    "transcript": "cards/transcripts/Plane_Game Knights Live.md",
+    "image": "cards/images/Game Knights Live.png",
+    "thumb": "cards/thumbs/Game Knights Live.webp",
+    "transcript": "cards/transcripts/Game Knights Live.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "PUNK",
@@ -1030,12 +1030,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_gardens_of_tranquil_repose",
+    "id": "gardens_of_tranquil_repose",
     "name": "Gardens of Tranquil Repose",
     "type": "Plane",
-    "image": "cards/images/Plane_Gardens of Tranquil Repose.png",
-    "thumb": "cards/thumbs/Plane_Gardens of Tranquil Repose.webp",
-    "transcript": "cards/transcripts/Plane_Gardens of Tranquil Repose.md",
+    "image": "cards/images/Gardens of Tranquil Repose.png",
+    "thumb": "cards/thumbs/Gardens of Tranquil Repose.webp",
+    "transcript": "cards/transcripts/Gardens of Tranquil Repose.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Necros",
@@ -1045,12 +1045,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_gavony",
+    "id": "gavony",
     "name": "Gavony",
     "type": "Plane",
-    "image": "cards/images/Plane_Gavony.png",
-    "thumb": "cards/thumbs/Plane_Gavony.webp",
-    "transcript": "cards/transcripts/Plane_Gavony.md",
+    "image": "cards/images/Gavony.png",
+    "thumb": "cards/thumbs/Gavony.webp",
+    "transcript": "cards/transcripts/Gavony.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Innistrad",
@@ -1059,12 +1059,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_ghirapur_grand_prix",
+    "id": "ghirapur_grand_prix",
     "name": "Ghirapur Grand Prix",
     "type": "Plane",
-    "image": "cards/images/Plane_Ghirapur Grand Prix.png",
-    "thumb": "cards/thumbs/Plane_Ghirapur Grand Prix.webp",
-    "transcript": "cards/transcripts/Plane_Ghirapur Grand Prix.md",
+    "image": "cards/images/Ghirapur Grand Prix.png",
+    "thumb": "cards/thumbs/Ghirapur Grand Prix.webp",
+    "transcript": "cards/transcripts/Ghirapur Grand Prix.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Avishkar",
@@ -1074,12 +1074,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_ghirapur",
+    "id": "ghirapur",
     "name": "Ghirapur",
     "type": "Plane",
-    "image": "cards/images/Plane_Ghirapur.png",
-    "thumb": "cards/thumbs/Plane_Ghirapur.webp",
-    "transcript": "cards/transcripts/Plane_Ghirapur.md",
+    "image": "cards/images/Ghirapur.png",
+    "thumb": "cards/thumbs/Ghirapur.webp",
+    "transcript": "cards/transcripts/Ghirapur.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Avishkar",
@@ -1088,12 +1088,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_glen_elendra",
+    "id": "glen_elendra",
     "name": "Glen Elendra",
     "type": "Plane",
-    "image": "cards/images/Plane_Glen Elendra.png",
-    "thumb": "cards/thumbs/Plane_Glen Elendra.webp",
-    "transcript": "cards/transcripts/Plane_Glen Elendra.md",
+    "image": "cards/images/Glen Elendra.png",
+    "thumb": "cards/thumbs/Glen Elendra.webp",
+    "transcript": "cards/transcripts/Glen Elendra.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Lorwyn",
@@ -1102,12 +1102,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_glimmervoid_basin",
+    "id": "glimmervoid_basin",
     "name": "Glimmervoid Basin",
     "type": "Plane",
-    "image": "cards/images/Plane_Glimmervoid Basin.png",
-    "thumb": "cards/thumbs/Plane_Glimmervoid Basin.webp",
-    "transcript": "cards/transcripts/Plane_Glimmervoid Basin.md",
+    "image": "cards/images/Glimmervoid Basin.png",
+    "thumb": "cards/thumbs/Glimmervoid Basin.webp",
+    "transcript": "cards/transcripts/Glimmervoid Basin.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Mirrodin",
@@ -1116,12 +1116,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_goldmeadow",
+    "id": "goldmeadow",
     "name": "Goldmeadow",
     "type": "Plane",
-    "image": "cards/images/Plane_Goldmeadow.png",
-    "thumb": "cards/thumbs/Plane_Goldmeadow.webp",
-    "transcript": "cards/transcripts/Plane_Goldmeadow.md",
+    "image": "cards/images/Goldmeadow.png",
+    "thumb": "cards/thumbs/Goldmeadow.webp",
+    "transcript": "cards/transcripts/Goldmeadow.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Lorwyn",
@@ -1130,12 +1130,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_grand_ossuary",
+    "id": "grand_ossuary",
     "name": "Grand Ossuary",
     "type": "Plane",
-    "image": "cards/images/Plane_Grand Ossuary.png",
-    "thumb": "cards/thumbs/Plane_Grand Ossuary.webp",
-    "transcript": "cards/transcripts/Plane_Grand Ossuary.md",
+    "image": "cards/images/Grand Ossuary.png",
+    "thumb": "cards/thumbs/Grand Ossuary.webp",
+    "transcript": "cards/transcripts/Grand Ossuary.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Ravnica",
@@ -1144,12 +1144,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_grixis",
+    "id": "grixis",
     "name": "Grixis",
     "type": "Plane",
-    "image": "cards/images/Plane_Grixis.png",
-    "thumb": "cards/thumbs/Plane_Grixis.webp",
-    "transcript": "cards/transcripts/Plane_Grixis.md",
+    "image": "cards/images/Grixis.png",
+    "thumb": "cards/thumbs/Grixis.webp",
+    "transcript": "cards/transcripts/Grixis.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Alara",
@@ -1158,12 +1158,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_grove_of_the_dreampods",
+    "id": "grove_of_the_dreampods",
     "name": "Grove of the Dreampods",
     "type": "Plane",
-    "image": "cards/images/Plane_Grove of the Dreampods.png",
-    "thumb": "cards/thumbs/Plane_Grove of the Dreampods.webp",
-    "transcript": "cards/transcripts/Plane_Grove of the Dreampods.md",
+    "image": "cards/images/Grove of the Dreampods.png",
+    "thumb": "cards/thumbs/Grove of the Dreampods.webp",
+    "transcript": "cards/transcripts/Grove of the Dreampods.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Fabacin",
@@ -1172,12 +1172,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_halcyon_floating_capital",
+    "id": "halcyon_floating_capital",
     "name": "Halcyon Floating Capital",
     "type": "Plane",
-    "image": "cards/images/Plane_Halcyon Floating Capital.png",
-    "thumb": "cards/thumbs/Plane_Halcyon Floating Capital.webp",
-    "transcript": "cards/transcripts/Plane_Halcyon Floating Capital.md",
+    "image": "cards/images/Halcyon Floating Capital.png",
+    "thumb": "cards/thumbs/Halcyon Floating Capital.webp",
+    "transcript": "cards/transcripts/Halcyon Floating Capital.md",
     "tags": [
       ":top:badge:tr:amber:Custom",
       "Dominaria",
@@ -1185,12 +1185,12 @@
     ]
   },
   {
-    "id": "plane_happy_yargle_day",
+    "id": "happy_yargle_day",
     "name": "Happy Yargle Day!",
     "type": "Plane",
-    "image": "cards/images/Plane_Happy Yargle Day!.png",
-    "thumb": "cards/thumbs/Plane_Happy Yargle Day!.webp",
-    "transcript": "cards/transcripts/Plane_Happy Yargle Day!.md",
+    "image": "cards/images/Happy Yargle Day!.png",
+    "thumb": "cards/thumbs/Happy Yargle Day!.webp",
+    "transcript": "cards/transcripts/Happy Yargle Day!.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Secret Lair",
@@ -1200,12 +1200,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_havengul_port_city",
+    "id": "havengul_port_city",
     "name": "Havengul Port City",
     "type": "Plane",
-    "image": "cards/images/Plane_Havengul Port City.png",
-    "thumb": "cards/thumbs/Plane_Havengul Port City.webp",
-    "transcript": "cards/transcripts/Plane_Havengul Port City.md",
+    "image": "cards/images/Havengul Port City.png",
+    "thumb": "cards/thumbs/Havengul Port City.webp",
+    "transcript": "cards/transcripts/Havengul Port City.md",
     "tags": [
       ":top:badge:tr:amber:Custom",
       "Innistrad",
@@ -1213,12 +1213,12 @@
     ]
   },
   {
-    "id": "plane_hedron_fields_of_agadeem",
+    "id": "hedron_fields_of_agadeem",
     "name": "Hedron Fields of Agadeem",
     "type": "Plane",
-    "image": "cards/images/Plane_Hedron Fields of Agadeem.png",
-    "thumb": "cards/thumbs/Plane_Hedron Fields of Agadeem.webp",
-    "transcript": "cards/transcripts/Plane_Hedron Fields of Agadeem.md",
+    "image": "cards/images/Hedron Fields of Agadeem.png",
+    "thumb": "cards/thumbs/Hedron Fields of Agadeem.webp",
+    "transcript": "cards/transcripts/Hedron Fields of Agadeem.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Zendikar",
@@ -1227,12 +1227,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_high_noon_at_thunder_junction",
+    "id": "high_noon_at_thunder_junction",
     "name": "High Noon At Thunder Junction",
     "type": "Plane",
-    "image": "cards/images/Plane_High Noon At Thunder Junction.png",
-    "thumb": "cards/thumbs/Plane_High Noon At Thunder Junction.webp",
-    "transcript": "cards/transcripts/Plane_High Noon At Thunder Junction.md",
+    "image": "cards/images/High Noon At Thunder Junction.png",
+    "thumb": "cards/thumbs/High Noon At Thunder Junction.webp",
+    "transcript": "cards/transcripts/High Noon At Thunder Junction.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Thunder Junction",
@@ -1242,12 +1242,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_horizon_boughs",
+    "id": "horizon_boughs",
     "name": "Horizon Boughs",
     "type": "Plane",
-    "image": "cards/images/Plane_Horizon Boughs.png",
-    "thumb": "cards/thumbs/Plane_Horizon Boughs.webp",
-    "transcript": "cards/transcripts/Plane_Horizon Boughs.md",
+    "image": "cards/images/Horizon Boughs.png",
+    "thumb": "cards/thumbs/Horizon Boughs.webp",
+    "transcript": "cards/transcripts/Horizon Boughs.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Pyrulea",
@@ -1256,12 +1256,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_hotel_of_fears",
+    "id": "hotel_of_fears",
     "name": "Hotel of Fears",
     "type": "Plane",
-    "image": "cards/images/Plane_Hotel of Fears.png",
-    "thumb": "cards/thumbs/Plane_Hotel of Fears.webp",
-    "transcript": "cards/transcripts/Plane_Hotel of Fears.md",
+    "image": "cards/images/Hotel of Fears.png",
+    "thumb": "cards/thumbs/Hotel of Fears.webp",
+    "transcript": "cards/transcripts/Hotel of Fears.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Spacecraft",
@@ -1271,12 +1271,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_imaginary_friends_plane",
+    "id": "imaginary_friends_plane",
     "name": "Imaginary Friends (Plane)",
     "type": "Plane",
-    "image": "cards/images/Plane_Imaginary Friends (Plane).png",
-    "thumb": "cards/thumbs/Plane_Imaginary Friends (Plane).webp",
-    "transcript": "cards/transcripts/Plane_Imaginary Friends (Plane).md",
+    "image": "cards/images/Imaginary Friends (Plane).png",
+    "thumb": "cards/thumbs/Imaginary Friends (Plane).webp",
+    "transcript": "cards/transcripts/Imaginary Friends (Plane).md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Secret Lair",
@@ -1286,12 +1286,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_immersturm",
+    "id": "immersturm",
     "name": "Immersturm",
     "type": "Plane",
-    "image": "cards/images/Plane_Immersturm.png",
-    "thumb": "cards/thumbs/Plane_Immersturm.webp",
-    "transcript": "cards/transcripts/Plane_Immersturm.md",
+    "image": "cards/images/Immersturm.png",
+    "thumb": "cards/thumbs/Immersturm.webp",
+    "transcript": "cards/transcripts/Immersturm.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Valla",
@@ -1300,12 +1300,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_inys_haen",
+    "id": "inys_haen",
     "name": "Inys Haen",
     "type": "Plane",
-    "image": "cards/images/Plane_Inys Haen.png",
-    "thumb": "cards/thumbs/Plane_Inys Haen.webp",
-    "transcript": "cards/transcripts/Plane_Inys Haen.md",
+    "image": "cards/images/Inys Haen.png",
+    "thumb": "cards/thumbs/Inys Haen.webp",
+    "transcript": "cards/transcripts/Inys Haen.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Cridhe",
@@ -1314,12 +1314,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_isle_of_vesuva",
+    "id": "isle_of_vesuva",
     "name": "Isle of Vesuva",
     "type": "Plane",
-    "image": "cards/images/Plane_Isle of Vesuva.png",
-    "thumb": "cards/thumbs/Plane_Isle of Vesuva.webp",
-    "transcript": "cards/transcripts/Plane_Isle of Vesuva.md",
+    "image": "cards/images/Isle of Vesuva.png",
+    "thumb": "cards/thumbs/Isle of Vesuva.webp",
+    "transcript": "cards/transcripts/Isle of Vesuva.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Dominaria",
@@ -1328,12 +1328,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_izzet_steam_maze",
+    "id": "izzet_steam_maze",
     "name": "Izzet Steam Maze",
     "type": "Plane",
-    "image": "cards/images/Plane_Izzet Steam Maze.png",
-    "thumb": "cards/thumbs/Plane_Izzet Steam Maze.webp",
-    "transcript": "cards/transcripts/Plane_Izzet Steam Maze.md",
+    "image": "cards/images/Izzet Steam Maze.png",
+    "thumb": "cards/thumbs/Izzet Steam Maze.webp",
+    "transcript": "cards/transcripts/Izzet Steam Maze.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Ravnica",
@@ -1342,12 +1342,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_jaliras_show",
+    "id": "jaliras_show",
     "name": "Jalira's Show",
     "type": "Plane",
-    "image": "cards/images/Plane_Jalira's Show.png",
-    "thumb": "cards/thumbs/Plane_Jalira's Show.webp",
-    "transcript": "cards/transcripts/Plane_Jalira's Show.md",
+    "image": "cards/images/Jalira's Show.png",
+    "thumb": "cards/thumbs/Jalira's Show.webp",
+    "transcript": "cards/transcripts/Jalira's Show.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Las Vegas",
@@ -1357,12 +1357,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_jund",
+    "id": "jund",
     "name": "Jund",
     "type": "Plane",
-    "image": "cards/images/Plane_Jund.png",
-    "thumb": "cards/thumbs/Plane_Jund.webp",
-    "transcript": "cards/transcripts/Plane_Jund.md",
+    "image": "cards/images/Jund.png",
+    "thumb": "cards/thumbs/Jund.webp",
+    "transcript": "cards/transcripts/Jund.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Alara",
@@ -1371,12 +1371,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_kerblam_warehouse",
+    "id": "kerblam_warehouse",
     "name": "Kerblam! Warehouse",
     "type": "Plane",
-    "image": "cards/images/Plane_Kerblam! Warehouse.png",
-    "thumb": "cards/thumbs/Plane_Kerblam! Warehouse.webp",
-    "transcript": "cards/transcripts/Plane_Kerblam! Warehouse.md",
+    "image": "cards/images/Kerblam! Warehouse.png",
+    "thumb": "cards/thumbs/Kerblam! Warehouse.webp",
+    "transcript": "cards/transcripts/Kerblam! Warehouse.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Kandoka",
@@ -1386,12 +1386,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_kessig",
+    "id": "kessig",
     "name": "Kessig",
     "type": "Plane",
-    "image": "cards/images/Plane_Kessig.png",
-    "thumb": "cards/thumbs/Plane_Kessig.webp",
-    "transcript": "cards/transcripts/Plane_Kessig.md",
+    "image": "cards/images/Kessig.png",
+    "thumb": "cards/thumbs/Kessig.webp",
+    "transcript": "cards/transcripts/Kessig.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Innistrad",
@@ -1400,12 +1400,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_ketria",
+    "id": "ketria",
     "name": "Ketria",
     "type": "Plane",
-    "image": "cards/images/Plane_Ketria.png",
-    "thumb": "cards/thumbs/Plane_Ketria.webp",
-    "transcript": "cards/transcripts/Plane_Ketria.md",
+    "image": "cards/images/Ketria.png",
+    "thumb": "cards/thumbs/Ketria.webp",
+    "transcript": "cards/transcripts/Ketria.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Ikoria",
@@ -1414,12 +1414,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_kharasha_foothills",
+    "id": "kharasha_foothills",
     "name": "Kharasha Foothills",
     "type": "Plane",
-    "image": "cards/images/Plane_Kharasha Foothills.png",
-    "thumb": "cards/thumbs/Plane_Kharasha Foothills.webp",
-    "transcript": "cards/transcripts/Plane_Kharasha Foothills.md",
+    "image": "cards/images/Kharasha Foothills.png",
+    "thumb": "cards/thumbs/Kharasha Foothills.webp",
+    "transcript": "cards/transcripts/Kharasha Foothills.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Mongseng",
@@ -1428,12 +1428,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_kilnspire_district",
+    "id": "kilnspire_district",
     "name": "Kilnspire District",
     "type": "Plane",
-    "image": "cards/images/Plane_Kilnspire District.png",
-    "thumb": "cards/thumbs/Plane_Kilnspire District.webp",
-    "transcript": "cards/transcripts/Plane_Kilnspire District.md",
+    "image": "cards/images/Kilnspire District.png",
+    "thumb": "cards/thumbs/Kilnspire District.webp",
+    "transcript": "cards/transcripts/Kilnspire District.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Ravnica",
@@ -1442,12 +1442,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_krosa",
+    "id": "krosa",
     "name": "Krosa",
     "type": "Plane",
-    "image": "cards/images/Plane_Krosa.png",
-    "thumb": "cards/thumbs/Plane_Krosa.webp",
-    "transcript": "cards/transcripts/Plane_Krosa.md",
+    "image": "cards/images/Krosa.png",
+    "thumb": "cards/thumbs/Krosa.webp",
+    "transcript": "cards/transcripts/Krosa.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Dominaria",
@@ -1456,12 +1456,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_lair_of_the_ashen_idol",
+    "id": "lair_of_the_ashen_idol",
     "name": "Lair of the Ashen Idol",
     "type": "Plane",
-    "image": "cards/images/Plane_Lair of the Ashen Idol.png",
-    "thumb": "cards/thumbs/Plane_Lair of the Ashen Idol.webp",
-    "transcript": "cards/transcripts/Plane_Lair of the Ashen Idol.md",
+    "image": "cards/images/Lair of the Ashen Idol.png",
+    "thumb": "cards/thumbs/Lair of the Ashen Idol.webp",
+    "transcript": "cards/transcripts/Lair of the Ashen Idol.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Azgol",
@@ -1470,12 +1470,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_lake_silencio",
+    "id": "lake_silencio",
     "name": "Lake Silencio",
     "type": "Plane",
-    "image": "cards/images/Plane_Lake Silencio.png",
-    "thumb": "cards/thumbs/Plane_Lake Silencio.webp",
-    "transcript": "cards/transcripts/Plane_Lake Silencio.md",
+    "image": "cards/images/Lake Silencio.png",
+    "thumb": "cards/thumbs/Lake Silencio.webp",
+    "transcript": "cards/transcripts/Lake Silencio.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Earth",
@@ -1485,12 +1485,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_lethe_lake",
+    "id": "lethe_lake",
     "name": "Lethe Lake",
     "type": "Plane",
-    "image": "cards/images/Plane_Lethe Lake.png",
-    "thumb": "cards/thumbs/Plane_Lethe Lake.webp",
-    "transcript": "cards/transcripts/Plane_Lethe Lake.md",
+    "image": "cards/images/Lethe Lake.png",
+    "thumb": "cards/thumbs/Lethe Lake.webp",
+    "transcript": "cards/transcripts/Lethe Lake.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Arkhos",
@@ -1499,12 +1499,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_lil_giri_saves_the_day",
+    "id": "lil_giri_saves_the_day",
     "name": "Li'l Giri Saves the Day",
     "type": "Plane",
-    "image": "cards/images/Plane_Li'l Giri Saves the Day.png",
-    "thumb": "cards/thumbs/Plane_Li'l Giri Saves the Day.webp",
-    "transcript": "cards/transcripts/Plane_Li'l Giri Saves the Day.md",
+    "image": "cards/images/Li'l Giri Saves the Day.png",
+    "thumb": "cards/thumbs/Li'l Giri Saves the Day.webp",
+    "transcript": "cards/transcripts/Li'l Giri Saves the Day.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Secret Lair",
@@ -1514,12 +1514,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_littjara",
+    "id": "littjara",
     "name": "Littjara",
     "type": "Plane",
-    "image": "cards/images/Plane_Littjara.png",
-    "thumb": "cards/thumbs/Plane_Littjara.webp",
-    "transcript": "cards/transcripts/Plane_Littjara.md",
+    "image": "cards/images/Littjara.png",
+    "thumb": "cards/thumbs/Littjara.webp",
+    "transcript": "cards/transcripts/Littjara.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Kaldheim",
@@ -1528,12 +1528,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_llanowar",
+    "id": "llanowar",
     "name": "Llanowar",
     "type": "Plane",
-    "image": "cards/images/Plane_Llanowar.png",
-    "thumb": "cards/thumbs/Plane_Llanowar.webp",
-    "transcript": "cards/transcripts/Plane_Llanowar.md",
+    "image": "cards/images/Llanowar.png",
+    "thumb": "cards/thumbs/Llanowar.webp",
+    "transcript": "cards/transcripts/Llanowar.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Dominaria",
@@ -1542,12 +1542,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_lotus_basin",
+    "id": "lotus_basin",
     "name": "Lotus Basin",
     "type": "Plane",
-    "image": "cards/images/Plane_Lotus Basin.png",
-    "thumb": "cards/thumbs/Plane_Lotus Basin.webp",
-    "transcript": "cards/transcripts/Plane_Lotus Basin.md",
+    "image": "cards/images/Lotus Basin.png",
+    "thumb": "cards/thumbs/Lotus Basin.webp",
+    "transcript": "cards/transcripts/Lotus Basin.md",
     "tags": [
       ":top:badge:tr:amber:Custom",
       "Dominaria",
@@ -1555,12 +1555,12 @@
     ]
   },
   {
-    "id": "plane_math_is_for_blockers_plane",
+    "id": "math_is_for_blockers_plane",
     "name": "Math is for Blockers (Plane)",
     "type": "Plane",
-    "image": "cards/images/Plane_Math is for Blockers (Plane).png",
-    "thumb": "cards/thumbs/Plane_Math is for Blockers (Plane).webp",
-    "transcript": "cards/transcripts/Plane_Math is for Blockers (Plane).md",
+    "image": "cards/images/Math is for Blockers (Plane).png",
+    "thumb": "cards/thumbs/Math is for Blockers (Plane).webp",
+    "transcript": "cards/transcripts/Math is for Blockers (Plane).md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Secret Lair",
@@ -1570,12 +1570,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_megaflora_jungle",
+    "id": "megaflora_jungle",
     "name": "Megaflora Jungle",
     "type": "Plane",
-    "image": "cards/images/Plane_Megaflora Jungle.png",
-    "thumb": "cards/thumbs/Plane_Megaflora Jungle.webp",
-    "transcript": "cards/transcripts/Plane_Megaflora Jungle.md",
+    "image": "cards/images/Megaflora Jungle.png",
+    "thumb": "cards/thumbs/Megaflora Jungle.webp",
+    "transcript": "cards/transcripts/Megaflora Jungle.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Gargantikar",
@@ -1584,12 +1584,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_mephidross",
+    "id": "mephidross",
     "name": "Mephidross",
     "type": "Plane",
-    "image": "cards/images/Plane_Mephidross.png",
-    "thumb": "cards/thumbs/Plane_Mephidross.webp",
-    "transcript": "cards/transcripts/Plane_Mephidross.md",
+    "image": "cards/images/Mephidross.png",
+    "thumb": "cards/thumbs/Mephidross.webp",
+    "transcript": "cards/transcripts/Mephidross.md",
     "tags": [
       ":top:badge:tr:amber:Custom",
       "Mirrodin",
@@ -1597,12 +1597,12 @@
     ]
   },
   {
-    "id": "plane_minamo",
+    "id": "minamo",
     "name": "Minamo",
     "type": "Plane",
-    "image": "cards/images/Plane_Minamo.png",
-    "thumb": "cards/thumbs/Plane_Minamo.webp",
-    "transcript": "cards/transcripts/Plane_Minamo.md",
+    "image": "cards/images/Minamo.png",
+    "thumb": "cards/thumbs/Minamo.webp",
+    "transcript": "cards/transcripts/Minamo.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Kamigawa",
@@ -1611,12 +1611,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_mirrored_depths",
+    "id": "mirrored_depths",
     "name": "Mirrored Depths",
     "type": "Plane",
-    "image": "cards/images/Plane_Mirrored Depths.png",
-    "thumb": "cards/thumbs/Plane_Mirrored Depths.webp",
-    "transcript": "cards/transcripts/Plane_Mirrored Depths.md",
+    "image": "cards/images/Mirrored Depths.png",
+    "thumb": "cards/thumbs/Mirrored Depths.webp",
+    "transcript": "cards/transcripts/Mirrored Depths.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Karsus",
@@ -1625,12 +1625,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_mojave_desert",
+    "id": "mojave_desert",
     "name": "Mojave Desert",
     "type": "Plane",
-    "image": "cards/images/Plane_Mojave Desert.png",
-    "thumb": "cards/thumbs/Plane_Mojave Desert.webp",
-    "transcript": "cards/transcripts/Plane_Mojave Desert.md",
+    "image": "cards/images/Mojave Desert.png",
+    "thumb": "cards/thumbs/Mojave Desert.webp",
+    "transcript": "cards/transcripts/Mojave Desert.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Las Vegas",
@@ -1640,12 +1640,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_mondassian_colony_ship",
+    "id": "mondassian_colony_ship",
     "name": "Mondassian Colony Ship",
     "type": "Plane",
-    "image": "cards/images/Plane_Mondassian Colony Ship.png",
-    "thumb": "cards/thumbs/Plane_Mondassian Colony Ship.webp",
-    "transcript": "cards/transcripts/Plane_Mondassian Colony Ship.md",
+    "image": "cards/images/Mondassian Colony Ship.png",
+    "thumb": "cards/thumbs/Mondassian Colony Ship.webp",
+    "transcript": "cards/transcripts/Mondassian Colony Ship.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Spacecraft",
@@ -1655,12 +1655,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_mount_keralia",
+    "id": "mount_keralia",
     "name": "Mount Keralia",
     "type": "Plane",
-    "image": "cards/images/Plane_Mount Keralia.png",
-    "thumb": "cards/thumbs/Plane_Mount Keralia.webp",
-    "transcript": "cards/transcripts/Plane_Mount Keralia.md",
+    "image": "cards/images/Mount Keralia.png",
+    "thumb": "cards/thumbs/Mount Keralia.webp",
+    "transcript": "cards/transcripts/Mount Keralia.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Regatha",
@@ -1669,12 +1669,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_multiversal_high_council",
+    "id": "multiversal_high_council",
     "name": "Multiversal High Council",
     "type": "Plane",
-    "image": "cards/images/Plane_Multiversal High Council.png",
-    "thumb": "cards/thumbs/Plane_Multiversal High Council.webp",
-    "transcript": "cards/transcripts/Plane_Multiversal High Council.md",
+    "image": "cards/images/Multiversal High Council.png",
+    "thumb": "cards/thumbs/Multiversal High Council.webp",
+    "transcript": "cards/transcripts/Multiversal High Council.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Universia Beyondia",
@@ -1684,12 +1684,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_murasa",
+    "id": "murasa",
     "name": "Murasa",
     "type": "Plane",
-    "image": "cards/images/Plane_Murasa.png",
-    "thumb": "cards/thumbs/Plane_Murasa.webp",
-    "transcript": "cards/transcripts/Plane_Murasa.md",
+    "image": "cards/images/Murasa.png",
+    "thumb": "cards/thumbs/Murasa.webp",
+    "transcript": "cards/transcripts/Murasa.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Zendikar",
@@ -1698,12 +1698,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_mycosynthwave",
+    "id": "mycosynthwave",
     "name": "Mycosynthwave",
     "type": "Plane",
-    "image": "cards/images/Plane_Mycosynthwave.png",
-    "thumb": "cards/thumbs/Plane_Mycosynthwave.webp",
-    "transcript": "cards/transcripts/Plane_Mycosynthwave.md",
+    "image": "cards/images/Mycosynthwave.png",
+    "thumb": "cards/thumbs/Mycosynthwave.webp",
+    "transcript": "cards/transcripts/Mycosynthwave.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Secret Lair",
@@ -1713,12 +1713,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_naar_isle",
+    "id": "naar_isle",
     "name": "Naar Isle",
     "type": "Plane",
-    "image": "cards/images/Plane_Naar Isle.png",
-    "thumb": "cards/thumbs/Plane_Naar Isle.webp",
-    "transcript": "cards/transcripts/Plane_Naar Isle.md",
+    "image": "cards/images/Naar Isle.png",
+    "thumb": "cards/thumbs/Naar Isle.webp",
+    "transcript": "cards/transcripts/Naar Isle.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Wildfire",
@@ -1727,12 +1727,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_naktamun",
+    "id": "naktamun",
     "name": "Naktamun",
     "type": "Plane",
-    "image": "cards/images/Plane_Naktamun.png",
-    "thumb": "cards/thumbs/Plane_Naktamun.webp",
-    "transcript": "cards/transcripts/Plane_Naktamun.md",
+    "image": "cards/images/Naktamun.png",
+    "thumb": "cards/thumbs/Naktamun.webp",
+    "transcript": "cards/transcripts/Naktamun.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Amonkhet",
@@ -1741,12 +1741,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_naya",
+    "id": "naya",
     "name": "Naya",
     "type": "Plane",
-    "image": "cards/images/Plane_Naya.png",
-    "thumb": "cards/thumbs/Plane_Naya.webp",
-    "transcript": "cards/transcripts/Plane_Naya.md",
+    "image": "cards/images/Naya.png",
+    "thumb": "cards/thumbs/Naya.webp",
+    "transcript": "cards/transcripts/Naya.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Alara",
@@ -1755,12 +1755,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_nephalia",
+    "id": "nephalia",
     "name": "Nephalia",
     "type": "Plane",
-    "image": "cards/images/Plane_Nephalia.png",
-    "thumb": "cards/thumbs/Plane_Nephalia.webp",
-    "transcript": "cards/transcripts/Plane_Nephalia.md",
+    "image": "cards/images/Nephalia.png",
+    "thumb": "cards/thumbs/Nephalia.webp",
+    "transcript": "cards/transcripts/Nephalia.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Innistrad",
@@ -1769,12 +1769,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_new_argive",
+    "id": "new_argive",
     "name": "New Argive",
     "type": "Plane",
-    "image": "cards/images/Plane_New Argive.png",
-    "thumb": "cards/thumbs/Plane_New Argive.webp",
-    "transcript": "cards/transcripts/Plane_New Argive.md",
+    "image": "cards/images/New Argive.png",
+    "thumb": "cards/thumbs/New Argive.webp",
+    "transcript": "cards/transcripts/New Argive.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Dominaria",
@@ -1783,12 +1783,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_new_new_york",
+    "id": "new_new_york",
     "name": "New New York",
     "type": "Plane",
-    "image": "cards/images/Plane_New New York.png",
-    "thumb": "cards/thumbs/Plane_New New York.webp",
-    "transcript": "cards/transcripts/Plane_New New York.md",
+    "image": "cards/images/New New York.png",
+    "thumb": "cards/thumbs/New New York.webp",
+    "transcript": "cards/transcripts/New New York.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "New Earth",
@@ -1798,12 +1798,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_new_players_journey",
+    "id": "new_players_journey",
     "name": "New Player's Journey",
     "type": "Plane",
-    "image": "cards/images/Plane_New Player's Journey.png",
-    "thumb": "cards/thumbs/Plane_New Player's Journey.webp",
-    "transcript": "cards/transcripts/Plane_New Player's Journey.md",
+    "image": "cards/images/New Player's Journey.png",
+    "thumb": "cards/thumbs/New Player's Journey.webp",
+    "transcript": "cards/transcripts/New Player's Journey.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Foundations",
@@ -1813,12 +1813,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_no_way_out_playtest",
+    "id": "no_way_out_playtest",
     "name": "No Way Out (Playtest)",
     "type": "Plane",
-    "image": "cards/images/Plane_No Way Out (Playtest).png",
-    "thumb": "cards/thumbs/Plane_No Way Out (Playtest).webp",
-    "transcript": "cards/transcripts/Plane_No Way Out (Playtest).md",
+    "image": "cards/images/No Way Out (Playtest).png",
+    "thumb": "cards/thumbs/No Way Out (Playtest).webp",
+    "transcript": "cards/transcripts/No Way Out (Playtest).md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Duskmourn",
@@ -1828,12 +1828,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_norns_dominion",
+    "id": "norns_dominion",
     "name": "Norn's Dominion",
     "type": "Plane",
-    "image": "cards/images/Plane_Norn's Dominion.png",
-    "thumb": "cards/thumbs/Plane_Norn's Dominion.webp",
-    "transcript": "cards/transcripts/Plane_Norn's Dominion.md",
+    "image": "cards/images/Norn's Dominion.png",
+    "thumb": "cards/thumbs/Norn's Dominion.webp",
+    "transcript": "cards/transcripts/Norn's Dominion.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "New Phyrexia",
@@ -1842,12 +1842,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_norns_seedcore",
+    "id": "norns_seedcore",
     "name": "Norn's Seedcore",
     "type": "Plane",
-    "image": "cards/images/Plane_Norn's Seedcore.png",
-    "thumb": "cards/thumbs/Plane_Norn's Seedcore.webp",
-    "transcript": "cards/transcripts/Plane_Norn's Seedcore.md",
+    "image": "cards/images/Norn's Seedcore.png",
+    "thumb": "cards/thumbs/Norn's Seedcore.webp",
+    "transcript": "cards/transcripts/Norn's Seedcore.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "New Phyrexia",
@@ -1856,12 +1856,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_north_pole_research_base",
+    "id": "north_pole_research_base",
     "name": "North Pole Research Base",
     "type": "Plane",
-    "image": "cards/images/Plane_North Pole Research Base.png",
-    "thumb": "cards/thumbs/Plane_North Pole Research Base.webp",
-    "transcript": "cards/transcripts/Plane_North Pole Research Base.md",
+    "image": "cards/images/North Pole Research Base.png",
+    "thumb": "cards/thumbs/North Pole Research Base.webp",
+    "transcript": "cards/transcripts/North Pole Research Base.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Earth",
@@ -1871,12 +1871,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_nyx",
+    "id": "nyx",
     "name": "Nyx",
     "type": "Plane",
-    "image": "cards/images/Plane_Nyx.png",
-    "thumb": "cards/thumbs/Plane_Nyx.webp",
-    "transcript": "cards/transcripts/Plane_Nyx.md",
+    "image": "cards/images/Nyx.png",
+    "thumb": "cards/thumbs/Nyx.webp",
+    "transcript": "cards/transcripts/Nyx.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Theros",
@@ -1885,12 +1885,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_onakke_catacomb",
+    "id": "onakke_catacomb",
     "name": "Onakke Catacomb",
     "type": "Plane",
-    "image": "cards/images/Plane_Onakke Catacomb.png",
-    "thumb": "cards/thumbs/Plane_Onakke Catacomb.webp",
-    "transcript": "cards/transcripts/Plane_Onakke Catacomb.md",
+    "image": "cards/images/Onakke Catacomb.png",
+    "thumb": "cards/thumbs/Onakke Catacomb.webp",
+    "transcript": "cards/transcripts/Onakke Catacomb.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Shandalar",
@@ -1899,12 +1899,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_ood_sphere",
+    "id": "ood_sphere",
     "name": "Ood Sphere",
     "type": "Plane",
-    "image": "cards/images/Plane_Ood Sphere.png",
-    "thumb": "cards/thumbs/Plane_Ood Sphere.webp",
-    "transcript": "cards/transcripts/Plane_Ood Sphere.md",
+    "image": "cards/images/Ood Sphere.png",
+    "thumb": "cards/thumbs/Ood Sphere.webp",
+    "transcript": "cards/transcripts/Ood Sphere.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Horsehead Nebula",
@@ -1914,12 +1914,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_orochi_colony",
+    "id": "orochi_colony",
     "name": "Orochi Colony",
     "type": "Plane",
-    "image": "cards/images/Plane_Orochi Colony.png",
-    "thumb": "cards/thumbs/Plane_Orochi Colony.webp",
-    "transcript": "cards/transcripts/Plane_Orochi Colony.md",
+    "image": "cards/images/Orochi Colony.png",
+    "thumb": "cards/thumbs/Orochi Colony.webp",
+    "transcript": "cards/transcripts/Orochi Colony.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Kamigawa",
@@ -1928,12 +1928,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_orzhova",
+    "id": "orzhova",
     "name": "Orzhova",
     "type": "Plane",
-    "image": "cards/images/Plane_Orzhova.png",
-    "thumb": "cards/thumbs/Plane_Orzhova.webp",
-    "transcript": "cards/transcripts/Plane_Orzhova.md",
+    "image": "cards/images/Orzhova.png",
+    "thumb": "cards/thumbs/Orzhova.webp",
+    "transcript": "cards/transcripts/Orzhova.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Ravnica",
@@ -1942,12 +1942,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_otaria",
+    "id": "otaria",
     "name": "Otaria",
     "type": "Plane",
-    "image": "cards/images/Plane_Otaria.png",
-    "thumb": "cards/thumbs/Plane_Otaria.webp",
-    "transcript": "cards/transcripts/Plane_Otaria.md",
+    "image": "cards/images/Otaria.png",
+    "thumb": "cards/thumbs/Otaria.webp",
+    "transcript": "cards/transcripts/Otaria.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Dominaria",
@@ -1956,12 +1956,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_otecln",
+    "id": "otecln",
     "name": "Oteclán",
     "type": "Plane",
-    "image": "cards/images/Plane_Oteclán.png",
-    "thumb": "cards/thumbs/Plane_Oteclán.webp",
-    "transcript": "cards/transcripts/Plane_Oteclán.md",
+    "image": "cards/images/Oteclán.png",
+    "thumb": "cards/thumbs/Oteclán.webp",
+    "transcript": "cards/transcripts/Oteclán.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Ixalan",
@@ -1971,12 +1971,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_paliano",
+    "id": "paliano",
     "name": "Paliano",
     "type": "Plane",
-    "image": "cards/images/Plane_Paliano.png",
-    "thumb": "cards/thumbs/Plane_Paliano.webp",
-    "transcript": "cards/transcripts/Plane_Paliano.md",
+    "image": "cards/images/Paliano.png",
+    "thumb": "cards/thumbs/Paliano.webp",
+    "transcript": "cards/transcripts/Paliano.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Fiora",
@@ -1985,12 +1985,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_panopticon",
+    "id": "panopticon",
     "name": "Panopticon",
     "type": "Plane",
-    "image": "cards/images/Plane_Panopticon.png",
-    "thumb": "cards/thumbs/Plane_Panopticon.webp",
-    "transcript": "cards/transcripts/Plane_Panopticon.md",
+    "image": "cards/images/Panopticon.png",
+    "thumb": "cards/thumbs/Panopticon.webp",
+    "transcript": "cards/transcripts/Panopticon.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Mirrodin",
@@ -1999,12 +1999,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_pin_collectors_booth",
+    "id": "pin_collectors_booth",
     "name": "Pin Collector's Booth",
     "type": "Plane",
-    "image": "cards/images/Plane_Pin Collector's Booth.png",
-    "thumb": "cards/thumbs/Plane_Pin Collector's Booth.webp",
-    "transcript": "cards/transcripts/Plane_Pin Collector's Booth.md",
+    "image": "cards/images/Pin Collector's Booth.png",
+    "thumb": "cards/thumbs/Pin Collector's Booth.webp",
+    "transcript": "cards/transcripts/Pin Collector's Booth.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "PUNK",
@@ -2013,12 +2013,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_pompeii",
+    "id": "pompeii",
     "name": "Pompeii",
     "type": "Plane",
-    "image": "cards/images/Plane_Pompeii.png",
-    "thumb": "cards/thumbs/Plane_Pompeii.webp",
-    "transcript": "cards/transcripts/Plane_Pompeii.md",
+    "image": "cards/images/Pompeii.png",
+    "thumb": "cards/thumbs/Pompeii.webp",
+    "transcript": "cards/transcripts/Pompeii.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Earth",
@@ -2028,12 +2028,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_pools_of_becoming",
+    "id": "pools_of_becoming",
     "name": "Pools of Becoming",
     "type": "Plane",
-    "image": "cards/images/Plane_Pools of Becoming.png",
-    "thumb": "cards/thumbs/Plane_Pools of Becoming.webp",
-    "transcript": "cards/transcripts/Plane_Pools of Becoming.md",
+    "image": "cards/images/Pools of Becoming.png",
+    "thumb": "cards/thumbs/Pools of Becoming.webp",
+    "transcript": "cards/transcripts/Pools of Becoming.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Bolas's Meditation Realm",
@@ -2042,12 +2042,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_prahv",
+    "id": "prahv",
     "name": "Prahv",
     "type": "Plane",
-    "image": "cards/images/Plane_Prahv.png",
-    "thumb": "cards/thumbs/Plane_Prahv.webp",
-    "transcript": "cards/transcripts/Plane_Prahv.md",
+    "image": "cards/images/Prahv.png",
+    "thumb": "cards/thumbs/Prahv.webp",
+    "transcript": "cards/transcripts/Prahv.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Ravnica",
@@ -2056,12 +2056,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_prestons_stage",
+    "id": "prestons_stage",
     "name": "Preston's Stage",
     "type": "Plane",
-    "image": "cards/images/Plane_Preston's Stage.png",
-    "thumb": "cards/thumbs/Plane_Preston's Stage.webp",
-    "transcript": "cards/transcripts/Plane_Preston's Stage.md",
+    "image": "cards/images/Preston's Stage.png",
+    "thumb": "cards/thumbs/Preston's Stage.webp",
+    "transcript": "cards/transcripts/Preston's Stage.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Las Vegas",
@@ -2071,12 +2071,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_prime_ministers_cabinet_room",
+    "id": "prime_ministers_cabinet_room",
     "name": "Prime Minister's Cabinet Room",
     "type": "Plane",
-    "image": "cards/images/Plane_Prime Minister's Cabinet Room.png",
-    "thumb": "cards/thumbs/Plane_Prime Minister's Cabinet Room.webp",
-    "transcript": "cards/transcripts/Plane_Prime Minister's Cabinet Room.md",
+    "image": "cards/images/Prime Minister's Cabinet Room.png",
+    "thumb": "cards/thumbs/Prime Minister's Cabinet Room.webp",
+    "transcript": "cards/transcripts/Prime Minister's Cabinet Room.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Earth",
@@ -2086,12 +2086,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_pursued_by_something",
+    "id": "pursued_by_something",
     "name": "Pursued by Something",
     "type": "Plane",
-    "image": "cards/images/Plane_Pursued by Something.png",
-    "thumb": "cards/thumbs/Plane_Pursued by Something.webp",
-    "transcript": "cards/transcripts/Plane_Pursued by Something.md",
+    "image": "cards/images/Pursued by Something.png",
+    "thumb": "cards/thumbs/Pursued by Something.webp",
+    "transcript": "cards/transcripts/Pursued by Something.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Duskmourn",
@@ -2101,12 +2101,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_quicksilver_sea",
+    "id": "quicksilver_sea",
     "name": "Quicksilver Sea",
     "type": "Plane",
-    "image": "cards/images/Plane_Quicksilver Sea.png",
-    "thumb": "cards/thumbs/Plane_Quicksilver Sea.webp",
-    "transcript": "cards/transcripts/Plane_Quicksilver Sea.md",
+    "image": "cards/images/Quicksilver Sea.png",
+    "thumb": "cards/thumbs/Quicksilver Sea.webp",
+    "transcript": "cards/transcripts/Quicksilver Sea.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Mirrodin",
@@ -2115,12 +2115,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_raiders_allegiance",
+    "id": "raiders_allegiance",
     "name": "Raiders' Allegiance",
     "type": "Plane",
-    "image": "cards/images/Plane_Raiders' Allegiance.png",
-    "thumb": "cards/thumbs/Plane_Raiders' Allegiance.webp",
-    "transcript": "cards/transcripts/Plane_Raiders' Allegiance.md",
+    "image": "cards/images/Raiders' Allegiance.png",
+    "thumb": "cards/thumbs/Raiders' Allegiance.webp",
+    "transcript": "cards/transcripts/Raiders' Allegiance.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Ixalan",
@@ -2130,12 +2130,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_ravens_run",
+    "id": "ravens_run",
     "name": "Raven's Run",
     "type": "Plane",
-    "image": "cards/images/Plane_Raven's Run.png",
-    "thumb": "cards/thumbs/Plane_Raven's Run.webp",
-    "transcript": "cards/transcripts/Plane_Raven's Run.md",
+    "image": "cards/images/Raven's Run.png",
+    "thumb": "cards/thumbs/Raven's Run.webp",
+    "transcript": "cards/transcripts/Raven's Run.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Shadowmoor",
@@ -2144,12 +2144,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_riptide_island",
+    "id": "riptide_island",
     "name": "Riptide Island",
     "type": "Plane",
-    "image": "cards/images/Plane_Riptide Island.png",
-    "thumb": "cards/thumbs/Plane_Riptide Island.webp",
-    "transcript": "cards/transcripts/Plane_Riptide Island.md",
+    "image": "cards/images/Riptide Island.png",
+    "thumb": "cards/thumbs/Riptide Island.webp",
+    "transcript": "cards/transcripts/Riptide Island.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Dominaria",
@@ -2158,12 +2158,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_sanctum_of_serra",
+    "id": "sanctum_of_serra",
     "name": "Sanctum of Serra",
     "type": "Plane",
-    "image": "cards/images/Plane_Sanctum of Serra.png",
-    "thumb": "cards/thumbs/Plane_Sanctum of Serra.webp",
-    "transcript": "cards/transcripts/Plane_Sanctum of Serra.md",
+    "image": "cards/images/Sanctum of Serra.png",
+    "thumb": "cards/thumbs/Sanctum of Serra.webp",
+    "transcript": "cards/transcripts/Sanctum of Serra.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Serra's Realm",
@@ -2172,12 +2172,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_sans_mercy",
+    "id": "sans_mercy",
     "name": "Sans Mercy",
     "type": "Plane",
-    "image": "cards/images/Plane_Sans Mercy.png",
-    "thumb": "cards/thumbs/Plane_Sans Mercy.webp",
-    "transcript": "cards/transcripts/Plane_Sans Mercy.md",
+    "image": "cards/images/Sans Mercy.png",
+    "thumb": "cards/thumbs/Sans Mercy.webp",
+    "transcript": "cards/transcripts/Sans Mercy.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Secret Lair",
@@ -2186,12 +2186,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_sea_of_sand",
+    "id": "sea_of_sand",
     "name": "Sea of Sand",
     "type": "Plane",
-    "image": "cards/images/Plane_Sea of Sand.png",
-    "thumb": "cards/thumbs/Plane_Sea of Sand.webp",
-    "transcript": "cards/transcripts/Plane_Sea of Sand.md",
+    "image": "cards/images/Sea of Sand.png",
+    "thumb": "cards/thumbs/Sea of Sand.webp",
+    "transcript": "cards/transcripts/Sea of Sand.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Rabiah",
@@ -2200,12 +2200,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_selesnya_loft_gardens",
+    "id": "selesnya_loft_gardens",
     "name": "Selesnya Loft Gardens",
     "type": "Plane",
-    "image": "cards/images/Plane_Selesnya Loft Gardens.png",
-    "thumb": "cards/thumbs/Plane_Selesnya Loft Gardens.webp",
-    "transcript": "cards/transcripts/Plane_Selesnya Loft Gardens.md",
+    "image": "cards/images/Selesnya Loft Gardens.png",
+    "thumb": "cards/thumbs/Selesnya Loft Gardens.webp",
+    "transcript": "cards/transcripts/Selesnya Loft Gardens.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Ravnica",
@@ -2214,12 +2214,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_shiv",
+    "id": "shiv",
     "name": "Shiv",
     "type": "Plane",
-    "image": "cards/images/Plane_Shiv.png",
-    "thumb": "cards/thumbs/Plane_Shiv.webp",
-    "transcript": "cards/transcripts/Plane_Shiv.md",
+    "image": "cards/images/Shiv.png",
+    "thumb": "cards/thumbs/Shiv.webp",
+    "transcript": "cards/transcripts/Shiv.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Dominaria",
@@ -2228,12 +2228,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_shrinking_plane",
+    "id": "shrinking_plane",
     "name": "Shrinking Plane",
     "type": "Plane",
-    "image": "cards/images/Plane_Shrinking Plane.png",
-    "thumb": "cards/thumbs/Plane_Shrinking Plane.webp",
-    "transcript": "cards/transcripts/Plane_Shrinking Plane.md",
+    "image": "cards/images/Shrinking Plane.png",
+    "thumb": "cards/thumbs/Shrinking Plane.webp",
+    "transcript": "cards/transcripts/Shrinking Plane.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Foldaria",
@@ -2243,12 +2243,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_shy_town",
+    "id": "shy_town",
     "name": "Shy Town",
     "type": "Plane",
-    "image": "cards/images/Plane_Shy Town.png",
-    "thumb": "cards/thumbs/Plane_Shy Town.webp",
-    "transcript": "cards/transcripts/Plane_Shy Town.md",
+    "image": "cards/images/Shy Town.png",
+    "thumb": "cards/thumbs/Shy Town.webp",
+    "transcript": "cards/transcripts/Shy Town.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Chicago",
@@ -2258,12 +2258,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_singing_towers_of_darillium",
+    "id": "singing_towers_of_darillium",
     "name": "Singing Towers of Darillium",
     "type": "Plane",
-    "image": "cards/images/Plane_Singing Towers of Darillium.png",
-    "thumb": "cards/thumbs/Plane_Singing Towers of Darillium.webp",
-    "transcript": "cards/transcripts/Plane_Singing Towers of Darillium.md",
+    "image": "cards/images/Singing Towers of Darillium.png",
+    "thumb": "cards/thumbs/Singing Towers of Darillium.webp",
+    "transcript": "cards/transcripts/Singing Towers of Darillium.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Darillium",
@@ -2273,12 +2273,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_sky_deck",
+    "id": "sky_deck",
     "name": "Sky Deck",
     "type": "Plane",
-    "image": "cards/images/Plane_Sky Deck.png",
-    "thumb": "cards/thumbs/Plane_Sky Deck.webp",
-    "transcript": "cards/transcripts/Plane_Sky Deck.md",
+    "image": "cards/images/Sky Deck.png",
+    "thumb": "cards/thumbs/Sky Deck.webp",
+    "transcript": "cards/transcripts/Sky Deck.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Chicago",
@@ -2288,12 +2288,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_skybreen",
+    "id": "skybreen",
     "name": "Skybreen",
     "type": "Plane",
-    "image": "cards/images/Plane_Skybreen.png",
-    "thumb": "cards/thumbs/Plane_Skybreen.webp",
-    "transcript": "cards/transcripts/Plane_Skybreen.md",
+    "image": "cards/images/Skybreen.png",
+    "thumb": "cards/thumbs/Skybreen.webp",
+    "transcript": "cards/transcripts/Skybreen.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Kaldheim",
@@ -2302,12 +2302,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_sokenzan",
+    "id": "sokenzan",
     "name": "Sokenzan",
     "type": "Plane",
-    "image": "cards/images/Plane_Sokenzan.png",
-    "thumb": "cards/thumbs/Plane_Sokenzan.webp",
-    "transcript": "cards/transcripts/Plane_Sokenzan.md",
+    "image": "cards/images/Sokenzan.png",
+    "thumb": "cards/thumbs/Sokenzan.webp",
+    "transcript": "cards/transcripts/Sokenzan.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Kamigawa",
@@ -2316,12 +2316,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_sorins_remastered_manor",
+    "id": "sorins_remastered_manor",
     "name": "Sorin's Remastered Manor",
     "type": "Plane",
-    "image": "cards/images/Plane_Sorin's Remastered Manor.png",
-    "thumb": "cards/thumbs/Plane_Sorin's Remastered Manor.webp",
-    "transcript": "cards/transcripts/Plane_Sorin's Remastered Manor.md",
+    "image": "cards/images/Sorin's Remastered Manor.png",
+    "thumb": "cards/thumbs/Sorin's Remastered Manor.webp",
+    "transcript": "cards/transcripts/Sorin's Remastered Manor.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Innistrad",
@@ -2331,12 +2331,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_spectrox_mines",
+    "id": "spectrox_mines",
     "name": "Spectrox Mines",
     "type": "Plane",
-    "image": "cards/images/Plane_Spectrox Mines.png",
-    "thumb": "cards/thumbs/Plane_Spectrox Mines.webp",
-    "transcript": "cards/transcripts/Plane_Spectrox Mines.md",
+    "image": "cards/images/Spectrox Mines.png",
+    "thumb": "cards/thumbs/Spectrox Mines.webp",
+    "transcript": "cards/transcripts/Spectrox Mines.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Androzani Minor",
@@ -2346,12 +2346,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_stairs_to_infinity",
+    "id": "stairs_to_infinity",
     "name": "Stairs to Infinity",
     "type": "Plane",
-    "image": "cards/images/Plane_Stairs to Infinity.png",
-    "thumb": "cards/thumbs/Plane_Stairs to Infinity.webp",
-    "transcript": "cards/transcripts/Plane_Stairs to Infinity.md",
+    "image": "cards/images/Stairs to Infinity.png",
+    "thumb": "cards/thumbs/Stairs to Infinity.webp",
+    "transcript": "cards/transcripts/Stairs to Infinity.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Xerex",
@@ -2360,12 +2360,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_stensia",
+    "id": "stensia",
     "name": "Stensia",
     "type": "Plane",
-    "image": "cards/images/Plane_Stensia.png",
-    "thumb": "cards/thumbs/Plane_Stensia.webp",
-    "transcript": "cards/transcripts/Plane_Stensia.md",
+    "image": "cards/images/Stensia.png",
+    "thumb": "cards/thumbs/Stensia.webp",
+    "transcript": "cards/transcripts/Stensia.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Innistrad",
@@ -2374,12 +2374,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_stormcage_containment_facility",
+    "id": "stormcage_containment_facility",
     "name": "Stormcage Containment Facility",
     "type": "Plane",
-    "image": "cards/images/Plane_Stormcage Containment Facility.png",
-    "thumb": "cards/thumbs/Plane_Stormcage Containment Facility.webp",
-    "transcript": "cards/transcripts/Plane_Stormcage Containment Facility.md",
+    "image": "cards/images/Stormcage Containment Facility.png",
+    "thumb": "cards/thumbs/Stormcage Containment Facility.webp",
+    "transcript": "cards/transcripts/Stormcage Containment Facility.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Unknown Planet",
@@ -2389,12 +2389,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_strixhaven",
+    "id": "strixhaven",
     "name": "Strixhaven",
     "type": "Plane",
-    "image": "cards/images/Plane_Strixhaven.png",
-    "thumb": "cards/thumbs/Plane_Strixhaven.webp",
-    "transcript": "cards/transcripts/Plane_Strixhaven.md",
+    "image": "cards/images/Strixhaven.png",
+    "thumb": "cards/thumbs/Strixhaven.webp",
+    "transcript": "cards/transcripts/Strixhaven.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Arcavios",
@@ -2403,12 +2403,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_stronghold_furnace",
+    "id": "stronghold_furnace",
     "name": "Stronghold Furnace",
     "type": "Plane",
-    "image": "cards/images/Plane_Stronghold Furnace.png",
-    "thumb": "cards/thumbs/Plane_Stronghold Furnace.webp",
-    "transcript": "cards/transcripts/Plane_Stronghold Furnace.md",
+    "image": "cards/images/Stronghold Furnace.png",
+    "thumb": "cards/thumbs/Stronghold Furnace.webp",
+    "transcript": "cards/transcripts/Stronghold Furnace.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Rath",
@@ -2417,12 +2417,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_stroopwafel_cafe",
+    "id": "stroopwafel_cafe",
     "name": "Stroopwafel Cafe",
     "type": "Plane",
-    "image": "cards/images/Plane_Stroopwafel Cafe.png",
-    "thumb": "cards/thumbs/Plane_Stroopwafel Cafe.webp",
-    "transcript": "cards/transcripts/Plane_Stroopwafel Cafe.md",
+    "image": "cards/images/Stroopwafel Cafe.png",
+    "thumb": "cards/thumbs/Stroopwafel Cafe.webp",
+    "transcript": "cards/transcripts/Stroopwafel Cafe.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Amsterdam",
@@ -2432,12 +2432,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_takenuma",
+    "id": "takenuma",
     "name": "Takenuma",
     "type": "Plane",
-    "image": "cards/images/Plane_Takenuma.png",
-    "thumb": "cards/thumbs/Plane_Takenuma.webp",
-    "transcript": "cards/transcripts/Plane_Takenuma.md",
+    "image": "cards/images/Takenuma.png",
+    "thumb": "cards/thumbs/Takenuma.webp",
+    "transcript": "cards/transcripts/Takenuma.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Kamigawa",
@@ -2446,12 +2446,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_talon_gates",
+    "id": "talon_gates",
     "name": "Talon Gates",
     "type": "Plane",
-    "image": "cards/images/Plane_Talon Gates.png",
-    "thumb": "cards/thumbs/Plane_Talon Gates.webp",
-    "transcript": "cards/transcripts/Plane_Talon Gates.md",
+    "image": "cards/images/Talon Gates.png",
+    "thumb": "cards/thumbs/Talon Gates.webp",
+    "transcript": "cards/transcripts/Talon Gates.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Dominaria",
@@ -2460,12 +2460,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_tardis_bay",
+    "id": "tardis_bay",
     "name": "TARDIS Bay",
     "type": "Plane",
-    "image": "cards/images/Plane_TARDIS Bay.png",
-    "thumb": "cards/thumbs/Plane_TARDIS Bay.webp",
-    "transcript": "cards/transcripts/Plane_TARDIS Bay.md",
+    "image": "cards/images/TARDIS Bay.png",
+    "thumb": "cards/thumbs/TARDIS Bay.webp",
+    "transcript": "cards/transcripts/TARDIS Bay.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Gallifrey",
@@ -2475,12 +2475,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_tarnation",
+    "id": "tarnation",
     "name": "Tarnation",
     "type": "Plane",
-    "image": "cards/images/Plane_Tarnation.png",
-    "thumb": "cards/thumbs/Plane_Tarnation.webp",
-    "transcript": "cards/transcripts/Plane_Tarnation.md",
+    "image": "cards/images/Tarnation.png",
+    "thumb": "cards/thumbs/Tarnation.webp",
+    "transcript": "cards/transcripts/Tarnation.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Thunder Junction",
@@ -2490,12 +2490,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_tazeem",
+    "id": "tazeem",
     "name": "Tazeem",
     "type": "Plane",
-    "image": "cards/images/Plane_Tazeem.png",
-    "thumb": "cards/thumbs/Plane_Tazeem.webp",
-    "transcript": "cards/transcripts/Plane_Tazeem.md",
+    "image": "cards/images/Tazeem.png",
+    "thumb": "cards/thumbs/Tazeem.webp",
+    "transcript": "cards/transcripts/Tazeem.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Zendikar",
@@ -2504,12 +2504,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_tember_city",
+    "id": "tember_city",
     "name": "Tember City",
     "type": "Plane",
-    "image": "cards/images/Plane_Tember City.png",
-    "thumb": "cards/thumbs/Plane_Tember City.webp",
-    "transcript": "cards/transcripts/Plane_Tember City.md",
+    "image": "cards/images/Tember City.png",
+    "thumb": "cards/thumbs/Tember City.webp",
+    "transcript": "cards/transcripts/Tember City.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Kinshala",
@@ -2518,12 +2518,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_temple_of_atropos",
+    "id": "temple_of_atropos",
     "name": "Temple of Atropos",
     "type": "Plane",
-    "image": "cards/images/Plane_Temple of Atropos.png",
-    "thumb": "cards/thumbs/Plane_Temple of Atropos.webp",
-    "transcript": "cards/transcripts/Plane_Temple of Atropos.md",
+    "image": "cards/images/Temple of Atropos.png",
+    "thumb": "cards/thumbs/Temple of Atropos.webp",
+    "transcript": "cards/transcripts/Temple of Atropos.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Time",
@@ -2533,12 +2533,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_ten_wizards_mountain",
+    "id": "ten_wizards_mountain",
     "name": "Ten Wizards Mountain",
     "type": "Plane",
-    "image": "cards/images/Plane_Ten Wizards Mountain.png",
-    "thumb": "cards/thumbs/Plane_Ten Wizards Mountain.webp",
-    "transcript": "cards/transcripts/Plane_Ten Wizards Mountain.md",
+    "image": "cards/images/Ten Wizards Mountain.png",
+    "thumb": "cards/thumbs/Ten Wizards Mountain.webp",
+    "transcript": "cards/transcripts/Ten Wizards Mountain.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Shenmeng",
@@ -2547,12 +2547,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_the_aether_flues",
+    "id": "the_aether_flues",
     "name": "The Aether Flues",
     "type": "Plane",
-    "image": "cards/images/Plane_The Aether Flues.png",
-    "thumb": "cards/thumbs/Plane_The Aether Flues.webp",
-    "transcript": "cards/transcripts/Plane_The Aether Flues.md",
+    "image": "cards/images/The Aether Flues.png",
+    "thumb": "cards/thumbs/The Aether Flues.webp",
+    "transcript": "cards/transcripts/The Aether Flues.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Iquatana",
@@ -2561,12 +2561,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_the_bean",
+    "id": "the_bean",
     "name": "The Bean",
     "type": "Plane",
-    "image": "cards/images/Plane_The Bean.png",
-    "thumb": "cards/thumbs/Plane_The Bean.webp",
-    "transcript": "cards/transcripts/Plane_The Bean.md",
+    "image": "cards/images/The Bean.png",
+    "thumb": "cards/thumbs/The Bean.webp",
+    "transcript": "cards/transcripts/The Bean.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Chicago",
@@ -2576,12 +2576,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_the_caldaia",
+    "id": "the_caldaia",
     "name": "The Caldaia",
     "type": "Plane",
-    "image": "cards/images/Plane_The Caldaia.png",
-    "thumb": "cards/thumbs/Plane_The Caldaia.webp",
-    "transcript": "cards/transcripts/Plane_The Caldaia.md",
+    "image": "cards/images/The Caldaia.png",
+    "thumb": "cards/thumbs/The Caldaia.webp",
+    "transcript": "cards/transcripts/The Caldaia.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Capenna",
@@ -2590,12 +2590,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_the_cave_of_skulls",
+    "id": "the_cave_of_skulls",
     "name": "The Cave of Skulls",
     "type": "Plane",
-    "image": "cards/images/Plane_The Cave of Skulls.png",
-    "thumb": "cards/thumbs/Plane_The Cave of Skulls.webp",
-    "transcript": "cards/transcripts/Plane_The Cave of Skulls.md",
+    "image": "cards/images/The Cave of Skulls.png",
+    "thumb": "cards/thumbs/The Cave of Skulls.webp",
+    "transcript": "cards/transcripts/The Cave of Skulls.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Earth",
@@ -2605,12 +2605,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_the_cheetah_planet",
+    "id": "the_cheetah_planet",
     "name": "The Cheetah Planet",
     "type": "Plane",
-    "image": "cards/images/Plane_The Cheetah Planet.png",
-    "thumb": "cards/thumbs/Plane_The Cheetah Planet.webp",
-    "transcript": "cards/transcripts/Plane_The Cheetah Planet.md",
+    "image": "cards/images/The Cheetah Planet.png",
+    "thumb": "cards/thumbs/The Cheetah Planet.webp",
+    "transcript": "cards/transcripts/The Cheetah Planet.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Outside Mutter's Spiral",
@@ -2620,12 +2620,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_the_command_zone",
+    "id": "the_command_zone",
     "name": "The Command Zone",
     "type": "Plane",
-    "image": "cards/images/Plane_The Command Zone.png",
-    "thumb": "cards/thumbs/Plane_The Command Zone.webp",
-    "transcript": "cards/transcripts/Plane_The Command Zone.md",
+    "image": "cards/images/The Command Zone.png",
+    "thumb": "cards/thumbs/The Command Zone.webp",
+    "transcript": "cards/transcripts/The Command Zone.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "PUNK",
@@ -2634,12 +2634,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_the_dark_barony",
+    "id": "the_dark_barony",
     "name": "The Dark Barony",
     "type": "Plane",
-    "image": "cards/images/Plane_The Dark Barony.png",
-    "thumb": "cards/thumbs/Plane_The Dark Barony.webp",
-    "transcript": "cards/transcripts/Plane_The Dark Barony.md",
+    "image": "cards/images/The Dark Barony.png",
+    "thumb": "cards/thumbs/The Dark Barony.webp",
+    "transcript": "cards/transcripts/The Dark Barony.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Ulgrotha",
@@ -2648,12 +2648,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_the_dead_zone",
+    "id": "the_dead_zone",
     "name": "The Dead Zone",
     "type": "Plane",
-    "image": "cards/images/Plane_The Dead Zone.png",
-    "thumb": "cards/thumbs/Plane_The Dead Zone.webp",
-    "transcript": "cards/transcripts/Plane_The Dead Zone.md",
+    "image": "cards/images/The Dead Zone.png",
+    "thumb": "cards/thumbs/The Dead Zone.webp",
+    "transcript": "cards/transcripts/The Dead Zone.md",
     "tags": [
       ":top:badge:tr:amber:Custom",
       "Ulgrotha",
@@ -2661,12 +2661,12 @@
     ]
   },
   {
-    "id": "plane_the_dining_car",
+    "id": "the_dining_car",
     "name": "The Dining Car",
     "type": "Plane",
-    "image": "cards/images/Plane_The Dining Car.png",
-    "thumb": "cards/thumbs/Plane_The Dining Car.webp",
-    "transcript": "cards/transcripts/Plane_The Dining Car.md",
+    "image": "cards/images/The Dining Car.png",
+    "thumb": "cards/thumbs/The Dining Car.webp",
+    "transcript": "cards/transcripts/The Dining Car.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Spacecraft",
@@ -2676,12 +2676,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_the_doctors_childhood_barn",
+    "id": "the_doctors_childhood_barn",
     "name": "The Doctor's Childhood Barn",
     "type": "Plane",
-    "image": "cards/images/Plane_The Doctor's Childhood Barn.png",
-    "thumb": "cards/thumbs/Plane_The Doctor's Childhood Barn.webp",
-    "transcript": "cards/transcripts/Plane_The Doctor's Childhood Barn.md",
+    "image": "cards/images/The Doctor's Childhood Barn.png",
+    "thumb": "cards/thumbs/The Doctor's Childhood Barn.webp",
+    "transcript": "cards/transcripts/The Doctor's Childhood Barn.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Gallifrey",
@@ -2691,12 +2691,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_the_doctors_tomb",
+    "id": "the_doctors_tomb",
     "name": "The Doctor's Tomb",
     "type": "Plane",
-    "image": "cards/images/Plane_The Doctor's Tomb.png",
-    "thumb": "cards/thumbs/Plane_The Doctor's Tomb.webp",
-    "transcript": "cards/transcripts/Plane_The Doctor's Tomb.md",
+    "image": "cards/images/The Doctor's Tomb.png",
+    "thumb": "cards/thumbs/The Doctor's Tomb.webp",
+    "transcript": "cards/transcripts/The Doctor's Tomb.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Trenzalore",
@@ -2706,12 +2706,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_the_drum_mining_facility",
+    "id": "the_drum_mining_facility",
     "name": "The Drum, Mining Facility",
     "type": "Plane",
-    "image": "cards/images/Plane_The Drum, Mining Facility.png",
-    "thumb": "cards/thumbs/Plane_The Drum, Mining Facility.webp",
-    "transcript": "cards/transcripts/Plane_The Drum, Mining Facility.md",
+    "image": "cards/images/The Drum, Mining Facility.png",
+    "thumb": "cards/thumbs/The Drum, Mining Facility.webp",
+    "transcript": "cards/transcripts/The Drum, Mining Facility.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Earth",
@@ -2721,12 +2721,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_the_eon_fog",
+    "id": "the_eon_fog",
     "name": "The Eon Fog",
     "type": "Plane",
-    "image": "cards/images/Plane_The Eon Fog.png",
-    "thumb": "cards/thumbs/Plane_The Eon Fog.webp",
-    "transcript": "cards/transcripts/Plane_The Eon Fog.md",
+    "image": "cards/images/The Eon Fog.png",
+    "thumb": "cards/thumbs/The Eon Fog.webp",
+    "transcript": "cards/transcripts/The Eon Fog.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Equilor",
@@ -2735,12 +2735,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_the_fathom_ward",
+    "id": "the_fathom_ward",
     "name": "The Fathom Ward",
     "type": "Plane",
-    "image": "cards/images/Plane_The Fathom Ward.png",
-    "thumb": "cards/thumbs/Plane_The Fathom Ward.webp",
-    "transcript": "cards/transcripts/Plane_The Fathom Ward.md",
+    "image": "cards/images/The Fathom Ward.png",
+    "thumb": "cards/thumbs/The Fathom Ward.webp",
+    "transcript": "cards/transcripts/The Fathom Ward.md",
     "tags": [
       ":top:badge:tr:amber:Custom",
       "New Phyrexia",
@@ -2748,12 +2748,12 @@
     ]
   },
   {
-    "id": "plane_the_fertile_lands_of_saulvinia",
+    "id": "the_fertile_lands_of_saulvinia",
     "name": "The Fertile Lands of Saulvinia",
     "type": "Plane",
-    "image": "cards/images/Plane_The Fertile Lands of Saulvinia.png",
-    "thumb": "cards/thumbs/Plane_The Fertile Lands of Saulvinia.webp",
-    "transcript": "cards/transcripts/Plane_The Fertile Lands of Saulvinia.md",
+    "image": "cards/images/The Fertile Lands of Saulvinia.png",
+    "thumb": "cards/thumbs/The Fertile Lands of Saulvinia.webp",
+    "transcript": "cards/transcripts/The Fertile Lands of Saulvinia.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Antausia",
@@ -2762,12 +2762,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_the_food_court",
+    "id": "the_food_court",
     "name": "The Food Court",
     "type": "Plane",
-    "image": "cards/images/Plane_The Food Court.png",
-    "thumb": "cards/thumbs/Plane_The Food Court.webp",
-    "transcript": "cards/transcripts/Plane_The Food Court.md",
+    "image": "cards/images/The Food Court.png",
+    "thumb": "cards/thumbs/The Food Court.webp",
+    "transcript": "cards/transcripts/The Food Court.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Eldraine",
@@ -2777,12 +2777,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_the_fourth_sphere",
+    "id": "the_fourth_sphere",
     "name": "The Fourth Sphere",
     "type": "Plane",
-    "image": "cards/images/Plane_The Fourth Sphere.png",
-    "thumb": "cards/thumbs/Plane_The Fourth Sphere.webp",
-    "transcript": "cards/transcripts/Plane_The Fourth Sphere.md",
+    "image": "cards/images/The Fourth Sphere.png",
+    "thumb": "cards/thumbs/The Fourth Sphere.webp",
+    "transcript": "cards/transcripts/The Fourth Sphere.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Phyrexia",
@@ -2791,12 +2791,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_the_golden_city_of_orazca",
+    "id": "the_golden_city_of_orazca",
     "name": "The Golden City of Orazca",
     "type": "Plane",
-    "image": "cards/images/Plane_The Golden City of Orazca.png",
-    "thumb": "cards/thumbs/Plane_The Golden City of Orazca.webp",
-    "transcript": "cards/transcripts/Plane_The Golden City of Orazca.md",
+    "image": "cards/images/The Golden City of Orazca.png",
+    "thumb": "cards/thumbs/The Golden City of Orazca.webp",
+    "transcript": "cards/transcripts/The Golden City of Orazca.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Ixalan",
@@ -2805,12 +2805,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_the_great_aerie",
+    "id": "the_great_aerie",
     "name": "The Great Aerie",
     "type": "Plane",
-    "image": "cards/images/Plane_The Great Aerie.png",
-    "thumb": "cards/thumbs/Plane_The Great Aerie.webp",
-    "transcript": "cards/transcripts/Plane_The Great Aerie.md",
+    "image": "cards/images/The Great Aerie.png",
+    "thumb": "cards/thumbs/The Great Aerie.webp",
+    "transcript": "cards/transcripts/The Great Aerie.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Tarkir",
@@ -2819,12 +2819,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_the_great_forest",
+    "id": "the_great_forest",
     "name": "The Great Forest",
     "type": "Plane",
-    "image": "cards/images/Plane_The Great Forest.png",
-    "thumb": "cards/thumbs/Plane_The Great Forest.webp",
-    "transcript": "cards/transcripts/Plane_The Great Forest.md",
+    "image": "cards/images/The Great Forest.png",
+    "thumb": "cards/thumbs/The Great Forest.webp",
+    "transcript": "cards/transcripts/The Great Forest.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Lorwyn",
@@ -2833,12 +2833,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_the_hippodrome",
+    "id": "the_hippodrome",
     "name": "The Hippodrome",
     "type": "Plane",
-    "image": "cards/images/Plane_The Hippodrome.png",
-    "thumb": "cards/thumbs/Plane_The Hippodrome.webp",
-    "transcript": "cards/transcripts/Plane_The Hippodrome.md",
+    "image": "cards/images/The Hippodrome.png",
+    "thumb": "cards/thumbs/The Hippodrome.webp",
+    "transcript": "cards/transcripts/The Hippodrome.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Segovia",
@@ -2847,12 +2847,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_the_lux_foundation_library",
+    "id": "the_lux_foundation_library",
     "name": "The Lux Foundation Library",
     "type": "Plane",
-    "image": "cards/images/Plane_The Lux Foundation Library.png",
-    "thumb": "cards/thumbs/Plane_The Lux Foundation Library.webp",
-    "transcript": "cards/transcripts/Plane_The Lux Foundation Library.md",
+    "image": "cards/images/The Lux Foundation Library.png",
+    "thumb": "cards/thumbs/The Lux Foundation Library.webp",
+    "transcript": "cards/transcripts/The Lux Foundation Library.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "The Library",
@@ -2862,12 +2862,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_the_maelstrom",
+    "id": "the_maelstrom",
     "name": "The Maelstrom",
     "type": "Plane",
-    "image": "cards/images/Plane_The Maelstrom.png",
-    "thumb": "cards/thumbs/Plane_The Maelstrom.webp",
-    "transcript": "cards/transcripts/Plane_The Maelstrom.md",
+    "image": "cards/images/The Maelstrom.png",
+    "thumb": "cards/thumbs/The Maelstrom.webp",
+    "transcript": "cards/transcripts/The Maelstrom.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Alara",
@@ -2876,12 +2876,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_the_matrix_of_time",
+    "id": "the_matrix_of_time",
     "name": "The Matrix of Time",
     "type": "Plane",
-    "image": "cards/images/Plane_The Matrix of Time.png",
-    "thumb": "cards/thumbs/Plane_The Matrix of Time.webp",
-    "transcript": "cards/transcripts/Plane_The Matrix of Time.md",
+    "image": "cards/images/The Matrix of Time.png",
+    "thumb": "cards/thumbs/The Matrix of Time.webp",
+    "transcript": "cards/transcripts/The Matrix of Time.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Gallifrey",
@@ -2891,12 +2891,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_the_moonbase",
+    "id": "the_moonbase",
     "name": "The Moonbase",
     "type": "Plane",
-    "image": "cards/images/Plane_The Moonbase.png",
-    "thumb": "cards/thumbs/Plane_The Moonbase.webp",
-    "transcript": "cards/transcripts/Plane_The Moonbase.md",
+    "image": "cards/images/The Moonbase.png",
+    "thumb": "cards/thumbs/The Moonbase.webp",
+    "transcript": "cards/transcripts/The Moonbase.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Moon",
@@ -2906,12 +2906,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_the_pit",
+    "id": "the_pit",
     "name": "The Pit",
     "type": "Plane",
-    "image": "cards/images/Plane_The Pit.png",
-    "thumb": "cards/thumbs/Plane_The Pit.webp",
-    "transcript": "cards/transcripts/Plane_The Pit.md",
+    "image": "cards/images/The Pit.png",
+    "thumb": "cards/thumbs/The Pit.webp",
+    "transcript": "cards/transcripts/The Pit.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "The Abyss",
@@ -2920,12 +2920,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_the_pro_tour",
+    "id": "the_pro_tour",
     "name": "The Pro Tour",
     "type": "Plane",
-    "image": "cards/images/Plane_The Pro Tour.png",
-    "thumb": "cards/thumbs/Plane_The Pro Tour.webp",
-    "transcript": "cards/transcripts/Plane_The Pro Tour.md",
+    "image": "cards/images/The Pro Tour.png",
+    "thumb": "cards/thumbs/The Pro Tour.webp",
+    "transcript": "cards/transcripts/The Pro Tour.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "PUNK",
@@ -2934,12 +2934,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_the_pyramid_of_mars",
+    "id": "the_pyramid_of_mars",
     "name": "The Pyramid of Mars",
     "type": "Plane",
-    "image": "cards/images/Plane_The Pyramid of Mars.png",
-    "thumb": "cards/thumbs/Plane_The Pyramid of Mars.webp",
-    "transcript": "cards/transcripts/Plane_The Pyramid of Mars.md",
+    "image": "cards/images/The Pyramid of Mars.png",
+    "thumb": "cards/thumbs/The Pyramid of Mars.webp",
+    "transcript": "cards/transcripts/The Pyramid of Mars.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Mars",
@@ -2949,12 +2949,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_the_sphere",
+    "id": "the_sphere",
     "name": "The Sphere",
     "type": "Plane",
-    "image": "cards/images/Plane_The Sphere.png",
-    "thumb": "cards/thumbs/Plane_The Sphere.webp",
-    "transcript": "cards/transcripts/Plane_The Sphere.md",
+    "image": "cards/images/The Sphere.png",
+    "thumb": "cards/thumbs/The Sphere.webp",
+    "transcript": "cards/transcripts/The Sphere.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Las Vegas",
@@ -2964,12 +2964,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_the_tangle",
+    "id": "the_tangle",
     "name": "The Tangle",
     "type": "Plane",
-    "image": "cards/images/Plane_The Tangle.png",
-    "thumb": "cards/thumbs/Plane_The Tangle.webp",
-    "transcript": "cards/transcripts/Plane_The Tangle.md",
+    "image": "cards/images/The Tangle.png",
+    "thumb": "cards/thumbs/The Tangle.webp",
+    "transcript": "cards/transcripts/The Tangle.md",
     "tags": [
       ":top:badge:tr:amber:Custom",
       "Mirrodin",
@@ -2977,12 +2977,12 @@
     ]
   },
   {
-    "id": "plane_the_western_cloud",
+    "id": "the_western_cloud",
     "name": "The Western Cloud",
     "type": "Plane",
-    "image": "cards/images/Plane_The Western Cloud.png",
-    "thumb": "cards/thumbs/Plane_The Western Cloud.webp",
-    "transcript": "cards/transcripts/Plane_The Western Cloud.md",
+    "image": "cards/images/The Western Cloud.png",
+    "thumb": "cards/thumbs/The Western Cloud.webp",
+    "transcript": "cards/transcripts/The Western Cloud.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Gobakhan",
@@ -2991,12 +2991,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_the_wilds",
+    "id": "the_wilds",
     "name": "The Wilds",
     "type": "Plane",
-    "image": "cards/images/Plane_The Wilds.png",
-    "thumb": "cards/thumbs/Plane_The Wilds.webp",
-    "transcript": "cards/transcripts/Plane_The Wilds.md",
+    "image": "cards/images/The Wilds.png",
+    "thumb": "cards/thumbs/The Wilds.webp",
+    "transcript": "cards/transcripts/The Wilds.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Eldraine",
@@ -3005,12 +3005,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_the_windy_city",
+    "id": "the_windy_city",
     "name": "The Windy City",
     "type": "Plane",
-    "image": "cards/images/Plane_The Windy City.png",
-    "thumb": "cards/thumbs/Plane_The Windy City.webp",
-    "transcript": "cards/transcripts/Plane_The Windy City.md",
+    "image": "cards/images/The Windy City.png",
+    "thumb": "cards/thumbs/The Windy City.webp",
+    "transcript": "cards/transcripts/The Windy City.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Chicago",
@@ -3020,12 +3020,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_the_zephyr_maze",
+    "id": "the_zephyr_maze",
     "name": "The Zephyr Maze",
     "type": "Plane",
-    "image": "cards/images/Plane_The Zephyr Maze.png",
-    "thumb": "cards/thumbs/Plane_The Zephyr Maze.webp",
-    "transcript": "cards/transcripts/Plane_The Zephyr Maze.md",
+    "image": "cards/images/The Zephyr Maze.png",
+    "thumb": "cards/thumbs/The Zephyr Maze.webp",
+    "transcript": "cards/transcripts/The Zephyr Maze.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Kyneth",
@@ -3034,12 +3034,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_thraben_high_city",
+    "id": "thraben_high_city",
     "name": "Thraben High City",
     "type": "Plane",
-    "image": "cards/images/Plane_Thraben High City.png",
-    "thumb": "cards/thumbs/Plane_Thraben High City.webp",
-    "transcript": "cards/transcripts/Plane_Thraben High City.md",
+    "image": "cards/images/Thraben High City.png",
+    "thumb": "cards/thumbs/Thraben High City.webp",
+    "transcript": "cards/transcripts/Thraben High City.md",
     "tags": [
       ":top:badge:tr:amber:Custom",
       "Innistrad",
@@ -3047,12 +3047,12 @@
     ]
   },
   {
-    "id": "plane_towashi",
+    "id": "towashi",
     "name": "Towashi",
     "type": "Plane",
-    "image": "cards/images/Plane_Towashi.png",
-    "thumb": "cards/thumbs/Plane_Towashi.webp",
-    "transcript": "cards/transcripts/Plane_Towashi.md",
+    "image": "cards/images/Towashi.png",
+    "thumb": "cards/thumbs/Towashi.webp",
+    "transcript": "cards/transcripts/Towashi.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Kamigawa",
@@ -3061,12 +3061,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_trail_of_the_mage_rings",
+    "id": "trail_of_the_mage_rings",
     "name": "Trail of the Mage Rings",
     "type": "Plane",
-    "image": "cards/images/Plane_Trail of the Mage-Rings.png",
-    "thumb": "cards/thumbs/Plane_Trail of the Mage-Rings.webp",
-    "transcript": "cards/transcripts/Plane_Trail of the Mage-Rings.md",
+    "image": "cards/images/Trail of the Mage-Rings.png",
+    "thumb": "cards/thumbs/Trail of the Mage-Rings.webp",
+    "transcript": "cards/transcripts/Trail of the Mage-Rings.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Vryn",
@@ -3075,12 +3075,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_truga_jungle",
+    "id": "truga_jungle",
     "name": "Truga Jungle",
     "type": "Plane",
-    "image": "cards/images/Plane_Truga Jungle.png",
-    "thumb": "cards/thumbs/Plane_Truga Jungle.webp",
-    "transcript": "cards/transcripts/Plane_Truga Jungle.md",
+    "image": "cards/images/Truga Jungle.png",
+    "thumb": "cards/thumbs/Truga Jungle.webp",
+    "transcript": "cards/transcripts/Truga Jungle.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Ergamon",
@@ -3089,12 +3089,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_turri_island",
+    "id": "turri_island",
     "name": "Turri Island",
     "type": "Plane",
-    "image": "cards/images/Plane_Turri Island.png",
-    "thumb": "cards/thumbs/Plane_Turri Island.webp",
-    "transcript": "cards/transcripts/Plane_Turri Island.md",
+    "image": "cards/images/Turri Island.png",
+    "thumb": "cards/thumbs/Turri Island.webp",
+    "transcript": "cards/transcripts/Turri Island.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Ir",
@@ -3103,12 +3103,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_two_streams_facility",
+    "id": "two_streams_facility",
     "name": "Two Streams Facility",
     "type": "Plane",
-    "image": "cards/images/Plane_Two Streams Facility.png",
-    "thumb": "cards/thumbs/Plane_Two Streams Facility.webp",
-    "transcript": "cards/transcripts/Plane_Two Streams Facility.md",
+    "image": "cards/images/Two Streams Facility.png",
+    "thumb": "cards/thumbs/Two Streams Facility.webp",
+    "transcript": "cards/transcripts/Two Streams Facility.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Apalapucia",
@@ -3118,12 +3118,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_undercity_reaches",
+    "id": "undercity_reaches",
     "name": "Undercity Reaches",
     "type": "Plane",
-    "image": "cards/images/Plane_Undercity Reaches.png",
-    "thumb": "cards/thumbs/Plane_Undercity Reaches.webp",
-    "transcript": "cards/transcripts/Plane_Undercity Reaches.md",
+    "image": "cards/images/Undercity Reaches.png",
+    "thumb": "cards/thumbs/Undercity Reaches.webp",
+    "transcript": "cards/transcripts/Undercity Reaches.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Ravnica",
@@ -3132,12 +3132,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_unit_headquarters",
+    "id": "unit_headquarters",
     "name": "UNIT Headquarters",
     "type": "Plane",
-    "image": "cards/images/Plane_UNIT Headquarters.png",
-    "thumb": "cards/thumbs/Plane_UNIT Headquarters.webp",
-    "transcript": "cards/transcripts/Plane_UNIT Headquarters.md",
+    "image": "cards/images/UNIT Headquarters.png",
+    "thumb": "cards/thumbs/UNIT Headquarters.webp",
+    "transcript": "cards/transcripts/UNIT Headquarters.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Earth",
@@ -3147,12 +3147,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_unyaro",
+    "id": "unyaro",
     "name": "Unyaro",
     "type": "Plane",
-    "image": "cards/images/Plane_Unyaro.png",
-    "thumb": "cards/thumbs/Plane_Unyaro.webp",
-    "transcript": "cards/transcripts/Plane_Unyaro.md",
+    "image": "cards/images/Unyaro.png",
+    "thumb": "cards/thumbs/Unyaro.webp",
+    "transcript": "cards/transcripts/Unyaro.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Zhalfir",
@@ -3161,12 +3161,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_valors_reach",
+    "id": "valors_reach",
     "name": "Valor's Reach",
     "type": "Plane",
-    "image": "cards/images/Plane_Valor's Reach.png",
-    "thumb": "cards/thumbs/Plane_Valor's Reach.webp",
-    "transcript": "cards/transcripts/Plane_Valor's Reach.md",
+    "image": "cards/images/Valor's Reach.png",
+    "thumb": "cards/thumbs/Valor's Reach.webp",
+    "transcript": "cards/transcripts/Valor's Reach.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Kylem",
@@ -3175,12 +3175,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_velis_vel",
+    "id": "velis_vel",
     "name": "Velis Vel",
     "type": "Plane",
-    "image": "cards/images/Plane_Velis Vel.png",
-    "thumb": "cards/thumbs/Plane_Velis Vel.webp",
-    "transcript": "cards/transcripts/Plane_Velis Vel.md",
+    "image": "cards/images/Velis Vel.png",
+    "thumb": "cards/thumbs/Velis Vel.webp",
+    "transcript": "cards/transcripts/Velis Vel.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Lorwyn",
@@ -3189,12 +3189,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_we_hope_you_like_squirrels",
+    "id": "we_hope_you_like_squirrels",
     "name": "We Hope You Like Squirrels",
     "type": "Plane",
-    "image": "cards/images/Plane_We Hope You Like Squirrels.png",
-    "thumb": "cards/thumbs/Plane_We Hope You Like Squirrels.webp",
-    "transcript": "cards/transcripts/Plane_We Hope You Like Squirrels.md",
+    "image": "cards/images/We Hope You Like Squirrels.png",
+    "thumb": "cards/thumbs/We Hope You Like Squirrels.webp",
+    "transcript": "cards/transcripts/We Hope You Like Squirrels.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Secret Lair",
@@ -3204,12 +3204,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_welcome_to_valley",
+    "id": "welcome_to_valley",
     "name": "Welcome to Valley",
     "type": "Plane",
-    "image": "cards/images/Plane_Welcome to Valley.png",
-    "thumb": "cards/thumbs/Plane_Welcome to Valley.webp",
-    "transcript": "cards/transcripts/Plane_Welcome to Valley.md",
+    "image": "cards/images/Welcome to Valley.png",
+    "thumb": "cards/thumbs/Welcome to Valley.webp",
+    "transcript": "cards/transcripts/Welcome to Valley.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Bloomburrow",
@@ -3219,12 +3219,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_windmill_farm",
+    "id": "windmill_farm",
     "name": "Windmill Farm",
     "type": "Plane",
-    "image": "cards/images/Plane_Windmill Farm.png",
-    "thumb": "cards/thumbs/Plane_Windmill Farm.webp",
-    "transcript": "cards/transcripts/Plane_Windmill Farm.md",
+    "image": "cards/images/Windmill Farm.png",
+    "thumb": "cards/thumbs/Windmill Farm.webp",
+    "transcript": "cards/transcripts/Windmill Farm.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Amsterdam",
@@ -3234,12 +3234,12 @@
     "scryfallId": null
   },
   {
-    "id": "plane_windriddle_palaces",
+    "id": "windriddle_palaces",
     "name": "Windriddle Palaces",
     "type": "Plane",
-    "image": "cards/images/Plane_Windriddle Palaces.png",
-    "thumb": "cards/thumbs/Plane_Windriddle Palaces.webp",
-    "transcript": "cards/transcripts/Plane_Windriddle Palaces.md",
+    "image": "cards/images/Windriddle Palaces.png",
+    "thumb": "cards/thumbs/Windriddle Palaces.webp",
+    "transcript": "cards/transcripts/Windriddle Palaces.md",
     "tags": [
       ":top:badge:tr:green:Official",
       "Belenon",

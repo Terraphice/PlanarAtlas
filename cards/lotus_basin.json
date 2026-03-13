@@ -1,0 +1,13 @@
+{
+  "id": "lotus_basin",
+  "name": "Lotus Basin",
+  "type": "Plane",
+  "image": "cards/images/Lotus Basin.png",
+  "thumb": "cards/thumbs/Lotus Basin.webp",
+  "transcript": "cards/transcripts/Lotus Basin.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "Dominaria",
+    "PBT"
+  ]
+}
