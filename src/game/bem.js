@@ -698,12 +698,16 @@ export function handleBemCellClick(event) {
       ctx.showToast("Returned to your position. Tap an adjacent card to move.");
       return;
     }
+
+    const gridCell = gameState.bemGrid.get(bemKey(nx, ny));
+    if (gridCell?.card && gridCell.faceUp) {
+      openGameReaderView(gridCell.card, buildBemAdjacentCardActions(nx, ny));
+      return;
+    }
+
     const isValidMove = (Math.abs(dx) + Math.abs(dy) === 1) || (Math.abs(dx) === 1 && Math.abs(dy) === 1);
     if (isValidMove) {
       bemMovePlayer(nx, ny);
-    } else {
-      const gridCell = gameState.bemGrid.get(bemKey(nx, ny));
-      if (gridCell?.card && gridCell.faceUp) openGameReaderView(gridCell.card, buildBemAdjacentCardActions(nx, ny));
     }
     return;
   }
@@ -871,24 +875,78 @@ export function buildBemCardActions() {
 }
 
 export function buildBemAdjacentCardActions(nx, ny) {
-  const { closeGameReaderView } = ctx;
+  const { closeGameReaderView, showToast } = ctx;
   const gameState = ctx.getGameState();
   if (!gameState?.bemPos || !gameState?.bemGrid) return [];
 
+  const key = bemKey(nx, ny);
   const dx = nx - gameState.bemPos.x;
   const dy = ny - gameState.bemPos.y;
-  const targetCell = gameState.bemGrid.get(bemKey(nx, ny));
-  if (!bemIsValidPlaneswalkTarget(dx, dy, targetCell)) return [];
+  const targetCell = gameState.bemGrid.get(key);
+  if (!targetCell?.card || !targetCell.faceUp || (dx === 0 && dy === 0)) return [];
 
-  return [
-    {
+  const actions = [];
+
+  function makeAdjacentAction(label, handler, danger = false) {
+    return {
+      label,
+      danger,
+      action: () => {
+        const currentState = ctx.getGameState();
+        if (!currentState?.bemGrid) return;
+        const currentCell = currentState.bemGrid.get(key);
+        if (!currentCell?.card || !currentCell.faceUp) return;
+        ctx.pushHistory?.();
+        handler(currentState, currentCell, currentCell.card.displayName);
+      }
+    };
+  }
+
+  if (bemIsValidPlaneswalkTarget(dx, dy, targetCell)) {
+    actions.push({
       label: "Planeswalk Here",
       action: () => {
         closeGameReaderView();
         bemMovePlayer(nx, ny);
       }
-    }
-  ];
+    });
+  }
+
+  actions.push(
+    makeAdjacentAction("Add", (gs, cell, name) => {
+      gs.activePlanes.push(cell.card);
+      gs.bemGrid.set(key, { card: null, faceUp: true, placeholder: true });
+      closeGameReaderView(); renderBemMap(); updateBemInfoBar(); syncBemTrButton();
+      showToast(`${name} added simultaneously.`);
+    }),
+    makeAdjacentAction("Return to Top", (gs, cell, name) => {
+      gs.remaining.unshift(cell.card);
+      gs.bemGrid.set(key, { card: null, faceUp: true, placeholder: true });
+      closeGameReaderView(); renderBemMap(); updateBemInfoBar(); syncBemTrButton();
+      showToast(`${name} returned to top.`);
+    }),
+    makeAdjacentAction("Return to Bottom", (gs, cell, name) => {
+      gs.remaining.push(cell.card);
+      gs.bemGrid.set(key, { card: null, faceUp: true, placeholder: true });
+      closeGameReaderView(); renderBemMap(); updateBemInfoBar(); syncBemTrButton();
+      showToast(`${name} returned to bottom.`);
+    }),
+    makeAdjacentAction("Shuffle Into Library", (gs, cell, name) => {
+      gs.remaining.push(cell.card);
+      gs.remaining = shuffleArray(gs.remaining);
+      gs.bemGrid.set(key, { card: null, faceUp: true, placeholder: true });
+      closeGameReaderView(); renderBemMap(); updateBemInfoBar(); syncBemTrButton();
+      showToast(`${name} shuffled into library.`);
+    }),
+    makeAdjacentAction("Exile", (gs, cell, name) => {
+      gs.exiled.push(cell.card);
+      gs.bemGrid.set(key, { card: null, faceUp: true, placeholder: true });
+      closeGameReaderView(); renderBemMap(); updateBemInfoBar(); syncBemTrButton();
+      showToast(`${name} exiled.`);
+    }, true)
+  );
+
+  return actions;
 }
 
 export function buildBemSideCardActions(sideIdx) {
