@@ -1,0 +1,14 @@
+{
+  "id": "gavony",
+  "name": "Gavony",
+  "type": "Plane",
+  "image": "cards/images/Gavony.png",
+  "thumb": "cards/thumbs/Gavony.webp",
+  "transcript": "cards/transcripts/Gavony.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Innistrad",
+    "MOC"
+  ],
+  "scryfallId": null
+}

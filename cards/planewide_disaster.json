@@ -1,0 +1,13 @@
+{
+  "id": "planewide_disaster",
+  "name": "Planewide Disaster",
+  "type": "Phenomenon",
+  "image": "cards/images/Planewide Disaster.png",
+  "thumb": "cards/thumbs/Planewide Disaster.webp",
+  "transcript": "cards/transcripts/Planewide Disaster.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "MOC"
+  ],
+  "scryfallId": null
+}

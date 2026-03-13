@@ -1,0 +1,13 @@
+{
+  "id": "havengul_port_city",
+  "name": "Havengul Port City",
+  "type": "Plane",
+  "image": "cards/images/Havengul Port City.png",
+  "thumb": "cards/thumbs/Havengul Port City.webp",
+  "transcript": "cards/transcripts/Havengul Port City.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "Innistrad",
+    "PBT"
+  ]
+}

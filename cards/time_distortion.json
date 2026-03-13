@@ -1,0 +1,13 @@
+{
+  "id": "time_distortion",
+  "name": "Time Distortion",
+  "type": "Phenomenon",
+  "image": "cards/images/Time Distortion.png",
+  "thumb": "cards/thumbs/Time Distortion.webp",
+  "transcript": "cards/transcripts/Time Distortion.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "OPCA"
+  ],
+  "scryfallId": null
+}

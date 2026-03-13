@@ -1,0 +1,15 @@
+{
+  "id": "bicycle_rack",
+  "name": "Bicycle Rack",
+  "type": "Plane",
+  "image": "cards/images/Bicycle Rack.png",
+  "thumb": "cards/thumbs/Bicycle Rack.webp",
+  "transcript": "cards/transcripts/Bicycle Rack.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Amsterdam",
+    "PUNK",
+    "hidden"
+  ],
+  "scryfallId": null
+}

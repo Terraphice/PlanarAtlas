@@ -1,0 +1,13 @@
+{
+  "id": "halcyon_floating_capital",
+  "name": "Halcyon Floating Capital",
+  "type": "Plane",
+  "image": "cards/images/Halcyon Floating Capital.png",
+  "thumb": "cards/thumbs/Halcyon Floating Capital.webp",
+  "transcript": "cards/transcripts/Halcyon Floating Capital.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "Dominaria",
+    "PBT"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "the_zephyr_maze",
+  "name": "The Zephyr Maze",
+  "type": "Plane",
+  "image": "cards/images/The Zephyr Maze.png",
+  "thumb": "cards/thumbs/The Zephyr Maze.webp",
+  "transcript": "cards/transcripts/The Zephyr Maze.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Kyneth",
+    "OPCA"
+  ],
+  "scryfallId": null
+}

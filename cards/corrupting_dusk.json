@@ -1,0 +1,12 @@
+{
+  "id": "corrupting_dusk",
+  "name": "Corrupting Dusk",
+  "type": "Phenomenon",
+  "image": "cards/images/Corrupting Dusk.png",
+  "thumb": "cards/thumbs/Corrupting Dusk.webp",
+  "transcript": "cards/transcripts/Corrupting Dusk.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "PBT"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "hedron_fields_of_agadeem",
+  "name": "Hedron Fields of Agadeem",
+  "type": "Plane",
+  "image": "cards/images/Hedron Fields of Agadeem.png",
+  "thumb": "cards/thumbs/Hedron Fields of Agadeem.webp",
+  "transcript": "cards/transcripts/Hedron Fields of Agadeem.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Zendikar",
+    "MOC"
+  ],
+  "scryfallId": null
+}

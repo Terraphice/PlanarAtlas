@@ -1,0 +1,14 @@
+{
+  "id": "kharasha_foothills",
+  "name": "Kharasha Foothills",
+  "type": "Plane",
+  "image": "cards/images/Kharasha Foothills.png",
+  "thumb": "cards/thumbs/Kharasha Foothills.webp",
+  "transcript": "cards/transcripts/Kharasha Foothills.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Mongseng",
+    "MOC"
+  ],
+  "scryfallId": null
+}

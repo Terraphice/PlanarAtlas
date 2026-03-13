@@ -234,9 +234,14 @@ export function decodeGameState(seed) {
     const raw = fromBase64Url(seed.slice(3));
     const obj = JSON.parse(raw);
     const lookupCard = (ck) => {
-      let id = decompressKey(ck);
-      if (!id) return null;
-      if (isLegacy) id = remapLegacyKey(id);
+      let id;
+      if (isLegacy) {
+        id = decompressKey(ck);
+        if (!id) return null;
+        id = remapLegacyKey(id);
+      } else {
+        id = remapLegacyKey(ck);
+      }
       return allCards.find((c) => c.id === id) || null;
     };
     if (obj.m === "bem") {

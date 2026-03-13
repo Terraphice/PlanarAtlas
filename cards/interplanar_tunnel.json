@@ -1,0 +1,13 @@
+{
+  "id": "interplanar_tunnel",
+  "name": "Interplanar Tunnel",
+  "type": "Phenomenon",
+  "image": "cards/images/Interplanar Tunnel.png",
+  "thumb": "cards/thumbs/Interplanar Tunnel.webp",
+  "transcript": "cards/transcripts/Interplanar Tunnel.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "OPCA"
+  ],
+  "scryfallId": null
+}

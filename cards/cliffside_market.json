@@ -1,0 +1,14 @@
+{
+  "id": "cliffside_market",
+  "name": "Cliffside Market",
+  "type": "Plane",
+  "image": "cards/images/Cliffside Market.png",
+  "thumb": "cards/thumbs/Cliffside Market.webp",
+  "transcript": "cards/transcripts/Cliffside Market.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Mercadia",
+    "OPCA"
+  ],
+  "scryfallId": null
+}

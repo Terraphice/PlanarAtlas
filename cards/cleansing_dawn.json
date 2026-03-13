@@ -1,0 +1,12 @@
+{
+  "id": "cleansing_dawn",
+  "name": "Cleansing Dawn",
+  "type": "Phenomenon",
+  "image": "cards/images/Cleansing Dawn.png",
+  "thumb": "cards/thumbs/Cleansing Dawn.webp",
+  "transcript": "cards/transcripts/Cleansing Dawn.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "PBT"
+  ]
+}

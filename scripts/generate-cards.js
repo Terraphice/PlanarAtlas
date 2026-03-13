@@ -17,15 +17,16 @@ export function getDisplayName(filename) {
 }
 
 export function getCardId(filename) {
+  // id is derived purely from the card name (no type prefix).
+  // Planes and phenomena won't share names in practice, so there is no collision risk.
   const type = getInferredType(filename);
   if (!type) return null;
   const name = getDisplayName(filename);
-  const suffix = name
+  return name
     .toLowerCase()
     .replace(/\u2014/g, "-")
     .replace(/\s+/g, "_")
     .replace(/[^a-z0-9_-]/g, "");
-  return type.toLowerCase() + "_" + suffix;
 }
 
 export function uniqueTags(tags) {
@@ -111,7 +112,6 @@ if (isDirectRun) {
 
     const id = getCardId(entry.name);
     const name = getDisplayName(entry.name);
-    const stem = entry.name.replace(/\.[^.]+$/, "");
     const existing = existingById.get(id) || {};
 
     const mergedTags = uniqueTags(
@@ -125,9 +125,9 @@ if (isDirectRun) {
       id,
       name,
       type,
-      image: `cards/images/${entry.name}`,
-      thumb: `cards/thumbs/${stem}.webp`,
-      transcript: `cards/transcripts/${stem}.md`,
+      image: `cards/images/${name}${extname(entry.name)}`,
+      thumb: `cards/thumbs/${name}.webp`,
+      transcript: `cards/transcripts/${name}.md`,
       tags: mergedTags
     };
 
@@ -139,7 +139,7 @@ if (isDirectRun) {
   }
 
   cards.sort((a, b) => {
-    return a.image.localeCompare(b.image, undefined, {
+    return a.name.localeCompare(b.name, undefined, {
       numeric: true,
       sensitivity: "base"
     });

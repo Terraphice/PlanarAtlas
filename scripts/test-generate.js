@@ -55,9 +55,9 @@ assert(getDisplayName("Phenomenon_Atlas Consultation.png") === "Atlas Consultati
 // ── getCardId ─────────────────────────────────────────────────────────────────
 
 section("getCardId");
-assert(getCardId("Plane_Akoum.png") === "plane_akoum", "Plane_Akoum → plane_akoum");
-assert(getCardId("Phenomenon_Atlas Consultation.png") === "phenomenon_atlas_consultation", "Spaces → underscores");
-assert(getCardId("Phenomenon_Interplanar_Tunnel.jpg") === "phenomenon_interplanar_tunnel", "Underscores normalized");
+assert(getCardId("Plane_Akoum.png") === "akoum", "Plane_Akoum → akoum");
+assert(getCardId("Phenomenon_Atlas Consultation.png") === "atlas_consultation", "Spaces → underscores");
+assert(getCardId("Phenomenon_Interplanar_Tunnel.jpg") === "interplanar_tunnel", "Underscores normalized");
 assert(getCardId("CustomCard.png") === null, "No type prefix → null");
 
 // ── uniqueTags ────────────────────────────────────────────────────────────────

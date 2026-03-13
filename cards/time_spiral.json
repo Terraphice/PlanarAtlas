@@ -1,0 +1,12 @@
+{
+  "id": "time_spiral",
+  "name": "Time Spiral",
+  "type": "Phenomenon",
+  "image": "cards/images/Time Spiral.png",
+  "thumb": "cards/thumbs/Time Spiral.webp",
+  "transcript": "cards/transcripts/Time Spiral.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "PBT"
+  ]
+}

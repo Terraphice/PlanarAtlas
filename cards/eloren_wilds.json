@@ -1,0 +1,14 @@
+{
+  "id": "eloren_wilds",
+  "name": "Eloren Wilds",
+  "type": "Plane",
+  "image": "cards/images/Eloren Wilds.png",
+  "thumb": "cards/thumbs/Eloren Wilds.webp",
+  "transcript": "cards/transcripts/Eloren Wilds.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Shandalar",
+    "OPCA"
+  ],
+  "scryfallId": null
+}

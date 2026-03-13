@@ -3,20 +3,20 @@
 // These functions have no DOM or module-state dependencies.
 
 /**
- * Compresses a card id by replacing known type prefixes with single characters.
- * @param {string} id - The card id (e.g. "plane_akoum").
- * @returns {string} The compressed id (e.g. "pakoum").
+ * Compresses a card id for encoding in a seed string.
+ * IDs are now name-based slugs with no type prefix, so no compression is needed.
+ * @param {string} id - The card id (e.g. "akoum").
+ * @returns {string} The id unchanged.
  */
 export function compressKey(id) {
-  if (id.startsWith("plane_")) return "p" + id.slice(6);
-  if (id.startsWith("phenomenon_")) return "n" + id.slice(11);
-  return "u" + id;
+  return id;
 }
 
 /**
- * Decompresses a compressed card id back to its full form.
- * @param {string | null | undefined} compressed - The compressed id (e.g. "pakoum").
- * @returns {string | null} The full card id, or null if invalid.
+ * Decompresses a card id token from a legacy d1: seed.
+ * Legacy seeds used a single-character type prefix (p/n/u) before the name slug.
+ * @param {string | null | undefined} compressed - The compressed token (e.g. "pakoum").
+ * @returns {string | null} The expanded legacy id (e.g. "plane_akoum"), or null if invalid.
  */
 export function decompressKey(compressed) {
   if (!compressed || compressed.length < 2) return null;
@@ -29,29 +29,33 @@ export function decompressKey(compressed) {
 }
 
 /**
- * Converts an old-format card key (e.g. "Plane_Akoum") to the new id format (e.g. "plane_akoum").
- * Used for backward compatibility when loading d1:/g1: seeds.
- * @param {string} oldKey - Old format card key.
- * @returns {string} New format card id.
+ * Converts a legacy card key to the current name-only id format (e.g. "akoum").
+ * Handles three legacy formats:
+ *   1. Old Plane_Akoum / Phenomenon_Foo format (d1: seeds after decompressKey expansion)
+ *   2. Intermediate plane_akoum / phenomenon_foo format (brief d2: transition period)
+ *   3. Current akoum format — returned unchanged.
+ * @param {string} oldKey - Legacy format card key.
+ * @returns {string} Current name-only card id.
  */
 export function remapLegacyKey(oldKey) {
-  if (oldKey.startsWith("Plane_")) {
-    const name = oldKey.slice(6)
+  let name = null;
+  if (/^Plane[-_ ]/i.test(oldKey)) {
+    name = oldKey.replace(/^Plane[-_ ]+/i, "");
+  } else if (/^Phenomenon[-_ ]/i.test(oldKey)) {
+    name = oldKey.replace(/^Phenomenon[-_ ]+/i, "");
+  } else if (oldKey.startsWith("plane_")) {
+    name = oldKey.slice(6);
+  } else if (oldKey.startsWith("phenomenon_")) {
+    name = oldKey.slice(11);
+  }
+  if (name !== null) {
+    return name
+      .toLowerCase()
       .replace(/\u2014/g, "-")
       .replace(/[ _]+/g, "_")
-      .replace(/[^a-z0-9_-]/gi, "")
-      .toLowerCase();
-    return "plane_" + name;
+      .replace(/[^a-z0-9_-]/g, "");
   }
-  if (oldKey.startsWith("Phenomenon_")) {
-    const name = oldKey.slice(11)
-      .replace(/\u2014/g, "-")
-      .replace(/[ _]+/g, "_")
-      .replace(/[^a-z0-9_-]/gi, "")
-      .toLowerCase();
-    return "phenomenon_" + name;
-  }
-  return oldKey.toLowerCase().replace(/\s+/g, "_");
+  return oldKey;
 }
 
 /**
@@ -127,9 +131,17 @@ export function decodeDeck(seed, maxCardCount = 9) {
         ck = part;
         count = 1;
       }
-      let id = decompressKey(ck);
-      if (!id) continue;
-      if (isLegacy) id = remapLegacyKey(id);
+      let id;
+      if (isLegacy) {
+        // d1: seeds used p/n/u prefix compression; expand then remap to current id format
+        id = decompressKey(ck);
+        if (!id) continue;
+        id = remapLegacyKey(id);
+      } else {
+        // d2: seeds store raw ids; apply remapLegacyKey to handle the intermediate
+        // plane_xxx / phenomenon_xxx format from before this refactor
+        id = remapLegacyKey(ck);
+      }
       map.set(id, count);
     }
     return map;

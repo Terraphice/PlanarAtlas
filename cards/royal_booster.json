@@ -1,0 +1,14 @@
+{
+  "id": "royal_booster",
+  "name": "Royal Booster",
+  "type": "Phenomenon",
+  "image": "cards/images/Royal Booster.png",
+  "thumb": "cards/thumbs/Royal Booster.webp",
+  "transcript": "cards/transcripts/Royal Booster.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "PUNK",
+    "hidden"
+  ],
+  "scryfallId": null
+}

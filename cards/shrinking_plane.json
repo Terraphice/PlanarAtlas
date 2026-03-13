@@ -1,0 +1,15 @@
+{
+  "id": "shrinking_plane",
+  "name": "Shrinking Plane",
+  "type": "Plane",
+  "image": "cards/images/Shrinking Plane.png",
+  "thumb": "cards/thumbs/Shrinking Plane.webp",
+  "transcript": "cards/transcripts/Shrinking Plane.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Foldaria",
+    "PUNK",
+    "hidden"
+  ],
+  "scryfallId": null
+}
