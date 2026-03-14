@@ -2,7 +2,7 @@
 
 ## Project Summary
 
-Planar Atlas is a full-featured Planechase tool for Magic: The Gathering, hosted via GitHub Pages at `planechase.terraphice.dev`. It provides a searchable card gallery, a deck builder, and a full game simulator supporting both Classic and Blind Eternities Map modes. There is no backend, no build system, and no framework — the entire site is vanilla HTML, CSS, and JavaScript (ES6 modules).
+Planar Atlas is a full-featured Planechase tool for Magic: The Gathering, hosted via GitHub Pages at `planechase.terraphice.dev`. It provides a searchable card gallery, a deck builder, and a full game companion supporting both Classic and Blind Eternities Map modes. There is no backend, no build system, and no framework — the entire site is vanilla HTML, CSS, and JavaScript (ES6 modules).
 
 ## Repository Overview
 
@@ -51,8 +51,8 @@ Planar Atlas is a full-featured Planechase tool for Magic: The Gathering, hosted
 │   └── game/
 │       ├── ui.js           # Shared game UI: card reader, reveal overlay, die rolling, tutorials (~1641 lines)
 │       ├── state.js        # Game state machine: history, undo/redo, encode/decode (~443 lines)
-│       ├── classic.js      # Classic shared-deck Planechase game mode rendering (~357 lines)
-│       └── bem.js          # Blind Eternities Map game mode rendering (~957 lines)
+│       ├── classic.js      # Classic shared-deck Planechase game companion rendering (~357 lines)
+│       └── bem.js          # Blind Eternities Map game companion rendering (~957 lines)
 ├── scripts/
 │   ├── generate-cards.js   # Node.js: regenerates cards.json from cards/images/
 │   ├── sync-cards.js       # Node.js: syncs per-card JSON files in cards/ from cards.json
@@ -74,16 +74,16 @@ Planar Atlas is a full-featured Planechase tool for Magic: The Gathering, hosted
 
 | Module | Lines | Purpose |
 |---|---|---|
-| `src/game/ui.js` | ~1641 | Shared game UI: card reader, reveal overlay, library view, die rolling, tutorials |
+| `src/game/ui.js` | ~1641 | Shared game companion UI: card reader, reveal overlay, library view, die rolling, tutorials |
 | `src/gallery/index.js` | ~1010 | App init, DOM wiring, event orchestration — the main entry point |
-| `src/game/bem.js` | ~957 | Blind Eternities Map game mode rendering and interaction |
+| `src/game/bem.js` | ~957 | Blind Eternities Map game companion rendering and interaction |
 | `src/gallery/render.js` | ~835 | Card rendering (all view modes), tag grouping, pagination |
-| `src/deck/index.js` | ~743 | Deck builder, game state orchestration, profile seeds, undo history |
+| `src/deck/index.js` | ~743 | Deck builder, game companion state orchestration, profile seeds, undo history |
 | `src/gallery/utils.js` | ~638 | Stateless helpers: enrichCard, parseSearchQuery, fuzzyIncludes, badge parsing |
 | `src/deck/panel.js` | ~561 | Deck panel UI: open/close, list rendering, slot management, import/export |
-| `src/game/state.js` | ~443 | Game state machine: history management, undo/redo, encode/decode, game lifecycle |
+| `src/game/state.js` | ~443 | Game companion state machine: history management, undo/redo, encode/decode, game lifecycle |
 | `src/gallery/modal.js` | ~387 | Modal card viewer: navigation, transcript loading, image flip animation |
-| `src/game/classic.js` | ~357 | Classic shared-deck Planechase game mode rendering |
+| `src/game/classic.js` | ~357 | Classic shared-deck Planechase game companion rendering |
 | `src/gallery/search.js` | ~279 | Search suggestions, keyboard navigation, inline ghost-text autocomplete |
 | `src/gallery/ui.js` | ~204 | `ThemeController` (palettes + modes) and `ToastManager` (ephemeral notifications) |
 | `src/gallery/state.js` | ~70 | State objects (`preferences`, `filters`, `displayState`, `paginationState`) |
@@ -102,9 +102,9 @@ Planar Atlas is a full-featured Planechase tool for Magic: The Gathering, hosted
 - **`src/deck/index.js`** — Full deck builder (10 named deck slots), orchestrates game mode start/stop, profile seed encoding/decoding, and undo history (up to 20 steps).
 - **`src/deck/panel.js`** — Deck panel open/close/shelve, list rendering, slot dropdown, card overlays, auto-import, deck import/export.
 - **`src/deck/codec.js`** — `compressKey`/`decompressKey` for card key compression. `encodeDeck`/`decodeDeck` for deck serialisation. `toBase64Url`/`fromBase64Url` for URL-safe base64.
-- **`src/game/ui.js`** — Shared game UI rendering: card reader view, reveal overlay, library view, game menus, die rolling, cost display, BEM zoom, and tutorial overlay.
+- **`src/game/ui.js`** — Shared game companion UI rendering: card reader view, reveal overlay, library view, game menus, die rolling, cost display, BEM zoom, and tutorial overlay.
 - **`src/game/state.js`** — Game state machine: `pushGameHistory`, `undoLastAction`, `redoNextAction`, `encodeGameState`, `decodeGameState`, `autoSaveGameState`. Max 20 history steps.
-- **`src/game/classic.js`** / **`src/game/bem.js`** — Rendering layers for their respective game modes; driven by state in `src/deck/index.js`.
+- **`src/game/classic.js`** / **`src/game/bem.js`** — Rendering layers for their respective game companion modes; driven by state in `src/deck/index.js`.
 - **`src/changelog.js`** — Calls GitHub Releases API on startup; shows a modal overlay when a new version is detected. Last-seen version stored in localStorage key `planar-atlas-last-seen-version`.
 - **`cards.json`** — Array of `{ file, tags[] }` objects. Consumed at runtime via `fetch()`. Do not edit by hand.
 - **`styles/themes.css`** — CSS custom properties for theming. Each palette overrides `--bg`, `--text`, `--accent`, etc. on `:root`. No preprocessor.

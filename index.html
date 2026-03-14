@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <title>Planar Atlas — A Feature Complete Planechase Tool</title>
-  <meta name="description" content="Browse a searchable gallery of every plane and phenomenon, build and share custom decks, and run full Planechase games in Classic and Blind Eternities Map modes. Installable, offline-capable, no account required.">
+  <meta name="description" content="Browse a searchable gallery of official and unofficial Planechase sets, build and share custom decks, and use the Classic & Blind Eternities Map helpers! Installable, offline-capable, no account required.">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Planar Atlas — A Feature Complete Planechase Tool">
-  <meta property="og:description" content="Browse a searchable gallery of every plane and phenomenon, build and share custom decks, and run full Planechase games in Classic and Blind Eternities Map modes. Installable, offline-capable, no account required.">
+  <meta property="og:description" content="Browse a searchable gallery of official and unofficial Planechase sets, build and share custom decks, and use the Classic & Blind Eternities Map helpers! Installable, offline-capable, no account required.">
   <meta property="og:url" content="https://planechase.terraphice.dev/">
   <meta property="og:site_name" content="Planar Atlas">
   <meta property="og:image" content="https://planechase.terraphice.dev/assets/social-preview.jpg">
@@ -168,7 +168,7 @@
                 <div class="settings-menu-section">
                   <h2 class="settings-menu-title">About</h2>
                   <p class="settings-menu-copy">
-                    A feature-complete Planechase tool for Magic: The Gathering. Browse a searchable gallery of every plane and phenomenon, build and share custom decks, and run full Planechase games in Classic and Blind Eternities Map modes.
+                    A feature-complete Planechase tool for Magic: The Gathering. Browse a searchable gallery of official and unofficial Planechase sets, build and share custom decks, and use the Classic & Blind Eternities Map helpers!
                   </p>
                 </div>
 
@@ -206,12 +206,12 @@
                   <h2 class="settings-menu-title">Game Keybinds</h2>
                   <ul class="settings-menu-list">
                     <li><kbd>Space</kbd> Roll the planar die</li>
-                    <li><kbd>Enter</kbd> Planeswalk (Classic) / Enter or confirm movement (BEM)</li>
+                    <li><kbd>Enter</kbd> Planeswalk (Classic) / Begin Planeswalking/Confirm Planeswalk (BEM)</li>
                     <li><kbd>i</kbd> View current card details</li>
                     <li><kbd>t</kbd> Toggle Tools menu</li>
                     <li><kbd>z</kbd> Undo last action</li>
                     <li><kbd>r</kbd> Redo next action</li>
-                    <li><kbd>↑ ↓ ← →</kbd> Pan the map (BEM only)</li>
+                    <li><kbd>↑ ↓ ← →</kbd> Pan the Blind Eternities Map (BEM)</li>
                   </ul>
                 </div>
 
@@ -235,21 +235,21 @@
 
                   <label class="checkbox-row settings-checkbox-row">
                     <input id="smooth-travel-toggle" type="checkbox" />
-                    <span>Smooth Travel Animation</span>
+                    <span>Smooth Travel Animation (BEM)</span>
                   </label>
 
                   <label class="checkbox-row settings-checkbox-row">
                     <input id="bem-edge-placeholders-toggle" type="checkbox" />
-                    <span>Placeholder Borders</span>
+                    <span>Placeholder Cards (BEM)</span>
                   </label>
 
                   <label class="settings-menu-select-row" for="hellriding-mode-select">
-                    <span>Hellriding Mode</span>
+                    <span>Hellriding Mode (BEM) - Hellriding Pheomena Settings</span>
                     <select id="hellriding-mode-select" class="select-input settings-menu-select-input">
-                      <option value="safe">Safe Hellriding</option>
-                      <option value="normal">Normal Hellriding</option>
-                      <option value="risky">Risky Hellriding</option>
-                      <option value="extreme">Extreme Hellriding</option>
+                      <option value="safe">Safe Hellriding - No Map Phenomena, 0% Bonus HR Phenomena</option>
+                      <option value="normal">Normal Hellriding - Phenomena Appear on Map, 0% Bonus HR Phenomena</option>
+                      <option value="risky">Risky Hellriding - No Map Phenomena, 66.6% Bonus HR Phenomena</option>
+                      <option value="extreme">Extreme Hellriding - No Map Phenomena, 100% Bonus HR Phenomena</option>
                     </select>
                   </label>
                 </div>

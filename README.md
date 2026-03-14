@@ -6,11 +6,11 @@
 
 **A feature-complete Planechase tool for Magic: The Gathering**
 
-Browse a fully searchable gallery of every plane and phenomenon, build and share custom decks, and run full Planechase game companions, all in a single installable web app with no accounts and no servers.
+Browse a fully searchable gallery of every plane and phenomenon, build and share custom decks, and assist
+live Planechase games, all in a single installable web app with no accounts and no servers. (Games require real-life Magic: The Gathering cards, and are not fully simulated. The game utility tools only simulate the planar deck and planar map for Blind Eternities Map mode, for use with real cards. Please support Wizard of The Coast and Magic: The Gathering, use/buy real cards!)
 
 [![Live Site](https://img.shields.io/badge/Live_Site-planechase.terraphice.dev-6366f1?style=for-the-badge&logo=firefox&logoColor=white)](https://planechase.terraphice.dev)
 [![PWA](https://img.shields.io/badge/PWA-Installable_&_Offline-22c55e?style=for-the-badge&logo=pwa&logoColor=white)](https://planechase.terraphice.dev)
-[![No Build](https://img.shields.io/badge/No_Build_Step-Vanilla_JS-3b82f6?style=for-the-badge)](https://github.com/Terraphice/PlanarAtlas)
 
 [![Total Cards](https://img.shields.io/badge/Total_Cards-230-6366f1?style=for-the-badge)](https://planechase.terraphice.dev)
 [![Official Cards](https://img.shields.io/badge/Official_Cards-206-22c55e?style=for-the-badge)](https://planechase.terraphice.dev)
@@ -22,9 +22,9 @@ Browse a fully searchable gallery of every plane and phenomenon, build and share
 
 ## Overview
 
-Planar Atlas started as a personal tool and grew into the most comprehensive Planechase companion available. Every card is rendered at full resolution with searchable transcripts, tagged by set and world, and ready to drop into a custom deck. The game companion handles the full game loop for both variants of Planechase, from the initial planeswalk through phenomena resolution and die rolls, with an undo stack so no accident is permanent.
+Planar Atlas started as a personal tool and grew into the most comprehensive Planechase companion available. Every card is rendered at full resolution with searchable transcripts, tagged by set and world, and ready to drop into a custom deck. The game companion handles the planar library, planar die, and other features for both variants of Planechase, as well as a robust undo/redo history system, searching, exiling, revealing, planeswalking, rolling, shuffling, phenomena reminder banners, and simultaneous active cards.
 
-There is no backend, no login, and nothing to install. The entire application is a static web page that caches itself for offline use the first time it loads.
+There is no backend, no login, and nothing to install unless you wish to run the project locally. The entire application is a static web page that caches itself for offline use the first time it loads.
 
 ---
 
@@ -35,20 +35,20 @@ There is no backend, no login, and nothing to install. The entire application is
 | **Gallery** | Grid, Singleton, Stack, and List views with paginated or infinite-scroll browsing. |
 | **Search** | Full search syntax: keywords, tags, card types, oracle text, regex, and fuzzy matching. |
 | **Deck Builder** | Multiple named deck slots, per-slot import and export, and drag-free card management. |
-| **Classic Planechase** | Shared-deck game mode with planeswalking, phenomena resolution, and the planar die. |
+| **Classic Planechase** | Shared-deck game companion mode with planeswalking, the planar die, and utility tooling. |
 | **Blind Eternities Map** | Shared-deck laid out as an explorable map, with risky hell-riding to unknown planes. |
 | **Profile Seeds** | Export your entire setup (all preferences and every deck) as a single shareable string, or share decks individually. |
 | **Undo History** | Reverse (and un-reverse!) up to 20 game actions from the Tools menu: Planeswalks, die rolls, card moves, etc. |
 | **Keyboard Play** | Full keyboard control so you never have to reach for the mouse mid-game! |
-| **Themes** | 8+ familiar color palette selections, applied consistently across the entire site. |
+| **Themes** | 8+ familiar color palette selections, applied consistently across the entire site. (Some are hidden!) |
 | **Offline / PWA** | Installs like a native app and works without an internet connection after first load! |
-| **Onboarding** | First-run tutorial for both game modes so new players can jump straight in. |
+| **Onboarding** | First-run tutorial for both game companion modes so new players can jump straight in. |
 
 ---
 
 ## Gallery
 
-The gallery is the heart of Planar Atlas. Every card in the library is available at full resolution, each with a readable transcript loaded on demand. Cards are tagged by set, world, content type, etc., and the tag system powers every filtering and grouping feature.
+The gallery is the heart of Planar Atlas. Every card in the library is available at full resolution, each with a readable transcript loaded on demand. Cards are tagged by set, world, content type, etc., and the tag system powers every filtering and grouping feature. These cards are directly from Scryfall, and aren't redistributed by this project nor used to play a standalone game, as permitted in the Wizards' Fan Content Policy.
 
 ### View Modes
 
@@ -102,33 +102,36 @@ The deck builder supports multiple named deck slots saved to your browser's loca
 
 ### Classic Mode
 
-The traditional shared-deck format. All players share a single combined planar deck and take turns planeswalking, rolling the planar die, and resolving phenomena. The game companion handles the full game loop from the opening shuffle through phenomena resolution, with an undo stack covering every action.
+The traditional shared-deck format. All players share a single combined planar deck and take turns planeswalking, rolling the planar die, and encountering planes & phenomena. The game companion handles all Planechase functions, like the planar deck, planar die, etc.
 
 ### Blind Eternities Map
 
-A shared planar deck is laid out as an interconnected map of face-down cards. Planes are revealed as players move between adjacent nodes. Planar Atlas renders the full map layout, tracks the active position, and handles phenomena automatically when encountered mid-travel. Risk-takers may choose to hellride to unknown (diagonal) face-down cards, with a configurable chance of encountering a phenomenon along the way.
+A shared planar deck is laid out as an interconnected map of face-down cards. Planes are revealed as players move between adjacent nodes. Planar Atlas renders the full map layout, tracks the active position, and provides many options and tools for resolving cards. Risk-takers may choose to hellride to unknown (diagonal) face-down cards, with a configurable chance of encountering a phenomenon along the way.
+
+ Planar Atlas does not substitute nor claim to substitute the full game-loop. You still need real Magic: The Gathering cards to play, and this tool serves only as a helper/companion to real cards. Please support Wizards and Magic: The Gathering, use/buy real cards!
 
 Planar Atlas handles:
 
 - Shuffling and activating the opening plane.
 - Encountering phenomena automatically when they surface.
 - Rolling the planar die with cost tracking and animations.
-- Tracking the planar deck, active planes, and the exile zone.
-- Multiple active planes and phenomena at once.
+- Tracking the planar deck, active planes, map, and the exile zone.
+- Simultaneous active planes and phenomena at once.
 - Searching the planar library and revealing cards from the top or bottom, with multiple view styles.
 - Detailed views and transcripts for every card, including cards not currently in play.
 - Undo for every game action up to 20 steps back, and redo for undone actions.
 - Shuffle, exile, and place-on-top/bottom support for cards in play and in the library.
-- Planeswalking mode: moving between planes, highlighting available choices, and hellriding.
+- Planeswalking. (Moving between planes, highlighting available choices, and hellriding.)
 
 ---
 
 ## Keyboard Shortcuts
 
-The full game loop is playable without a mouse.
+The full game companion is usable without a mouse, for easy access while playing with real cards.
 
 | Key | Action |
 |---|---|
+| `Arrow Keys` | Move around the planar map |
 | `Space` | Roll the planar die |
 | `Enter` | Planeswalk to the next plane, or enter Planeswalking mode/confirm selection |
 | `I` | Inspect the current card in detailed view |
@@ -208,7 +211,7 @@ CDN runtime dependencies: [marked.js](https://marked.js.org/) (Markdown renderin
 Contributions are welcome. The easiest way to contribute is to add card images or transcripts for planes and phenomena that are missing from the library. See the existing files in `cards/images/` and `cards/transcripts/` for the expected formats and naming conventions.
 
 I'm honestly choosy about which custom cards are welcome in the library, for now. Please understand that any denied PR/contribution of custom cards
-isn't so much an attack on the quality or design, but more so a desire to reduce duplicate/excessive design, or maintain game scope.
+isn't so much an attack on the quality or design, but more so a desire to reduce duplicate/excessive design, or maintain scope.
 
 For code contributions, open an issue first to discuss the change, then submit a pull request. Run `npm test` and `npm run test:unit` to verify your changes, and manually test affected features against the checklist in the repository.
 
