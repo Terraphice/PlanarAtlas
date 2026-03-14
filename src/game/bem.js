@@ -17,6 +17,42 @@ let bemPlaneswalkPending = false;
 let bemAnimating = false;
 let bemCurrentR = 1;
 
+function ensureCounterState(gameState) {
+  if (!gameState) return;
+  if (!gameState.cardCounters) gameState.cardCounters = new Map();
+  if (!(gameState.counterTrackedIds instanceof Set)) gameState.counterTrackedIds = new Set();
+}
+
+function trimBemCounters(gameState) {
+  ensureCounterState(gameState);
+  const mapIds = new Set();
+  for (const cell of gameState.bemGrid.values()) {
+    if (cell.card && !cell.placeholder) mapIds.add(cell.card.id);
+  }
+  for (const card of gameState.activePlanes) mapIds.add(card.id);
+  for (const id of [...gameState.counterTrackedIds]) {
+    if (!mapIds.has(id)) {
+      gameState.counterTrackedIds.delete(id);
+      gameState.cardCounters.delete(id);
+    }
+  }
+  for (const id of [...gameState.cardCounters.keys()]) {
+    if (!mapIds.has(id)) gameState.cardCounters.delete(id);
+  }
+}
+
+function clearTemporaryBemCounters(gameState, activeCard) {
+  if (ctx.getCounterBehavior?.() !== "temporary") return;
+  ensureCounterState(gameState);
+  const keepId = activeCard?.id;
+  for (const id of [...gameState.counterTrackedIds]) {
+    if (id !== keepId) {
+      gameState.counterTrackedIds.delete(id);
+      gameState.cardCounters.delete(id);
+    }
+  }
+}
+
 export function initBemGame(context) {
   ctx = context;
 }
@@ -269,7 +305,9 @@ export function startBemGame() {
     recentPhenomena: [],
     bemGrid,
     bemPos: { x: 0, y: 0 },
-    bemHellridedPositions: new Set()
+    bemHellridedPositions: new Set(),
+    cardCounters: new Map(),
+    counterTrackedIds: new Set()
   });
 
   setGameActive(true);
@@ -280,6 +318,7 @@ export function startBemGame() {
   bemMapArea?.classList.remove("hidden");
   resetDieIcon();
   updateCostDisplay();
+  trimBemCounters(ctx.getGameState());
   renderBemMap();
   updateBemInfoBar();
   syncBemTrButton();
@@ -327,6 +366,7 @@ export function bemMovePlayer(nx, ny) {
       ctx.showToast("Moving to empty spot, no planes remain.");
     }
     bemLandOnPhenomenon = cell.card?.type === "Phenomenon" && ctx.getPhenomenonAnimationEnabled();
+    clearTemporaryBemCounters(gameState, cell.card);
     gameState.bemPos = { x: nx, y: ny };
     bemViewOffset = { dx: 0, dy: 0 };
     bemClearActivePlanesToBottom();
@@ -337,6 +377,7 @@ export function bemMovePlayer(nx, ny) {
     bemPlaneswalkPending = false;
     bemRemoveFalloff();
     bemDiscoverAdjacent();
+    trimBemCounters(gameState);
     renderBemMap();
     updateBemInfoBar();
     syncBemTrButton();
@@ -373,6 +414,7 @@ export function bemMovePlayer(nx, ny) {
 
   bemLandOnPhenomenon = cell.card?.type === "Phenomenon" && ctx.getPhenomenonAnimationEnabled();
 
+  clearTemporaryBemCounters(gameState, cell.card);
   gameState.bemPos = { x: nx, y: ny };
   bemViewOffset = { dx: 0, dy: 0 };
 
@@ -458,6 +500,7 @@ export function bemFillPlaceholder() {
     ctx.showToast("No planes remain in the library.");
   }
 
+  trimBemCounters(gameState);
   renderBemMap();
   updateBemInfoBar();
   syncBemTrButton();
@@ -547,6 +590,9 @@ export function renderBemMap() {
       const isPlayer = pdx === 0 && pdy === 0;
       const isDiagToPlayer = Math.abs(pdx) === 1 && Math.abs(pdy) === 1;
       const isOrthogToPlayer = (Math.abs(pdx) + Math.abs(pdy)) === 1;
+
+      ensureCounterState(gameState);
+      if (cell?.card && gameState.counterTrackedIds.has(cell.card.id)) div.classList.add("game-counter-glow");
 
       if (bemPlaneswalkPending && !isPlayer) {
         if (isOrthogToPlayer && cell?.faceUp) div.classList.add("bem-cell-planeswalk-glow");
@@ -876,6 +922,13 @@ export function buildBemCardActions() {
 
   return [
     ...(pos ? [buildBemFlipAction(pos.x, pos.y)] : []),
+    makeAction("Counters", (gs, key, cell, name) => {
+      ensureCounterState(gs);
+      gs.counterTrackedIds.add(cell.card.id);
+      if (!gs.cardCounters.has(cell.card.id)) gs.cardCounters.set(cell.card.id, 0);
+      closeGameReaderView(); renderBemMap(); updateBemInfoBar(); syncBemTrButton();
+      showToast(`${name} is now tracking counters.`);
+    }),
     makeAction("Add", (gs, key, cell, name) => {
       gs.activePlanes.push(cell.card);
       gs.bemGrid.set(key, { card: null, faceUp: true, placeholder: true });
@@ -939,6 +992,13 @@ export function buildBemAdjacentCardActions(nx, ny) {
 
   return [
     buildBemFlipAction(nx, ny),
+    makeTargetAction("Counters", (gs, cell, name) => {
+      ensureCounterState(gs);
+      gs.counterTrackedIds.add(cell.card.id);
+      if (!gs.cardCounters.has(cell.card.id)) gs.cardCounters.set(cell.card.id, 0);
+      closeGameReaderView(); renderBemMap(); updateBemInfoBar(); syncBemTrButton();
+      showToast(`${name} is now tracking counters.`);
+    }),
     ...(canPlaneswalkHere ? [{
       label: "Planeswalk Here",
       action: () => {
@@ -985,6 +1045,22 @@ export function buildBemSideCardActions(sideIdx) {
 
   return [
     {
+      label: "Counters",
+      action: () => {
+        const gameState = getGameState();
+        if (!gameState) return;
+        const card = gameState.activePlanes[sideIdx];
+        if (!card) return;
+        ctx.pushHistory?.();
+        ensureCounterState(gameState);
+        gameState.counterTrackedIds.add(card.id);
+        if (!gameState.cardCounters.has(card.id)) gameState.cardCounters.set(card.id, 0);
+        closeGameReaderView();
+        updateBemInfoBar();
+        showToast(`${card.displayName} is now tracking counters.`);
+      }
+    },
+    {
       label: "Make Main",
       action: () => {
         const gameState = getGameState();
@@ -1021,6 +1097,7 @@ export function buildBemSideCardActions(sideIdx) {
         if (!card) return;
         gameState.remaining.unshift(card);
         gameState.focusedIndex = Math.min(gameState.focusedIndex, Math.max(0, gameState.activePlanes.length - 1));
+        trimBemCounters(gameState);
         closeGameReaderView();
         updateBemInfoBar();
         showToast(`${card.displayName} returned to top.`);
@@ -1036,6 +1113,7 @@ export function buildBemSideCardActions(sideIdx) {
         if (!card) return;
         gameState.remaining.push(card);
         gameState.focusedIndex = Math.min(gameState.focusedIndex, Math.max(0, gameState.activePlanes.length - 1));
+        trimBemCounters(gameState);
         closeGameReaderView();
         updateBemInfoBar();
         showToast(`${card.displayName} returned to bottom.`);
@@ -1052,6 +1130,7 @@ export function buildBemSideCardActions(sideIdx) {
         gameState.remaining.push(card);
         gameState.remaining = shuffleArray(gameState.remaining);
         gameState.focusedIndex = Math.min(gameState.focusedIndex, Math.max(0, gameState.activePlanes.length - 1));
+        trimBemCounters(gameState);
         closeGameReaderView();
         updateBemInfoBar();
         showToast(`${card.displayName} shuffled into library.`);
@@ -1068,6 +1147,7 @@ export function buildBemSideCardActions(sideIdx) {
         if (!card) return;
         gameState.exiled.push(card);
         gameState.focusedIndex = Math.min(gameState.focusedIndex, Math.max(0, gameState.activePlanes.length - 1));
+        trimBemCounters(gameState);
         closeGameReaderView();
         updateBemInfoBar();
         showToast(`${card.displayName} exiled.`);
