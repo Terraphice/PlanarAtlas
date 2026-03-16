@@ -1,6 +1,6 @@
 // CACHE_VERSION is automatically updated on each push to main.
 // Do not edit manually — it will be overwritten by CI.
-const CACHE_VERSION = "a3fb070a";
+const CACHE_VERSION = "d45780a1";
 const CACHE_NAME = `planar-atlas-${CACHE_VERSION}`;
 
 const PRECACHE_ASSETS = [
