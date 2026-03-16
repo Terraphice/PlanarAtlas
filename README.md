@@ -201,6 +201,7 @@ Planar Atlas is a vanilla JavaScript single-page application with no framework, 
 | `sw.js` | Service worker: caches all modules, card images, and CDN assets for offline use |
 | `scripts/generate-cards.js` | Node.js script: regenerates `cards.json` from the card images directory |
 | `scripts/sync-cards.js` | Node.js script: syncs per-card JSON files in `cards/` from `cards.json` |
+| `scripts/generate-embeds.js` | Node.js script: generates static social share pages for card and tag URLs under `share/` |
 
 CDN runtime dependencies: [marked.js](https://marked.js.org/) (Markdown rendering), [DOMPurify](https://github.com/cure53/DOMPurify) (HTML sanitisation), [mana-font](https://mana.andrewgioia.com/) (MTG symbol font).
 
