@@ -13,12 +13,27 @@ function escapeHtml(value) {
     .replace(/'/g, "&#39;");
 }
 
+function parseBadgeTag(tag) {
+  if (typeof tag !== "string") return null;
+  const stripped = tag.startsWith(":top:") ? tag.slice(5) : tag;
+  const parts = stripped.split(":");
+  if (parts.length < 4 || parts[0] !== "badge") return null;
+
+  const corner = parts[1];
+  const color = parts[2];
+  const label = parts.slice(3).join(":").trim();
+
+  if (!["tl", "tr", "bl", "br"].includes(corner)) return null;
+  if (!["green", "amber", "blue", "red", "purple", "gray"].includes(color)) return null;
+  if (!label) return null;
+
+  return { corner, color, label };
+}
+
 function normalizeTagLabel(tag) {
   if (typeof tag !== "string") return "";
-  if (tag.startsWith(":top:badge:")) {
-    const parts = tag.split(":");
-    if (parts.length >= 6) return parts.slice(5).join(":").trim();
-  }
+  const badge = parseBadgeTag(tag.trim());
+  if (badge) return badge.label;
   return tag.trim();
 }
 
@@ -127,18 +142,23 @@ function generateEmbedPages(rootDir) {
     }));
 
     for (const rawTag of card.tags || []) {
-      const label = normalizeTagLabel(rawTag);
+      const raw = String(rawTag || "").trim();
+      if (!raw || raw.toLowerCase() === "hidden") continue;
+      const label = normalizeTagLabel(raw);
       if (!label || label.toLowerCase() === "hidden") continue;
-      if (!tagMap.has(label)) {
-        tagMap.set(label, []);
+
+      const key = raw.toLowerCase();
+      if (!tagMap.has(key)) {
+        tagMap.set(key, { rawTag: raw, label, cards: [] });
       }
-      tagMap.get(label).push(card);
+      tagMap.get(key).cards.push(card);
     }
   }
 
   const usedSlugs = new Set();
-  for (const [tag, cardsForTag] of [...tagMap.entries()].sort(([a], [b]) => a.localeCompare(b, undefined, { sensitivity: "base" }))) {
-    let slug = slugifyTag(tag);
+  for (const entry of [...tagMap.values()].sort((a, b) => a.label.localeCompare(b.label, undefined, { sensitivity: "base" }))) {
+    const { rawTag, label, cards: cardsForTag } = entry;
+    let slug = slugifyTag(label);
     if (usedSlugs.has(slug)) {
       let i = 2;
       while (usedSlugs.has(`${slug}-${i}`)) i += 1;
@@ -148,10 +168,10 @@ function generateEmbedPages(rootDir) {
 
     const sampleCard = cardsForTag[0];
     const imageUrl = toAbsoluteUrl(sampleCard?.thumb || sampleCard?.image || "assets/social-preview.jpg");
-    const title = `${tag} cards | Planar Atlas`;
-    const description = `${cardsForTag.length} card${cardsForTag.length === 1 ? "" : "s"} tagged “${tag}” on Planar Atlas.`;
+    const title = `${label} cards | Planar Atlas`;
+    const description = `${cardsForTag.length} card${cardsForTag.length === 1 ? "" : "s"} tagged “${label}” on Planar Atlas.`;
     const canonicalUrl = `${SITE_ORIGIN}/share/tag/${slug}/`;
-    const redirectTarget = `${SITE_ORIGIN}/?tag=${encodeURIComponent(tag)}`;
+    const redirectTarget = `${SITE_ORIGIN}/?tags=${encodeURIComponent(rawTag)}`;
 
     writePage(rootDir, `share/tag/${slug}`, buildMetaPage({
       title,

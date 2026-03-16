@@ -7,6 +7,7 @@ import {
   enrichCard,
   sortCards,
   reconcileSelectedTags,
+  readUrlState,
   parseSearchQuery,
   matchesParsedQuery,
   fuzzyIncludes,
@@ -269,6 +270,32 @@ const noSymbol = enhanceManaSymbols("No mana symbols here.");
 assert(noSymbol === "No mana symbols here.", "Text without symbols unchanged");
 const unknown = enhanceManaSymbols("{UNKNOWN}");
 assert(unknown.includes("{UNKNOWN}"), "Unknown symbol preserved as-is");
+
+
+// ── readUrlState ─────────────────────────────────────────────────────────────
+
+section("readUrlState");
+const originalWindow = globalThis.window;
+
+{
+  globalThis.window = { location: { search: "?card=atlas_consultation&q=ignored&tag=Zendikar" } };
+  const urlFilters = { search: "seed", tags: new Set(["Seed"]) };
+  const urlDisplay = { viewMode: "grid", groupBy: "none", groupTag: "" };
+  readUrlState(urlFilters, urlDisplay);
+  assert(urlFilters.search === "", "card query clears search state");
+  assert(urlFilters.tags.size === 0, "card query clears tag filters");
+}
+
+{
+  globalThis.window = { location: { search: "?tags=%3Atop%3Abadge%3Atr%3Agreen%3AOfficial" } };
+  const urlFilters = { search: "seed", tags: new Set(["Seed"]) };
+  const urlDisplay = { viewMode: "grid", groupBy: "none", groupTag: "" };
+  readUrlState(urlFilters, urlDisplay);
+  assert(urlFilters.search === "", "tags alias sets empty search for tag share links");
+  assert(urlFilters.tags.has(":top:badge:tr:green:Official"), "tags alias restores canonical badge tag");
+}
+
+globalThis.window = originalWindow;
 
 // ── parseSearchQuery ──────────────────────────────────────────────────────────
 
