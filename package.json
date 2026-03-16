@@ -1,16 +1,18 @@
 {
   "type": "module",
   "scripts": {
-    "generate": "node scripts/generate-cards.js",
+    "generate": "node scripts/generate-cards.js && node scripts/generate-embeds.js",
     "sync": "node scripts/sync-cards.js",
     "test": "node scripts/smoke-test.js",
     "test:codec": "node scripts/test-codec.js",
     "test:utils": "node scripts/test-utils.js",
     "test:generate": "node scripts/test-generate.js",
     "test:sync": "node scripts/test-sync.js",
-    "test:unit": "node scripts/test-codec.js && node scripts/test-utils.js && node scripts/test-generate.js && node scripts/test-sync.js",
+    "test:unit": "node scripts/test-codec.js && node scripts/test-utils.js && node scripts/test-generate.js && node scripts/test-sync.js && node scripts/test-embeds.js",
     "test:e2e": "npx playwright test",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "generate:embeds": "node scripts/generate-embeds.js",
+    "test:embeds": "node scripts/test-embeds.js"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

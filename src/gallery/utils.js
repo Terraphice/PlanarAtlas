@@ -176,6 +176,10 @@ export function readUrlState(filters, displayState, paginationState = null) {
 
 export function writeUrlState(filters, displayState, { push = false, paginationState = null } = {}) {
   const params = new URLSearchParams();
+  const existingParams = new URLSearchParams(window.location.search);
+
+  const cardParam = existingParams.get("card");
+  if (cardParam) params.set("card", cardParam);
 
   if (filters.search) {
     params.set("q", filters.search);
