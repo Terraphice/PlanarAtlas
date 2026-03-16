@@ -16,6 +16,7 @@ let bemLandOnPhenomenon = false;
 let bemPlaneswalkPending = false;
 let bemAnimating = false;
 let bemCurrentR = 1;
+const openCounterTrackers = new Set();
 
 function ensureCounterState(gameState) {
   if (!gameState) return;
@@ -62,22 +63,26 @@ function addBemCounterControls(gameState, container, card) {
   if (!card || !gameState.counterTrackedIds.has(card.id)) return;
   const wrap = document.createElement("div");
   wrap.className = "bem-cell-counter-wrap";
+  const isOpen = openCounterTrackers.has(card.id);
   wrap.innerHTML = `
-    <button type="button" class="bem-cell-counter-toggle game-counter-glow" aria-label="Adjust counters">
-      <img src="assets/favicon.svg" alt="" aria-hidden="true" />
+    <button type="button" class="bem-cell-counter-toggle game-counter-glow" aria-label="Adjust counters" aria-expanded="${isOpen ? "true" : "false"}">
+      <span class="game-counter-favicon-wrap"><img src="assets/favicon.svg" alt="" aria-hidden="true" /></span>
     </button>
-    <div class="bem-cell-counter-controls">
-      <button type="button" class="bem-cell-counter-step" data-step="-1" aria-label="Remove counter">−</button>
-      <span class="bem-cell-counter-value">${getCardCounter(gameState, card.id)}</span>
-      <button type="button" class="bem-cell-counter-step" data-step="1" aria-label="Add counter">+</button>
-    </div>
+    <div class="bem-cell-counter-controls${isOpen ? " bem-cell-counter-controls-visible" : ""}">
+        <button type="button" class="bem-cell-counter-step" data-step="-1" aria-label="Remove counter">−</button>
+        <span class="bem-cell-counter-value">${getCardCounter(gameState, card.id)}</span>
+        <button type="button" class="bem-cell-counter-step" data-step="1" aria-label="Add counter">+</button>
+      </div>
   `;
   const toggle = wrap.querySelector('.bem-cell-counter-toggle');
-  const controls = wrap.querySelector('.bem-cell-counter-controls');
   toggle?.addEventListener('click', (event) => {
     event.stopPropagation();
     event.preventDefault();
-    controls?.classList.toggle('bem-cell-counter-controls-visible');
+    const next = !openCounterTrackers.has(card.id);
+    if (next) openCounterTrackers.add(card.id);
+    else openCounterTrackers.delete(card.id);
+    wrap.querySelector('.bem-cell-counter-controls')?.classList.toggle('bem-cell-counter-controls-visible', next);
+    toggle.setAttribute('aria-expanded', next ? 'true' : 'false');
   });
   wrap.querySelectorAll('.bem-cell-counter-step').forEach((btn) => {
     btn.addEventListener('click', (event) => {
@@ -85,6 +90,7 @@ function addBemCounterControls(gameState, container, card) {
       event.preventDefault();
       const gs = ctx.getGameState();
       if (!gs) return;
+      openCounterTrackers.add(card.id);
       ctx.pushHistory?.();
       const delta = Number(btn.dataset.step || 0);
       const next = Math.max(0, getCardCounter(gs, card.id) + delta);
@@ -637,7 +643,6 @@ export function renderBemMap() {
       const isOrthogToPlayer = (Math.abs(pdx) + Math.abs(pdy)) === 1;
 
       ensureCounterState(gameState);
-      if (cell?.card && gameState.counterTrackedIds.has(cell.card.id)) div.classList.add("game-counter-glow");
 
       if (bemPlaneswalkPending && !isPlayer) {
         if (isOrthogToPlayer && cell?.faceUp) div.classList.add("bem-cell-planeswalk-glow");
@@ -684,10 +689,10 @@ export function renderBemMap() {
           } else {
             div.classList.add("bem-cell-active-plane");
           }
-          addBemCounterControls(gameState, div, cell.card);
         } else if (isOrthogToPlayer && !isPanning) {
           if (!bemPlaneswalkPending) div.classList.add("bem-cell-moveable");
         }
+        addBemCounterControls(gameState, div, cell.card);
       } else {
         div.classList.add("bem-cell-facedown");
 

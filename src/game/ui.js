@@ -35,6 +35,7 @@ let readerCardPath = "";
 let bemZoomLevel = "default";
 let pendingGameMode = null;
 const readerTranscriptCache = new Map();
+const openCounterTrackers = new Set();
 
 // ── Context (set by initGameUI) ───────────────────────────────────────────────
 
@@ -54,25 +55,32 @@ function renderMainCounter(card, gameState) {
   if (!gameCardImageBtn || !card) return;
   ensureCounterState(gameState);
   gameCardImageBtn.querySelector(".game-main-counter-wrap")?.remove();
-  if (!gameState.counterTrackedIds.has(card.id)) return;
+  if (!gameState.counterTrackedIds.has(card.id)) {
+    openCounterTrackers.delete(card.id);
+    return;
+  }
   const wrap = document.createElement("div");
   wrap.className = "game-main-counter-wrap";
+  const isOpen = openCounterTrackers.has(card.id);
   wrap.innerHTML = `
-    <button type="button" class="game-main-counter-toggle" aria-label="Adjust counters">
-      <img src="assets/favicon.svg" alt="" aria-hidden="true" />
+    <button type="button" class="game-main-counter-toggle" aria-label="Adjust counters" aria-expanded="${isOpen ? "true" : "false"}">
+      <span class="game-counter-favicon-wrap"><img src="assets/favicon.svg" alt="" aria-hidden="true" /></span>
     </button>
-    <div class="game-main-counter-controls">
-      <button type="button" class="game-main-counter-step" data-step="-1" aria-label="Remove counter">−</button>
-      <span class="game-main-counter-value">${getCardCounter(gameState, card.id)}</span>
-      <button type="button" class="game-main-counter-step" data-step="1" aria-label="Add counter">+</button>
-    </div>
+    <div class="game-main-counter-controls${isOpen ? " game-main-counter-controls-visible" : ""}">
+        <button type="button" class="game-main-counter-step" data-step="-1" aria-label="Remove counter">−</button>
+        <span class="game-main-counter-value">${getCardCounter(gameState, card.id)}</span>
+        <button type="button" class="game-main-counter-step" data-step="1" aria-label="Add counter">+</button>
+      </div>
   `;
   const toggle = wrap.querySelector(".game-main-counter-toggle");
-  const controls = wrap.querySelector(".game-main-counter-controls");
   toggle?.addEventListener("click", (event) => {
     event.stopPropagation();
     event.preventDefault();
-    controls?.classList.toggle("game-main-counter-controls-visible");
+    const next = !openCounterTrackers.has(card.id);
+    if (next) openCounterTrackers.add(card.id);
+    else openCounterTrackers.delete(card.id);
+    wrap.querySelector(".game-main-counter-controls")?.classList.toggle("game-main-counter-controls-visible", next);
+    toggle.setAttribute("aria-expanded", next ? "true" : "false");
   });
   wrap.querySelectorAll(".game-main-counter-step").forEach((btn) => {
     btn.addEventListener("click", (event) => {
@@ -81,6 +89,7 @@ function renderMainCounter(card, gameState) {
       const gs = ctx.getGameState();
       if (!gs) return;
       ensureCounterState(gs);
+      openCounterTrackers.add(card.id);
       ctx.pushGameHistory();
       const delta = Number(btn.dataset.step || 0);
       const current = getCardCounter(gs, card.id);
@@ -312,19 +321,25 @@ export function renderGameSidePanel(activePlanes, focusedIndex) {
       if (gameState.counterTrackedIds.has(card.id)) {
         const counterWrap = document.createElement("div");
         counterWrap.className = "game-side-counter-wrap";
+        const isOpen = openCounterTrackers.has(card.id);
         counterWrap.innerHTML = `
-          <button type="button" class="game-side-counter-toggle game-counter-glow" aria-label="Adjust counters">⬤</button>
-          <div class="game-side-counter-controls">
-            <button type="button" class="game-side-counter-step" data-step="-1" aria-label="Remove counter">−</button>
-            <span class="game-side-counter-value">${getCardCounter(gameState, card.id)}</span>
-            <button type="button" class="game-side-counter-step" data-step="1" aria-label="Add counter">+</button>
-          </div>
+          <button type="button" class="game-side-counter-toggle game-counter-glow" aria-label="Adjust counters" aria-expanded="${isOpen ? "true" : "false"}">
+            <span class="game-counter-favicon-wrap"><img src="assets/favicon.svg" alt="" aria-hidden="true" /></span>
+          </button>
+          <div class="game-side-counter-controls${isOpen ? " game-side-counter-controls-visible" : ""}">
+              <button type="button" class="game-side-counter-step" data-step="-1" aria-label="Remove counter">−</button>
+              <span class="game-side-counter-value">${getCardCounter(gameState, card.id)}</span>
+              <button type="button" class="game-side-counter-step" data-step="1" aria-label="Add counter">+</button>
+            </div>
         `;
         const toggle = counterWrap.querySelector(".game-side-counter-toggle");
-        const controls = counterWrap.querySelector(".game-side-counter-controls");
         toggle?.addEventListener("click", (event) => {
           event.stopPropagation();
-          controls?.classList.toggle("game-side-counter-controls-visible");
+          const next = !openCounterTrackers.has(card.id);
+          if (next) openCounterTrackers.add(card.id);
+          else openCounterTrackers.delete(card.id);
+          counterWrap.querySelector(".game-side-counter-controls")?.classList.toggle("game-side-counter-controls-visible", next);
+          toggle.setAttribute("aria-expanded", next ? "true" : "false");
         });
         counterWrap.querySelectorAll(".game-side-counter-step").forEach((btn) => {
           btn.addEventListener("click", (event) => {
@@ -332,6 +347,7 @@ export function renderGameSidePanel(activePlanes, focusedIndex) {
             const gs = ctx.getGameState();
             if (!gs) return;
             ensureCounterState(gs);
+            openCounterTrackers.add(card.id);
             ctx.pushGameHistory();
             const delta = Number(btn.dataset.step || 0);
             const current = getCardCounter(gs, card.id);
@@ -342,6 +358,8 @@ export function renderGameSidePanel(activePlanes, focusedIndex) {
           });
         });
         sideCard.appendChild(counterWrap);
+      } else {
+        openCounterTrackers.delete(card.id);
       }
       sideCard.addEventListener("click", () => {
         if (!ctx.getGameState()) return;

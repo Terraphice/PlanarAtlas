@@ -4,6 +4,7 @@
 import { escapeHtml, shuffleArray } from "../gallery/utils.js";
 
 let ctx = null;
+const openCounterTrackers = new Set();
 
 function ensureCounterState(gameState) {
   if (!gameState.cardCounters) gameState.cardCounters = new Map();
@@ -222,27 +223,32 @@ export function renderClassicSidePanel(activePlanes, focusedIndex) {
       const counterWrap = document.createElement("div");
       counterWrap.className = "game-side-counter-wrap";
       const value = getCardCounter(gameState, card.id);
+      const isOpen = openCounterTrackers.has(card.id);
       counterWrap.innerHTML = `
-        <button type="button" class="game-side-counter-toggle game-counter-glow" aria-label="Adjust counters">
-          <span aria-hidden="true">⬤</span>
+        <button type="button" class="game-side-counter-toggle game-counter-glow" aria-label="Adjust counters" aria-expanded="${isOpen ? "true" : "false"}">
+          <span class="game-counter-favicon-wrap"><img src="assets/favicon.svg" alt="" aria-hidden="true" /></span>
         </button>
-        <div class="game-side-counter-controls">
-          <button type="button" class="game-side-counter-step" data-step="-1" aria-label="Remove counter">−</button>
-          <span class="game-side-counter-value">${value}</span>
-          <button type="button" class="game-side-counter-step" data-step="1" aria-label="Add counter">+</button>
-        </div>
+        <div class="game-side-counter-controls${isOpen ? " game-side-counter-controls-visible" : ""}">
+            <button type="button" class="game-side-counter-step" data-step="-1" aria-label="Remove counter">−</button>
+            <span class="game-side-counter-value">${value}</span>
+            <button type="button" class="game-side-counter-step" data-step="1" aria-label="Add counter">+</button>
+          </div>
       `;
       const toggle = counterWrap.querySelector(".game-side-counter-toggle");
-      const controls = counterWrap.querySelector(".game-side-counter-controls");
       toggle?.addEventListener("click", (event) => {
         event.stopPropagation();
-        controls?.classList.toggle("game-side-counter-controls-visible");
+        const next = !openCounterTrackers.has(card.id);
+        if (next) openCounterTrackers.add(card.id);
+        else openCounterTrackers.delete(card.id);
+        counterWrap.querySelector(".game-side-counter-controls")?.classList.toggle("game-side-counter-controls-visible", next);
+        toggle.setAttribute("aria-expanded", next ? "true" : "false");
       });
       counterWrap.querySelectorAll(".game-side-counter-step").forEach((stepBtn) => {
         stepBtn.addEventListener("click", (event) => {
           event.stopPropagation();
           const gs = getGameState();
           if (!gs) return;
+          openCounterTrackers.add(card.id);
           ctx.pushHistory?.();
           const delta = Number(stepBtn.dataset.step || 0);
           addCounter(gs, card.id, delta);
@@ -250,6 +256,8 @@ export function renderClassicSidePanel(activePlanes, focusedIndex) {
         });
       });
       sideCard.appendChild(counterWrap);
+    } else {
+      openCounterTrackers.delete(card.id);
     }
     sideCard.addEventListener("click", () => {
       const gameState = getGameState();
@@ -298,22 +306,6 @@ export function buildMainCardActions(focusedIdx) {
         trimCountersToCards(gameState);
         updateGameView();
         showToast(`${top.displayName} added simultaneously.`);
-      }
-    },
-    {
-      label: "Counters",
-      action: () => {
-        const gameState = getGameState();
-        if (!gameState) return;
-        const card = gameState.activePlanes[focusedIdx];
-        if (!card) return;
-        ctx.pushHistory?.();
-        ensureCounterState(gameState);
-        gameState.counterTrackedIds.add(card.id);
-        if (!gameState.cardCounters.has(card.id)) gameState.cardCounters.set(card.id, 0);
-        closeGameReaderView();
-        updateGameView();
-        showToast(`${card.displayName} is now tracking counters.`);
       }
     },
     {
