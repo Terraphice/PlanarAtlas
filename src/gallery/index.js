@@ -342,6 +342,10 @@ async function init() {
 
     initChangelog();
 
+    // Some late init flows (overlays/menus/modules) can transiently reset UI
+    // state during startup; re-apply deep-link card intent once init settles.
+    tryOpenCardFromHash();
+
     prefetchAllTranscripts(allCards);
   } catch (error) {
     console.error(error);

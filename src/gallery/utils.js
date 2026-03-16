@@ -139,12 +139,36 @@ export function reconcileSelectedTags(selectedTags, cards) {
 export function readUrlState(filters, displayState, paginationState = null) {
   const params = new URLSearchParams(window.location.search);
 
-  filters.search = params.get("q") || "";
+  const cardParam = params.get("card");
+  if (cardParam) {
+    filters.search = "";
+    filters.tags = new Set();
+    return;
+  }
 
-  const tagValues = [
+  const searchText = params.get("q") || "";
+  const directTagValues = [
     ...params.getAll("tag"),
     ...params.getAll("type")
   ];
+
+  const aliasTagValues = [];
+  const tagAliasParam = params.get("tags");
+  if (tagAliasParam) {
+    aliasTagValues.push(
+      ...tagAliasParam
+        .split(",")
+        .map((value) => decodeURIComponent(value.replace(/\+/g, "%20")))
+    );
+  }
+
+  if (directTagValues.length === 0 && aliasTagValues.length > 0) {
+    filters.search = "";
+  } else {
+    filters.search = searchText;
+  }
+
+  const tagValues = [...directTagValues, ...aliasTagValues];
 
   filters.tags = new Set(
     tagValues
