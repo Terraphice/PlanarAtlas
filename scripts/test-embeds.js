@@ -63,8 +63,8 @@ if (!existsSync(tagHtmlPath)) {
   if (html.includes('property="og:title"')) pass("Tag page has og:title");
   else fail("Tag page missing og:title");
 
-  if (html.includes("/?tag=Official")) pass("Tag page redirects to tag filter URL");
-  else fail("Tag page missing tag redirect");
+  if (html.includes("/?tags=%3Atop%3Abadge%3Atr%3Agreen%3AOfficial")) pass("Tag page redirects to canonical badge tag URL");
+  else fail("Tag page missing canonical badge tag redirect");
 }
 
 console.log(`\n${"─".repeat(40)}`);
