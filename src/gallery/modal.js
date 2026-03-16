@@ -43,20 +43,36 @@ export function createModalManager({
   // ── URL helpers ───────────────────────────────────────────────────────────────
 
   function updateUrlForCard(card) {
-    const hash = `#card=${encodeURIComponent(card.id)}`;
-    const url = `${window.location.pathname}${window.location.search}${hash}`;
+    const params = new URLSearchParams(window.location.search);
+    params.set("card", card.id);
+
+    const hash = window.location.hash.startsWith("#card=") ? "" : window.location.hash;
+    const query = params.toString();
+    const url = `${window.location.pathname}${query ? `?${query}` : ""}${hash}`;
+
     if (`${window.location.pathname}${window.location.search}${window.location.hash}` !== url) {
       history.pushState(null, "", url);
     }
   }
 
   function clearCardHash() {
-    if (window.location.hash.startsWith("#card=")) {
-      history.pushState("", document.title, window.location.pathname + window.location.search);
-    }
+    const params = new URLSearchParams(window.location.search);
+    const hadCardQuery = params.has("card");
+    params.delete("card");
+
+    const hasCardHash = window.location.hash.startsWith("#card=");
+    if (!hadCardQuery && !hasCardHash) return;
+
+    const query = params.toString();
+    const hash = hasCardHash ? "" : window.location.hash;
+    history.pushState("", document.title, `${window.location.pathname}${query ? `?${query}` : ""}${hash}`);
   }
 
   function getCardKeyFromHash() {
+    const params = new URLSearchParams(window.location.search);
+    const fromQuery = params.get("card");
+    if (fromQuery) return fromQuery;
+
     const match = window.location.hash.match(/^#card=(.+)$/);
     if (!match) return null;
     return decodeURIComponent(match[1]);
@@ -260,8 +276,11 @@ export function createModalManager({
 
   async function copyCurrentCardLink() {
     if (currentModalIndex < 0 || currentModalIndex >= getFilteredCards().length) return;
+    const currentCard = getFilteredCards()[currentModalIndex];
+    const shareUrl = `${window.location.origin}/share/card/${encodeURIComponent(currentCard.id)}/`;
+
     try {
-      await navigator.clipboard.writeText(window.location.href);
+      await navigator.clipboard.writeText(shareUrl);
       callbacks.showToast("Link copied.");
     } catch {
       callbacks.showToast("Copy failed.");
