@@ -20,15 +20,16 @@ jobs:
         run: |
           SHORT_SHA="${GITHUB_SHA::8}"
           sed -i "s|^const CACHE_VERSION = .*|const CACHE_VERSION = \"${SHORT_SHA}\";|" sw.js
+          node scripts/update-version.js
 
-      - name: Commit updated service worker
+      - name: Commit updated build metadata
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add sw.js
+          git add sw.js version.json
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
-            git commit -m "chore: update service worker cache key [skip ci]"
+            git commit -m "chore: update build metadata [skip ci]"
             git push
           fi

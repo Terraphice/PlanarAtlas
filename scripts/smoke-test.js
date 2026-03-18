@@ -158,6 +158,16 @@ try {
   } else {
     fail("version.json missing \"version\" string field");
   }
+  if (typeof versionData.buildTimestamp === "string" && versionData.buildTimestamp) {
+    pass(`version.json includes build timestamp (${versionData.buildTimestamp})`);
+  } else {
+    fail("version.json missing \"buildTimestamp\" string field");
+  }
+  if (typeof versionData.commit === "string" && versionData.commit) {
+    pass(`version.json includes commit (${versionData.commit})`);
+  } else {
+    fail("version.json missing \"commit\" string field");
+  }
 } catch (e) {
   fail(`version.json failed to parse: ${e.message}`);
 }
@@ -173,6 +183,7 @@ const requiredFiles = [
   "styles/game.css",
   "src/gallery/index.js",
   "src/deck/index.js",
+  "src/footer.js",
   "src/deck/codec.js",
   "src/deck/panel.js",
   "src/game/state.js",
@@ -181,6 +192,7 @@ const requiredFiles = [
   "sw.js",
   "manifest.json",
   "version.json",
+  "PRIVACY.md",
   "assets/favicon.svg",
   "assets/card-preview.jpg",
   "assets/favicon-192.png",
@@ -226,6 +238,39 @@ try {
   }
 } catch (e) {
   fail(`Failed to read index.html: ${e.message}`);
+}
+
+// ── 9. Footer / privacy DOM elements exist in index.html ─────────────────────
+
+section("9. Footer integration");
+
+try {
+  const indexHtml = readFileSync(indexHtmlPath, "utf8");
+  const footerIds = [
+    "privacy-policy-trigger",
+    "footer-contact-link",
+    "site-version",
+    "site-build",
+    "site-commit",
+    "privacy-modal",
+    "privacy-modal-backdrop",
+    "privacy-modal-body",
+    "privacy-modal-close",
+  ];
+  let missingIds = 0;
+  for (const id of footerIds) {
+    if (indexHtml.includes(`id="${id}"`)) {
+      pass(`#${id} element exists in index.html`);
+    } else {
+      fail(`#${id} element missing from index.html — required by footer.js`);
+      missingIds++;
+    }
+  }
+  if (missingIds === 0) {
+    pass("footer.js DOM contract is satisfied by index.html");
+  }
+} catch (e) {
+  fail(`Failed to read index.html for footer integration: ${e.message}`);
 }
 
 // ── Summary ───────────────────────────────────────────────────────────────────
