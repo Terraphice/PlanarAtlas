@@ -2248,22 +2248,29 @@ html[data-palette="scryfall"][data-theme="dark"] .sidebar {
   flex-direction: column;
   gap: 16px;
   padding: 24px;
-  border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+  border: 1px solid color-mix(in srgb, var(--border) 76%, transparent);
   border-radius: 20px;
-  background: color-mix(in srgb, var(--panel) 94%, black 6%);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--panel) 92%, black 8%), color-mix(in srgb, var(--bg) 82%, black 18%));
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
-}
-
-.privacy-modal-title {
-  margin: 0;
-  text-align: center;
 }
 
 .privacy-modal-body {
   overflow: auto;
+  padding: 18px 20px;
   color: var(--text);
   line-height: 1.7;
-  text-align: center;
+  text-align: left;
+  background: color-mix(in srgb, var(--bg) 74%, black 26%);
+  border: 1px solid color-mix(in srgb, var(--border) 55%, transparent);
+  border-radius: 16px;
+}
+
+.privacy-modal-body > :first-child {
+  margin-top: 0;
+}
+
+.privacy-modal-body > :last-child {
+  margin-bottom: 0;
 }
 
 .privacy-modal-close {
