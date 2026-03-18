@@ -302,14 +302,39 @@
         </section>
       </main>
 
-      <footer class="site-footer">
-        <p class="site-footer-legal">
-          Planar Atlas is unofficial Fan Content permitted under the <a href="https://company.wizards.com/en/legal/fancontentpolicy" target="_blank" rel="noopener noreferrer">Wizards of the Coast Fan Content Policy</a>.
-          Magic: The Gathering, Planechase, and all associated card names, art, and symbols are property of Wizards of the Coast LLC.
-          Card images and text are © Wizards of the Coast. This site is not produced by, endorsed by, supported by, or affiliated with Wizards of the Coast.
-          Planar Atlas is a utility tool designed to assist players with real-life Planechase games and the physical cards; it is not a video game or a replacement for actual cards.
-        </p>
+      <footer class="site-footer" aria-label="Site footer">
+        <div class="site-footer-block">
+          <p class="site-footer-heading">© 2026 Terraphice — Planar Atlas™</p>
+          <p class="site-footer-legal">All rights reserved. Content provided on this site is for informational and entertainment purposes only and is provided “as is” without warranties.</p>
+          <p class="site-footer-legal">
+            Planar Atlas is unofficial Fan Content permitted under the <a href="https://company.wizards.com/en/legal/fancontentpolicy" target="_blank" rel="noopener noreferrer">Wizards of the Coast Fan Content Policy</a>.
+            Magic: The Gathering, Planechase, and all associated card names, art, and symbols are property of Wizards of the Coast LLC.
+            Card images and text are © Wizards of the Coast. This site is not produced by, endorsed by, supported by, or affiliated with Wizards of the Coast.
+            Planar Atlas is a utility tool designed to assist players with real-life Planechase games and the physical cards; it is not a video game or a replacement for actual cards.
+          </p>
+          <p class="site-footer-links">
+            <a href="https://github.com/Terraphice/PlanarAtlas" target="_blank" rel="noopener noreferrer">Source</a>
+            <span aria-hidden="true">·</span>
+            <button id="privacy-policy-trigger" class="site-footer-inline-button" type="button">Privacy Policy</button>
+            <span aria-hidden="true">·</span>
+            <a id="footer-contact-link" href="mailto:me@terraphice.dev?subject=Planar%20Atlas">Contact</a>
+          </p>
+        </div>
+        <div class="site-footer-block site-footer-meta" aria-label="Build metadata">
+          <p id="site-version" class="site-footer-meta-line">V0.0.0</p>
+          <p id="site-build" class="site-footer-meta-line">Build: —</p>
+          <p id="site-commit" class="site-footer-meta-line">Commit: —</p>
+        </div>
       </footer>
+    </div>
+  </div>
+
+  <div id="privacy-modal" class="privacy-modal hidden" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="privacy-modal-title">
+    <div id="privacy-modal-backdrop" class="privacy-modal-backdrop"></div>
+    <div class="privacy-modal-panel" role="document">
+      <h2 id="privacy-modal-title" class="privacy-modal-title">Privacy Policy</h2>
+      <div id="privacy-modal-body" class="privacy-modal-body">PLACEHOLDER</div>
+      <button id="privacy-modal-close" class="privacy-modal-close" type="button">Close</button>
     </div>
   </div>
 
