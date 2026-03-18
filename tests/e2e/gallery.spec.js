@@ -43,6 +43,18 @@ test.describe("Gallery", () => {
     await expect(deckBtn).toBeVisible();
   });
 
+  test("page spinner updates pagination without pressing enter", async ({ page }) => {
+    const pageInput = page.locator(".pagination-page-input");
+    await expect(pageInput).toBeVisible({ timeout: 10_000 });
+    await expect(page.locator(".pagination-page-label")).toContainText("1–20 of");
+
+    await pageInput.focus();
+    await page.keyboard.press("ArrowUp");
+
+    await expect(pageInput).toHaveValue("2");
+    await expect(page.locator(".pagination-page-label")).toContainText("21–40 of");
+  });
+
   test("no JavaScript errors on load", async ({ page }) => {
     const errors = [];
     page.on("pageerror", (err) => {
