@@ -54,6 +54,7 @@ import { createRenderer } from "./render.js";
 import { createSearchManager } from "./search.js";
 import { createModalManager } from "./modal.js";
 import { initChangelog } from "../changelog.js";
+import { initFooter } from "../footer.js";
 
 let allCards = [];
 let filteredCards = [];
@@ -340,7 +341,8 @@ async function init() {
     setSmoothTravel(filters.smoothTravel);
     setBemEdgePlaceholders(filters.bemEdgePlaceholders);
 
-    initChangelog();
+initChangelog();
+initFooter();
 
     // Some late init flows (overlays/menus/modules) can transiently reset UI
     // state during startup; re-apply deep-link card intent once init settles.

@@ -25,7 +25,7 @@ jobs:
 
       - name: Update version.json
         run: |
-          printf '{"version":"%s"}\n' "${{ steps.version.outputs.version }}" > version.json
+          PLANAR_VERSION="${{ steps.version.outputs.version }}" node scripts/update-version.js
 
       - name: Commit updated files
         run: |

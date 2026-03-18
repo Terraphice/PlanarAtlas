@@ -1,6 +1,7 @@
 {
   "type": "module",
   "scripts": {
+    "version:sync": "node scripts/update-version.js",
     "generate": "node scripts/generate-cards.js && node scripts/generate-embeds.js",
     "sync": "node scripts/sync-cards.js",
     "test": "node scripts/smoke-test.js",

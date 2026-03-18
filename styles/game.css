@@ -2152,11 +2152,22 @@ html[data-palette="scryfall"][data-theme="dark"] .sidebar {
 /* ── Site footer ──────────────────────────────────────────────────────────────── */
 
 .site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 32px;
+  align-items: flex-start;
+  justify-content: space-between;
   padding: 20px 24px 28px;
   margin-top: 8px;
   border-top: 1px solid color-mix(in srgb, var(--border) 40%, transparent);
 }
 
+.site-footer-block {
+  flex: 1 1 320px;
+  min-width: min(100%, 320px);
+}
+
+.site-footer-heading,
 .site-footer-legal {
   margin: 0;
   color: var(--text-faint);
@@ -2165,15 +2176,117 @@ html[data-palette="scryfall"][data-theme="dark"] .sidebar {
   opacity: 0.68;
 }
 
-.site-footer-legal a {
+.site-footer-heading {
+  margin-bottom: 4px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  opacity: 0.82;
+}
+
+.site-footer-links,
+.site-footer-meta-line {
+  margin: 8px 0 0;
+  color: var(--text-faint);
+  font-size: 0.73rem;
+  line-height: 1.6;
+  opacity: 0.82;
+}
+
+.site-footer-meta {
+  text-align: right;
+}
+
+.site-footer a,
+.site-footer-inline-button {
   color: var(--text-faint);
   text-decoration: underline;
   text-decoration-color: color-mix(in srgb, var(--text-faint) 40%, transparent);
 }
 
-.site-footer-legal a:hover {
+.site-footer a:hover,
+.site-footer-inline-button:hover {
   color: var(--text-soft);
   opacity: 1;
+}
+
+.site-footer-inline-button {
+  appearance: none;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.privacy-modal.hidden {
+  display: none;
+}
+
+.privacy-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.privacy-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 8, 20, 0.7);
+  backdrop-filter: blur(6px);
+}
+
+.privacy-modal-panel {
+  position: relative;
+  z-index: 1;
+  width: min(720px, 100%);
+  max-height: min(80vh, 720px);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--panel) 94%, black 6%);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+}
+
+.privacy-modal-title {
+  margin: 0;
+  text-align: center;
+}
+
+.privacy-modal-body {
+  overflow: auto;
+  color: var(--text);
+  line-height: 1.7;
+  text-align: center;
+}
+
+.privacy-modal-close {
+  align-self: center;
+  min-width: 220px;
+  padding: 14px 20px;
+  border: 1px solid color-mix(in srgb, var(--accent) 60%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 24%, var(--panel));
+  color: var(--text);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+body.privacy-modal-open {
+  overflow: hidden;
+}
+
+@media (max-width: 700px) {
+  .site-footer-meta {
+    text-align: left;
+  }
 }
 
 /* ── Modal image flip animation ──────────────────────────────────────────────── */
