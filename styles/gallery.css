@@ -1494,28 +1494,28 @@ button.active-filter-pill:disabled {
 }
 
 .pagination-page-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   color: var(--text-faint);
   font-size: 0.8rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .pagination-page-input {
-  width: 3.5em;
+  width: 4.75em;
+  min-height: 34px;
   text-align: center;
   border: 1px solid var(--border);
   background: var(--bg-elev-2);
   color: var(--text);
-  border-radius: 6px;
-  padding: 2px 4px;
-  font-size: 0.8rem;
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-size: 0.84rem;
   font-weight: 700;
-  -moz-appearance: textfield;
-  appearance: auto ;
-}
-
-.pagination-page-input::-webkit-outer-spin-button,
-.pagination-page-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+  line-height: 1.2;
+  appearance: auto;
 }
 
 .pagination-infinite-info {
@@ -1783,7 +1783,7 @@ button.active-filter-pill:disabled {
   }
 
   .pagination-page-meta {
-    display: none;
+    width: 100%;
   }
 }
 
@@ -1808,6 +1808,10 @@ button.active-filter-pill:disabled {
     order: -1;
     width: 100%;
     text-align: center;
+  }
+
+  .pagination-page-meta {
+    order: 0;
   }
 
   .pagination-btn {

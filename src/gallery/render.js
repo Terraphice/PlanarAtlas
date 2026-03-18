@@ -590,19 +590,42 @@ export function createRenderer({
       pageInput.value = paginationState.currentPage;
       pageInput.min = 1;
       pageInput.max = totalPages;
+      pageInput.step = 1;
       pageInput.setAttribute("aria-label", "Go to page");
       pageInput.setAttribute("inputmode", "numeric");
+
+      const commitPageInput = ({ blur = false } = {}) => {
+        const page = parseInt(pageInput.value, 10);
+        if (isNaN(page)) {
+          pageInput.value = paginationState.currentPage;
+          if (blur) pageInput.blur();
+          return;
+        }
+
+        const nextPage = Math.max(1, Math.min(totalPages, page));
+        pageInput.value = nextPage;
+        if (nextPage === paginationState.currentPage) {
+          if (blur) pageInput.blur();
+          return;
+        }
+
+        paginationState.currentPage = nextPage;
+        renderGallery();
+        callbacks.updateUrlFromState({ push: true });
+      };
+
+      pageInput.addEventListener("change", () => {
+        commitPageInput();
+      });
+      pageInput.addEventListener("blur", () => {
+        commitPageInput();
+      });
       pageInput.addEventListener("keydown", (e) => {
         if (e.key === "Enter") {
-          const page = parseInt(pageInput.value, 10);
-          if (!isNaN(page)) {
-            paginationState.currentPage = Math.max(1, Math.min(totalPages, page));
-            renderGallery();
-            callbacks.updateUrlFromState({ push: true });
-          }
-          pageInput.blur();
+          commitPageInput({ blur: true });
         }
       });
+
       pageMeta.appendChild(pageInput);
       pageMeta.appendChild(document.createTextNode(` of ${totalPages}`));
 
