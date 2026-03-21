@@ -435,6 +435,48 @@
 
 /* ── Game view ───────────────────────────────────────────────────────────────── */
 
+:root {
+  --game-safe-top: env(safe-area-inset-top, 0px);
+  --game-safe-right: env(safe-area-inset-right, 0px);
+  --game-safe-bottom: env(safe-area-inset-bottom, 0px);
+  --game-safe-left: env(safe-area-inset-left, 0px);
+  --game-viewport-width: 100dvw;
+  --game-viewport-height: 100dvh;
+  --game-inline-safe-start: var(--game-safe-left);
+  --game-inline-safe-end: var(--game-safe-right);
+  --game-block-safe-start: var(--game-safe-top);
+  --game-block-safe-end: var(--game-safe-bottom);
+  --game-edge-gap: 16px;
+  --game-top-clearance: calc(var(--game-block-safe-start) + var(--game-edge-gap));
+  --game-bottom-clearance: calc(var(--game-block-safe-end) + var(--game-edge-gap));
+  --game-left-clearance: calc(var(--game-inline-safe-start) + var(--game-edge-gap));
+  --game-right-clearance: calc(var(--game-inline-safe-end) + var(--game-edge-gap));
+  --game-main-padding-top: calc(var(--game-block-safe-start) + 70px);
+  --game-main-padding-right: calc(var(--game-inline-safe-end) + 16px);
+  --game-main-padding-bottom: calc(var(--game-block-safe-end) + 70px);
+  --game-main-padding-left: calc(var(--game-inline-safe-start) + 16px);
+  --game-side-panel-right: var(--game-right-clearance);
+  --game-side-panel-max-height: calc(var(--game-viewport-height) - var(--game-block-safe-start) - var(--game-block-safe-end) - 160px);
+  --game-menu-offset-bottom: calc(var(--game-block-safe-end) + 96px);
+  --game-menu-max-height: min(calc(var(--game-viewport-height) - var(--game-block-safe-start) - var(--game-block-safe-end) - 32px), 520px);
+  --game-banner-top: var(--game-top-clearance);
+  --game-banner-max-width: calc(100% - var(--game-left-clearance) - var(--game-right-clearance) - 168px);
+  --game-reveal-padding: 16px;
+  --game-reveal-panel-width: min(640px, calc(var(--game-viewport-width) - var(--game-inline-safe-start) - var(--game-inline-safe-end) - (var(--game-reveal-padding) * 2)));
+  --game-reveal-panel-max-height: calc(var(--game-viewport-height) - var(--game-block-safe-start) - var(--game-block-safe-end) - (var(--game-reveal-padding) * 2));
+  --game-tutorial-padding: 16px;
+  --game-tutorial-panel-max-width: min(560px, calc(var(--game-viewport-width) - var(--game-inline-safe-start) - var(--game-inline-safe-end) - (var(--game-tutorial-padding) * 2)));
+  --game-tutorial-panel-max-height: min(calc(var(--game-viewport-height) - var(--game-block-safe-start) - var(--game-block-safe-end) - (var(--game-tutorial-padding) * 2)), 600px);
+  --bem-card-aspect: 1.4;
+  --bem-grid-gap: 6px;
+  --bem-grid-padding-inline: 12px;
+  --bem-grid-padding-block: 162px;
+  --bem-usable-inline: calc(var(--game-viewport-width) - var(--game-inline-safe-start) - var(--game-inline-safe-end) - var(--bem-grid-padding-inline));
+  --bem-usable-block: calc(var(--game-viewport-height) - var(--game-block-safe-start) - var(--game-block-safe-end) - var(--bem-grid-padding-block));
+  --bem-zoom-scale: 0.6;
+  --bem-zoom-max: 560px;
+}
+
 .game-view {
   position: fixed;
   inset: 0;
@@ -457,13 +499,13 @@
   justify-content: center;
   width: 100%;
   height: 100%;
-  padding: 70px 16px;
+  padding: var(--game-main-padding-top) var(--game-main-padding-right) var(--game-main-padding-bottom) var(--game-main-padding-left);
 }
 
 .game-card-image {
   display: block;
   max-width: min(860px, calc(100vw - 180px));
-  max-height: calc(100vh - 160px);
+  max-height: var(--game-side-panel-max-height);
   width: auto;
   height: auto;
   border-radius: 14px;
@@ -555,7 +597,7 @@
 }
 
 .game-tl { top: 16px; left: 16px; }
-.game-tr { top: 16px; right: 16px; }
+.game-tr { top: 16px; right: var(--game-side-panel-right); }
 .game-bl { bottom: 16px; left: 16px; }
 .game-br { bottom: 16px; right: 16px; }
 
@@ -614,7 +656,7 @@
 
 .game-side-panel {
   position: absolute;
-  right: 16px;
+  right: var(--game-side-panel-right);
   top: 50%;
   transform: translateY(-50%);
   display: flex;
@@ -622,7 +664,7 @@
   align-items: center;
   gap: 10px;
   z-index: 5;
-  max-height: calc(100vh - 160px);
+  max-height: var(--game-side-panel-max-height);
   overflow-y: auto;
 }
 
@@ -713,7 +755,7 @@
 .game-menu {
   position: absolute;
   z-index: 20;
-  width: min(300px, calc(100vw - 100px));
+  width: min(300px, calc(var(--game-viewport-width) - var(--game-inline-safe-start) - var(--game-inline-safe-end) - 100px));
   background: color-mix(in srgb, var(--bg-elev-1) 96%, transparent);
   border: 1px solid var(--border);
   border-radius: 16px;
@@ -723,7 +765,7 @@
   padding: 8px 8px 4px;
   display: flex;
   flex-direction: column;
-  max-height: min(82vh, 520px);
+  max-height: var(--game-menu-max-height);
 }
 
 .game-menu-scroll {
@@ -737,13 +779,13 @@
 }
 
 .game-menu-br {
-  bottom: 96px;
-  right: 16px;
+  bottom: var(--game-menu-offset-bottom);
+  right: var(--game-right-clearance);
 }
 
 .game-menu-bl {
-  bottom: 96px;
-  left: 16px;
+  bottom: var(--game-menu-offset-bottom);
+  left: var(--game-left-clearance);
 }
 
 .game-menu-title {
@@ -1218,8 +1260,8 @@
 
 .game-tl-group {
   position: absolute;
-  top: 16px;
-  left: 16px;
+  top: var(--game-top-clearance);
+  left: var(--game-left-clearance);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1243,8 +1285,8 @@
 
 .game-tr-group {
   position: absolute;
-  top: 16px;
-  right: 16px;
+  top: var(--game-top-clearance);
+  right: var(--game-right-clearance);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1258,8 +1300,8 @@
 
 .game-bl-group {
   position: absolute;
-  bottom: 16px;
-  left: 16px;
+  bottom: var(--game-bottom-clearance);
+  left: var(--game-left-clearance);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1273,8 +1315,8 @@
 
 .game-br-group {
   position: absolute;
-  bottom: 16px;
-  right: 16px;
+  bottom: var(--game-bottom-clearance);
+  right: var(--game-right-clearance);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1310,7 +1352,7 @@
 
 .phenomenon-banner {
   position: absolute;
-  top: 16px;
+  top: var(--game-banner-top);
   left: 50%;
   transform: translateX(-50%);
   z-index: 8;
@@ -1319,7 +1361,7 @@
   align-items: stretch;
   gap: 5px;
   pointer-events: auto;
-  max-width: calc(100% - 200px);
+  max-width: max(180px, var(--game-banner-max-width));
   min-width: 180px;
 }
 
@@ -1621,8 +1663,8 @@
 .game-reveal-panel {
   position: relative;
   z-index: 1;
-  width: min(640px, calc(100vw - 32px));
-  max-height: 82vh;
+  width: var(--game-reveal-panel-width);
+  max-height: var(--game-reveal-panel-max-height);
   background: color-mix(in srgb, var(--bg-elev-1) 97%, transparent);
   border: 1px solid var(--border);
   border-radius: 18px;
@@ -1956,6 +1998,20 @@
 /* ── Mobile landscape optimization for game mode ─────────────────────────────── */
 
 @media (max-height: 520px) and (orientation: landscape) {
+  :root {
+    --game-edge-gap: 8px;
+    --game-main-padding-top: calc(var(--game-block-safe-start) + 56px);
+    --game-main-padding-right: calc(var(--game-inline-safe-end) + 12px);
+    --game-main-padding-bottom: calc(var(--game-block-safe-end) + 48px);
+    --game-main-padding-left: calc(var(--game-inline-safe-start) + 12px);
+    --game-menu-offset-bottom: calc(var(--game-block-safe-end) + 62px);
+    --game-menu-max-height: calc(var(--game-viewport-height) - var(--game-block-safe-start) - var(--game-block-safe-end) - 24px);
+    --game-banner-max-width: calc(100% - var(--game-left-clearance) - var(--game-right-clearance) - 144px);
+    --game-side-panel-max-height: calc(var(--game-viewport-height) - var(--game-block-safe-start) - var(--game-block-safe-end) - 112px);
+    --bem-grid-padding-block: 128px;
+    --bem-zoom-max: 360px;
+  }
+
   .game-view {
     flex-direction: row;
   }
@@ -1966,32 +2022,12 @@
   }
 
   .game-card-image {
-    max-height: 90vh;
-    max-width: 55vw;
+    max-height: calc(var(--game-viewport-height) - var(--game-block-safe-start) - var(--game-block-safe-end) - 24px);
+    max-width: calc((var(--game-viewport-width) - var(--game-inline-safe-start) - var(--game-inline-safe-end)) * 0.55);
   }
 
   .game-card-name {
     font-size: 0.82rem;
-  }
-
-  .game-tl-group {
-    top: 8px;
-    left: 8px;
-  }
-
-  .game-tr-group {
-    top: 8px;
-    right: 8px;
-  }
-
-  .game-bl-group {
-    bottom: 8px;
-    left: 8px;
-  }
-
-  .game-br-group {
-    bottom: 8px;
-    right: 8px;
   }
 
   .game-corner-btn {
@@ -2002,16 +2038,7 @@
 
   .game-cost-display { width: 44px; }
 
-  .game-menu {
-    max-height: 80vh;
-  }
-
-  .game-menu-br { bottom: 70px; }
-  .game-menu-bl { bottom: 70px; }
-
   .phenomenon-banner {
-    top: 8px;
-    max-width: calc(100% - 160px);
     min-width: 140px;
   }
 
@@ -2032,28 +2059,51 @@
 /* ── Mobile portrait: rotate game view to landscape ──────────────────────────── */
 
 @media (pointer: coarse) and (orientation: portrait) {
+  :root {
+    --game-viewport-width: 100dvh;
+    --game-viewport-height: 100dvw;
+    --game-inline-safe-start: var(--game-safe-top);
+    --game-inline-safe-end: var(--game-safe-bottom);
+    --game-block-safe-start: var(--game-safe-right);
+    --game-block-safe-end: var(--game-safe-left);
+    --game-edge-gap: 10px;
+    --game-main-padding-top: calc(var(--game-block-safe-start) + 64px);
+    --game-main-padding-right: calc(var(--game-inline-safe-end) + 12px);
+    --game-main-padding-bottom: calc(var(--game-block-safe-end) + 48px);
+    --game-main-padding-left: calc(var(--game-inline-safe-start) + 12px);
+    --game-side-panel-max-height: calc(var(--game-viewport-height) - var(--game-block-safe-start) - var(--game-block-safe-end) - 120px);
+    --game-menu-offset-bottom: calc(var(--game-block-safe-end) + 58px);
+    --game-menu-max-height: min(calc(var(--game-viewport-height) - var(--game-block-safe-start) - var(--game-block-safe-end) - 32px), 480px);
+    --game-banner-max-width: calc(100% - var(--game-left-clearance) - var(--game-right-clearance) - 160px);
+    --game-reveal-panel-width: min(600px, calc(var(--game-viewport-width) - var(--game-inline-safe-start) - var(--game-inline-safe-end) - 32px));
+    --game-reveal-panel-max-height: calc(var(--game-viewport-height) - var(--game-block-safe-start) - var(--game-block-safe-end) - 32px);
+    --game-tutorial-padding: 10px;
+    --game-tutorial-panel-max-height: min(calc(var(--game-viewport-height) - var(--game-block-safe-start) - var(--game-block-safe-end) - 20px), 520px);
+    --bem-grid-padding-block: 128px;
+    --bem-zoom-max: 360px;
+  }
+
   body.game-open {
     overflow: hidden;
   }
 
-  .game-view {
-    top: calc((100vh - 100vw) / 2);
+  .game-view,
+  .game-reveal-overlay,
+  .die-popup,
+  .game-tutorial-overlay {
+    top: calc((100dvh - 100dvw) / 2);
     right: auto;
     bottom: auto;
-    left: calc((100vw - 100vh) / 2);
-    width: 100vh;
-    height: 100vw;
+    left: calc((100dvw - 100dvh) / 2);
+    width: 100dvh;
+    height: 100dvw;
     transform: rotate(-90deg);
     transform-origin: center center;
   }
 
   .game-card-image {
-    max-width: calc(100vh - 180px);
-    max-height: calc(100vw - 120px);
-  }
-
-  .game-main-area {
-    padding: 64px 12px 48px;
+    max-width: calc(var(--game-viewport-width) - var(--game-inline-safe-start) - var(--game-inline-safe-end) - 180px);
+    max-height: calc(var(--game-viewport-height) - var(--game-block-safe-start) - var(--game-block-safe-end) - 120px);
   }
 
   .game-card-name {
@@ -2067,66 +2117,10 @@
     font-size: 1.3rem;
   }
 
-  .game-tl-group {
-    top: 10px;
-    left: 10px;
-  }
-
-  .game-tr-group {
-    top: 10px;
-    right: 10px;
-  }
-
-  .game-bl-group {
-    bottom: 10px;
-    left: 10px;
-  }
-
-  .game-br-group {
-    bottom: 10px;
-    right: 10px;
-  }
-
   .game-cost-display { width: 50px; }
 
   .game-menu {
-    max-height: min(calc(100vw - 80px), 480px);
-    max-width: calc(100vh - 100px);
-  }
-
-  .game-menu-br {
-    bottom: 68px;
-    right: 10px;
-  }
-
-  .game-menu-bl {
-    bottom: 68px;
-    left: 10px;
-  }
-
-  .phenomenon-banner {
-    top: 10px;
-    max-width: calc(100% - 180px);
-  }
-
-  .game-reveal-overlay {
-    top: calc((100vh - 100vw) / 2);
-    right: auto;
-    bottom: auto;
-    left: calc((100vw - 100vh) / 2);
-    width: 100vh;
-    height: 100vw;
-    transform: rotate(-90deg);
-    transform-origin: center center;
-  }
-
-  .game-reveal-panel {
-    max-height: calc(100vw - 32px);
-    width: min(600px, calc(100vh - 32px));
-  }
-
-  .game-side-panel {
-    max-height: calc(100vw - 120px);
+    max-width: calc(var(--game-viewport-width) - var(--game-inline-safe-start) - var(--game-inline-safe-end) - 100px);
   }
 }
 
@@ -2390,7 +2384,7 @@ body.privacy-modal-open {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px;
+  padding: var(--game-tutorial-padding);
 }
 
 .game-reader-view.hidden {
@@ -2930,7 +2924,7 @@ body.privacy-modal-open {
   justify-content: center;
   width: 100%;
   height: 100%;
-  padding: 60px 0 80px;
+  padding: calc(var(--game-block-safe-start) + 60px) var(--game-inline-safe-end) calc(var(--game-block-safe-end) + 80px) var(--game-inline-safe-start);
   overflow: hidden;
   touch-action: none;
 }
@@ -2943,11 +2937,11 @@ body.privacy-modal-open {
    centred on the current view position. The grid template is set by JS. */
 .bem-map {
   --bem-cell-w: min(
-    calc((100vw - 12px) * 0.6),
-    calc((100vh - 162px) * 0.6 * 1.4),
-    560px
+    calc(var(--bem-usable-inline) * var(--bem-zoom-scale)),
+    calc(var(--bem-usable-block) * var(--bem-zoom-scale) * var(--bem-card-aspect)),
+    var(--bem-zoom-max)
   );
-  --bem-cell-h: calc(var(--bem-cell-w) / 1.4);
+  --bem-cell-h: calc(var(--bem-cell-w) / var(--bem-card-aspect));
   display: grid;
   grid-template-columns: repeat(3, var(--bem-cell-w));
   grid-template-rows: repeat(3, var(--bem-cell-h));
@@ -3234,7 +3228,7 @@ body.privacy-modal-open {
 }
 
 .game-view.bem-active .game-side-panel {
-  right: 16px;
+  right: var(--game-side-panel-right);
   left: auto;
 }
 
@@ -3251,63 +3245,40 @@ body.privacy-modal-open {
 /* ── BEM responsive styles ───────────────────────────────────────────────────── */
 
 @media (max-width: 680px) {
+  :root {
+    --bem-zoom-max: 400px;
+  }
+
   .bem-map {
-    --bem-cell-w: min(
-      calc((100vw - 12px) * 0.6),
-      calc((100vh - 162px) * 0.6 * 1.4),
-      400px
-    );
-    --bem-cell-h: calc(var(--bem-cell-w) / 1.4);
     gap: 4px;
   }
 }
 
 @media (max-width: 480px) {
+  :root {
+    --bem-zoom-max: 320px;
+  }
+
   .bem-map {
-    --bem-cell-w: min(
-      calc((100vw - 12px) * 0.6),
-      calc((100vh - 162px) * 0.6 * 1.4),
-      320px
-    );
-    --bem-cell-h: calc(var(--bem-cell-w) / 1.4);
     gap: 3px;
   }
 }
 
 @media (max-height: 520px) and (orientation: landscape) {
   .bem-map-area {
-    padding: 48px 0 68px;
+    padding: calc(var(--game-block-safe-start) + 48px) var(--game-inline-safe-end) calc(var(--game-block-safe-end) + 68px) var(--game-inline-safe-start);
     flex: 1;
   }
 
   .bem-info-bar {
-    bottom: 16px;
-  }
-
-  .bem-map {
-    --bem-cell-w: min(
-      calc((100vw - 12px) * 0.6),
-      calc((100vh - 128px) * 0.6 * 1.4),
-      360px
-    );
-    --bem-cell-h: calc(var(--bem-cell-w) / 1.4);
+    bottom: calc(var(--game-block-safe-end) + 8px);
   }
 }
 
 /* Mobile portrait: BEM grid rotates with the game view */
 @media (pointer: coarse) and (orientation: portrait) {
   .bem-map-area {
-    padding: 60px 0 80px;
-  }
-
-  .bem-map {
-    /* In rotated portrait mode, vw/vh are swapped relative to visual layout */
-    --bem-cell-w: min(
-      calc((100vh - 12px) * 0.6),
-      calc((100vw - 162px) * 0.6 * 1.4),
-      420px
-    );
-    --bem-cell-h: calc(var(--bem-cell-w) / 1.4);
+    padding: calc(var(--game-block-safe-start) + 48px) var(--game-inline-safe-end) calc(var(--game-block-safe-end) + 68px) var(--game-inline-safe-start);
   }
 
   .bem-view-card-btn {
@@ -3364,22 +3335,18 @@ body.privacy-modal-open {
 
 /* Close zoom: centre card fills most of viewport */
 .game-view.bem-zoom-close .bem-map {
-  --bem-cell-w: min(
-    calc((100vw - 12px) * 0.86),
-    calc((100vh - 162px) * 0.86 * 1.4),
-    900px
-  );
-  --bem-cell-h: calc(var(--bem-cell-w) / 1.4);
+  --bem-zoom-scale: 0.86;
+  --bem-zoom-max: 900px;
 }
 
 /* Far zoom: cells sized so the inner 3×3 area fills the viewport */
 .game-view.bem-zoom-far .bem-map {
   --bem-cell-w: min(
-    calc((100vw - 24px) / 3),
-    calc((100vh - 162px) * 1.4 / 3),
+    calc(var(--bem-usable-inline) / 3),
+    calc(var(--bem-usable-block) * var(--bem-card-aspect) / 3),
     240px
   );
-  --bem-cell-h: calc(var(--bem-cell-w) / 1.4);
+  --bem-cell-h: calc(var(--bem-cell-w) / var(--bem-card-aspect));
 }
 
 /* ── Die result popups ───────────────────────────────────────────────────────── */
@@ -3514,19 +3481,7 @@ body.privacy-modal-open {
   transform: scale(1.06);
 }
 
-/* Mobile portrait: die popups rotate with game view */
-@media (pointer: coarse) and (orientation: portrait) {
-  .die-popup {
-    top: calc((100vh - 100vw) / 2);
-    right: auto;
-    bottom: auto;
-    left: calc((100vw - 100vh) / 2);
-    width: 100vh;
-    height: 100vw;
-    transform: rotate(-90deg);
-    transform-origin: center center;
-  }
-}
+/* Mobile portrait: die popups rotate with the shared mobile game viewport rules. */
 
 /* ── List view ───────────────────────────────────────────────────────────────── */
 
@@ -3838,7 +3793,7 @@ body.privacy-modal-open {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px;
+  padding: var(--game-tutorial-padding);
 }
 
 .game-tutorial-overlay.hidden {
@@ -3859,8 +3814,8 @@ body.privacy-modal-open {
   border: 1px solid var(--border);
   border-radius: 20px;
   padding: 28px 28px 24px;
-  max-width: min(560px, calc(100vw - 32px));
-  max-height: min(80vh, 600px);
+  max-width: var(--game-tutorial-panel-max-width);
+  max-height: var(--game-tutorial-panel-max-height);
   width: 100%;
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
   display: flex;
@@ -3939,24 +3894,7 @@ body.privacy-modal-open {
   transform: translateY(-1px);
 }
 
-/* Tutorial overlay in portrait mobile — rotate with game view */
-@media (pointer: coarse) and (orientation: portrait) {
-  .game-tutorial-overlay {
-    top: calc((100vh - 100vw) / 2);
-    right: auto;
-    bottom: auto;
-    left: calc((100vw - 100vh) / 2);
-    width: 100vh;
-    height: 100vw;
-    transform: rotate(-90deg);
-    transform-origin: center center;
-    padding: 10px;
-  }
-
-  .game-tutorial-panel {
-    max-height: min(85vw, 520px);
-  }
-}
+/* Tutorial overlay in portrait mobile — rotation handled with the shared mobile game viewport variables. */
 
 /* ── Deck panel close button in title row ─────────────────────────────────────── */
 
