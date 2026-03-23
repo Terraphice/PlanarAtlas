@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /share/
+Disallow: /cards/
+Disallow: /transcripts/
+Disallow: /scripts/
+
+Sitemap: https://planechase.terraphice.dev/sitemap.xml
