@@ -1,29 +1,8 @@
 /* ── Deck button ─────────────────────────────────────────────────────────────── */
 
 .topbar-deck-button {
-  flex-shrink: 0;
   position: relative;
-  width: 46px;
-  height: 46px;
-  padding: 0;
-  border: 1px solid var(--border);
-  background: var(--bg-elev-2);
-  color: var(--text);
-  border-radius: 10px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   font-size: 1.25rem;
-  transition: border-color 160ms ease, background 160ms ease, color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
-}
-
-.topbar-deck-button:hover,
-.topbar-deck-button:focus-visible {
-  border-color: color-mix(in srgb, var(--accent) 44%, var(--border));
-  background: color-mix(in srgb, var(--bg-elev-2) 84%, var(--accent) 16%);
-  transform: translateY(-1px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
 }
 
 .topbar-deck-button.deck-panel-open,
