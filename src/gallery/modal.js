@@ -2,7 +2,7 @@
 // Card detail modal: navigation between cards, asynchronous transcript loading,
 // phenomenon flip animation, and URL hash synchronisation.
 
-import { enhanceManaSymbols } from "./utils.js";
+import { compareTags, enhanceManaSymbols } from "./utils.js";
 import { remapLegacyKey } from "../deck/codec.js";
 
 export function createModalManager({
@@ -173,7 +173,8 @@ export function createModalManager({
     callbacks.setModalCardKey(card.id);
 
     modalTagList.innerHTML = "";
-    for (const tag of card.tags) {
+    const orderedTags = [...card.tags].sort(compareTags);
+    for (const tag of orderedTags) {
       modalTagList.appendChild(callbacks.createTagChipElement(tag, "modal-tag"));
     }
 
