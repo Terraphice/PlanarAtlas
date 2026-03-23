@@ -3240,6 +3240,22 @@ body.privacy-modal-open {
               0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
+
+.bem-info-bar-btn--phenomenon {
+  border-color: #c084fc;
+  box-shadow: 0 0 0 2px rgba(192, 132, 252, 0.35),
+              0 0 14px rgba(192, 132, 252, 0.28),
+              0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.bem-info-bar-btn--phenomenon:hover {
+  border-color: #c084fc;
+  background: color-mix(in srgb, rgba(192, 132, 252, 0.16) 70%, var(--bg-elev-2));
+  box-shadow: 0 0 0 2px rgba(192, 132, 252, 0.45),
+              0 0 18px rgba(192, 132, 252, 0.38),
+              0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
 .bem-card-name-label {
   overflow: hidden;
   text-overflow: ellipsis;
