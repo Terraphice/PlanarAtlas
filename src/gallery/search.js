@@ -2,7 +2,13 @@
 // Search input management: suggestion list, keyboard navigation, and ghost-text
 // inline autocomplete for both the top bar and sidebar search surfaces.
 
-import { getTagLabel, matchesFilters, parseSearchQuery, escapeHtml } from "./utils.js";
+import {
+  getTagLabel,
+  matchesFilters,
+  parseSearchQuery,
+  escapeHtml,
+  getSearchableNormalizedTags
+} from "./utils.js";
 
 export function createSearchManager({
   topSearch,
@@ -47,7 +53,9 @@ export function createSearchManager({
     const suggestions = [];
 
     const matchingTags = [...new Set(
-      allCards.flatMap((card) => card.tags).filter((tag) => getTagLabel(tag).toLowerCase().includes(queryLower))
+      allCards
+        .flatMap((card) => card.tags)
+        .filter((tag) => getSearchableNormalizedTags([tag]).some((value) => value.includes(queryLower)))
     )].slice(0, 4);
 
     for (const tag of matchingTags) {
