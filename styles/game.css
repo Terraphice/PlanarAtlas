@@ -2027,8 +2027,18 @@
 
   .game-view,
   .game-reveal-overlay,
-  .die-popup,
-  .game-tutorial-overlay {
+  .die-popup {
+    top: calc((100dvh - 100dvw) / 2);
+    right: auto;
+    bottom: auto;
+    left: calc((100dvw - 100dvh) / 2);
+    width: 100dvh;
+    height: 100dvw;
+    transform: rotate(-90deg);
+    transform-origin: center center;
+  }
+
+  body.game-open .game-tutorial-overlay {
     top: calc((100dvh - 100dvw) / 2);
     right: auto;
     bottom: auto;
