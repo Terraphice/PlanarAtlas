@@ -540,6 +540,19 @@ export function getBadgeTags(tags) {
   return tags.map(parseBadgeTag).filter(Boolean);
 }
 
+export function compareTags(a, b) {
+  const aTop = isTopTag(a);
+  const bTop = isTopTag(b);
+  if (aTop !== bTop) return aTop ? -1 : 1;
+
+  const aBadge = parseBadgeTag(a);
+  const bBadge = parseBadgeTag(b);
+  if (aBadge && !bBadge) return -1;
+  if (!aBadge && bBadge) return 1;
+
+  return getTagLabel(a).localeCompare(getTagLabel(b), undefined, { sensitivity: "base" });
+}
+
 export function getTagLabel(tag) {
   const stripped = stripTopPrefix(tag);
   const badge = parseBadgeTag(stripped);
@@ -549,7 +562,9 @@ export function getTagLabel(tag) {
 export function getTagToneClass(tag, baseClass) {
   const stripped = stripTopPrefix(tag);
   const badge = parseBadgeTag(stripped);
-  return badge ? `${baseClass} tone-${badge.color}` : baseClass;
+  if (!badge) return baseClass;
+  if (badge.label === "Plane") return `${baseClass} tone-plane`;
+  return `${baseClass} tone-${badge.color}`;
 }
 
 export function stripQuotes(value) {

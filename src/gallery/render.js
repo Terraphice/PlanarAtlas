@@ -7,6 +7,7 @@ import {
   getTagToneClass,
   getBadgeTags,
   parseBadgeTag,
+  compareTags,
   escapeHtml
 } from "./utils.js";
 
@@ -122,7 +123,12 @@ export function createRenderer({
   // ── Badge / chip rendering ────────────────────────────────────────────────────
 
   function renderCardBadgeLayer(card) {
-    const badges = getBadgeTags(card.tags);
+    const badges = getBadgeTags(card.tags).map((badge) => {
+      if (badge.label === "Official" || badge.label === "Custom") {
+        return { ...badge, corner: "tl" };
+      }
+      return badge;
+    });
     if (badges.length === 0) return null;
 
     const grouped = { tl: [], tr: [], bl: [], br: [] };
@@ -139,7 +145,7 @@ export function createRenderer({
       stack.className = `card-badge-stack ${corner}`;
       for (const badge of grouped[corner]) {
         const badgeEl = document.createElement("div");
-        badgeEl.className = `card-badge tone-${badge.color}`;
+        badgeEl.className = getTagToneClass(badge.raw, "card-badge");
         badgeEl.textContent = badge.label;
         stack.appendChild(badgeEl);
       }
@@ -228,7 +234,8 @@ export function createRenderer({
     const MAX_TAG_CHARS = 35;
     let charCount = 0;
     const visibleTags = [];
-    for (const tag of card.tags) {
+    const orderedTags = [...card.tags].sort(compareTags);
+    for (const tag of orderedTags) {
       const label = getTagLabel(tag);
       if (visibleTags.length === 0 || charCount + label.length <= MAX_TAG_CHARS) {
         visibleTags.push(tag);
@@ -311,7 +318,7 @@ export function createRenderer({
 
     const tagsEl = document.createElement("div");
     tagsEl.className = "list-card-tags";
-    const badgeTags = card.tags.filter(isRawBadgeTag);
+    const badgeTags = [...card.tags].filter(isRawBadgeTag).sort(compareTags);
     for (const tag of badgeTags.slice(0, 3)) {
       tagsEl.appendChild(createTagChipElement(tag, "card-tag"));
     }
@@ -402,7 +409,7 @@ export function createRenderer({
 
     if (filters.search) pillData.push({ label: `Search: ${filters.search}`, removable: false });
 
-    for (const tag of filters.tags) {
+    for (const tag of [...filters.tags].sort(compareTags)) {
       pillData.push({ label: `Tag: ${getTagLabel(tag)}`, removable: true, tag });
     }
 
@@ -426,8 +433,9 @@ export function createRenderer({
       if (pill.removable) {
         element.classList.add("active-filter-pill-removable");
         element.dataset.tag = pill.tag;
-        const badge = parseBadgeTag(pill.tag);
-        if (badge) element.classList.add(`tone-${badge.color}`);
+        if (parseBadgeTag(pill.tag)) {
+          element.className = getTagToneClass(pill.tag, "active-filter-pill active-filter-pill-removable");
+        }
       } else {
         element.disabled = true;
       }
