@@ -1,471 +1,5 @@
 [
   {
-    "id": "atlas_consultation",
-    "name": "Atlas Consultation",
-    "type": "Phenomenon",
-    "image": "cards/images/Atlas Consultation.png",
-    "thumb": "cards/thumbs/Atlas Consultation.webp",
-    "transcript": "cards/transcripts/Atlas Consultation.md",
-    "tags": [
-      ":top:badge:tr:amber:Custom",
-      "PBT"
-    ]
-  },
-  {
-    "id": "battlefield_hysteria",
-    "name": "Battlefield Hysteria",
-    "type": "Phenomenon",
-    "image": "cards/images/Battlefield Hysteria.png",
-    "thumb": "cards/thumbs/Battlefield Hysteria.webp",
-    "transcript": "cards/transcripts/Battlefield Hysteria.md",
-    "tags": [
-      ":top:badge:tr:amber:Custom",
-      "PBT"
-    ]
-  },
-  {
-    "id": "caught_in_a_parallel_universe",
-    "name": "Caught in a Parallel Universe",
-    "type": "Phenomenon",
-    "image": "cards/images/Caught in a Parallel Universe.png",
-    "thumb": "cards/thumbs/Caught in a Parallel Universe.webp",
-    "transcript": "cards/transcripts/Caught in a Parallel Universe.md",
-    "tags": [
-      ":top:badge:tr:green:Official",
-      "WHO",
-      "hidden"
-    ],
-    "scryfallId": null
-  },
-  {
-    "id": "chaotic_aether",
-    "name": "Chaotic Aether",
-    "type": "Phenomenon",
-    "image": "cards/images/Chaotic Aether.png",
-    "thumb": "cards/thumbs/Chaotic Aether.webp",
-    "transcript": "cards/transcripts/Chaotic Aether.md",
-    "tags": [
-      ":top:badge:tr:green:Official",
-      "MOC"
-    ],
-    "scryfallId": null
-  },
-  {
-    "id": "cleansing_dawn",
-    "name": "Cleansing Dawn",
-    "type": "Phenomenon",
-    "image": "cards/images/Cleansing Dawn.png",
-    "thumb": "cards/thumbs/Cleansing Dawn.webp",
-    "transcript": "cards/transcripts/Cleansing Dawn.md",
-    "tags": [
-      ":top:badge:tr:amber:Custom",
-      "PBT"
-    ]
-  },
-  {
-    "id": "corrupting_dusk",
-    "name": "Corrupting Dusk",
-    "type": "Phenomenon",
-    "image": "cards/images/Corrupting Dusk.png",
-    "thumb": "cards/thumbs/Corrupting Dusk.webp",
-    "transcript": "cards/transcripts/Corrupting Dusk.md",
-    "tags": [
-      ":top:badge:tr:amber:Custom",
-      "PBT"
-    ]
-  },
-  {
-    "id": "disturbed_slumber",
-    "name": "Disturbed Slumber",
-    "type": "Phenomenon",
-    "image": "cards/images/Disturbed Slumber.png",
-    "thumb": "cards/thumbs/Disturbed Slumber.webp",
-    "transcript": "cards/transcripts/Disturbed Slumber.md",
-    "tags": [
-      ":top:badge:tr:amber:Custom",
-      "PBT"
-    ]
-  },
-  {
-    "id": "embrace_of_ichor",
-    "name": "Embrace of Ichor",
-    "type": "Phenomenon",
-    "image": "cards/images/Embrace of Ichor.png",
-    "thumb": "cards/thumbs/Embrace of Ichor.webp",
-    "transcript": "cards/transcripts/Embrace of Ichor.md",
-    "tags": [
-      ":top:badge:tr:amber:Custom",
-      "PBT"
-    ]
-  },
-  {
-    "id": "fateful_return",
-    "name": "Fateful Return",
-    "type": "Phenomenon",
-    "image": "cards/images/Fateful Return.png",
-    "thumb": "cards/thumbs/Fateful Return.webp",
-    "transcript": "cards/transcripts/Fateful Return.md",
-    "tags": [
-      ":top:badge:tr:amber:Custom",
-      "PBT"
-    ]
-  },
-  {
-    "id": "fixed_point_in_time",
-    "name": "Fixed Point in Time",
-    "type": "Phenomenon",
-    "image": "cards/images/Fixed Point in Time.png",
-    "thumb": "cards/thumbs/Fixed Point in Time.webp",
-    "transcript": "cards/transcripts/Fixed Point in Time.md",
-    "tags": [
-      ":top:badge:tr:green:Official",
-      "WHO",
-      "hidden"
-    ],
-    "scryfallId": null
-  },
-  {
-    "id": "glimpse_of_fate",
-    "name": "Glimpse of Fate",
-    "type": "Phenomenon",
-    "image": "cards/images/Glimpse of Fate.png",
-    "thumb": "cards/thumbs/Glimpse of Fate.webp",
-    "transcript": "cards/transcripts/Glimpse of Fate.md",
-    "tags": [
-      ":top:badge:tr:amber:Custom",
-      "PBT"
-    ]
-  },
-  {
-    "id": "great_desparking",
-    "name": "Great Desparking",
-    "type": "Phenomenon",
-    "image": "cards/images/Great Desparking.png",
-    "thumb": "cards/thumbs/Great Desparking.webp",
-    "transcript": "cards/transcripts/Great Desparking.md",
-    "tags": [
-      ":top:badge:tr:amber:Custom",
-      "PBT"
-    ]
-  },
-  {
-    "id": "high_and_dry_black_market",
-    "name": "High and Dry Black Market",
-    "type": "Phenomenon",
-    "image": "cards/images/High and Dry Black Market.png",
-    "thumb": "cards/thumbs/High and Dry Black Market.webp",
-    "transcript": "cards/transcripts/High and Dry Black Market.md",
-    "tags": [
-      ":top:badge:tr:green:Official",
-      "PUNK",
-      "hidden"
-    ],
-    "scryfallId": null
-  },
-  {
-    "id": "human-time_lord_meta_crisis",
-    "name": "Human—Time Lord Meta Crisis",
-    "type": "Phenomenon",
-    "image": "cards/images/Human—Time Lord Meta-Crisis.png",
-    "thumb": "cards/thumbs/Human—Time Lord Meta-Crisis.webp",
-    "transcript": "cards/transcripts/Human—Time Lord Meta-Crisis.md",
-    "tags": [
-      ":top:badge:tr:green:Official",
-      "WHO",
-      "hidden"
-    ],
-    "scryfallId": null
-  },
-  {
-    "id": "ichor_trail",
-    "name": "Ichor Trail",
-    "type": "Phenomenon",
-    "image": "cards/images/Ichor Trail.png",
-    "thumb": "cards/thumbs/Ichor Trail.webp",
-    "transcript": "cards/transcripts/Ichor Trail.md",
-    "tags": [
-      ":top:badge:tr:amber:Custom",
-      "PBT"
-    ]
-  },
-  {
-    "id": "interplanar_mapping",
-    "name": "Interplanar Mapping",
-    "type": "Phenomenon",
-    "image": "cards/images/Interplanar Mapping.png",
-    "thumb": "cards/thumbs/Interplanar Mapping.webp",
-    "transcript": "cards/transcripts/Interplanar Mapping.md",
-    "tags": [
-      ":top:badge:tr:amber:Custom",
-      "PBT"
-    ]
-  },
-  {
-    "id": "interplanar_tunnel",
-    "name": "Interplanar Tunnel",
-    "type": "Phenomenon",
-    "image": "cards/images/Interplanar Tunnel.png",
-    "thumb": "cards/thumbs/Interplanar Tunnel.webp",
-    "transcript": "cards/transcripts/Interplanar Tunnel.md",
-    "tags": [
-      ":top:badge:tr:green:Official",
-      "OPCA"
-    ],
-    "scryfallId": null
-  },
-  {
-    "id": "mad_labs",
-    "name": "Mad Labs",
-    "type": "Phenomenon",
-    "image": "cards/images/Mad Labs.png",
-    "thumb": "cards/thumbs/Mad Labs.webp",
-    "transcript": "cards/transcripts/Mad Labs.md",
-    "tags": [
-      ":top:badge:tr:green:Official",
-      "PUNK",
-      "hidden"
-    ],
-    "scryfallId": null
-  },
-  {
-    "id": "morphic_tide",
-    "name": "Morphic Tide",
-    "type": "Phenomenon",
-    "image": "cards/images/Morphic Tide.png",
-    "thumb": "cards/thumbs/Morphic Tide.webp",
-    "transcript": "cards/transcripts/Morphic Tide.md",
-    "tags": [
-      ":top:badge:tr:green:Official",
-      "OPCA"
-    ],
-    "scryfallId": null
-  },
-  {
-    "id": "mutual_epiphany",
-    "name": "Mutual Epiphany",
-    "type": "Phenomenon",
-    "image": "cards/images/Mutual Epiphany.png",
-    "thumb": "cards/thumbs/Mutual Epiphany.webp",
-    "transcript": "cards/transcripts/Mutual Epiphany.md",
-    "tags": [
-      ":top:badge:tr:green:Official",
-      "MOC"
-    ],
-    "scryfallId": null
-  },
-  {
-    "id": "omenpath_instability",
-    "name": "Omenpath Instability",
-    "type": "Phenomenon",
-    "image": "cards/images/Omenpath Instability.png",
-    "thumb": "cards/thumbs/Omenpath Instability.webp",
-    "transcript": "cards/transcripts/Omenpath Instability.md",
-    "tags": [
-      ":top:badge:tr:green:Official",
-      "PUNK",
-      "hidden"
-    ],
-    "scryfallId": null
-  },
-  {
-    "id": "omenpath_shortcut",
-    "name": "Omenpath Shortcut",
-    "type": "Phenomenon",
-    "image": "cards/images/Omenpath Shortcut.png",
-    "thumb": "cards/thumbs/Omenpath Shortcut.webp",
-    "transcript": "cards/transcripts/Omenpath Shortcut.md",
-    "tags": [
-      ":top:badge:tr:amber:Custom",
-      "PBT"
-    ]
-  },
-  {
-    "id": "pin_trading",
-    "name": "Pin Trading",
-    "type": "Phenomenon",
-    "image": "cards/images/Pin Trading.png",
-    "thumb": "cards/thumbs/Pin Trading.webp",
-    "transcript": "cards/transcripts/Pin Trading.md",
-    "tags": [
-      ":top:badge:tr:green:Official",
-      "PUNK",
-      "hidden"
-    ],
-    "scryfallId": null
-  },
-  {
-    "id": "planewide_disaster",
-    "name": "Planewide Disaster",
-    "type": "Phenomenon",
-    "image": "cards/images/Planewide Disaster.png",
-    "thumb": "cards/thumbs/Planewide Disaster.webp",
-    "transcript": "cards/transcripts/Planewide Disaster.md",
-    "tags": [
-      ":top:badge:tr:green:Official",
-      "MOC"
-    ],
-    "scryfallId": null
-  },
-  {
-    "id": "probability_flux",
-    "name": "Probability Flux",
-    "type": "Phenomenon",
-    "image": "cards/images/Probability Flux.png",
-    "thumb": "cards/thumbs/Probability Flux.webp",
-    "transcript": "cards/transcripts/Probability Flux.md",
-    "tags": [
-      ":top:badge:tr:green:Official",
-      "PUNK",
-      "hidden"
-    ],
-    "scryfallId": null
-  },
-  {
-    "id": "reality_shaping",
-    "name": "Reality Shaping",
-    "type": "Phenomenon",
-    "image": "cards/images/Reality Shaping.png",
-    "thumb": "cards/thumbs/Reality Shaping.webp",
-    "transcript": "cards/transcripts/Reality Shaping.md",
-    "tags": [
-      ":top:badge:tr:green:Official",
-      "MOC"
-    ],
-    "scryfallId": null
-  },
-  {
-    "id": "royal_booster",
-    "name": "Royal Booster",
-    "type": "Phenomenon",
-    "image": "cards/images/Royal Booster.png",
-    "thumb": "cards/thumbs/Royal Booster.webp",
-    "transcript": "cards/transcripts/Royal Booster.md",
-    "tags": [
-      ":top:badge:tr:green:Official",
-      "PUNK",
-      "hidden"
-    ],
-    "scryfallId": null
-  },
-  {
-    "id": "sleeper_agent",
-    "name": "Sleeper Agent",
-    "type": "Phenomenon",
-    "image": "cards/images/Sleeper Agent.png",
-    "thumb": "cards/thumbs/Sleeper Agent.webp",
-    "transcript": "cards/transcripts/Sleeper Agent.md",
-    "tags": [
-      ":top:badge:tr:amber:Custom",
-      "PBT"
-    ]
-  },
-  {
-    "id": "spatial_merging",
-    "name": "Spatial Merging",
-    "type": "Phenomenon",
-    "image": "cards/images/Spatial Merging.png",
-    "thumb": "cards/thumbs/Spatial Merging.webp",
-    "transcript": "cards/transcripts/Spatial Merging.md",
-    "tags": [
-      ":top:badge:tr:green:Official",
-      "MOC"
-    ],
-    "scryfallId": null
-  },
-  {
-    "id": "surging_vitality",
-    "name": "Surging Vitality",
-    "type": "Phenomenon",
-    "image": "cards/images/Surging Vitality.png",
-    "thumb": "cards/thumbs/Surging Vitality.webp",
-    "transcript": "cards/transcripts/Surging Vitality.md",
-    "tags": [
-      ":top:badge:tr:amber:Custom",
-      "PBT"
-    ]
-  },
-  {
-    "id": "team_up",
-    "name": "Team Up!",
-    "type": "Phenomenon",
-    "image": "cards/images/Team-Up!.png",
-    "thumb": "cards/thumbs/Team-Up!.webp",
-    "transcript": "cards/transcripts/Team-Up!.md",
-    "tags": [
-      ":top:badge:tr:green:Official",
-      "PUNK",
-      "hidden"
-    ],
-    "scryfallId": null
-  },
-  {
-    "id": "time_distortion",
-    "name": "Time Distortion",
-    "type": "Phenomenon",
-    "image": "cards/images/Time Distortion.png",
-    "thumb": "cards/thumbs/Time Distortion.webp",
-    "transcript": "cards/transcripts/Time Distortion.md",
-    "tags": [
-      ":top:badge:tr:green:Official",
-      "OPCA"
-    ],
-    "scryfallId": null
-  },
-  {
-    "id": "time_spiral",
-    "name": "Time Spiral",
-    "type": "Phenomenon",
-    "image": "cards/images/Time Spiral.png",
-    "thumb": "cards/thumbs/Time Spiral.webp",
-    "transcript": "cards/transcripts/Time Spiral.md",
-    "tags": [
-      ":top:badge:tr:amber:Custom",
-      "PBT"
-    ]
-  },
-  {
-    "id": "unknown_event",
-    "name": "Unknown Event",
-    "type": "Phenomenon",
-    "image": "cards/images/Unknown Event.png",
-    "thumb": "cards/thumbs/Unknown Event.webp",
-    "transcript": "cards/transcripts/Unknown Event.md",
-    "tags": [
-      ":top:badge:tr:green:Official",
-      "PUNK",
-      "hidden"
-    ],
-    "scryfallId": null
-  },
-  {
-    "id": "unleash_the_flux",
-    "name": "Unleash the Flux",
-    "type": "Phenomenon",
-    "image": "cards/images/Unleash the Flux.png",
-    "thumb": "cards/thumbs/Unleash the Flux.webp",
-    "transcript": "cards/transcripts/Unleash the Flux.md",
-    "tags": [
-      ":top:badge:tr:green:Official",
-      "WHO",
-      "hidden"
-    ],
-    "scryfallId": null
-  },
-  {
-    "id": "year_end_review",
-    "name": "Year End Review",
-    "type": "Phenomenon",
-    "image": "cards/images/Year-End Review.png",
-    "thumb": "cards/thumbs/Year-End Review.webp",
-    "transcript": "cards/transcripts/Year-End Review.md",
-    "tags": [
-      ":top:badge:tr:green:Official",
-      "PUNK",
-      "hidden"
-    ],
-    "scryfallId": null
-  },
-  {
     "id": "academy_at_tolaria_west",
     "name": "Academy at Tolaria West",
     "type": "Plane",
@@ -475,7 +9,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Dominaria",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -489,7 +24,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Ravnica",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -503,7 +39,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Zendikar",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -518,7 +55,8 @@
       ":top:badge:tr:green:Official",
       "Earth",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -533,7 +71,8 @@
       ":top:badge:tr:green:Official",
       "Earth",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -548,7 +87,8 @@
       ":top:badge:tr:green:Official",
       "Alfava Metraxis",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -562,7 +102,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Kephalai",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -576,7 +117,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -591,7 +133,8 @@
       ":top:badge:tr:green:Official",
       "Hell",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -605,9 +148,23 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Kolbahan",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
+  },
+  {
+    "id": "atlas_consultation",
+    "name": "Atlas Consultation",
+    "type": "Phenomenon",
+    "image": "cards/images/Atlas Consultation.png",
+    "thumb": "cards/thumbs/Atlas Consultation.webp",
+    "transcript": "cards/transcripts/Atlas Consultation.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "PBT",
+      ":top:badge:tr:purple:Phenomenon"
+    ]
   },
   {
     "id": "bad_wolf_bay",
@@ -620,7 +177,8 @@
       ":top:badge:tr:green:Official",
       "Earth",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -634,9 +192,23 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Alara",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
+  },
+  {
+    "id": "battlefield_hysteria",
+    "name": "Battlefield Hysteria",
+    "type": "Phenomenon",
+    "image": "cards/images/Battlefield Hysteria.png",
+    "thumb": "cards/thumbs/Battlefield Hysteria.webp",
+    "transcript": "cards/transcripts/Battlefield Hysteria.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "PBT",
+      ":top:badge:tr:purple:Phenomenon"
+    ]
   },
   {
     "id": "besieged_viking_village",
@@ -649,7 +221,8 @@
       ":top:badge:tr:green:Official",
       "Earth",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -664,7 +237,8 @@
       ":top:badge:tr:green:Official",
       "Amsterdam",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -678,7 +252,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -692,7 +267,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Equilor",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -707,7 +283,23 @@
       ":top:badge:tr:green:Official",
       "Mars",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
+    "id": "caught_in_a_parallel_universe",
+    "name": "Caught in a Parallel Universe",
+    "type": "Phenomenon",
+    "image": "cards/images/Caught in a Parallel Universe.png",
+    "thumb": "cards/thumbs/Caught in a Parallel Universe.webp",
+    "transcript": "cards/transcripts/Caught in a Parallel Universe.md",
+    "tags": [
+      ":top:badge:tr:green:Official",
+      "WHO",
+      "hidden",
+      ":top:badge:tr:purple:Phenomenon"
     ],
     "scryfallId": null
   },
@@ -721,7 +313,22 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Luvion",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
+    "id": "chaotic_aether",
+    "name": "Chaotic Aether",
+    "type": "Phenomenon",
+    "image": "cards/images/Chaotic Aether.png",
+    "thumb": "cards/thumbs/Chaotic Aether.webp",
+    "transcript": "cards/transcripts/Chaotic Aether.md",
+    "tags": [
+      ":top:badge:tr:green:Official",
+      "MOC",
+      ":top:badge:tr:purple:Phenomenon"
     ],
     "scryfallId": null
   },
@@ -736,7 +343,8 @@
       ":top:badge:tr:green:Official",
       "Las Vegas",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -751,7 +359,8 @@
       ":top:badge:tr:green:Official",
       "Chicago",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -766,7 +375,8 @@
       ":top:badge:tr:green:Official",
       "Skaro",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -781,9 +391,23 @@
       ":top:badge:tr:green:Official",
       "Clamhattan",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
+  },
+  {
+    "id": "cleansing_dawn",
+    "name": "Cleansing Dawn",
+    "type": "Phenomenon",
+    "image": "cards/images/Cleansing Dawn.png",
+    "thumb": "cards/thumbs/Cleansing Dawn.webp",
+    "transcript": "cards/transcripts/Cleansing Dawn.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "PBT",
+      ":top:badge:tr:purple:Phenomenon"
+    ]
   },
   {
     "id": "cliffside_market",
@@ -795,7 +419,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Mercadia",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -810,9 +435,23 @@
       ":top:badge:tr:green:Official",
       "Earth",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
+  },
+  {
+    "id": "corrupting_dusk",
+    "name": "Corrupting Dusk",
+    "type": "Phenomenon",
+    "image": "cards/images/Corrupting Dusk.png",
+    "thumb": "cards/thumbs/Corrupting Dusk.webp",
+    "transcript": "cards/transcripts/Corrupting Dusk.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "PBT",
+      ":top:badge:tr:purple:Phenomenon"
+    ]
   },
   {
     "id": "dalek_intensive_care",
@@ -825,7 +464,8 @@
       ":top:badge:tr:green:Official",
       "The Dalek Asylum",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -840,9 +480,23 @@
       ":top:badge:tr:green:Official",
       "Secret Lair",
       "hidden",
-      "PSSC"
+      "PSSC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
+  },
+  {
+    "id": "disturbed_slumber",
+    "name": "Disturbed Slumber",
+    "type": "Phenomenon",
+    "image": "cards/images/Disturbed Slumber.png",
+    "thumb": "cards/thumbs/Disturbed Slumber.webp",
+    "transcript": "cards/transcripts/Disturbed Slumber.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "PBT",
+      ":top:badge:tr:purple:Phenomenon"
+    ]
   },
   {
     "id": "edge_of_malacol",
@@ -854,7 +508,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Belenon",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -868,7 +523,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Shandalar",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -883,9 +539,23 @@
       ":top:badge:tr:green:Official",
       "Las Vegas",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
+  },
+  {
+    "id": "embrace_of_ichor",
+    "name": "Embrace of Ichor",
+    "type": "Phenomenon",
+    "image": "cards/images/Embrace of Ichor.png",
+    "thumb": "cards/thumbs/Embrace of Ichor.webp",
+    "transcript": "cards/transcripts/Embrace of Ichor.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "PBT",
+      ":top:badge:tr:purple:Phenomenon"
+    ]
   },
   {
     "id": "enigma_ridges",
@@ -897,7 +567,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Echoir",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -911,7 +582,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Alara",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -926,9 +598,23 @@
       ":top:badge:tr:green:Official",
       "Blind Eternities",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
+  },
+  {
+    "id": "fateful_return",
+    "name": "Fateful Return",
+    "type": "Phenomenon",
+    "image": "cards/images/Fateful Return.png",
+    "thumb": "cards/thumbs/Fateful Return.webp",
+    "transcript": "cards/transcripts/Fateful Return.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "PBT",
+      ":top:badge:tr:purple:Phenomenon"
+    ]
   },
   {
     "id": "fblthp_completely_utterly_totally_lost",
@@ -941,7 +627,8 @@
       ":top:badge:tr:green:Official",
       "Secret Lair",
       "hidden",
-      "PSSC"
+      "PSSC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -955,7 +642,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Muraganda",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -969,7 +657,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Moag",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -984,7 +673,23 @@
       ":top:badge:tr:green:Official",
       "Secret Lair",
       "hidden",
-      "PSSC"
+      "PSSC",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
+    "id": "fixed_point_in_time",
+    "name": "Fixed Point in Time",
+    "type": "Phenomenon",
+    "image": "cards/images/Fixed Point in Time.png",
+    "thumb": "cards/thumbs/Fixed Point in Time.webp",
+    "transcript": "cards/transcripts/Fixed Point in Time.md",
+    "tags": [
+      ":top:badge:tr:green:Official",
+      "WHO",
+      "hidden",
+      ":top:badge:tr:purple:Phenomenon"
     ],
     "scryfallId": null
   },
@@ -998,7 +703,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "New Phyrexia",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1012,7 +718,8 @@
     "tags": [
       ":top:badge:tr:amber:Custom",
       "Phyrexia",
-      "PBT"
+      "PBT",
+      ":top:badge:tr:green:Plane"
     ]
   },
   {
@@ -1025,7 +732,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1040,7 +748,8 @@
       ":top:badge:tr:green:Official",
       "Necros",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1054,7 +763,23 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Innistrad",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
+    "id": "ghirapur",
+    "name": "Ghirapur",
+    "type": "Plane",
+    "image": "cards/images/Ghirapur.png",
+    "thumb": "cards/thumbs/Ghirapur.webp",
+    "transcript": "cards/transcripts/Ghirapur.md",
+    "tags": [
+      ":top:badge:tr:green:Official",
+      "Avishkar",
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1069,21 +794,8 @@
       ":top:badge:tr:green:Official",
       "Avishkar",
       "PUNK",
-      "hidden"
-    ],
-    "scryfallId": null
-  },
-  {
-    "id": "ghirapur",
-    "name": "Ghirapur",
-    "type": "Plane",
-    "image": "cards/images/Ghirapur.png",
-    "thumb": "cards/thumbs/Ghirapur.webp",
-    "transcript": "cards/transcripts/Ghirapur.md",
-    "tags": [
-      ":top:badge:tr:green:Official",
-      "Avishkar",
-      "MOC"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1097,7 +809,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Lorwyn",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1111,9 +824,23 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Mirrodin",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
+  },
+  {
+    "id": "glimpse_of_fate",
+    "name": "Glimpse of Fate",
+    "type": "Phenomenon",
+    "image": "cards/images/Glimpse of Fate.png",
+    "thumb": "cards/thumbs/Glimpse of Fate.webp",
+    "transcript": "cards/transcripts/Glimpse of Fate.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "PBT",
+      ":top:badge:tr:purple:Phenomenon"
+    ]
   },
   {
     "id": "goldmeadow",
@@ -1125,7 +852,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Lorwyn",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1139,9 +867,23 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Ravnica",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
+  },
+  {
+    "id": "great_desparking",
+    "name": "Great Desparking",
+    "type": "Phenomenon",
+    "image": "cards/images/Great Desparking.png",
+    "thumb": "cards/thumbs/Great Desparking.webp",
+    "transcript": "cards/transcripts/Great Desparking.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "PBT",
+      ":top:badge:tr:purple:Phenomenon"
+    ]
   },
   {
     "id": "grixis",
@@ -1153,7 +895,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Alara",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1167,7 +910,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Fabacin",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1181,7 +925,8 @@
     "tags": [
       ":top:badge:tr:amber:Custom",
       "Dominaria",
-      "PBT"
+      "PBT",
+      ":top:badge:tr:green:Plane"
     ]
   },
   {
@@ -1195,7 +940,8 @@
       ":top:badge:tr:green:Official",
       "Secret Lair",
       "hidden",
-      "PSSC"
+      "PSSC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1209,7 +955,8 @@
     "tags": [
       ":top:badge:tr:amber:Custom",
       "Innistrad",
-      "PBT"
+      "PBT",
+      ":top:badge:tr:green:Plane"
     ]
   },
   {
@@ -1222,7 +969,23 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Zendikar",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
+    "id": "high_and_dry_black_market",
+    "name": "High and Dry Black Market",
+    "type": "Phenomenon",
+    "image": "cards/images/High and Dry Black Market.png",
+    "thumb": "cards/thumbs/High and Dry Black Market.webp",
+    "transcript": "cards/transcripts/High and Dry Black Market.md",
+    "tags": [
+      ":top:badge:tr:green:Official",
+      "PUNK",
+      "hidden",
+      ":top:badge:tr:purple:Phenomenon"
     ],
     "scryfallId": null
   },
@@ -1237,7 +1000,8 @@
       ":top:badge:tr:green:Official",
       "Thunder Junction",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1251,7 +1015,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Pyrulea",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1266,9 +1031,38 @@
       ":top:badge:tr:green:Official",
       "Spacecraft",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
+  },
+  {
+    "id": "human-time_lord_meta_crisis",
+    "name": "Human—Time Lord Meta Crisis",
+    "type": "Phenomenon",
+    "image": "cards/images/Human—Time Lord Meta-Crisis.png",
+    "thumb": "cards/thumbs/Human—Time Lord Meta-Crisis.webp",
+    "transcript": "cards/transcripts/Human—Time Lord Meta-Crisis.md",
+    "tags": [
+      ":top:badge:tr:green:Official",
+      "WHO",
+      "hidden",
+      ":top:badge:tr:purple:Phenomenon"
+    ],
+    "scryfallId": null
+  },
+  {
+    "id": "ichor_trail",
+    "name": "Ichor Trail",
+    "type": "Phenomenon",
+    "image": "cards/images/Ichor Trail.png",
+    "thumb": "cards/thumbs/Ichor Trail.webp",
+    "transcript": "cards/transcripts/Ichor Trail.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "PBT",
+      ":top:badge:tr:purple:Phenomenon"
+    ]
   },
   {
     "id": "imaginary_friends_plane",
@@ -1281,7 +1075,8 @@
       ":top:badge:tr:green:Official",
       "Secret Lair",
       "hidden",
-      "PSSC"
+      "PSSC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1295,7 +1090,35 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Valla",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
+    "id": "interplanar_mapping",
+    "name": "Interplanar Mapping",
+    "type": "Phenomenon",
+    "image": "cards/images/Interplanar Mapping.png",
+    "thumb": "cards/thumbs/Interplanar Mapping.webp",
+    "transcript": "cards/transcripts/Interplanar Mapping.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "PBT",
+      ":top:badge:tr:purple:Phenomenon"
+    ]
+  },
+  {
+    "id": "interplanar_tunnel",
+    "name": "Interplanar Tunnel",
+    "type": "Phenomenon",
+    "image": "cards/images/Interplanar Tunnel.png",
+    "thumb": "cards/thumbs/Interplanar Tunnel.webp",
+    "transcript": "cards/transcripts/Interplanar Tunnel.md",
+    "tags": [
+      ":top:badge:tr:green:Official",
+      "OPCA",
+      ":top:badge:tr:purple:Phenomenon"
     ],
     "scryfallId": null
   },
@@ -1309,7 +1132,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Cridhe",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1323,7 +1147,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Dominaria",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1337,7 +1162,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Ravnica",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1352,7 +1178,8 @@
       ":top:badge:tr:green:Official",
       "Las Vegas",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1366,7 +1193,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Alara",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1381,7 +1209,8 @@
       ":top:badge:tr:green:Official",
       "Kandoka",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1395,7 +1224,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Innistrad",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1409,7 +1239,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Ikoria",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1423,7 +1254,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Mongseng",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1437,7 +1269,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Ravnica",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1451,7 +1284,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Dominaria",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1465,7 +1299,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Azgol",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1480,7 +1315,8 @@
       ":top:badge:tr:green:Official",
       "Earth",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1494,7 +1330,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Arkhos",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1509,7 +1346,8 @@
       ":top:badge:tr:green:Official",
       "Secret Lair",
       "hidden",
-      "PSSC"
+      "PSSC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1523,7 +1361,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Kaldheim",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1537,7 +1376,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Dominaria",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1551,8 +1391,24 @@
     "tags": [
       ":top:badge:tr:amber:Custom",
       "Dominaria",
-      "PBT"
+      "PBT",
+      ":top:badge:tr:green:Plane"
     ]
+  },
+  {
+    "id": "mad_labs",
+    "name": "Mad Labs",
+    "type": "Phenomenon",
+    "image": "cards/images/Mad Labs.png",
+    "thumb": "cards/thumbs/Mad Labs.webp",
+    "transcript": "cards/transcripts/Mad Labs.md",
+    "tags": [
+      ":top:badge:tr:green:Official",
+      "PUNK",
+      "hidden",
+      ":top:badge:tr:purple:Phenomenon"
+    ],
+    "scryfallId": null
   },
   {
     "id": "math_is_for_blockers_plane",
@@ -1565,7 +1421,8 @@
       ":top:badge:tr:green:Official",
       "Secret Lair",
       "hidden",
-      "PSSC"
+      "PSSC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1579,7 +1436,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Gargantikar",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1593,7 +1451,8 @@
     "tags": [
       ":top:badge:tr:amber:Custom",
       "Mirrodin",
-      "PBT"
+      "PBT",
+      ":top:badge:tr:green:Plane"
     ]
   },
   {
@@ -1606,7 +1465,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Kamigawa",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1620,7 +1480,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Karsus",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1635,7 +1496,8 @@
       ":top:badge:tr:green:Official",
       "Las Vegas",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1650,7 +1512,22 @@
       ":top:badge:tr:green:Official",
       "Spacecraft",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
+    "id": "morphic_tide",
+    "name": "Morphic Tide",
+    "type": "Phenomenon",
+    "image": "cards/images/Morphic Tide.png",
+    "thumb": "cards/thumbs/Morphic Tide.webp",
+    "transcript": "cards/transcripts/Morphic Tide.md",
+    "tags": [
+      ":top:badge:tr:green:Official",
+      "OPCA",
+      ":top:badge:tr:purple:Phenomenon"
     ],
     "scryfallId": null
   },
@@ -1664,7 +1541,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Regatha",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1679,7 +1557,8 @@
       ":top:badge:tr:green:Official",
       "Universia Beyondia",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1693,7 +1572,22 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Zendikar",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
+    "id": "mutual_epiphany",
+    "name": "Mutual Epiphany",
+    "type": "Phenomenon",
+    "image": "cards/images/Mutual Epiphany.png",
+    "thumb": "cards/thumbs/Mutual Epiphany.webp",
+    "transcript": "cards/transcripts/Mutual Epiphany.md",
+    "tags": [
+      ":top:badge:tr:green:Official",
+      "MOC",
+      ":top:badge:tr:purple:Phenomenon"
     ],
     "scryfallId": null
   },
@@ -1708,7 +1602,8 @@
       ":top:badge:tr:green:Official",
       "Secret Lair",
       "hidden",
-      "PSSC"
+      "PSSC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1722,7 +1617,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Wildfire",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1736,7 +1632,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Amonkhet",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1750,7 +1647,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Alara",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1764,7 +1662,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Innistrad",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1778,7 +1677,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Dominaria",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1793,7 +1693,8 @@
       ":top:badge:tr:green:Official",
       "New Earth",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1808,7 +1709,8 @@
       ":top:badge:tr:green:Official",
       "Foundations",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1823,7 +1725,8 @@
       ":top:badge:tr:green:Official",
       "Duskmourn",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1837,7 +1740,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "New Phyrexia",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1851,7 +1755,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "New Phyrexia",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1866,7 +1771,8 @@
       ":top:badge:tr:green:Official",
       "Earth",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1880,9 +1786,38 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Theros",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
+  },
+  {
+    "id": "omenpath_instability",
+    "name": "Omenpath Instability",
+    "type": "Phenomenon",
+    "image": "cards/images/Omenpath Instability.png",
+    "thumb": "cards/thumbs/Omenpath Instability.webp",
+    "transcript": "cards/transcripts/Omenpath Instability.md",
+    "tags": [
+      ":top:badge:tr:green:Official",
+      "PUNK",
+      "hidden",
+      ":top:badge:tr:purple:Phenomenon"
+    ],
+    "scryfallId": null
+  },
+  {
+    "id": "omenpath_shortcut",
+    "name": "Omenpath Shortcut",
+    "type": "Phenomenon",
+    "image": "cards/images/Omenpath Shortcut.png",
+    "thumb": "cards/thumbs/Omenpath Shortcut.webp",
+    "transcript": "cards/transcripts/Omenpath Shortcut.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "PBT",
+      ":top:badge:tr:purple:Phenomenon"
+    ]
   },
   {
     "id": "onakke_catacomb",
@@ -1894,7 +1829,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Shandalar",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1909,7 +1845,8 @@
       ":top:badge:tr:green:Official",
       "Horsehead Nebula",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1923,7 +1860,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Kamigawa",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1937,7 +1875,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Ravnica",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1951,7 +1890,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Dominaria",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1966,7 +1906,8 @@
       ":top:badge:tr:green:Official",
       "Ixalan",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1980,7 +1921,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Fiora",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -1994,7 +1936,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Mirrodin",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2008,7 +1951,37 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
+    "id": "pin_trading",
+    "name": "Pin Trading",
+    "type": "Phenomenon",
+    "image": "cards/images/Pin Trading.png",
+    "thumb": "cards/thumbs/Pin Trading.webp",
+    "transcript": "cards/transcripts/Pin Trading.md",
+    "tags": [
+      ":top:badge:tr:green:Official",
+      "PUNK",
+      "hidden",
+      ":top:badge:tr:purple:Phenomenon"
+    ],
+    "scryfallId": null
+  },
+  {
+    "id": "planewide_disaster",
+    "name": "Planewide Disaster",
+    "type": "Phenomenon",
+    "image": "cards/images/Planewide Disaster.png",
+    "thumb": "cards/thumbs/Planewide Disaster.webp",
+    "transcript": "cards/transcripts/Planewide Disaster.md",
+    "tags": [
+      ":top:badge:tr:green:Official",
+      "MOC",
+      ":top:badge:tr:purple:Phenomenon"
     ],
     "scryfallId": null
   },
@@ -2023,7 +1996,8 @@
       ":top:badge:tr:green:Official",
       "Earth",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2037,7 +2011,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Bolas's Meditation Realm",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2051,7 +2026,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Ravnica",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2066,7 +2042,8 @@
       ":top:badge:tr:green:Official",
       "Las Vegas",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2081,7 +2058,23 @@
       ":top:badge:tr:green:Official",
       "Earth",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
+    "id": "probability_flux",
+    "name": "Probability Flux",
+    "type": "Phenomenon",
+    "image": "cards/images/Probability Flux.png",
+    "thumb": "cards/thumbs/Probability Flux.webp",
+    "transcript": "cards/transcripts/Probability Flux.md",
+    "tags": [
+      ":top:badge:tr:green:Official",
+      "PUNK",
+      "hidden",
+      ":top:badge:tr:purple:Phenomenon"
     ],
     "scryfallId": null
   },
@@ -2096,7 +2089,8 @@
       ":top:badge:tr:green:Official",
       "Duskmourn",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2110,7 +2104,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Mirrodin",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2125,7 +2120,8 @@
       ":top:badge:tr:green:Official",
       "Ixalan",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2139,7 +2135,22 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Shadowmoor",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
+    "id": "reality_shaping",
+    "name": "Reality Shaping",
+    "type": "Phenomenon",
+    "image": "cards/images/Reality Shaping.png",
+    "thumb": "cards/thumbs/Reality Shaping.webp",
+    "transcript": "cards/transcripts/Reality Shaping.md",
+    "tags": [
+      ":top:badge:tr:green:Official",
+      "MOC",
+      ":top:badge:tr:purple:Phenomenon"
     ],
     "scryfallId": null
   },
@@ -2153,7 +2164,23 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Dominaria",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
+    "id": "royal_booster",
+    "name": "Royal Booster",
+    "type": "Phenomenon",
+    "image": "cards/images/Royal Booster.png",
+    "thumb": "cards/thumbs/Royal Booster.webp",
+    "transcript": "cards/transcripts/Royal Booster.md",
+    "tags": [
+      ":top:badge:tr:green:Official",
+      "PUNK",
+      "hidden",
+      ":top:badge:tr:purple:Phenomenon"
     ],
     "scryfallId": null
   },
@@ -2167,7 +2194,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Serra's Realm",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2181,7 +2209,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Secret Lair",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2195,7 +2224,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Rabiah",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2209,7 +2239,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Ravnica",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2223,7 +2254,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Dominaria",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2238,7 +2270,8 @@
       ":top:badge:tr:green:Official",
       "Foldaria",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2253,7 +2286,8 @@
       ":top:badge:tr:green:Official",
       "Chicago",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2268,7 +2302,8 @@
       ":top:badge:tr:green:Official",
       "Darillium",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2283,7 +2318,8 @@
       ":top:badge:tr:green:Official",
       "Chicago",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2297,9 +2333,23 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Kaldheim",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
+  },
+  {
+    "id": "sleeper_agent",
+    "name": "Sleeper Agent",
+    "type": "Phenomenon",
+    "image": "cards/images/Sleeper Agent.png",
+    "thumb": "cards/thumbs/Sleeper Agent.webp",
+    "transcript": "cards/transcripts/Sleeper Agent.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "PBT",
+      ":top:badge:tr:purple:Phenomenon"
+    ]
   },
   {
     "id": "sokenzan",
@@ -2311,7 +2361,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Kamigawa",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2326,7 +2377,22 @@
       ":top:badge:tr:green:Official",
       "Innistrad",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
+    "id": "spatial_merging",
+    "name": "Spatial Merging",
+    "type": "Phenomenon",
+    "image": "cards/images/Spatial Merging.png",
+    "thumb": "cards/thumbs/Spatial Merging.webp",
+    "transcript": "cards/transcripts/Spatial Merging.md",
+    "tags": [
+      ":top:badge:tr:green:Official",
+      "MOC",
+      ":top:badge:tr:purple:Phenomenon"
     ],
     "scryfallId": null
   },
@@ -2341,7 +2407,8 @@
       ":top:badge:tr:green:Official",
       "Androzani Minor",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2355,7 +2422,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Xerex",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2369,7 +2437,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Innistrad",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2384,7 +2453,8 @@
       ":top:badge:tr:green:Official",
       "Unknown Planet",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2398,7 +2468,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Arcavios",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2412,7 +2483,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Rath",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2427,9 +2499,23 @@
       ":top:badge:tr:green:Official",
       "Amsterdam",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
+  },
+  {
+    "id": "surging_vitality",
+    "name": "Surging Vitality",
+    "type": "Phenomenon",
+    "image": "cards/images/Surging Vitality.png",
+    "thumb": "cards/thumbs/Surging Vitality.webp",
+    "transcript": "cards/transcripts/Surging Vitality.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "PBT",
+      ":top:badge:tr:purple:Phenomenon"
+    ]
   },
   {
     "id": "takenuma",
@@ -2441,7 +2527,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Kamigawa",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2455,7 +2542,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Dominaria",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2470,7 +2558,8 @@
       ":top:badge:tr:green:Official",
       "Gallifrey",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2485,7 +2574,8 @@
       ":top:badge:tr:green:Official",
       "Thunder Junction",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2499,7 +2589,23 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Zendikar",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
+    "id": "team_up",
+    "name": "Team Up!",
+    "type": "Phenomenon",
+    "image": "cards/images/Team-Up!.png",
+    "thumb": "cards/thumbs/Team-Up!.webp",
+    "transcript": "cards/transcripts/Team-Up!.md",
+    "tags": [
+      ":top:badge:tr:green:Official",
+      "PUNK",
+      "hidden",
+      ":top:badge:tr:purple:Phenomenon"
     ],
     "scryfallId": null
   },
@@ -2513,7 +2619,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Kinshala",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2528,7 +2635,8 @@
       ":top:badge:tr:green:Official",
       "Time",
       "WHO",
-      "Hidden"
+      "Hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2542,7 +2650,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Shenmeng",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2556,7 +2665,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Iquatana",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2571,7 +2681,8 @@
       ":top:badge:tr:green:Official",
       "Chicago",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2585,7 +2696,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Capenna",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2600,7 +2712,8 @@
       ":top:badge:tr:green:Official",
       "Earth",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2615,7 +2728,8 @@
       ":top:badge:tr:green:Official",
       "Outside Mutter's Spiral",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2629,7 +2743,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2643,7 +2758,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Ulgrotha",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2657,7 +2773,8 @@
     "tags": [
       ":top:badge:tr:amber:Custom",
       "Ulgrotha",
-      "PBT"
+      "PBT",
+      ":top:badge:tr:green:Plane"
     ]
   },
   {
@@ -2671,7 +2788,8 @@
       ":top:badge:tr:green:Official",
       "Spacecraft",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2686,7 +2804,8 @@
       ":top:badge:tr:green:Official",
       "Gallifrey",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2701,7 +2820,8 @@
       ":top:badge:tr:green:Official",
       "Trenzalore",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2716,7 +2836,8 @@
       ":top:badge:tr:green:Official",
       "Earth",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2730,7 +2851,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Equilor",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2744,7 +2866,8 @@
     "tags": [
       ":top:badge:tr:amber:Custom",
       "New Phyrexia",
-      "PBT"
+      "PBT",
+      ":top:badge:tr:green:Plane"
     ]
   },
   {
@@ -2757,7 +2880,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Antausia",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2772,7 +2896,8 @@
       ":top:badge:tr:green:Official",
       "Eldraine",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2786,7 +2911,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Phyrexia",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2800,7 +2926,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Ixalan",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2814,7 +2941,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Tarkir",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2828,7 +2956,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Lorwyn",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2842,7 +2971,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Segovia",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2857,7 +2987,8 @@
       ":top:badge:tr:green:Official",
       "The Library",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2871,7 +3002,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Alara",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2886,7 +3018,8 @@
       ":top:badge:tr:green:Official",
       "Gallifrey",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2901,7 +3034,8 @@
       ":top:badge:tr:green:Official",
       "Moon",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2915,7 +3049,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "The Abyss",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2929,7 +3064,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2944,7 +3080,8 @@
       ":top:badge:tr:green:Official",
       "Mars",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2959,7 +3096,8 @@
       ":top:badge:tr:green:Official",
       "Las Vegas",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -2973,7 +3111,8 @@
     "tags": [
       ":top:badge:tr:amber:Custom",
       "Mirrodin",
-      "PBT"
+      "PBT",
+      ":top:badge:tr:green:Plane"
     ]
   },
   {
@@ -2986,7 +3125,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Gobakhan",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -3000,7 +3140,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Eldraine",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -3015,7 +3156,8 @@
       ":top:badge:tr:green:Official",
       "Chicago",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -3029,7 +3171,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Kyneth",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -3043,7 +3186,35 @@
     "tags": [
       ":top:badge:tr:amber:Custom",
       "Innistrad",
-      "PBT"
+      "PBT",
+      ":top:badge:tr:green:Plane"
+    ]
+  },
+  {
+    "id": "time_distortion",
+    "name": "Time Distortion",
+    "type": "Phenomenon",
+    "image": "cards/images/Time Distortion.png",
+    "thumb": "cards/thumbs/Time Distortion.webp",
+    "transcript": "cards/transcripts/Time Distortion.md",
+    "tags": [
+      ":top:badge:tr:green:Official",
+      "OPCA",
+      ":top:badge:tr:purple:Phenomenon"
+    ],
+    "scryfallId": null
+  },
+  {
+    "id": "time_spiral",
+    "name": "Time Spiral",
+    "type": "Phenomenon",
+    "image": "cards/images/Time Spiral.png",
+    "thumb": "cards/thumbs/Time Spiral.webp",
+    "transcript": "cards/transcripts/Time Spiral.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "PBT",
+      ":top:badge:tr:purple:Phenomenon"
     ]
   },
   {
@@ -3056,7 +3227,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Kamigawa",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -3070,7 +3242,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Vryn",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -3084,7 +3257,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Ergamon",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -3098,7 +3272,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Ir",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -3113,7 +3288,8 @@
       ":top:badge:tr:green:Official",
       "Apalapucia",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -3127,7 +3303,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Ravnica",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -3142,7 +3319,38 @@
       ":top:badge:tr:green:Official",
       "Earth",
       "WHO",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
+    "id": "unknown_event",
+    "name": "Unknown Event",
+    "type": "Phenomenon",
+    "image": "cards/images/Unknown Event.png",
+    "thumb": "cards/thumbs/Unknown Event.webp",
+    "transcript": "cards/transcripts/Unknown Event.md",
+    "tags": [
+      ":top:badge:tr:green:Official",
+      "PUNK",
+      "hidden",
+      ":top:badge:tr:purple:Phenomenon"
+    ],
+    "scryfallId": null
+  },
+  {
+    "id": "unleash_the_flux",
+    "name": "Unleash the Flux",
+    "type": "Phenomenon",
+    "image": "cards/images/Unleash the Flux.png",
+    "thumb": "cards/thumbs/Unleash the Flux.webp",
+    "transcript": "cards/transcripts/Unleash the Flux.md",
+    "tags": [
+      ":top:badge:tr:green:Official",
+      "WHO",
+      "hidden",
+      ":top:badge:tr:purple:Phenomenon"
     ],
     "scryfallId": null
   },
@@ -3156,7 +3364,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Zhalfir",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -3170,7 +3379,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Kylem",
-      "MOC"
+      "MOC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -3184,7 +3394,8 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Lorwyn",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -3199,7 +3410,8 @@
       ":top:badge:tr:green:Official",
       "Secret Lair",
       "hidden",
-      "PSSC"
+      "PSSC",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -3214,7 +3426,8 @@
       ":top:badge:tr:green:Official",
       "Bloomburrow",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -3229,7 +3442,8 @@
       ":top:badge:tr:green:Official",
       "Amsterdam",
       "PUNK",
-      "hidden"
+      "hidden",
+      ":top:badge:tr:green:Plane"
     ],
     "scryfallId": null
   },
@@ -3243,7 +3457,23 @@
     "tags": [
       ":top:badge:tr:green:Official",
       "Belenon",
-      "OPCA"
+      "OPCA",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
+    "id": "year_end_review",
+    "name": "Year End Review",
+    "type": "Phenomenon",
+    "image": "cards/images/Year-End Review.png",
+    "thumb": "cards/thumbs/Year-End Review.webp",
+    "transcript": "cards/transcripts/Year-End Review.md",
+    "tags": [
+      ":top:badge:tr:green:Official",
+      "PUNK",
+      "hidden",
+      ":top:badge:tr:purple:Phenomenon"
     ],
     "scryfallId": null
   }

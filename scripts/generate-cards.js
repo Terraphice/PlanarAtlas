@@ -55,6 +55,34 @@ export function isOfficialCard(tags) {
   });
 }
 
+export function getDerivedTypeTag(type) {
+  if (type === "Plane") return ":top:badge:tr:green:Plane";
+  if (type === "Phenomenon") return ":top:badge:tr:purple:Phenomenon";
+  return null;
+}
+
+export function mergeCardTags(existingTags, type) {
+  const derivedTypeTag = getDerivedTypeTag(type);
+
+  const mergedTags = uniqueTags(Array.isArray(existingTags) ? existingTags : []).filter((tag) => {
+    const lower = tag.toLowerCase().trim();
+    if (lower === "plane" || lower === "phenomenon") return false;
+
+    const stripped = lower.startsWith(":top:") ? lower.slice(5) : lower;
+    if (stripped.startsWith("badge:")) {
+      const parts = stripped.split(":");
+      if (parts.length >= 4) {
+        const label = parts.slice(3).join(":").trim();
+        if (label === "plane" || label === "phenomenon") return false;
+      }
+    }
+
+    return true;
+  });
+
+  return derivedTypeTag ? uniqueTags([...mergedTags, derivedTypeTag]) : mergedTags;
+}
+
 // ── Internal helpers ──────────────────────────────────────────────────────────
 
 function readExistingCards(filepath) {
@@ -71,6 +99,15 @@ function readExistingCards(filepath) {
 }
 
 // ── Main script (only runs when executed directly) ────────────────────────────
+
+function normalizeExistingCard(card) {
+  const type = typeof card.type === "string" ? card.type : null;
+  return {
+    ...card,
+    tags: mergeCardTags(card.tags, type)
+  };
+}
+
 
 const __filename = fileURLToPath(import.meta.url);
 const isDirectRun = resolve(process.argv[1]) === resolve(__filename);
@@ -89,8 +126,18 @@ if (isDirectRun) {
   const cards = [];
 
   if (!existsSync(IMAGES_DIR)) {
-    console.error(`Image directory not found: cards/images/`);
-    process.exit(1);
+    if (existingCards.length === 0) {
+      console.error(`Image directory not found: cards/images/`);
+      process.exit(1);
+    }
+
+    const normalizedCards = existingCards
+      .map(normalizeExistingCard)
+      .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: "base" }));
+
+    writeFileSync(OUTPUT_FILE, JSON.stringify(normalizedCards, null, 2) + "\n");
+    console.log(`Normalized cards.json tags for ${normalizedCards.length} cards from existing card data.`);
+    process.exit(0);
   }
 
   let files;
@@ -114,12 +161,7 @@ if (isDirectRun) {
     const name = getDisplayName(entry.name);
     const existing = existingById.get(id) || {};
 
-    const mergedTags = uniqueTags(
-      Array.isArray(existing.tags) ? existing.tags : []
-    ).filter((tag) => {
-      const lower = tag.toLowerCase().trim();
-      return lower !== "plane" && lower !== "phenomenon";
-    });
+    const mergedTags = mergeCardTags(existing.tags, type);
 
     const card = {
       id,
@@ -146,8 +188,18 @@ if (isDirectRun) {
   });
 
   if (cards.length === 0) {
-    console.error("No valid card images found. Refusing to overwrite cards.json.");
-    process.exit(1);
+    if (existingCards.length === 0) {
+      console.error("No valid card images found. Refusing to overwrite cards.json.");
+      process.exit(1);
+    }
+
+    const normalizedCards = existingCards
+      .map(normalizeExistingCard)
+      .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: "base" }));
+
+    writeFileSync(OUTPUT_FILE, JSON.stringify(normalizedCards, null, 2) + "\n");
+    console.log(`Normalized cards.json tags for ${normalizedCards.length} cards from existing card data.`);
+    process.exit(0);
   }
 
   try {

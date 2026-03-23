@@ -9,6 +9,8 @@ import {
   getCardId,
   uniqueTags,
   isOfficialCard,
+  getDerivedTypeTag,
+  mergeCardTags,
 } from "./generate-cards.js";
 
 let passed = 0;
@@ -70,6 +72,25 @@ assert(deepEqual(uniqueTags([]), []), "Empty array returns empty");
 assert(deepEqual(uniqueTags(["  Zendikar  ", "OPCA"]), ["Zendikar", "OPCA"]), "Trims whitespace");
 assert(deepEqual(uniqueTags(["", "  ", "Zendikar"]), ["Zendikar"]), "Filters empty/whitespace-only tags");
 assert(deepEqual(uniqueTags(["Zendikar", "OPCA", "zendikar", "opca"]), ["Zendikar", "OPCA"]), "Multiple duplicates removed");
+
+// ── getDerivedTypeTag ───────────────────────────────────────────────────────
+
+section("getDerivedTypeTag");
+assert(getDerivedTypeTag("Plane") === ":top:badge:tr:green:Plane", "Plane type gets green Plane badge");
+assert(getDerivedTypeTag("Phenomenon") === ":top:badge:tr:purple:Phenomenon", "Phenomenon type gets purple Phenomenon badge");
+assert(getDerivedTypeTag("Scheme") === null, "Unknown type gets no derived badge");
+
+// ── mergeCardTags ────────────────────────────────────────────────────────────
+
+section("mergeCardTags");
+assert(
+  deepEqual(mergeCardTags([":top:badge:tr:amber:Custom", "PBT"], "Phenomenon"), [":top:badge:tr:amber:Custom", "PBT", ":top:badge:tr:purple:Phenomenon"]),
+  "Phenomenon badge is appended alongside existing tags"
+);
+assert(
+  deepEqual(mergeCardTags(["Plane", ":top:badge:tr:green:Plane", "Zendikar"], "Plane"), ["Zendikar", ":top:badge:tr:green:Plane"]),
+  "Legacy plain and badge type tags collapse to one canonical Plane badge"
+);
 
 // ── isOfficialCard ────────────────────────────────────────────────────────────
 
