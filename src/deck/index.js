@@ -87,6 +87,9 @@ const gameSidePanel = document.getElementById("game-side-panel");
 const classicViewCardBtn = document.getElementById("classic-view-card-btn");
 const classicCardNameLabel = document.getElementById("classic-card-name-label");
 const bemCardNameLabel = document.getElementById("bem-card-name");
+const bemViewCardBtn = document.getElementById("bem-view-card-btn");
+const bemViewPannedCardBtn = document.getElementById("bem-view-panned-card-btn");
+const bemPannedCardNameLabel = document.getElementById("bem-panned-card-name");
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -621,6 +624,9 @@ export function initDeck({ cards, showToast, onDeckChange }) {
     handleBemArrowKey,
     showToast: (msg) => showToastFn?.(msg),
     getEasyPlaneswalk: () => easyPlaneswalk,
+    getBemViewOffset,
+    bemViewCardBtn,
+    bemViewPannedCardBtn,
   });
 
   initGameStateManager({
@@ -707,6 +713,8 @@ export function initDeck({ cards, showToast, onDeckChange }) {
     bemMapArea,
     bemMapEl,
     bemCardNameLabel,
+    bemViewPannedCardBtn,
+    bemPannedCardNameLabel,
   });
 
   const urlParams = new URLSearchParams(window.location.search);
