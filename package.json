@@ -2,18 +2,20 @@
   "type": "module",
   "scripts": {
     "version:sync": "node scripts/update-version.js",
-    "generate": "node scripts/generate-cards.js && node scripts/generate-embeds.js",
+    "generate": "node scripts/generate-cards.js && node scripts/generate-embeds.js && node scripts/generate-seo.js",
     "sync": "node scripts/sync-cards.js",
     "test": "node scripts/smoke-test.js",
     "test:codec": "node scripts/test-codec.js",
     "test:utils": "node scripts/test-utils.js",
     "test:generate": "node scripts/test-generate.js",
     "test:sync": "node scripts/test-sync.js",
-    "test:unit": "node scripts/test-codec.js && node scripts/test-utils.js && node scripts/test-generate.js && node scripts/test-sync.js && node scripts/test-embeds.js",
+    "test:unit": "node scripts/test-codec.js && node scripts/test-utils.js && node scripts/test-generate.js && node scripts/test-sync.js && node scripts/test-embeds.js && node scripts/test-seo.js",
     "test:e2e": "npx playwright test",
     "lint": "eslint .",
     "generate:embeds": "node scripts/generate-embeds.js",
-    "test:embeds": "node scripts/test-embeds.js"
+    "test:embeds": "node scripts/test-embeds.js",
+    "generate:seo": "node scripts/generate-seo.js",
+    "test:seo": "node scripts/test-seo.js"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
