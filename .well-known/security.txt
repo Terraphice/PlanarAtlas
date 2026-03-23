@@ -1,0 +1,7 @@
+Contact: mailto:me@terraphice.dev
+Contact: https://github.com/Terraphice/PlanarAtlas/issues
+Policy: https://planechase.terraphice.dev/PRIVACY.md
+Canonical: https://planechase.terraphice.dev/.well-known/security.txt
+Acknowledgments: https://github.com/Terraphice/PlanarAtlas
+Preferred-Languages: en
+Expires: 2027-03-18T14:52:55.086Z
