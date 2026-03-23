@@ -1390,7 +1390,7 @@ function hideTutorial() {
 function updateFullscreenButton() {
   if (!gameOptFullscreen) return;
   const isFullscreen = document.fullscreenElement === document.documentElement;
-  gameOptFullscreen.textContent = isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen";
+  gameOptFullscreen.textContent = isFullscreen ? "Exit Fullscreen" : "Fullscreen";
 }
 
 async function toggleFullscreen() {
