@@ -9,7 +9,8 @@
     ":top:badge:tr:green:Official",
     "Alfava Metraxis",
     "WHO",
-    "hidden"
+    "hidden",
+    ":top:badge:tr:green:Plane"
   ],
   "scryfallId": null
 }

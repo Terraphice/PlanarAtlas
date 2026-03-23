@@ -9,7 +9,8 @@
     ":top:badge:tr:green:Official",
     "Necros",
     "WHO",
-    "hidden"
+    "hidden",
+    ":top:badge:tr:green:Plane"
   ],
   "scryfallId": null
 }

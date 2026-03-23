@@ -9,7 +9,8 @@
     ":top:badge:tr:green:Official",
     "Trenzalore",
     "WHO",
-    "hidden"
+    "hidden",
+    ":top:badge:tr:green:Plane"
   ],
   "scryfallId": null
 }

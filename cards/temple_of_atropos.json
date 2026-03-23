@@ -9,7 +9,8 @@
     ":top:badge:tr:green:Official",
     "Time",
     "WHO",
-    "Hidden"
+    "Hidden",
+    ":top:badge:tr:green:Plane"
   ],
   "scryfallId": null
 }
