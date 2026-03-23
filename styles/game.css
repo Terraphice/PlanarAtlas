@@ -296,14 +296,37 @@
   background: color-mix(in srgb, var(--accent) 16%, var(--bg-elev-2));
 }
 
-.deck-danger-btn {
-  color: var(--tone-red-text);
-  border-color: var(--tone-red-border);
-  background: var(--tone-red-bg);
+.deck-danger-btn,
+.game-menu-item-danger,
+.game-reveal-footer-btn-danger,
+.game-reader-action-danger,
+.confirm-ok {
+  color: var(--danger-surface-color, var(--tone-red-text));
+  border-color: var(--danger-surface-border, color-mix(in srgb, var(--tone-red-border) 50%, var(--border)));
+  background: var(--danger-surface-bg, color-mix(in srgb, var(--tone-red-bg) 60%, var(--bg-elev-2)));
 }
 
-.deck-danger-btn:hover {
-  background: color-mix(in srgb, var(--tone-red-bg) 80%, var(--bg-elev-2) 20%);
+.deck-danger-btn:hover,
+.deck-danger-btn:focus-visible,
+.game-menu-item-danger:hover:not(:disabled),
+.game-menu-item-danger:focus-visible:not(:disabled),
+.game-reveal-footer-btn-danger:hover:not(:disabled),
+.game-reveal-footer-btn-danger:focus-visible:not(:disabled),
+.game-reader-action-danger:hover,
+.game-reader-action-danger:focus-visible,
+.confirm-ok:hover,
+.confirm-ok:focus-visible {
+  color: var(--danger-surface-hover-color, var(--danger-surface-color, var(--tone-red-text)));
+  border-color: var(--danger-surface-hover-border, var(--tone-red-border));
+  background: var(--danger-surface-hover-bg, var(--tone-red-bg));
+  transform: var(--danger-surface-hover-transform, none);
+  box-shadow: var(--danger-surface-hover-shadow, none);
+}
+
+.deck-danger-btn {
+  --danger-surface-border: var(--tone-red-border);
+  --danger-surface-bg: var(--tone-red-bg);
+  --danger-surface-hover-bg: color-mix(in srgb, var(--tone-red-bg) 80%, var(--bg-elev-2) 20%);
 }
 
 .deck-close-btn {
@@ -825,11 +848,10 @@
 }
 
 .game-menu-item-danger {
-  color: var(--tone-red-text);
-}
-
-.game-menu-item-danger:hover:not(:disabled) {
-  background: color-mix(in srgb, var(--tone-red-bg) 60%, transparent);
+  --danger-surface-border: transparent;
+  --danger-surface-bg: transparent;
+  --danger-surface-hover-bg: color-mix(in srgb, var(--tone-red-bg) 60%, transparent);
+  --danger-surface-hover-shadow: none;
 }
 
 .game-menu-search {
@@ -1976,13 +1998,9 @@
 }
 
 .game-reveal-footer-btn-danger {
-  color: var(--tone-red-text);
-  border-color: color-mix(in srgb, var(--tone-red-border) 60%, transparent);
-}
-
-.game-reveal-footer-btn-danger:hover:not(:disabled) {
-  background: color-mix(in srgb, var(--tone-red-bg) 60%, transparent);
-  border-color: var(--tone-red-border);
+  --danger-surface-border: color-mix(in srgb, var(--tone-red-border) 60%, transparent);
+  --danger-surface-bg: color-mix(in srgb, var(--bg-elev-2) 80%, transparent);
+  --danger-surface-hover-bg: color-mix(in srgb, var(--tone-red-bg) 60%, transparent);
 }
 
 .game-reveal-footer-btn-success {
@@ -2606,13 +2624,9 @@ body.privacy-modal-open {
 }
 
 .game-reader-action-danger {
-  color: var(--tone-red-text);
-  border-color: color-mix(in srgb, var(--tone-red-border) 60%, transparent);
-}
-
-.game-reader-action-danger:hover {
-  background: color-mix(in srgb, var(--tone-red-bg) 60%, transparent);
-  border-color: var(--tone-red-border);
+  --danger-surface-border: color-mix(in srgb, var(--tone-red-border) 60%, transparent);
+  --danger-surface-bg: color-mix(in srgb, var(--bg-elev-2) 80%, transparent);
+  --danger-surface-hover-bg: color-mix(in srgb, var(--tone-red-bg) 60%, transparent);
 }
 
 @media (max-width: 680px) {
@@ -3816,15 +3830,11 @@ body.privacy-modal-open {
 }
 
 .confirm-ok {
-  background: var(--tone-red-bg);
-  border-color: var(--tone-red-border);
-  color: var(--tone-red-text);
-}
-
-.confirm-ok:hover {
-  background: color-mix(in srgb, var(--tone-red-bg) 80%, black 20%);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 18px color-mix(in srgb, var(--tone-red-border) 30%, transparent);
+  --danger-surface-border: var(--tone-red-border);
+  --danger-surface-bg: var(--tone-red-bg);
+  --danger-surface-hover-bg: color-mix(in srgb, var(--tone-red-bg) 80%, black 20%);
+  --danger-surface-hover-transform: translateY(-1px);
+  --danger-surface-hover-shadow: 0 6px 18px color-mix(in srgb, var(--tone-red-border) 30%, transparent);
 }
 
 /* ── Tutorial overlay ─────────────────────────────────────────────────────────── */
