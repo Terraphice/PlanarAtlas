@@ -147,66 +147,17 @@
 
 /* Deck panel shelving lip (desktop) */
 .deck-panel-lip {
-  position: absolute;
   top: 80px;
-  left: calc(-1 * var(--deck-lip-w, 48px));
-  width: var(--deck-lip-w, 48px);
-  min-height: 160px;
-  padding: 14px 8px;
-  border: 0;
-  border-right: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
-  border-radius: 16px 0 0 16px;
-  background: linear-gradient(180deg,
-    color-mix(in srgb, var(--bg-elev-2) 96%, white 4%),
-    color-mix(in srgb, var(--bg-elev-1) 96%, black 4%));
-  color: var(--text-soft);
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  box-shadow:
-    -8px 0 20px rgba(0, 0, 0, 0.18),
-    0 0 0 1px color-mix(in srgb, var(--border) 55%, transparent);
-  transition: transform 180ms ease, filter 180ms ease, box-shadow 180ms ease, background 180ms ease, color 180ms ease;
+  --panel-lip-width: var(--deck-lip-w, 48px);
+  --panel-lip-min-height: 160px;
+  --panel-lip-padding: 14px 8px;
+  --panel-lip-gap: 10px;
   z-index: 1;
   overflow: hidden;
 }
 
-.deck-panel-lip:hover,
-.deck-panel-lip:focus-visible {
-  color: color-mix(in srgb, var(--text) 92%, white 8%);
-  background:
-    linear-gradient(180deg,
-      color-mix(in srgb, var(--bg-elev-2) 82%, var(--accent) 18%),
-      color-mix(in srgb, var(--bg-elev-1) 90%, var(--accent) 10%));
-  box-shadow:
-    -16px 0 32px rgba(0, 0, 0, 0.24),
-    0 0 0 1px color-mix(in srgb, var(--accent) 26%, transparent),
-    0 0 24px color-mix(in srgb, var(--accent) 16%, transparent);
-  animation: deckPanelLipBounce 420ms ease;
-}
-
-@keyframes deckPanelLipBounce {
-  0% { transform: translateX(0); }
-  35% { transform: translateX(-3px); }
-  65% { transform: translateX(1px); }
-  100% { transform: translateX(0); }
-}
-
 .deck-panel-lip-icon {
   font-size: 1.1rem;
-  line-height: 1;
-}
-
-.deck-panel-lip-label {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  font-size: 0.72rem;
-  font-weight: 800;
 }
 
 /* Inner content area that clips to panel bounds */
@@ -2760,10 +2711,10 @@ body.privacy-modal-open {
       0 -12px 28px rgba(0, 0, 0, 0.24),
       0 0 0 1px color-mix(in srgb, var(--accent) 26%, transparent),
       0 0 24px color-mix(in srgb, var(--accent) 16%, transparent);
-    animation: deckPanelLipBounce 420ms ease;
+    animation: deckPanelLipMobileBounce 420ms ease;
   }
 
-  @keyframes deckPanelLipBounce {
+  @keyframes deckPanelLipMobileBounce {
     0% { transform: translateX(-50%) translateY(0); }
     35% { transform: translateX(-50%) translateY(-3px); }
     65% { transform: translateX(-50%) translateY(1px); }
