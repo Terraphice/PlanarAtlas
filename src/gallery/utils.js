@@ -90,6 +90,7 @@ export function enrichCard(card) {
     : [];
 
   const normalizedTags = tags.map((tag) => tag.toLowerCase());
+  const searchableNormalizedTags = getSearchableNormalizedTags(tags);
 
   return {
     ...card,
@@ -102,6 +103,7 @@ export function enrichCard(card) {
     transcriptPath: card.transcript,
     tags,
     normalizedTags,
+    searchableNormalizedTags,
     scryfallId: card.scryfallId !== undefined ? card.scryfallId : undefined
   };
 }
@@ -257,10 +259,11 @@ export function matchesFilters(card, parsedQuery, filters, transcriptCache = nul
 }
 
 export function matchesParsedQuery(card, parsedQuery, filters, transcriptCache = null) {
+  const searchableNormalizedTags = getCardSearchableNormalizedTags(card);
   const haystack = [
     card.name,
     card.type,
-    ...card.normalizedTags
+    ...searchableNormalizedTags
   ].join(" ").toLowerCase();
 
   if (parsedQuery.regex) {
@@ -312,13 +315,13 @@ export function matchesParsedQuery(card, parsedQuery, filters, transcriptCache =
   }
 
   for (const value of parsedQuery.tagTerms) {
-    if (!card.normalizedTags.includes(value)) {
+    if (!getCardSearchableNormalizedTags(card).includes(value)) {
       return false;
     }
   }
 
   for (const value of parsedQuery.negTagTerms) {
-    if (card.normalizedTags.includes(value)) {
+    if (getCardSearchableNormalizedTags(card).includes(value)) {
       return false;
     }
   }
@@ -538,6 +541,30 @@ export function parseBadgeTag(tag) {
 
 export function getBadgeTags(tags) {
   return tags.map(parseBadgeTag).filter(Boolean);
+}
+
+export function getSearchableNormalizedTags(tags) {
+  const searchableTags = new Set();
+
+  for (const tag of Array.isArray(tags) ? tags : []) {
+    const rawTag = String(tag).trim();
+    if (!rawTag) continue;
+
+    searchableTags.add(rawTag.toLowerCase());
+
+    const label = getTagLabel(rawTag).toLowerCase().trim();
+    if (label) searchableTags.add(label);
+  }
+
+  return [...searchableTags];
+}
+
+export function getCardSearchableNormalizedTags(card) {
+  if (Array.isArray(card.searchableNormalizedTags) && card.searchableNormalizedTags.length > 0) {
+    return card.searchableNormalizedTags;
+  }
+
+  return getSearchableNormalizedTags(card.tags);
 }
 
 export function compareTags(a, b) {
