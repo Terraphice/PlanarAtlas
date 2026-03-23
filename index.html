@@ -500,9 +500,13 @@
     <div id="bem-map-area" class="bem-map-area hidden">
       <div id="bem-map" class="bem-map" role="grid" aria-label="Blind Eternities Map"></div>
       <div id="bem-info-bar" class="bem-info-bar">
-        <button id="bem-view-card-btn" class="bem-view-card-btn" type="button" aria-label="View current card">
+        <button id="bem-view-card-btn" class="bem-info-bar-btn bem-info-bar-btn--active" type="button" aria-label="View current card">
           <i class="ms ms-planeswalker" aria-hidden="true"></i>
           <span id="bem-card-name" class="bem-card-name-label"></span>
+        </button>
+        <button id="bem-view-panned-card-btn" class="bem-info-bar-btn bem-info-bar-btn--panned hidden" type="button" aria-label="View panned card">
+          <i class="ms ms-planeswalker" aria-hidden="true"></i>
+          <span id="bem-panned-card-name" class="bem-card-name-label"></span>
         </button>
       </div>
     </div>
