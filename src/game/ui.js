@@ -99,6 +99,7 @@ const gameTutorialOverlay = document.getElementById("game-tutorial-overlay");
 const gameTutorialTitle = document.getElementById("game-tutorial-title");
 const gameTutorialBody = document.getElementById("game-tutorial-body");
 const gameTutorialClose = document.getElementById("game-tutorial-close");
+const gameOptFullscreen = document.getElementById("game-opt-fullscreen");
 const bemZoomSelect = document.getElementById("bem-zoom-select");
 const diePlaneswalkerPopup = document.getElementById("die-planeswalk-popup");
 const diePlaneswalkerBackdrop = document.getElementById("die-planeswalk-backdrop");
@@ -1386,6 +1387,33 @@ function hideTutorial() {
   try { localStorage.setItem(key, "1"); } catch { /* ignore */ }
 }
 
+function updateFullscreenButton() {
+  if (!gameOptFullscreen) return;
+  const isFullscreen = document.fullscreenElement === document.documentElement;
+  gameOptFullscreen.textContent = isFullscreen ? "Exit Fullscreen" : "Fullscreen";
+}
+
+async function toggleFullscreen() {
+  if (!document.fullscreenEnabled) {
+    ctx.showToast?.("Fullscreen isn’t available in this browser. Add to Home Screen on iPhone for a true full-screen view.");
+    return;
+  }
+
+  try {
+    if (document.fullscreenElement === document.documentElement) {
+      await document.exitFullscreen();
+      ctx.showToast?.("Exited fullscreen.");
+    } else {
+      await document.documentElement.requestFullscreen({ navigationUI: "hide" });
+      ctx.showToast?.("Fullscreen enabled.");
+    }
+  } catch {
+    ctx.showToast?.("Fullscreen was blocked. Try again from a direct tap, or use Add to Home Screen on iPhone.");
+  } finally {
+    updateFullscreenButton();
+  }
+}
+
 /** Clears the "tutorial seen" flags so tutorials will show again. */
 export function clearTutorialFlags() {
   try {
@@ -1599,4 +1627,11 @@ function bindGameUIEvents() {
     else if (pendingGameMode === "bem") ctx.startBemGame();
     pendingGameMode = null;
   });
+
+  gameOptFullscreen?.addEventListener("click", () => {
+    toggleFullscreen();
+  });
+
+  document.addEventListener("fullscreenchange", updateFullscreenButton);
+  updateFullscreenButton();
 }
