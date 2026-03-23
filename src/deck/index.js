@@ -26,7 +26,7 @@ import {
 } from "../game/ui.js";
 
 import {
-  initDeckPanel, openDeckPanel, closeDeckPanel,
+  initDeckPanel, closeDeckPanel,
   updateDeckButton, renderDeckList, renderDeckSlotDropdown, updateCardOverlays,
   updateAllCardOverlays, refreshDeckCardItem, updateModalDeckButton
 } from "./panel.js";
@@ -66,7 +66,6 @@ const gameModeBemBtn = document.getElementById("game-mode-bem-btn");
 const gameModeDialogCancel = document.getElementById("game-mode-dialog-cancel");
 const gameOptExit = document.getElementById("game-opt-exit");
 const gameOptReset = document.getElementById("game-opt-reset");
-const gameOptDeckBuilder = document.getElementById("game-opt-deck-builder");
 const gameOptSaveState = document.getElementById("game-opt-save-state");
 const gameOptLoadState = document.getElementById("game-opt-load-state");
 const gameOptStateLink = document.getElementById("game-opt-state-link");
@@ -439,11 +438,6 @@ export { clearTutorialFlags, closeGameReaderView, closeTopGameOverlay } from "..
 function bindDeckEvents() {
   gameOptExit?.addEventListener("click", exitGame);
   gameOptReset?.addEventListener("click", resetGame);
-  gameOptDeckBuilder?.addEventListener("click", () => {
-    exitGame();
-    openDeckPanel();
-  });
-
   gameOptSaveState?.addEventListener("click", saveGameStateSeed);
   gameOptLoadState?.addEventListener("click", loadGameStatePrompt);
   gameOptStateLink?.addEventListener("click", shareGameStateLink);
