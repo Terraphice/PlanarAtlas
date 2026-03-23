@@ -201,20 +201,10 @@
 }
 
 .deck-action-btn {
-  border: 1px solid var(--border);
-  background: var(--bg-elev-2);
-  color: var(--text);
-  border-radius: 9px;
+  --neutral-button-radius: 9px;
   padding: 6px 10px;
   font-size: 0.8rem;
   font-weight: 700;
-  cursor: pointer;
-  transition: border-color 140ms ease, background 140ms ease;
-}
-
-.deck-action-btn:hover {
-  border-color: color-mix(in srgb, var(--accent) 44%, var(--border));
-  background: color-mix(in srgb, var(--accent) 10%, var(--bg-elev-2));
 }
 
 .deck-play-btn {
@@ -3741,22 +3731,14 @@ body.privacy-modal-open {
 
 .confirm-btn {
   padding: 10px 20px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  cursor: pointer;
   font-size: 0.9rem;
   font-weight: 700;
-  transition: background 140ms ease, border-color 140ms ease, transform 140ms ease;
 }
 
 .confirm-cancel {
-  background: var(--bg-elev-1);
-  color: var(--text);
-}
-
-.confirm-cancel:hover {
-  background: var(--bg-elev-2);
-  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+  --neutral-button-bg: var(--bg-elev-1);
+  --neutral-button-color: var(--text);
+  --neutral-button-hover-bg: var(--bg-elev-2);
 }
 
 .confirm-ok {

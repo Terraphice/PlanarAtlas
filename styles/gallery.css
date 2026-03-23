@@ -660,15 +660,33 @@ html[data-palette="gruvbox"][data-theme="dark"] .sidebar {
   justify-content: flex-end;
 }
 
-.settings-menu-action {
-  text-align: center;
-  border: 1px solid var(--border);
-  background: var(--bg-elev-2);
-  color: var(--text);
-  border-radius: 10px;
-  padding: 10px 12px;
+.neutral-button-base {
+  border: 1px solid var(--neutral-button-border, var(--border));
+  background: var(--neutral-button-bg, var(--bg-elev-2));
+  color: var(--neutral-button-color, var(--text));
+  border-radius: var(--neutral-button-radius, 10px);
   cursor: pointer;
-  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    color 160ms ease,
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.neutral-button-base:hover,
+.neutral-button-base:focus-visible {
+  color: var(--neutral-button-hover-color, var(--text));
+  border-color: var(--neutral-button-hover-border, color-mix(in srgb, var(--accent) 44%, var(--neutral-button-border, var(--border))));
+  background: var(--neutral-button-hover-bg, color-mix(in srgb, var(--accent) 10%, var(--neutral-button-bg, var(--bg-elev-2))));
+  transform: var(--neutral-button-hover-transform, none);
+  box-shadow: var(--neutral-button-hover-shadow, none);
+}
+
+.settings-menu-action {
+  --neutral-button-hover-transform: translateY(-1px);
+  text-align: center;
+  padding: 10px 12px;
   font-size: 0.88rem;
 }
 
@@ -681,18 +699,15 @@ html[data-palette="gruvbox"][data-theme="dark"] .sidebar {
 }
 
 .settings-menu-action-danger {
-  --danger-surface-border: color-mix(in srgb, var(--tone-red-border) 50%, var(--border));
-  --danger-surface-bg: color-mix(in srgb, var(--tone-red-bg) 60%, var(--bg-elev-2));
-  --danger-surface-hover-bg: var(--tone-red-bg);
-  --danger-surface-hover-transform: translateY(-1px);
+  --neutral-button-border: color-mix(in srgb, var(--tone-red-border) 50%, var(--border));
+  --neutral-button-bg: color-mix(in srgb, var(--tone-red-bg) 60%, var(--bg-elev-2));
+  --neutral-button-color: var(--tone-red-text);
+  --neutral-button-hover-border: var(--tone-red-border);
+  --neutral-button-hover-bg: var(--tone-red-bg);
+  --neutral-button-hover-color: var(--tone-red-text);
+  --neutral-button-hover-transform: translateY(-1px);
 }
 
-.settings-menu-action:hover,
-.settings-menu-action:focus-visible {
-  border-color: color-mix(in srgb, var(--accent) 44%, var(--border));
-  background: color-mix(in srgb, var(--accent) 10%, var(--bg-elev-2));
-  transform: translateY(-1px);
-}
 
 .settings-menu-link {
   display: inline-flex;
@@ -767,11 +782,7 @@ html[data-palette="gruvbox"][data-theme="dark"] .sidebar {
 .clear-button,
 .modal-copy-link,
 .modal-close {
-  border: 1px solid var(--border);
-  background: var(--bg-elev-2);
-  color: var(--text-soft);
-  border-radius: 10px;
-  cursor: pointer;
+  --neutral-button-color: var(--text-soft);
 }
 
 .clear-inline-button {
@@ -785,13 +796,6 @@ html[data-palette="gruvbox"][data-theme="dark"] .sidebar {
   font-weight: 700;
 }
 
-.clear-inline-button:hover,
-.clear-button:hover,
-.modal-copy-link:hover,
-.modal-close:hover {
-  color: var(--text);
-  border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
-}
 
 .checkbox-row {
   display: flex;
@@ -1265,19 +1269,16 @@ button.active-filter-pill:disabled {
 }
 
 .modal-close {
+  --neutral-button-border: color-mix(in srgb, var(--tone-red-border) 50%, var(--border));
+  --neutral-button-bg: color-mix(in srgb, var(--tone-red-bg) 60%, var(--bg-elev-2));
+  --neutral-button-color: var(--tone-red-text);
+  --neutral-button-hover-border: var(--tone-red-border);
+  --neutral-button-hover-bg: var(--tone-red-bg);
+  --neutral-button-hover-color: var(--tone-red-text);
+  --neutral-button-hover-shadow: 0 4px 12px color-mix(in srgb, var(--tone-red-border) 25%, transparent);
   padding: 8px 12px;
   font-size: 0.85rem;
   font-weight: 700;
-  border-color: color-mix(in srgb, var(--tone-red-border) 50%, var(--border));
-  color: var(--tone-red-text);
-  background: color-mix(in srgb, var(--tone-red-bg) 60%, var(--bg-elev-2));
-}
-
-.modal-close:hover {
-  border-color: var(--tone-red-border);
-  background: var(--tone-red-bg);
-  color: var(--tone-red-text);
-  box-shadow: 0 4px 12px color-mix(in srgb, var(--tone-red-border) 25%, transparent);
 }
 
 .modal-nav {
