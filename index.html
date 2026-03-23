@@ -107,13 +107,13 @@
         <div class="filter-block">
           <div class="filter-heading-row">
             <h2 class="filter-heading">Tags</h2>
-            <button id="clear-tag-filters" class="clear-inline-button" type="button">Clear</button>
+            <button id="clear-tag-filters" class="neutral-button-base clear-inline-button" type="button">Clear</button>
           </div>
           <div id="tag-filter-list" class="tag-filter-list"></div>
         </div>
 
         <div class="filter-actions">
-          <button id="clear-all-filters" class="clear-button" type="button">Clear all filters</button>
+          <button id="clear-all-filters" class="neutral-button-base clear-button" type="button">Clear all filters</button>
         </div>
       </div>
     </aside>
@@ -262,18 +262,18 @@
 
                 <div class="settings-menu-section settings-menu-actions">
                   <div class="settings-menu-action-row">
-                    <button id="settings-export-profile" class="settings-menu-action settings-menu-action-half" type="button" title="Export all preferences and decks as a seed">
+                    <button id="settings-export-profile" class="neutral-button-base settings-menu-action settings-menu-action-half" type="button" title="Export all preferences and decks as a seed">
                       ↑ Export Profile
                     </button>
-                    <button id="settings-import-profile" class="settings-menu-action settings-menu-action-half" type="button" title="Import preferences and decks from a seed">
+                    <button id="settings-import-profile" class="neutral-button-base settings-menu-action settings-menu-action-half" type="button" title="Import preferences and decks from a seed">
                       ↓ Import Profile
                     </button>
                   </div>
                   <div class="settings-menu-action-row">
-                    <button id="settings-clear-preferences" class="settings-menu-action settings-menu-action-half settings-menu-action-danger" type="button" title="Reset all preferences and decks" aria-label="Reset all preferences and decks">
+                    <button id="settings-clear-preferences" class="neutral-button-base settings-menu-action settings-menu-action-half settings-menu-action-danger" type="button" title="Reset all preferences and decks" aria-label="Reset all preferences and decks">
                       🗑 Reset All
                     </button>
-                    <a id="settings-contact-developer" class="settings-menu-action settings-menu-action-half settings-menu-link" href="mailto:me@terraphice.dev?subject=Planar%20Atlas" title="Contact developer" aria-label="Contact developer">
+                    <a id="settings-contact-developer" class="neutral-button-base settings-menu-action settings-menu-action-half settings-menu-link" href="mailto:me@terraphice.dev?subject=Planar%20Atlas" title="Contact developer" aria-label="Contact developer">
                       ✉ Contact
                     </a>
                   </div>
@@ -372,10 +372,10 @@
                 <input id="modal-deck-count" class="modal-deck-qty-input" type="number" min="0" max="9" value="0" inputmode="numeric" aria-label="Deck quantity" />
                 <button id="modal-deck-inc" class="modal-deck-qty-btn" type="button" aria-label="Add one copy">+</button>
               </div>
-              <button id="modal-copy-link" class="modal-copy-link" type="button" aria-label="Link">
+              <button id="modal-copy-link" class="neutral-button-base modal-copy-link" type="button" aria-label="Link">
                 Link
               </button>
-              <button id="modal-close" class="modal-close" type="button" aria-label="Close card viewer">×</button>
+              <button id="modal-close" class="neutral-button-base modal-close" type="button" aria-label="Close card viewer">×</button>
             </div>
           </div>
 
@@ -437,12 +437,12 @@
         <input id="deck-slot-name-input" class="deck-slot-name-input" type="text" placeholder="Name this deck…" maxlength="40" />
       </div>
       <div class="deck-panel-actions">
-        <button id="deck-play-btn" class="deck-action-btn deck-play-btn" type="button">▶ Play</button>
-        <button id="deck-link-btn" class="deck-action-btn" type="button">Link</button>
-        <button id="deck-export-btn" class="deck-action-btn" type="button">Export</button>
-        <button id="deck-import-btn" class="deck-action-btn" type="button">Import</button>
+        <button id="deck-play-btn" class="neutral-button-base deck-action-btn deck-play-btn" type="button">▶ Play</button>
+        <button id="deck-link-btn" class="neutral-button-base deck-action-btn" type="button">Link</button>
+        <button id="deck-export-btn" class="neutral-button-base deck-action-btn" type="button">Export</button>
+        <button id="deck-import-btn" class="neutral-button-base deck-action-btn" type="button">Import</button>
         <div class="deck-autoimport-wrap">
-          <button id="deck-autoimport-btn" class="deck-action-btn" type="button">Auto</button>
+          <button id="deck-autoimport-btn" class="neutral-button-base deck-action-btn" type="button">Auto</button>
           <div id="deck-autoimport-menu" class="deck-autoimport-menu hidden">
             <button class="deck-autoimport-item" data-action="official" type="button">Import Official</button>
             <button class="deck-autoimport-item" data-action="custom" type="button">Import Custom</button>
@@ -453,7 +453,7 @@
             <div id="deck-autoimport-tag-list" class="deck-autoimport-tag-list hidden"></div>
           </div>
         </div>
-        <button id="deck-clear-btn" class="deck-action-btn deck-danger-btn" type="button">Clear</button>
+        <button id="deck-clear-btn" class="neutral-button-base deck-action-btn deck-danger-btn" type="button">Clear</button>
       </div>
     </div>
     <div id="deck-card-list" class="deck-card-list"></div>
@@ -705,7 +705,7 @@
       <h2 id="confirm-dialog-title" class="confirm-title">⚠ Reset Everything?</h2>
       <p class="confirm-body">This will permanently delete <strong>all decks</strong> and <strong>all saved preferences</strong>. This cannot be undone.</p>
       <div class="confirm-actions">
-        <button id="confirm-cancel" class="confirm-btn confirm-cancel" type="button">Cancel</button>
+        <button id="confirm-cancel" class="neutral-button-base confirm-btn confirm-cancel" type="button">Cancel</button>
         <button id="confirm-ok" class="confirm-btn confirm-ok danger-surface danger-surface-interactive" type="button">Reset All</button>
       </div>
     </div>
