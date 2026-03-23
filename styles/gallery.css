@@ -645,18 +645,10 @@ html[data-palette="gruvbox"][data-theme="dark"] .sidebar {
 }
 
 .settings-menu-action-danger {
-  border-color: color-mix(in srgb, var(--tone-red-border) 50%, var(--border));
-  color: var(--tone-red-text);
-  background: color-mix(in srgb, var(--tone-red-bg) 60%, var(--bg-elev-2));
-}
-
-.settings-menu-action-danger:hover,
-.settings-menu-action-danger:focus-visible {
-  border-color: var(--tone-red-border);
-  background: var(--tone-red-bg);
-  color: var(--tone-red-text);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px color-mix(in srgb, var(--tone-red-border) 25%, transparent);
+  --danger-surface-border: color-mix(in srgb, var(--tone-red-border) 50%, var(--border));
+  --danger-surface-bg: color-mix(in srgb, var(--tone-red-bg) 60%, var(--bg-elev-2));
+  --danger-surface-hover-bg: var(--tone-red-bg);
+  --danger-surface-hover-transform: translateY(-1px);
 }
 
 .settings-menu-action:hover,
@@ -1131,6 +1123,25 @@ button.active-filter-pill:disabled {
   background: var(--tone-blue-bg);
   border-color: var(--tone-blue-border);
   color: var(--tone-blue-text);
+}
+
+
+.danger-surface,
+.settings-menu-action-danger {
+  color: var(--danger-surface-color, var(--tone-red-text));
+  border-color: var(--danger-surface-border, color-mix(in srgb, var(--tone-red-border) 50%, var(--border)));
+  background: var(--danger-surface-bg, color-mix(in srgb, var(--tone-red-bg) 60%, var(--bg-elev-2)));
+}
+
+.danger-surface-interactive:hover,
+.danger-surface-interactive:focus-visible,
+.settings-menu-action-danger:hover,
+.settings-menu-action-danger:focus-visible {
+  color: var(--danger-surface-hover-color, var(--danger-surface-color, var(--tone-red-text)));
+  border-color: var(--danger-surface-hover-border, var(--tone-red-border));
+  background: var(--danger-surface-hover-bg, var(--tone-red-bg));
+  transform: var(--danger-surface-hover-transform, none);
+  box-shadow: var(--danger-surface-hover-shadow, 0 4px 12px color-mix(in srgb, var(--tone-red-border) 25%, transparent));
 }
 
 .tone-red {
