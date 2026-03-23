@@ -617,22 +617,44 @@ export function renderBemMap() {
       bemMapEl.appendChild(div);
     }
   }
+
+  updateBemInfoBar();
 }
 
 // ── BEM info bar ──────────────────────────────────────────────────────────────
 
 export function updateBemInfoBar() {
-  const { bemCardNameLabel } = ctx;
+  const { bemCardNameLabel, bemPannedCardNameLabel, bemViewPannedCardBtn } = ctx;
   const gameState = ctx.getGameState();
   if (!gameState?.bemGrid || !gameState?.bemPos) return;
 
-  const cell = gameState.bemGrid.get(bemKey(gameState.bemPos.x, gameState.bemPos.y));
+  const getBemCellLabel = (cell) => {
+    if (cell?.placeholder && !cell?.card) return "Empty Cell";
+    if (!cell?.card) return "";
+    return cell.faceUp ? cell.card.displayName : "Unknown";
+  };
 
-  if (cell?.placeholder && !cell?.card) {
-    if (bemCardNameLabel) bemCardNameLabel.textContent = "Empty Cell";
-  } else {
-    const card = cell?.card;
-    if (bemCardNameLabel) bemCardNameLabel.textContent = card ? card.displayName : "";
+  const activeX = gameState.bemPos.x;
+  const activeY = gameState.bemPos.y;
+  const viewedX = activeX + bemViewOffset.dx;
+  const viewedY = activeY + bemViewOffset.dy;
+  const activeCell = gameState.bemGrid.get(bemKey(activeX, activeY));
+  const viewedCell = gameState.bemGrid.get(bemKey(viewedX, viewedY));
+  const isCenteredView = bemViewOffset.dx === 0 && bemViewOffset.dy === 0;
+  const shouldShowPannedButton = !isCenteredView
+    && (viewedX !== activeX || viewedY !== activeY)
+    && !!viewedCell?.card;
+  const viewedPhenomenon = shouldShowPannedButton && viewedCell.faceUp && viewedCell.card.type === "Phenomenon";
+
+  if (bemCardNameLabel) bemCardNameLabel.textContent = getBemCellLabel(activeCell);
+
+  if (bemPannedCardNameLabel) {
+    bemPannedCardNameLabel.textContent = shouldShowPannedButton ? getBemCellLabel(viewedCell) : "";
+  }
+  if (bemViewPannedCardBtn) {
+    bemViewPannedCardBtn.classList.toggle("hidden", !shouldShowPannedButton);
+    bemViewPannedCardBtn.classList.toggle("bem-info-bar-btn--panned", shouldShowPannedButton && !viewedPhenomenon);
+    bemViewPannedCardBtn.classList.toggle("bem-info-bar-btn--phenomenon", viewedPhenomenon);
   }
 
   ctx.renderGameSidePanel(gameState.activePlanes, gameState.focusedIndex);

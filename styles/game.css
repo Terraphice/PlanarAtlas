@@ -1,29 +1,8 @@
 /* ── Deck button ─────────────────────────────────────────────────────────────── */
 
 .topbar-deck-button {
-  flex-shrink: 0;
   position: relative;
-  width: 46px;
-  height: 46px;
-  padding: 0;
-  border: 1px solid var(--border);
-  background: var(--bg-elev-2);
-  color: var(--text);
-  border-radius: 10px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   font-size: 1.25rem;
-  transition: border-color 160ms ease, background 160ms ease, color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
-}
-
-.topbar-deck-button:hover,
-.topbar-deck-button:focus-visible {
-  border-color: color-mix(in srgb, var(--accent) 44%, var(--border));
-  background: color-mix(in srgb, var(--bg-elev-2) 84%, var(--accent) 16%);
-  transform: translateY(-1px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
 }
 
 .topbar-deck-button.deck-panel-open,
@@ -168,66 +147,17 @@
 
 /* Deck panel shelving lip (desktop) */
 .deck-panel-lip {
-  position: absolute;
   top: 80px;
-  left: calc(-1 * var(--deck-lip-w, 48px));
-  width: var(--deck-lip-w, 48px);
-  min-height: 160px;
-  padding: 14px 8px;
-  border: 0;
-  border-right: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
-  border-radius: 16px 0 0 16px;
-  background: linear-gradient(180deg,
-    color-mix(in srgb, var(--bg-elev-2) 96%, white 4%),
-    color-mix(in srgb, var(--bg-elev-1) 96%, black 4%));
-  color: var(--text-soft);
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  box-shadow:
-    -8px 0 20px rgba(0, 0, 0, 0.18),
-    0 0 0 1px color-mix(in srgb, var(--border) 55%, transparent);
-  transition: transform 180ms ease, filter 180ms ease, box-shadow 180ms ease, background 180ms ease, color 180ms ease;
+  --panel-lip-width: var(--deck-lip-w, 48px);
+  --panel-lip-min-height: 160px;
+  --panel-lip-padding: 14px 8px;
+  --panel-lip-gap: 10px;
   z-index: 1;
   overflow: hidden;
 }
 
-.deck-panel-lip:hover,
-.deck-panel-lip:focus-visible {
-  color: color-mix(in srgb, var(--text) 92%, white 8%);
-  background:
-    linear-gradient(180deg,
-      color-mix(in srgb, var(--bg-elev-2) 82%, var(--accent) 18%),
-      color-mix(in srgb, var(--bg-elev-1) 90%, var(--accent) 10%));
-  box-shadow:
-    -16px 0 32px rgba(0, 0, 0, 0.24),
-    0 0 0 1px color-mix(in srgb, var(--accent) 26%, transparent),
-    0 0 24px color-mix(in srgb, var(--accent) 16%, transparent);
-  animation: deckPanelLipBounce 420ms ease;
-}
-
-@keyframes deckPanelLipBounce {
-  0% { transform: translateX(0); }
-  35% { transform: translateX(-3px); }
-  65% { transform: translateX(1px); }
-  100% { transform: translateX(0); }
-}
-
 .deck-panel-lip-icon {
   font-size: 1.1rem;
-  line-height: 1;
-}
-
-.deck-panel-lip-label {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  font-size: 0.72rem;
-  font-weight: 800;
 }
 
 /* Inner content area that clips to panel bounds */
@@ -271,20 +201,10 @@
 }
 
 .deck-action-btn {
-  border: 1px solid var(--border);
-  background: var(--bg-elev-2);
-  color: var(--text);
-  border-radius: 9px;
+  --neutral-button-radius: 9px;
   padding: 6px 10px;
   font-size: 0.8rem;
   font-weight: 700;
-  cursor: pointer;
-  transition: border-color 140ms ease, background 140ms ease;
-}
-
-.deck-action-btn:hover {
-  border-color: color-mix(in srgb, var(--accent) 44%, var(--border));
-  background: color-mix(in srgb, var(--accent) 10%, var(--bg-elev-2));
 }
 
 .deck-play-btn {
@@ -296,14 +216,37 @@
   background: color-mix(in srgb, var(--accent) 16%, var(--bg-elev-2));
 }
 
-.deck-danger-btn {
-  color: var(--tone-red-text);
-  border-color: var(--tone-red-border);
-  background: var(--tone-red-bg);
+.deck-danger-btn,
+.game-menu-item-danger,
+.game-reveal-footer-btn-danger,
+.game-reader-action-danger,
+.confirm-ok {
+  color: var(--danger-surface-color, var(--tone-red-text));
+  border-color: var(--danger-surface-border, color-mix(in srgb, var(--tone-red-border) 50%, var(--border)));
+  background: var(--danger-surface-bg, color-mix(in srgb, var(--tone-red-bg) 60%, var(--bg-elev-2)));
 }
 
-.deck-danger-btn:hover {
-  background: color-mix(in srgb, var(--tone-red-bg) 80%, var(--bg-elev-2) 20%);
+.deck-danger-btn:hover,
+.deck-danger-btn:focus-visible,
+.game-menu-item-danger:hover:not(:disabled),
+.game-menu-item-danger:focus-visible:not(:disabled),
+.game-reveal-footer-btn-danger:hover:not(:disabled),
+.game-reveal-footer-btn-danger:focus-visible:not(:disabled),
+.game-reader-action-danger:hover,
+.game-reader-action-danger:focus-visible,
+.confirm-ok:hover,
+.confirm-ok:focus-visible {
+  color: var(--danger-surface-hover-color, var(--danger-surface-color, var(--tone-red-text)));
+  border-color: var(--danger-surface-hover-border, var(--tone-red-border));
+  background: var(--danger-surface-hover-bg, var(--tone-red-bg));
+  transform: var(--danger-surface-hover-transform, none);
+  box-shadow: var(--danger-surface-hover-shadow, none);
+}
+
+.deck-danger-btn {
+  --danger-surface-border: var(--tone-red-border);
+  --danger-surface-bg: var(--tone-red-bg);
+  --danger-surface-hover-bg: color-mix(in srgb, var(--tone-red-bg) 80%, var(--bg-elev-2) 20%);
 }
 
 .deck-close-btn {
@@ -825,11 +768,10 @@
 }
 
 .game-menu-item-danger {
-  color: var(--tone-red-text);
-}
-
-.game-menu-item-danger:hover:not(:disabled) {
-  background: color-mix(in srgb, var(--tone-red-bg) 60%, transparent);
+  --danger-surface-border: transparent;
+  --danger-surface-bg: transparent;
+  --danger-surface-hover-bg: color-mix(in srgb, var(--tone-red-bg) 60%, transparent);
+  --danger-surface-hover-shadow: none;
 }
 
 .game-menu-search {
@@ -1976,13 +1918,9 @@
 }
 
 .game-reveal-footer-btn-danger {
-  color: var(--tone-red-text);
-  border-color: color-mix(in srgb, var(--tone-red-border) 60%, transparent);
-}
-
-.game-reveal-footer-btn-danger:hover:not(:disabled) {
-  background: color-mix(in srgb, var(--tone-red-bg) 60%, transparent);
-  border-color: var(--tone-red-border);
+  --danger-surface-border: color-mix(in srgb, var(--tone-red-border) 60%, transparent);
+  --danger-surface-bg: color-mix(in srgb, var(--bg-elev-2) 80%, transparent);
+  --danger-surface-hover-bg: color-mix(in srgb, var(--tone-red-bg) 60%, transparent);
 }
 
 .game-reveal-footer-btn-success {
@@ -2606,13 +2544,9 @@ body.privacy-modal-open {
 }
 
 .game-reader-action-danger {
-  color: var(--tone-red-text);
-  border-color: color-mix(in srgb, var(--tone-red-border) 60%, transparent);
-}
-
-.game-reader-action-danger:hover {
-  background: color-mix(in srgb, var(--tone-red-bg) 60%, transparent);
-  border-color: var(--tone-red-border);
+  --danger-surface-border: color-mix(in srgb, var(--tone-red-border) 60%, transparent);
+  --danger-surface-bg: color-mix(in srgb, var(--bg-elev-2) 80%, transparent);
+  --danger-surface-hover-bg: color-mix(in srgb, var(--tone-red-bg) 60%, transparent);
 }
 
 @media (max-width: 680px) {
@@ -2767,10 +2701,10 @@ body.privacy-modal-open {
       0 -12px 28px rgba(0, 0, 0, 0.24),
       0 0 0 1px color-mix(in srgb, var(--accent) 26%, transparent),
       0 0 24px color-mix(in srgb, var(--accent) 16%, transparent);
-    animation: deckPanelLipBounce 420ms ease;
+    animation: deckPanelLipMobileBounce 420ms ease;
   }
 
-  @keyframes deckPanelLipBounce {
+  @keyframes deckPanelLipMobileBounce {
     0% { transform: translateX(-50%) translateY(0); }
     35% { transform: translateX(-50%) translateY(-3px); }
     65% { transform: translateX(-50%) translateY(1px); }
@@ -3178,18 +3112,20 @@ body.privacy-modal-open {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 12px;
   padding: 0 80px;
   z-index: 10;
 }
 
-.bem-view-card-btn {
-  display: flex;
+.bem-info-bar-btn {
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   padding: 0 20px;
   height: 58px;
   min-height: 58px;
-  border: 2px solid #4ade80;
+  border: 2px solid transparent;
   border-radius: 16px;
   background: color-mix(in srgb, var(--bg-elev-2) 90%, transparent);
   color: var(--text);
@@ -3200,17 +3136,57 @@ body.privacy-modal-open {
   transition: border-color 140ms ease, background 140ms ease, box-shadow 140ms ease;
   white-space: nowrap;
   overflow: hidden;
+  max-width: min(280px, calc((100% - 44px) / 2));
+  flex: 0 1 auto;
+}
+
+.bem-info-bar-btn.hidden {
+  display: none;
+}
+
+.bem-info-bar-btn--active {
+  border-color: #4ade80;
   box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.35),
               0 0 14px rgba(74, 222, 128, 0.3),
               0 8px 20px rgba(0, 0, 0, 0.3);
-  max-width: calc(100% - 32px);
 }
 
-.bem-view-card-btn:hover {
+.bem-info-bar-btn--active:hover {
   border-color: #4ade80;
   background: color-mix(in srgb, rgba(74, 222, 128, 0.14) 70%, var(--bg-elev-2));
   box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.45),
               0 0 18px rgba(74, 222, 128, 0.4),
+              0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.bem-info-bar-btn--panned {
+  border-color: #fb923c;
+  box-shadow: 0 0 0 2px rgba(251, 146, 60, 0.35),
+              0 0 14px rgba(251, 146, 60, 0.28),
+              0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.bem-info-bar-btn--panned:hover {
+  border-color: #fb923c;
+  background: color-mix(in srgb, rgba(251, 146, 60, 0.16) 70%, var(--bg-elev-2));
+  box-shadow: 0 0 0 2px rgba(251, 146, 60, 0.45),
+              0 0 18px rgba(251, 146, 60, 0.38),
+              0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+
+.bem-info-bar-btn--phenomenon {
+  border-color: #c084fc;
+  box-shadow: 0 0 0 2px rgba(192, 132, 252, 0.35),
+              0 0 14px rgba(192, 132, 252, 0.28),
+              0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.bem-info-bar-btn--phenomenon:hover {
+  border-color: #c084fc;
+  background: color-mix(in srgb, rgba(192, 132, 252, 0.16) 70%, var(--bg-elev-2));
+  box-shadow: 0 0 0 2px rgba(192, 132, 252, 0.45),
+              0 0 18px rgba(192, 132, 252, 0.38),
               0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
@@ -3281,11 +3257,12 @@ body.privacy-modal-open {
     padding: calc(var(--game-block-safe-start) + 48px) var(--game-inline-safe-end) calc(var(--game-block-safe-end) + 68px) var(--game-inline-safe-start);
   }
 
-  .bem-view-card-btn {
+  .bem-info-bar-btn {
     height: 52px;
     min-height: 52px;
     font-size: 0.9rem;
     padding: 0 14px;
+    max-width: min(240px, calc((100% - 36px) / 2));
   }
 }
 
@@ -3754,34 +3731,22 @@ body.privacy-modal-open {
 
 .confirm-btn {
   padding: 10px 20px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  cursor: pointer;
   font-size: 0.9rem;
   font-weight: 700;
-  transition: background 140ms ease, border-color 140ms ease, transform 140ms ease;
 }
 
 .confirm-cancel {
-  background: var(--bg-elev-1);
-  color: var(--text);
-}
-
-.confirm-cancel:hover {
-  background: var(--bg-elev-2);
-  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+  --neutral-button-bg: var(--bg-elev-1);
+  --neutral-button-color: var(--text);
+  --neutral-button-hover-bg: var(--bg-elev-2);
 }
 
 .confirm-ok {
-  background: var(--tone-red-bg);
-  border-color: var(--tone-red-border);
-  color: var(--tone-red-text);
-}
-
-.confirm-ok:hover {
-  background: color-mix(in srgb, var(--tone-red-bg) 80%, black 20%);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 18px color-mix(in srgb, var(--tone-red-border) 30%, transparent);
+  --danger-surface-border: var(--tone-red-border);
+  --danger-surface-bg: var(--tone-red-bg);
+  --danger-surface-hover-bg: color-mix(in srgb, var(--tone-red-bg) 80%, black 20%);
+  --danger-surface-hover-transform: translateY(-1px);
+  --danger-surface-hover-shadow: 0 6px 18px color-mix(in srgb, var(--tone-red-border) 30%, transparent);
 }
 
 /* ── Tutorial overlay ─────────────────────────────────────────────────────────── */
