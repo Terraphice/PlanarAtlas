@@ -3178,18 +3178,20 @@ body.privacy-modal-open {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 12px;
   padding: 0 80px;
   z-index: 10;
 }
 
-.bem-view-card-btn {
-  display: flex;
+.bem-info-bar-btn {
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   padding: 0 20px;
   height: 58px;
   min-height: 58px;
-  border: 2px solid #4ade80;
+  border: 2px solid transparent;
   border-radius: 16px;
   background: color-mix(in srgb, var(--bg-elev-2) 90%, transparent);
   color: var(--text);
@@ -3200,17 +3202,57 @@ body.privacy-modal-open {
   transition: border-color 140ms ease, background 140ms ease, box-shadow 140ms ease;
   white-space: nowrap;
   overflow: hidden;
+  max-width: min(280px, calc((100% - 44px) / 2));
+  flex: 0 1 auto;
+}
+
+.bem-info-bar-btn.hidden {
+  display: none;
+}
+
+.bem-info-bar-btn--active {
+  border-color: #4ade80;
   box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.35),
               0 0 14px rgba(74, 222, 128, 0.3),
               0 8px 20px rgba(0, 0, 0, 0.3);
-  max-width: calc(100% - 32px);
 }
 
-.bem-view-card-btn:hover {
+.bem-info-bar-btn--active:hover {
   border-color: #4ade80;
   background: color-mix(in srgb, rgba(74, 222, 128, 0.14) 70%, var(--bg-elev-2));
   box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.45),
               0 0 18px rgba(74, 222, 128, 0.4),
+              0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.bem-info-bar-btn--panned {
+  border-color: #fb923c;
+  box-shadow: 0 0 0 2px rgba(251, 146, 60, 0.35),
+              0 0 14px rgba(251, 146, 60, 0.28),
+              0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.bem-info-bar-btn--panned:hover {
+  border-color: #fb923c;
+  background: color-mix(in srgb, rgba(251, 146, 60, 0.16) 70%, var(--bg-elev-2));
+  box-shadow: 0 0 0 2px rgba(251, 146, 60, 0.45),
+              0 0 18px rgba(251, 146, 60, 0.38),
+              0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+
+.bem-info-bar-btn--phenomenon {
+  border-color: #c084fc;
+  box-shadow: 0 0 0 2px rgba(192, 132, 252, 0.35),
+              0 0 14px rgba(192, 132, 252, 0.28),
+              0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.bem-info-bar-btn--phenomenon:hover {
+  border-color: #c084fc;
+  background: color-mix(in srgb, rgba(192, 132, 252, 0.16) 70%, var(--bg-elev-2));
+  box-shadow: 0 0 0 2px rgba(192, 132, 252, 0.45),
+              0 0 18px rgba(192, 132, 252, 0.38),
               0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
@@ -3281,11 +3323,12 @@ body.privacy-modal-open {
     padding: calc(var(--game-block-safe-start) + 48px) var(--game-inline-safe-end) calc(var(--game-block-safe-end) + 68px) var(--game-inline-safe-start);
   }
 
-  .bem-view-card-btn {
+  .bem-info-bar-btn {
     height: 52px;
     min-height: 52px;
     font-size: 0.9rem;
     padding: 0 14px;
+    max-width: min(240px, calc((100% - 36px) / 2));
   }
 }
 

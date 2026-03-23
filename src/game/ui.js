@@ -1561,7 +1561,8 @@ function bindGameUIEvents() {
 
   const bemMapEl = document.getElementById("bem-map");
   const bemMapArea = document.getElementById("bem-map-area");
-  const bemViewCardBtn = document.getElementById("bem-view-card-btn");
+  const bemViewCardBtn = ctx.bemViewCardBtn ?? document.getElementById("bem-view-card-btn");
+  const bemViewPannedCardBtn = ctx.bemViewPannedCardBtn ?? document.getElementById("bem-view-panned-card-btn");
 
   bemMapEl?.addEventListener("click", (event) => ctx.handleBemCellClick(event));
   bemViewCardBtn?.addEventListener("click", () => {
@@ -1569,6 +1570,14 @@ function bindGameUIEvents() {
     if (!gameState?.bemGrid || !gameState?.bemPos) return;
     const cell = gameState.bemGrid.get(bemKey(gameState.bemPos.x, gameState.bemPos.y));
     if (cell?.card) openGameReaderView(cell.card, buildBemCardActions(), { faceDown: !cell.faceUp });
+  });
+  bemViewPannedCardBtn?.addEventListener("click", () => {
+    const gameState = ctx.getGameState();
+    if (!gameState?.bemGrid || !gameState?.bemPos) return;
+    const viewedX = gameState.bemPos.x + ctx.getBemViewOffset().dx;
+    const viewedY = gameState.bemPos.y + ctx.getBemViewOffset().dy;
+    const cell = gameState.bemGrid.get(bemKey(viewedX, viewedY));
+    if (cell?.card) openGameReaderView(cell.card, buildBemSideCardActions(viewedX, viewedY), { faceDown: !cell.faceUp });
   });
 
   classicViewCardBtn?.addEventListener("click", () => {
