@@ -10,7 +10,8 @@ import {
   parseSearchQuery,
   getTagLabel,
   getTagToneClass,
-  isTopTag
+  isTopTag,
+  compareTags
 } from "./utils.js";
 
 import {
@@ -410,9 +411,7 @@ function applyFilters({ updateUrl = true, preservePage = false } = {}) {
 // ── Tag filters ───────────────────────────────────────────────────────────────
 
 function buildTagFilters(cards) {
-  const allTags = [...new Set(cards.flatMap((card) => card.tags))].sort((a, b) =>
-    a.localeCompare(b, undefined, { sensitivity: "base" })
-  );
+  const allTags = [...new Set(cards.flatMap((card) => card.tags))].sort(compareTags);
 
   const topTags = allTags.filter(isTopTag);
   const regularTags = allTags.filter((tag) => !isTopTag(tag) && tag.toLowerCase() !== "hidden");
