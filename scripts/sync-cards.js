@@ -8,6 +8,12 @@ export function getCardJsonFilename(cardId) {
   return cardId + ".json";
 }
 
+export function getCardKey(card) {
+  if (typeof card?.id === "string" && card.id) return card.id;
+  if (typeof card?.slug === "string" && card.slug) return card.slug;
+  return null;
+}
+
 // ── Main script (only runs when executed directly) ────────────────────────────
 
 const __filename = fileURLToPath(import.meta.url);
@@ -43,22 +49,25 @@ if (isDirectRun) {
   let unchanged = 0;
 
   for (const card of cards) {
-    if (typeof card.id !== "string" || !card.id) {
-      console.warn(`Skipping card with missing or invalid "id" field: ${JSON.stringify(card)}`);
+    const cardKey = getCardKey(card);
+    if (!cardKey) {
+      console.warn(`Skipping card with missing or invalid "id"/"slug" field: ${JSON.stringify(card)}`);
       continue;
     }
-    const jsonFilename = getCardJsonFilename(card.id);
+    const jsonFilename = getCardJsonFilename(cardKey);
     expectedFiles.add(jsonFilename);
 
     const outputPath = join(CARDS_DIR, jsonFilename);
     const output = {
-      id: card.id,
+      id: cardKey,
+      uid: card.uid,
       name: card.name,
       type: card.type,
       image: card.image,
       thumb: card.thumb,
       transcript: card.transcript,
-      tags: Array.isArray(card.tags) ? card.tags : []
+      tags: Array.isArray(card.tags) ? card.tags : [],
+      legacyAssetPaths: card.legacyAssetPaths && typeof card.legacyAssetPaths === "object" ? card.legacyAssetPaths : undefined
     };
     if (card.scryfallId !== undefined) {
       output.scryfallId = card.scryfallId;

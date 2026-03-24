@@ -12,6 +12,8 @@ import {
   isOfficialCard,
   getDerivedTypeTag,
   mergeCardTags,
+  getCanonicalAssetPaths,
+  getLegacyAssetPaths
 } from "./generate-cards.js";
 
 let passed = 0;
@@ -54,6 +56,26 @@ assert(getDisplayName("Plane_Akoum.png") === "Akoum", "Strips 'Plane_' prefix an
 assert(getDisplayName("Phenomenon_Interplanar_Tunnel.jpg") === "Interplanar Tunnel", "Strips Phenomenon_ and converts underscores");
 assert(getDisplayName("Plane_The_Library_of_Leng.png") === "The Library of Leng", "Multi-word names");
 assert(getDisplayName("Phenomenon_Atlas Consultation.png") === "Atlas Consultation", "Space-separated name");
+
+// ── canonical + legacy asset paths ──────────────────────────────────────────
+
+section("getCanonicalAssetPaths / getLegacyAssetPaths");
+assert(
+  deepEqual(getCanonicalAssetPaths("abc-123", ".jpg"), {
+    image: "cards/images/abc-123.jpg",
+    thumb: "cards/thumbs/abc-123.webp",
+    transcript: "cards/transcripts/abc-123.md"
+  }),
+  "Canonical paths are UID-based"
+);
+assert(
+  deepEqual(getLegacyAssetPaths("Akoum", ".png"), {
+    image: "cards/images/Akoum.png",
+    thumb: "cards/thumbs/Akoum.webp",
+    transcript: "cards/transcripts/Akoum.md"
+  }),
+  "Legacy paths preserve name-based lookups"
+);
 
 // ── slugifyName / getCardSlug ────────────────────────────────────────────────
 
