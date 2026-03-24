@@ -1,0 +1,16 @@
+{
+  "id": "hedron_fields_of_agadeem",
+  "uid": "48e78ef4-e9c6-42ec-af54-97cefe93263e",
+  "name": "Hedron Fields of Agadeem",
+  "type": "Plane",
+  "image": "cards/images/48e78ef4-e9c6-42ec-af54-97cefe93263e.png",
+  "thumb": "cards/thumbs/48e78ef4-e9c6-42ec-af54-97cefe93263e.webp",
+  "transcript": "cards/transcripts/48e78ef4-e9c6-42ec-af54-97cefe93263e.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Zendikar",
+    "MOC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

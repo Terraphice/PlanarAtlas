@@ -1,0 +1,15 @@
+{
+  "id": "the_dead_zone",
+  "uid": "578eba20-35b2-4b68-a61c-632bd0650e2e",
+  "name": "The Dead Zone",
+  "type": "Plane",
+  "image": "cards/images/578eba20-35b2-4b68-a61c-632bd0650e2e.png",
+  "thumb": "cards/thumbs/578eba20-35b2-4b68-a61c-632bd0650e2e.webp",
+  "transcript": "cards/transcripts/578eba20-35b2-4b68-a61c-632bd0650e2e.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "Ulgrotha",
+    "PBT",
+    ":top:badge:tr:green:Plane"
+  ]
+}

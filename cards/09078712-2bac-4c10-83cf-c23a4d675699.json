@@ -1,0 +1,16 @@
+{
+  "id": "immersturm",
+  "uid": "09078712-2bac-4c10-83cf-c23a4d675699",
+  "name": "Immersturm",
+  "type": "Plane",
+  "image": "cards/images/09078712-2bac-4c10-83cf-c23a4d675699.png",
+  "thumb": "cards/thumbs/09078712-2bac-4c10-83cf-c23a4d675699.webp",
+  "transcript": "cards/transcripts/09078712-2bac-4c10-83cf-c23a4d675699.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Valla",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

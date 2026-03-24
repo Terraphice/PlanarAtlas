@@ -1,0 +1,16 @@
+{
+  "id": "murasa",
+  "uid": "226d3ccb-01d2-4ecc-bef6-baa40b47354b",
+  "name": "Murasa",
+  "type": "Plane",
+  "image": "cards/images/226d3ccb-01d2-4ecc-bef6-baa40b47354b.png",
+  "thumb": "cards/thumbs/226d3ccb-01d2-4ecc-bef6-baa40b47354b.webp",
+  "transcript": "cards/transcripts/226d3ccb-01d2-4ecc-bef6-baa40b47354b.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Zendikar",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

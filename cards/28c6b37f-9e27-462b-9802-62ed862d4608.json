@@ -1,0 +1,17 @@
+{
+  "id": "shy_town",
+  "uid": "28c6b37f-9e27-462b-9802-62ed862d4608",
+  "name": "Shy Town",
+  "type": "Plane",
+  "image": "cards/images/28c6b37f-9e27-462b-9802-62ed862d4608.png",
+  "thumb": "cards/thumbs/28c6b37f-9e27-462b-9802-62ed862d4608.webp",
+  "transcript": "cards/transcripts/28c6b37f-9e27-462b-9802-62ed862d4608.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Chicago",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

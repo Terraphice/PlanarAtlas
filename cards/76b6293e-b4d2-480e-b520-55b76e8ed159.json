@@ -1,0 +1,16 @@
+{
+  "id": "grove_of_the_dreampods",
+  "uid": "76b6293e-b4d2-480e-b520-55b76e8ed159",
+  "name": "Grove of the Dreampods",
+  "type": "Plane",
+  "image": "cards/images/76b6293e-b4d2-480e-b520-55b76e8ed159.png",
+  "thumb": "cards/thumbs/76b6293e-b4d2-480e-b520-55b76e8ed159.webp",
+  "transcript": "cards/transcripts/76b6293e-b4d2-480e-b520-55b76e8ed159.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Fabacin",
+    "MOC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

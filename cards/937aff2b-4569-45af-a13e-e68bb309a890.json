@@ -1,0 +1,17 @@
+{
+  "id": "the_dining_car",
+  "uid": "937aff2b-4569-45af-a13e-e68bb309a890",
+  "name": "The Dining Car",
+  "type": "Plane",
+  "image": "cards/images/937aff2b-4569-45af-a13e-e68bb309a890.png",
+  "thumb": "cards/thumbs/937aff2b-4569-45af-a13e-e68bb309a890.webp",
+  "transcript": "cards/transcripts/937aff2b-4569-45af-a13e-e68bb309a890.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Spacecraft",
+    "WHO",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

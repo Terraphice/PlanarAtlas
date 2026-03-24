@@ -1,0 +1,16 @@
+{
+  "id": "norns_seedcore",
+  "uid": "e06ade6f-ee92-456c-a653-0a3b997db007",
+  "name": "Norn's Seedcore",
+  "type": "Plane",
+  "image": "cards/images/e06ade6f-ee92-456c-a653-0a3b997db007.png",
+  "thumb": "cards/thumbs/e06ade6f-ee92-456c-a653-0a3b997db007.webp",
+  "transcript": "cards/transcripts/e06ade6f-ee92-456c-a653-0a3b997db007.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "New Phyrexia",
+    "MOC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

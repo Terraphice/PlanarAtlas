@@ -1,0 +1,17 @@
+{
+  "id": "the_bean",
+  "uid": "869bd76d-4999-4ffc-9da2-bb93e1f06c48",
+  "name": "The Bean",
+  "type": "Plane",
+  "image": "cards/images/869bd76d-4999-4ffc-9da2-bb93e1f06c48.png",
+  "thumb": "cards/thumbs/869bd76d-4999-4ffc-9da2-bb93e1f06c48.webp",
+  "transcript": "cards/transcripts/869bd76d-4999-4ffc-9da2-bb93e1f06c48.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Chicago",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

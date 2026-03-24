@@ -1,0 +1,16 @@
+{
+  "id": "feeding_grounds",
+  "uid": "b1d08b99-dca9-4a05-abe9-0601ea8b0762",
+  "name": "Feeding Grounds",
+  "type": "Plane",
+  "image": "cards/images/b1d08b99-dca9-4a05-abe9-0601ea8b0762.png",
+  "thumb": "cards/thumbs/b1d08b99-dca9-4a05-abe9-0601ea8b0762.webp",
+  "transcript": "cards/transcripts/b1d08b99-dca9-4a05-abe9-0601ea8b0762.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Muraganda",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

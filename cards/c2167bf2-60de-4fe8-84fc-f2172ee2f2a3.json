@@ -1,0 +1,16 @@
+{
+  "id": "naktamun",
+  "uid": "c2167bf2-60de-4fe8-84fc-f2172ee2f2a3",
+  "name": "Naktamun",
+  "type": "Plane",
+  "image": "cards/images/c2167bf2-60de-4fe8-84fc-f2172ee2f2a3.png",
+  "thumb": "cards/thumbs/c2167bf2-60de-4fe8-84fc-f2172ee2f2a3.webp",
+  "transcript": "cards/transcripts/c2167bf2-60de-4fe8-84fc-f2172ee2f2a3.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Amonkhet",
+    "MOC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

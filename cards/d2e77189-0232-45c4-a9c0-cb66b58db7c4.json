@@ -1,0 +1,14 @@
+{
+  "id": "great_desparking",
+  "uid": "d2e77189-0232-45c4-a9c0-cb66b58db7c4",
+  "name": "Great Desparking",
+  "type": "Phenomenon",
+  "image": "cards/images/d2e77189-0232-45c4-a9c0-cb66b58db7c4.png",
+  "thumb": "cards/thumbs/d2e77189-0232-45c4-a9c0-cb66b58db7c4.webp",
+  "transcript": "cards/transcripts/d2e77189-0232-45c4-a9c0-cb66b58db7c4.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "PBT",
+    ":top:badge:tr:purple:Phenomenon"
+  ]
+}

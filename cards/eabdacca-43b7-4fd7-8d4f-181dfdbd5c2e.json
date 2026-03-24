@@ -1,0 +1,16 @@
+{
+  "id": "izzet_steam_maze",
+  "uid": "eabdacca-43b7-4fd7-8d4f-181dfdbd5c2e",
+  "name": "Izzet Steam Maze",
+  "type": "Plane",
+  "image": "cards/images/eabdacca-43b7-4fd7-8d4f-181dfdbd5c2e.png",
+  "thumb": "cards/thumbs/eabdacca-43b7-4fd7-8d4f-181dfdbd5c2e.webp",
+  "transcript": "cards/transcripts/eabdacca-43b7-4fd7-8d4f-181dfdbd5c2e.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Ravnica",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

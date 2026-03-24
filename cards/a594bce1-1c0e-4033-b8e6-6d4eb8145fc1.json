@@ -1,0 +1,16 @@
+{
+  "id": "inys_haen",
+  "uid": "a594bce1-1c0e-4033-b8e6-6d4eb8145fc1",
+  "name": "Inys Haen",
+  "type": "Plane",
+  "image": "cards/images/a594bce1-1c0e-4033-b8e6-6d4eb8145fc1.png",
+  "thumb": "cards/thumbs/a594bce1-1c0e-4033-b8e6-6d4eb8145fc1.webp",
+  "transcript": "cards/transcripts/a594bce1-1c0e-4033-b8e6-6d4eb8145fc1.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Cridhe",
+    "MOC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

@@ -1,0 +1,16 @@
+{
+  "id": "the_eon_fog",
+  "uid": "a97bdad6-10d5-460e-a528-1845471c32c6",
+  "name": "The Eon Fog",
+  "type": "Plane",
+  "image": "cards/images/a97bdad6-10d5-460e-a528-1845471c32c6.png",
+  "thumb": "cards/thumbs/a97bdad6-10d5-460e-a528-1845471c32c6.webp",
+  "transcript": "cards/transcripts/a97bdad6-10d5-460e-a528-1845471c32c6.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Equilor",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

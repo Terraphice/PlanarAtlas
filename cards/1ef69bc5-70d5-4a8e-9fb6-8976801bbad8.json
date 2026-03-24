@@ -1,0 +1,14 @@
+{
+  "id": "sleeper_agent",
+  "uid": "1ef69bc5-70d5-4a8e-9fb6-8976801bbad8",
+  "name": "Sleeper Agent",
+  "type": "Phenomenon",
+  "image": "cards/images/1ef69bc5-70d5-4a8e-9fb6-8976801bbad8.png",
+  "thumb": "cards/thumbs/1ef69bc5-70d5-4a8e-9fb6-8976801bbad8.webp",
+  "transcript": "cards/transcripts/1ef69bc5-70d5-4a8e-9fb6-8976801bbad8.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "PBT",
+    ":top:badge:tr:purple:Phenomenon"
+  ]
+}

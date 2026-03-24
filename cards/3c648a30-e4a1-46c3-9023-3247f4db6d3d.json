@@ -1,0 +1,17 @@
+{
+  "id": "circus_of_the_sun",
+  "uid": "3c648a30-e4a1-46c3-9023-3247f4db6d3d",
+  "name": "Circus of the Sun",
+  "type": "Plane",
+  "image": "cards/images/3c648a30-e4a1-46c3-9023-3247f4db6d3d.png",
+  "thumb": "cards/thumbs/3c648a30-e4a1-46c3-9023-3247f4db6d3d.webp",
+  "transcript": "cards/transcripts/3c648a30-e4a1-46c3-9023-3247f4db6d3d.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Las Vegas",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

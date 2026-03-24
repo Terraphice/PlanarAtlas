@@ -1,0 +1,14 @@
+{
+  "id": "corrupting_dusk",
+  "uid": "d828b740-4f56-43c5-b8b7-57c56c257117",
+  "name": "Corrupting Dusk",
+  "type": "Phenomenon",
+  "image": "cards/images/d828b740-4f56-43c5-b8b7-57c56c257117.png",
+  "thumb": "cards/thumbs/d828b740-4f56-43c5-b8b7-57c56c257117.webp",
+  "transcript": "cards/transcripts/d828b740-4f56-43c5-b8b7-57c56c257117.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "PBT",
+    ":top:badge:tr:purple:Phenomenon"
+  ]
+}

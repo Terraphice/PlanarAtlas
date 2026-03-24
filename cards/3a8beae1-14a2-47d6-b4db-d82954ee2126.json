@@ -1,0 +1,15 @@
+{
+  "id": "the_fathom_ward",
+  "uid": "3a8beae1-14a2-47d6-b4db-d82954ee2126",
+  "name": "The Fathom Ward",
+  "type": "Plane",
+  "image": "cards/images/3a8beae1-14a2-47d6-b4db-d82954ee2126.png",
+  "thumb": "cards/thumbs/3a8beae1-14a2-47d6-b4db-d82954ee2126.webp",
+  "transcript": "cards/transcripts/3a8beae1-14a2-47d6-b4db-d82954ee2126.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "New Phyrexia",
+    "PBT",
+    ":top:badge:tr:green:Plane"
+  ]
+}

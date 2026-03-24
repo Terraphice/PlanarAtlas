@@ -1,0 +1,14 @@
+{
+  "id": "disturbed_slumber",
+  "uid": "a11e32fb-e86c-44a1-91e3-129d7d2068e1",
+  "name": "Disturbed Slumber",
+  "type": "Phenomenon",
+  "image": "cards/images/a11e32fb-e86c-44a1-91e3-129d7d2068e1.png",
+  "thumb": "cards/thumbs/a11e32fb-e86c-44a1-91e3-129d7d2068e1.webp",
+  "transcript": "cards/transcripts/a11e32fb-e86c-44a1-91e3-129d7d2068e1.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "PBT",
+    ":top:badge:tr:purple:Phenomenon"
+  ]
+}

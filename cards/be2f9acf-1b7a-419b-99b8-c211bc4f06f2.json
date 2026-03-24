@@ -1,0 +1,16 @@
+{
+  "id": "ten_wizards_mountain",
+  "uid": "be2f9acf-1b7a-419b-99b8-c211bc4f06f2",
+  "name": "Ten Wizards Mountain",
+  "type": "Plane",
+  "image": "cards/images/be2f9acf-1b7a-419b-99b8-c211bc4f06f2.png",
+  "thumb": "cards/thumbs/be2f9acf-1b7a-419b-99b8-c211bc4f06f2.webp",
+  "transcript": "cards/transcripts/be2f9acf-1b7a-419b-99b8-c211bc4f06f2.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Shenmeng",
+    "MOC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

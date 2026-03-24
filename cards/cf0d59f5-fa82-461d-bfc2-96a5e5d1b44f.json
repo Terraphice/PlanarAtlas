@@ -1,0 +1,17 @@
+{
+  "id": "bowie_base_one",
+  "uid": "cf0d59f5-fa82-461d-bfc2-96a5e5d1b44f",
+  "name": "Bowie Base One",
+  "type": "Plane",
+  "image": "cards/images/cf0d59f5-fa82-461d-bfc2-96a5e5d1b44f.png",
+  "thumb": "cards/thumbs/cf0d59f5-fa82-461d-bfc2-96a5e5d1b44f.webp",
+  "transcript": "cards/transcripts/cf0d59f5-fa82-461d-bfc2-96a5e5d1b44f.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Mars",
+    "WHO",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

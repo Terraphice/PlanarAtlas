@@ -1,0 +1,16 @@
+{
+  "id": "the_command_zone",
+  "uid": "41013719-4498-4734-87a1-edb035e0ae1a",
+  "name": "The Command Zone",
+  "type": "Plane",
+  "image": "cards/images/41013719-4498-4734-87a1-edb035e0ae1a.png",
+  "thumb": "cards/thumbs/41013719-4498-4734-87a1-edb035e0ae1a.webp",
+  "transcript": "cards/transcripts/41013719-4498-4734-87a1-edb035e0ae1a.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

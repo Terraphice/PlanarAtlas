@@ -1,0 +1,15 @@
+{
+  "id": "halcyon_floating_capital",
+  "uid": "c377ae9d-5dc7-49f2-8ca0-9033183add9f",
+  "name": "Halcyon Floating Capital",
+  "type": "Plane",
+  "image": "cards/images/c377ae9d-5dc7-49f2-8ca0-9033183add9f.png",
+  "thumb": "cards/thumbs/c377ae9d-5dc7-49f2-8ca0-9033183add9f.webp",
+  "transcript": "cards/transcripts/c377ae9d-5dc7-49f2-8ca0-9033183add9f.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "Dominaria",
+    "PBT",
+    ":top:badge:tr:green:Plane"
+  ]
+}

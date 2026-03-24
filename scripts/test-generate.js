@@ -12,7 +12,8 @@ import {
   isOfficialCard,
   getDerivedTypeTag,
   mergeCardTags,
-  getCanonicalAssetPaths
+  getCanonicalAssetPaths,
+  getUniqueSlug
 } from "./generate-cards.js";
 
 let passed = 0;
@@ -60,13 +61,21 @@ assert(getDisplayName("Phenomenon_Atlas Consultation.png") === "Atlas Consultati
 
 section("getCanonicalAssetPaths");
 assert(
-  deepEqual(getCanonicalAssetPaths("abc-123", ".jpg"), {
-    image: "cards/images/abc-123.jpg",
-    thumb: "cards/thumbs/abc-123.webp",
-    transcript: "cards/transcripts/abc-123.md"
+  deepEqual(getCanonicalAssetPaths("69127fa3-878a-44c3-a42e-5901b58a010e", ".jpg"), {
+    image: "cards/images/69127fa3-878a-44c3-a42e-5901b58a010e.jpg",
+    thumb: "cards/thumbs/69127fa3-878a-44c3-a42e-5901b58a010e.webp",
+    transcript: "cards/transcripts/69127fa3-878a-44c3-a42e-5901b58a010e.md"
   }),
-  "Canonical paths are UID-based"
+  "Canonical paths are uid-based"
 );
+
+// ── getUniqueSlug ─────────────────────────────────────────────────────────────
+
+section("getUniqueSlug");
+const slugTracker = new Map();
+assert(getUniqueSlug("academy_at_tolaria_west", slugTracker) === "academy_at_tolaria_west", "First slug is unchanged");
+assert(getUniqueSlug("academy_at_tolaria_west", slugTracker) === "academy_at_tolaria_west_2", "Second duplicate gets _2 suffix");
+assert(getUniqueSlug("academy_at_tolaria_west", slugTracker) === "academy_at_tolaria_west_3", "Third duplicate gets _3 suffix");
 
 // ── slugifyName / getCardSlug ────────────────────────────────────────────────
 

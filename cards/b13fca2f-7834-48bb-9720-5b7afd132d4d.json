@@ -1,0 +1,16 @@
+{
+  "id": "sokenzan",
+  "uid": "b13fca2f-7834-48bb-9720-5b7afd132d4d",
+  "name": "Sokenzan",
+  "type": "Plane",
+  "image": "cards/images/b13fca2f-7834-48bb-9720-5b7afd132d4d.png",
+  "thumb": "cards/thumbs/b13fca2f-7834-48bb-9720-5b7afd132d4d.webp",
+  "transcript": "cards/transcripts/b13fca2f-7834-48bb-9720-5b7afd132d4d.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Kamigawa",
+    "MOC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

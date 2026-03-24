@@ -1,0 +1,17 @@
+{
+  "id": "clamilton_estate",
+  "uid": "e9ba24c6-3298-4304-b299-0c060a617ebe",
+  "name": "Clamilton Estate",
+  "type": "Plane",
+  "image": "cards/images/e9ba24c6-3298-4304-b299-0c060a617ebe.png",
+  "thumb": "cards/thumbs/e9ba24c6-3298-4304-b299-0c060a617ebe.webp",
+  "transcript": "cards/transcripts/e9ba24c6-3298-4304-b299-0c060a617ebe.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Clamhattan",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

@@ -1,0 +1,16 @@
+{
+  "id": "bant",
+  "uid": "7eb3aef0-00ed-43f1-a1cd-5c34d80ac31e",
+  "name": "Bant",
+  "type": "Plane",
+  "image": "cards/images/7eb3aef0-00ed-43f1-a1cd-5c34d80ac31e.png",
+  "thumb": "cards/thumbs/7eb3aef0-00ed-43f1-a1cd-5c34d80ac31e.webp",
+  "transcript": "cards/transcripts/7eb3aef0-00ed-43f1-a1cd-5c34d80ac31e.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Alara",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

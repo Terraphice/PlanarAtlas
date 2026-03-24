@@ -1,0 +1,17 @@
+{
+  "id": "besieged_viking_village",
+  "uid": "b931d9c8-8ddb-4765-8300-0a74c5a11733",
+  "name": "Besieged Viking Village",
+  "type": "Plane",
+  "image": "cards/images/b931d9c8-8ddb-4765-8300-0a74c5a11733.png",
+  "thumb": "cards/thumbs/b931d9c8-8ddb-4765-8300-0a74c5a11733.webp",
+  "transcript": "cards/transcripts/b931d9c8-8ddb-4765-8300-0a74c5a11733.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Earth",
+    "WHO",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

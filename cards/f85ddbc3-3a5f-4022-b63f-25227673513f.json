@@ -1,0 +1,17 @@
+{
+  "id": "sorins_remastered_manor",
+  "uid": "f85ddbc3-3a5f-4022-b63f-25227673513f",
+  "name": "Sorin's Remastered Manor",
+  "type": "Plane",
+  "image": "cards/images/f85ddbc3-3a5f-4022-b63f-25227673513f.png",
+  "thumb": "cards/thumbs/f85ddbc3-3a5f-4022-b63f-25227673513f.webp",
+  "transcript": "cards/transcripts/f85ddbc3-3a5f-4022-b63f-25227673513f.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Innistrad",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

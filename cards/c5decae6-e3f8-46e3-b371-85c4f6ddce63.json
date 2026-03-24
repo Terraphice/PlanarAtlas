@@ -1,0 +1,17 @@
+{
+  "id": "mondassian_colony_ship",
+  "uid": "c5decae6-e3f8-46e3-b371-85c4f6ddce63",
+  "name": "Mondassian Colony Ship",
+  "type": "Plane",
+  "image": "cards/images/c5decae6-e3f8-46e3-b371-85c4f6ddce63.png",
+  "thumb": "cards/thumbs/c5decae6-e3f8-46e3-b371-85c4f6ddce63.webp",
+  "transcript": "cards/transcripts/c5decae6-e3f8-46e3-b371-85c4f6ddce63.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Spacecraft",
+    "WHO",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

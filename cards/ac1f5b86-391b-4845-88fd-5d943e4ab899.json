@@ -1,0 +1,14 @@
+{
+  "id": "embrace_of_ichor",
+  "uid": "ac1f5b86-391b-4845-88fd-5d943e4ab899",
+  "name": "Embrace of Ichor",
+  "type": "Phenomenon",
+  "image": "cards/images/ac1f5b86-391b-4845-88fd-5d943e4ab899.png",
+  "thumb": "cards/thumbs/ac1f5b86-391b-4845-88fd-5d943e4ab899.webp",
+  "transcript": "cards/transcripts/ac1f5b86-391b-4845-88fd-5d943e4ab899.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "PBT",
+    ":top:badge:tr:purple:Phenomenon"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "royal_booster",
+  "uid": "84f38c77-14b4-4fc7-90a5-da4c58ed95ad",
+  "name": "Royal Booster",
+  "type": "Phenomenon",
+  "image": "cards/images/84f38c77-14b4-4fc7-90a5-da4c58ed95ad.png",
+  "thumb": "cards/thumbs/84f38c77-14b4-4fc7-90a5-da4c58ed95ad.webp",
+  "transcript": "cards/transcripts/84f38c77-14b4-4fc7-90a5-da4c58ed95ad.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:purple:Phenomenon"
+  ],
+  "scryfallId": null
+}

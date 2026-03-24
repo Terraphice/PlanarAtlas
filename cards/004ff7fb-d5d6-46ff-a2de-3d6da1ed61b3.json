@@ -1,0 +1,17 @@
+{
+  "id": "ood_sphere",
+  "uid": "004ff7fb-d5d6-46ff-a2de-3d6da1ed61b3",
+  "name": "Ood Sphere",
+  "type": "Plane",
+  "image": "cards/images/004ff7fb-d5d6-46ff-a2de-3d6da1ed61b3.png",
+  "thumb": "cards/thumbs/004ff7fb-d5d6-46ff-a2de-3d6da1ed61b3.webp",
+  "transcript": "cards/transcripts/004ff7fb-d5d6-46ff-a2de-3d6da1ed61b3.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Horsehead Nebula",
+    "WHO",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

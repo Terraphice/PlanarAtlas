@@ -1,0 +1,17 @@
+{
+  "id": "antarctic_research_base",
+  "uid": "733548d6-7b36-49ff-a51f-a8216f7bc99f",
+  "name": "Antarctic Research Base",
+  "type": "Plane",
+  "image": "cards/images/733548d6-7b36-49ff-a51f-a8216f7bc99f.png",
+  "thumb": "cards/thumbs/733548d6-7b36-49ff-a51f-a8216f7bc99f.webp",
+  "transcript": "cards/transcripts/733548d6-7b36-49ff-a51f-a8216f7bc99f.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Earth",
+    "WHO",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

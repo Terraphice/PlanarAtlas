@@ -1,0 +1,16 @@
+{
+  "id": "the_pit",
+  "uid": "d3b31cfc-7051-40b0-b4b2-72f1f94ce3a2",
+  "name": "The Pit",
+  "type": "Plane",
+  "image": "cards/images/d3b31cfc-7051-40b0-b4b2-72f1f94ce3a2.png",
+  "thumb": "cards/thumbs/d3b31cfc-7051-40b0-b4b2-72f1f94ce3a2.webp",
+  "transcript": "cards/transcripts/d3b31cfc-7051-40b0-b4b2-72f1f94ce3a2.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "The Abyss",
+    "MOC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

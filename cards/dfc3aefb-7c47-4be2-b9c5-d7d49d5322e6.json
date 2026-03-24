@@ -1,0 +1,16 @@
+{
+  "id": "sea_of_sand",
+  "uid": "dfc3aefb-7c47-4be2-b9c5-d7d49d5322e6",
+  "name": "Sea of Sand",
+  "type": "Plane",
+  "image": "cards/images/dfc3aefb-7c47-4be2-b9c5-d7d49d5322e6.png",
+  "thumb": "cards/thumbs/dfc3aefb-7c47-4be2-b9c5-d7d49d5322e6.webp",
+  "transcript": "cards/transcripts/dfc3aefb-7c47-4be2-b9c5-d7d49d5322e6.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Rabiah",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

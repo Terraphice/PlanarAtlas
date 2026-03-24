@@ -1,0 +1,16 @@
+{
+  "id": "krosa",
+  "uid": "b91d4516-f7e6-461c-89b6-f311bc561152",
+  "name": "Krosa",
+  "type": "Plane",
+  "image": "cards/images/b91d4516-f7e6-461c-89b6-f311bc561152.png",
+  "thumb": "cards/thumbs/b91d4516-f7e6-461c-89b6-f311bc561152.webp",
+  "transcript": "cards/transcripts/b91d4516-f7e6-461c-89b6-f311bc561152.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Dominaria",
+    "MOC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

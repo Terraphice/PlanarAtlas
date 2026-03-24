@@ -1,0 +1,16 @@
+{
+  "id": "kharasha_foothills",
+  "uid": "a4289a39-8243-43a6-8a1c-14c25fe6f06f",
+  "name": "Kharasha Foothills",
+  "type": "Plane",
+  "image": "cards/images/a4289a39-8243-43a6-8a1c-14c25fe6f06f.png",
+  "thumb": "cards/thumbs/a4289a39-8243-43a6-8a1c-14c25fe6f06f.webp",
+  "transcript": "cards/transcripts/a4289a39-8243-43a6-8a1c-14c25fe6f06f.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Mongseng",
+    "MOC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

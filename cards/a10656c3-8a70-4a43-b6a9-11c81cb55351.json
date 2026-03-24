@@ -1,0 +1,17 @@
+{
+  "id": "temple_of_atropos",
+  "uid": "a10656c3-8a70-4a43-b6a9-11c81cb55351",
+  "name": "Temple of Atropos",
+  "type": "Plane",
+  "image": "cards/images/a10656c3-8a70-4a43-b6a9-11c81cb55351.png",
+  "thumb": "cards/thumbs/a10656c3-8a70-4a43-b6a9-11c81cb55351.webp",
+  "transcript": "cards/transcripts/a10656c3-8a70-4a43-b6a9-11c81cb55351.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Time",
+    "WHO",
+    "Hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

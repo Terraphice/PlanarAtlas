@@ -1,0 +1,16 @@
+{
+  "id": "ghirapur",
+  "uid": "d35fae8f-d5e3-4a95-8ef9-dc6b2d33a7dc",
+  "name": "Ghirapur",
+  "type": "Plane",
+  "image": "cards/images/d35fae8f-d5e3-4a95-8ef9-dc6b2d33a7dc.png",
+  "thumb": "cards/thumbs/d35fae8f-d5e3-4a95-8ef9-dc6b2d33a7dc.webp",
+  "transcript": "cards/transcripts/d35fae8f-d5e3-4a95-8ef9-dc6b2d33a7dc.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Avishkar",
+    "MOC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

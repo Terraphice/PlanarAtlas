@@ -1,0 +1,17 @@
+{
+  "id": "mojave_desert",
+  "uid": "46ee0a30-c535-4a55-996f-60448497a4db",
+  "name": "Mojave Desert",
+  "type": "Plane",
+  "image": "cards/images/46ee0a30-c535-4a55-996f-60448497a4db.png",
+  "thumb": "cards/thumbs/46ee0a30-c535-4a55-996f-60448497a4db.webp",
+  "transcript": "cards/transcripts/46ee0a30-c535-4a55-996f-60448497a4db.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Las Vegas",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

@@ -1,0 +1,17 @@
+{
+  "id": "finally_left_handed_magic_cards",
+  "uid": "62df76b4-f186-458b-b258-25259b2ca437",
+  "name": "Finally! Left Handed Magic Cards",
+  "type": "Plane",
+  "image": "cards/images/62df76b4-f186-458b-b258-25259b2ca437.png",
+  "thumb": "cards/thumbs/62df76b4-f186-458b-b258-25259b2ca437.webp",
+  "transcript": "cards/transcripts/62df76b4-f186-458b-b258-25259b2ca437.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Secret Lair",
+    "hidden",
+    "PSSC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

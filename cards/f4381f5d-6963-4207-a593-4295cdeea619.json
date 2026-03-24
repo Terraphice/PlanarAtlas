@@ -1,0 +1,17 @@
+{
+  "id": "elvish_impersonation_contest",
+  "uid": "f4381f5d-6963-4207-a593-4295cdeea619",
+  "name": "Elvish Impersonation Contest",
+  "type": "Plane",
+  "image": "cards/images/f4381f5d-6963-4207-a593-4295cdeea619.png",
+  "thumb": "cards/thumbs/f4381f5d-6963-4207-a593-4295cdeea619.webp",
+  "transcript": "cards/transcripts/f4381f5d-6963-4207-a593-4295cdeea619.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Las Vegas",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

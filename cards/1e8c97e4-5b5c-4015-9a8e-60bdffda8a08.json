@@ -1,0 +1,16 @@
+{
+  "id": "megaflora_jungle",
+  "uid": "1e8c97e4-5b5c-4015-9a8e-60bdffda8a08",
+  "name": "Megaflora Jungle",
+  "type": "Plane",
+  "image": "cards/images/1e8c97e4-5b5c-4015-9a8e-60bdffda8a08.png",
+  "thumb": "cards/thumbs/1e8c97e4-5b5c-4015-9a8e-60bdffda8a08.webp",
+  "transcript": "cards/transcripts/1e8c97e4-5b5c-4015-9a8e-60bdffda8a08.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Gargantikar",
+    "MOC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

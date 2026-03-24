@@ -1,0 +1,17 @@
+{
+  "id": "ghirapur_grand_prix",
+  "uid": "250b7242-8faa-47f7-98ea-af6805a6c187",
+  "name": "Ghirapur Grand Prix",
+  "type": "Plane",
+  "image": "cards/images/250b7242-8faa-47f7-98ea-af6805a6c187.png",
+  "thumb": "cards/thumbs/250b7242-8faa-47f7-98ea-af6805a6c187.webp",
+  "transcript": "cards/transcripts/250b7242-8faa-47f7-98ea-af6805a6c187.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Avishkar",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

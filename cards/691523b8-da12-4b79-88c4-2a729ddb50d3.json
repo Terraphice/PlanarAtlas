@@ -1,0 +1,17 @@
+{
+  "id": "singing_towers_of_darillium",
+  "uid": "691523b8-da12-4b79-88c4-2a729ddb50d3",
+  "name": "Singing Towers of Darillium",
+  "type": "Plane",
+  "image": "cards/images/691523b8-da12-4b79-88c4-2a729ddb50d3.png",
+  "thumb": "cards/thumbs/691523b8-da12-4b79-88c4-2a729ddb50d3.webp",
+  "transcript": "cards/transcripts/691523b8-da12-4b79-88c4-2a729ddb50d3.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Darillium",
+    "WHO",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

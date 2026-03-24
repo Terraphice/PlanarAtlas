@@ -1,0 +1,17 @@
+{
+  "id": "deceptive_divination",
+  "uid": "42b0a7bb-ece0-435f-82b0-7a66185df372",
+  "name": "Deceptive Divination",
+  "type": "Plane",
+  "image": "cards/images/42b0a7bb-ece0-435f-82b0-7a66185df372.png",
+  "thumb": "cards/thumbs/42b0a7bb-ece0-435f-82b0-7a66185df372.webp",
+  "transcript": "cards/transcripts/42b0a7bb-ece0-435f-82b0-7a66185df372.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Secret Lair",
+    "hidden",
+    "PSSC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

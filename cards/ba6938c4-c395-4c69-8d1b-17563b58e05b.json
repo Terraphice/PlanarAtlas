@@ -1,0 +1,17 @@
+{
+  "id": "pompeii",
+  "uid": "ba6938c4-c395-4c69-8d1b-17563b58e05b",
+  "name": "Pompeii",
+  "type": "Plane",
+  "image": "cards/images/ba6938c4-c395-4c69-8d1b-17563b58e05b.png",
+  "thumb": "cards/thumbs/ba6938c4-c395-4c69-8d1b-17563b58e05b.webp",
+  "transcript": "cards/transcripts/ba6938c4-c395-4c69-8d1b-17563b58e05b.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Earth",
+    "WHO",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

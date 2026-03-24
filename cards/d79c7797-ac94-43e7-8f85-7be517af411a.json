@@ -1,0 +1,16 @@
+{
+  "id": "the_western_cloud",
+  "uid": "d79c7797-ac94-43e7-8f85-7be517af411a",
+  "name": "The Western Cloud",
+  "type": "Plane",
+  "image": "cards/images/d79c7797-ac94-43e7-8f85-7be517af411a.png",
+  "thumb": "cards/thumbs/d79c7797-ac94-43e7-8f85-7be517af411a.webp",
+  "transcript": "cards/transcripts/d79c7797-ac94-43e7-8f85-7be517af411a.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Gobakhan",
+    "MOC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

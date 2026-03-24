@@ -1,0 +1,17 @@
+{
+  "id": "tardis_bay",
+  "uid": "8e9af878-c7c3-42a8-983e-73b2d9a2582f",
+  "name": "TARDIS Bay",
+  "type": "Plane",
+  "image": "cards/images/8e9af878-c7c3-42a8-983e-73b2d9a2582f.png",
+  "thumb": "cards/thumbs/8e9af878-c7c3-42a8-983e-73b2d9a2582f.webp",
+  "transcript": "cards/transcripts/8e9af878-c7c3-42a8-983e-73b2d9a2582f.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Gallifrey",
+    "WHO",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

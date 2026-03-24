@@ -1,0 +1,15 @@
+{
+  "id": "havengul_port_city",
+  "uid": "1441437f-c254-4097-9f10-b7d36de764b5",
+  "name": "Havengul Port City",
+  "type": "Plane",
+  "image": "cards/images/1441437f-c254-4097-9f10-b7d36de764b5.png",
+  "thumb": "cards/thumbs/1441437f-c254-4097-9f10-b7d36de764b5.webp",
+  "transcript": "cards/transcripts/1441437f-c254-4097-9f10-b7d36de764b5.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "Innistrad",
+    "PBT",
+    ":top:badge:tr:green:Plane"
+  ]
+}

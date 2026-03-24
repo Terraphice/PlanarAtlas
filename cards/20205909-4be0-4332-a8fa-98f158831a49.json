@@ -1,0 +1,16 @@
+{
+  "id": "grixis",
+  "uid": "20205909-4be0-4332-a8fa-98f158831a49",
+  "name": "Grixis",
+  "type": "Plane",
+  "image": "cards/images/20205909-4be0-4332-a8fa-98f158831a49.png",
+  "thumb": "cards/thumbs/20205909-4be0-4332-a8fa-98f158831a49.webp",
+  "transcript": "cards/transcripts/20205909-4be0-4332-a8fa-98f158831a49.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Alara",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

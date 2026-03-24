@@ -1,0 +1,17 @@
+{
+  "id": "the_doctors_tomb",
+  "uid": "ec97b299-1c3a-457d-8024-784d18934489",
+  "name": "The Doctor's Tomb",
+  "type": "Plane",
+  "image": "cards/images/ec97b299-1c3a-457d-8024-784d18934489.png",
+  "thumb": "cards/thumbs/ec97b299-1c3a-457d-8024-784d18934489.webp",
+  "transcript": "cards/transcripts/ec97b299-1c3a-457d-8024-784d18934489.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Trenzalore",
+    "WHO",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

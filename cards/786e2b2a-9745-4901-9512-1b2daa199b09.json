@@ -1,0 +1,16 @@
+{
+  "id": "turri_island",
+  "uid": "786e2b2a-9745-4901-9512-1b2daa199b09",
+  "name": "Turri Island",
+  "type": "Plane",
+  "image": "cards/images/786e2b2a-9745-4901-9512-1b2daa199b09.png",
+  "thumb": "cards/thumbs/786e2b2a-9745-4901-9512-1b2daa199b09.webp",
+  "transcript": "cards/transcripts/786e2b2a-9745-4901-9512-1b2daa199b09.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Ir",
+    "MOC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

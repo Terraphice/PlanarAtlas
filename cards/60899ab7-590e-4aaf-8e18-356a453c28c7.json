@@ -1,0 +1,16 @@
+{
+  "id": "astral_arena",
+  "uid": "60899ab7-590e-4aaf-8e18-356a453c28c7",
+  "name": "Astral Arena",
+  "type": "Plane",
+  "image": "cards/images/60899ab7-590e-4aaf-8e18-356a453c28c7.png",
+  "thumb": "cards/thumbs/60899ab7-590e-4aaf-8e18-356a453c28c7.webp",
+  "transcript": "cards/transcripts/60899ab7-590e-4aaf-8e18-356a453c28c7.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Kolbahan",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

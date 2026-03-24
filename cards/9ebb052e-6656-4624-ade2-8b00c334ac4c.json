@@ -1,0 +1,16 @@
+{
+  "id": "fields_of_summer",
+  "uid": "9ebb052e-6656-4624-ade2-8b00c334ac4c",
+  "name": "Fields of Summer",
+  "type": "Plane",
+  "image": "cards/images/9ebb052e-6656-4624-ade2-8b00c334ac4c.png",
+  "thumb": "cards/thumbs/9ebb052e-6656-4624-ade2-8b00c334ac4c.webp",
+  "transcript": "cards/transcripts/9ebb052e-6656-4624-ade2-8b00c334ac4c.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Moag",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

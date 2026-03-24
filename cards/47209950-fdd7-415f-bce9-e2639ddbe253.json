@@ -1,0 +1,16 @@
+{
+  "id": "llanowar",
+  "uid": "47209950-fdd7-415f-bce9-e2639ddbe253",
+  "name": "Llanowar",
+  "type": "Plane",
+  "image": "cards/images/47209950-fdd7-415f-bce9-e2639ddbe253.png",
+  "thumb": "cards/thumbs/47209950-fdd7-415f-bce9-e2639ddbe253.webp",
+  "transcript": "cards/transcripts/47209950-fdd7-415f-bce9-e2639ddbe253.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Dominaria",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

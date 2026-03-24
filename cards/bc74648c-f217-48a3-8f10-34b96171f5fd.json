@@ -1,0 +1,17 @@
+{
+  "id": "multiversal_high_council",
+  "uid": "bc74648c-f217-48a3-8f10-34b96171f5fd",
+  "name": "Multiversal High Council",
+  "type": "Plane",
+  "image": "cards/images/bc74648c-f217-48a3-8f10-34b96171f5fd.png",
+  "thumb": "cards/thumbs/bc74648c-f217-48a3-8f10-34b96171f5fd.webp",
+  "transcript": "cards/transcripts/bc74648c-f217-48a3-8f10-34b96171f5fd.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Universia Beyondia",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

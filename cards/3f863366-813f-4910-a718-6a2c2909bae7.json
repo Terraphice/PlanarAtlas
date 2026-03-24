@@ -1,0 +1,17 @@
+{
+  "id": "unit_headquarters",
+  "uid": "3f863366-813f-4910-a718-6a2c2909bae7",
+  "name": "UNIT Headquarters",
+  "type": "Plane",
+  "image": "cards/images/3f863366-813f-4910-a718-6a2c2909bae7.png",
+  "thumb": "cards/thumbs/3f863366-813f-4910-a718-6a2c2909bae7.webp",
+  "transcript": "cards/transcripts/3f863366-813f-4910-a718-6a2c2909bae7.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Earth",
+    "WHO",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

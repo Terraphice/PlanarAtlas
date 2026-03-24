@@ -1,0 +1,17 @@
+{
+  "id": "high_noon_at_thunder_junction",
+  "uid": "6291a096-804a-42c0-80ba-37e5cdaadcfc",
+  "name": "High Noon At Thunder Junction",
+  "type": "Plane",
+  "image": "cards/images/6291a096-804a-42c0-80ba-37e5cdaadcfc.png",
+  "thumb": "cards/thumbs/6291a096-804a-42c0-80ba-37e5cdaadcfc.webp",
+  "transcript": "cards/transcripts/6291a096-804a-42c0-80ba-37e5cdaadcfc.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Thunder Junction",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

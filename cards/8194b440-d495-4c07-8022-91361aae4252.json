@@ -1,0 +1,14 @@
+{
+  "id": "glimpse_of_fate",
+  "uid": "8194b440-d495-4c07-8022-91361aae4252",
+  "name": "Glimpse of Fate",
+  "type": "Phenomenon",
+  "image": "cards/images/8194b440-d495-4c07-8022-91361aae4252.png",
+  "thumb": "cards/thumbs/8194b440-d495-4c07-8022-91361aae4252.webp",
+  "transcript": "cards/transcripts/8194b440-d495-4c07-8022-91361aae4252.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "PBT",
+    ":top:badge:tr:purple:Phenomenon"
+  ]
+}

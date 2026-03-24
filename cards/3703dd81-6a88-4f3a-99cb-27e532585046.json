@@ -1,0 +1,16 @@
+{
+  "id": "nephalia",
+  "uid": "3703dd81-6a88-4f3a-99cb-27e532585046",
+  "name": "Nephalia",
+  "type": "Plane",
+  "image": "cards/images/3703dd81-6a88-4f3a-99cb-27e532585046.png",
+  "thumb": "cards/thumbs/3703dd81-6a88-4f3a-99cb-27e532585046.webp",
+  "transcript": "cards/transcripts/3703dd81-6a88-4f3a-99cb-27e532585046.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Innistrad",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

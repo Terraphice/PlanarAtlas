@@ -1,0 +1,17 @@
+{
+  "id": "tarnation",
+  "uid": "d02357fb-0c3d-4733-b98d-41ac14f46a0c",
+  "name": "Tarnation",
+  "type": "Plane",
+  "image": "cards/images/d02357fb-0c3d-4733-b98d-41ac14f46a0c.png",
+  "thumb": "cards/thumbs/d02357fb-0c3d-4733-b98d-41ac14f46a0c.webp",
+  "transcript": "cards/transcripts/d02357fb-0c3d-4733-b98d-41ac14f46a0c.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Thunder Junction",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

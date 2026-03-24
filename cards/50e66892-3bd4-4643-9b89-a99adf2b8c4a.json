@@ -1,0 +1,17 @@
+{
+  "id": "the_lux_foundation_library",
+  "uid": "50e66892-3bd4-4643-9b89-a99adf2b8c4a",
+  "name": "The Lux Foundation Library",
+  "type": "Plane",
+  "image": "cards/images/50e66892-3bd4-4643-9b89-a99adf2b8c4a.png",
+  "thumb": "cards/thumbs/50e66892-3bd4-4643-9b89-a99adf2b8c4a.webp",
+  "transcript": "cards/transcripts/50e66892-3bd4-4643-9b89-a99adf2b8c4a.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "The Library",
+    "WHO",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

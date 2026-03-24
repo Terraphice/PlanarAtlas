@@ -1,0 +1,16 @@
+{
+  "id": "orochi_colony",
+  "uid": "562645f3-5ae6-45cd-8bea-de42dc1381cc",
+  "name": "Orochi Colony",
+  "type": "Plane",
+  "image": "cards/images/562645f3-5ae6-45cd-8bea-de42dc1381cc.png",
+  "thumb": "cards/thumbs/562645f3-5ae6-45cd-8bea-de42dc1381cc.webp",
+  "transcript": "cards/transcripts/562645f3-5ae6-45cd-8bea-de42dc1381cc.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Kamigawa",
+    "MOC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

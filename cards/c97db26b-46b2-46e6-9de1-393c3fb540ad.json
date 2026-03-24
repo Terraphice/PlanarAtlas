@@ -1,0 +1,15 @@
+{
+  "id": "mutual_epiphany",
+  "uid": "c97db26b-46b2-46e6-9de1-393c3fb540ad",
+  "name": "Mutual Epiphany",
+  "type": "Phenomenon",
+  "image": "cards/images/c97db26b-46b2-46e6-9de1-393c3fb540ad.png",
+  "thumb": "cards/thumbs/c97db26b-46b2-46e6-9de1-393c3fb540ad.webp",
+  "transcript": "cards/transcripts/c97db26b-46b2-46e6-9de1-393c3fb540ad.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "MOC",
+    ":top:badge:tr:purple:Phenomenon"
+  ],
+  "scryfallId": null
+}

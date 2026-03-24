@@ -1,0 +1,17 @@
+{
+  "id": "the_drum_mining_facility",
+  "uid": "43b86e8d-7540-4842-ad93-e6de0eea6448",
+  "name": "The Drum, Mining Facility",
+  "type": "Plane",
+  "image": "cards/images/43b86e8d-7540-4842-ad93-e6de0eea6448.png",
+  "thumb": "cards/thumbs/43b86e8d-7540-4842-ad93-e6de0eea6448.webp",
+  "transcript": "cards/transcripts/43b86e8d-7540-4842-ad93-e6de0eea6448.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Earth",
+    "WHO",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

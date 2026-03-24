@@ -1,0 +1,16 @@
+{
+  "id": "nyx",
+  "uid": "d7063239-a8cd-4316-aee7-bcc3012fd5bd",
+  "name": "Nyx",
+  "type": "Plane",
+  "image": "cards/images/d7063239-a8cd-4316-aee7-bcc3012fd5bd.png",
+  "thumb": "cards/thumbs/d7063239-a8cd-4316-aee7-bcc3012fd5bd.webp",
+  "transcript": "cards/transcripts/d7063239-a8cd-4316-aee7-bcc3012fd5bd.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Theros",
+    "MOC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

@@ -1,0 +1,17 @@
+{
+  "id": "coal_hill_school",
+  "uid": "ce5fe35d-839f-4e7f-9c20-031f86a675c0",
+  "name": "Coal Hill School",
+  "type": "Plane",
+  "image": "cards/images/ce5fe35d-839f-4e7f-9c20-031f86a675c0.png",
+  "thumb": "cards/thumbs/ce5fe35d-839f-4e7f-9c20-031f86a675c0.webp",
+  "transcript": "cards/transcripts/ce5fe35d-839f-4e7f-9c20-031f86a675c0.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Earth",
+    "WHO",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

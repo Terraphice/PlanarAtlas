@@ -1,0 +1,16 @@
+{
+  "id": "game_knights_live",
+  "uid": "997fcfe5-f3a5-42df-9f1f-34a74ce5f47c",
+  "name": "Game Knights Live",
+  "type": "Plane",
+  "image": "cards/images/997fcfe5-f3a5-42df-9f1f-34a74ce5f47c.png",
+  "thumb": "cards/thumbs/997fcfe5-f3a5-42df-9f1f-34a74ce5f47c.webp",
+  "transcript": "cards/transcripts/997fcfe5-f3a5-42df-9f1f-34a74ce5f47c.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

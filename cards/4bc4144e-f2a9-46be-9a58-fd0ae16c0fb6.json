@@ -1,0 +1,16 @@
+{
+  "id": "velis_vel",
+  "uid": "4bc4144e-f2a9-46be-9a58-fd0ae16c0fb6",
+  "name": "Velis Vel",
+  "type": "Plane",
+  "image": "cards/images/4bc4144e-f2a9-46be-9a58-fd0ae16c0fb6.png",
+  "thumb": "cards/thumbs/4bc4144e-f2a9-46be-9a58-fd0ae16c0fb6.webp",
+  "transcript": "cards/transcripts/4bc4144e-f2a9-46be-9a58-fd0ae16c0fb6.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Lorwyn",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

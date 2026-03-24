@@ -1,0 +1,17 @@
+{
+  "id": "event_horizon",
+  "uid": "c531f272-ef7b-4f77-b787-c33dbaab4055",
+  "name": "Event Horizon",
+  "type": "Plane",
+  "image": "cards/images/c531f272-ef7b-4f77-b787-c33dbaab4055.png",
+  "thumb": "cards/thumbs/c531f272-ef7b-4f77-b787-c33dbaab4055.webp",
+  "transcript": "cards/transcripts/c531f272-ef7b-4f77-b787-c33dbaab4055.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Blind Eternities",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

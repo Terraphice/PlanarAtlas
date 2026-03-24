@@ -1,0 +1,17 @@
+{
+  "id": "happy_yargle_day",
+  "uid": "db4cbca8-414d-4649-ad10-0fe82a62ad58",
+  "name": "Happy Yargle Day!",
+  "type": "Plane",
+  "image": "cards/images/db4cbca8-414d-4649-ad10-0fe82a62ad58.png",
+  "thumb": "cards/thumbs/db4cbca8-414d-4649-ad10-0fe82a62ad58.webp",
+  "transcript": "cards/transcripts/db4cbca8-414d-4649-ad10-0fe82a62ad58.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Secret Lair",
+    "hidden",
+    "PSSC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

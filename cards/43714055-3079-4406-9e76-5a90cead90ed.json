@@ -1,0 +1,16 @@
+{
+  "id": "takenuma",
+  "uid": "43714055-3079-4406-9e76-5a90cead90ed",
+  "name": "Takenuma",
+  "type": "Plane",
+  "image": "cards/images/43714055-3079-4406-9e76-5a90cead90ed.png",
+  "thumb": "cards/thumbs/43714055-3079-4406-9e76-5a90cead90ed.webp",
+  "transcript": "cards/transcripts/43714055-3079-4406-9e76-5a90cead90ed.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Kamigawa",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

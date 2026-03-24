@@ -1,0 +1,17 @@
+{
+  "id": "jaliras_show",
+  "uid": "b79b6060-6d70-4b13-946b-12ffdcd5b269",
+  "name": "Jalira's Show",
+  "type": "Plane",
+  "image": "cards/images/b79b6060-6d70-4b13-946b-12ffdcd5b269.png",
+  "thumb": "cards/thumbs/b79b6060-6d70-4b13-946b-12ffdcd5b269.webp",
+  "transcript": "cards/transcripts/b79b6060-6d70-4b13-946b-12ffdcd5b269.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Las Vegas",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

@@ -1,0 +1,17 @@
+{
+  "id": "mycosynthwave",
+  "uid": "43a2b2c9-f831-477b-9c92-b6f661cb00a6",
+  "name": "Mycosynthwave",
+  "type": "Plane",
+  "image": "cards/images/43a2b2c9-f831-477b-9c92-b6f661cb00a6.png",
+  "thumb": "cards/thumbs/43a2b2c9-f831-477b-9c92-b6f661cb00a6.webp",
+  "transcript": "cards/transcripts/43a2b2c9-f831-477b-9c92-b6f661cb00a6.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Secret Lair",
+    "hidden",
+    "PSSC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

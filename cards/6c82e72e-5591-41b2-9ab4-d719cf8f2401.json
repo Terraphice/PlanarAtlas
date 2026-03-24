@@ -1,0 +1,14 @@
+{
+  "id": "atlas_consultation",
+  "uid": "6c82e72e-5591-41b2-9ab4-d719cf8f2401",
+  "name": "Atlas Consultation",
+  "type": "Phenomenon",
+  "image": "cards/images/6c82e72e-5591-41b2-9ab4-d719cf8f2401.png",
+  "thumb": "cards/thumbs/6c82e72e-5591-41b2-9ab4-d719cf8f2401.webp",
+  "transcript": "cards/transcripts/6c82e72e-5591-41b2-9ab4-d719cf8f2401.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "PBT",
+    ":top:badge:tr:purple:Phenomenon"
+  ]
+}

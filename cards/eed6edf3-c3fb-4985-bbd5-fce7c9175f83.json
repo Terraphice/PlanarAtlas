@@ -1,0 +1,17 @@
+{
+  "id": "the_windy_city",
+  "uid": "eed6edf3-c3fb-4985-bbd5-fce7c9175f83",
+  "name": "The Windy City",
+  "type": "Plane",
+  "image": "cards/images/eed6edf3-c3fb-4985-bbd5-fce7c9175f83.png",
+  "thumb": "cards/thumbs/eed6edf3-c3fb-4985-bbd5-fce7c9175f83.webp",
+  "transcript": "cards/transcripts/eed6edf3-c3fb-4985-bbd5-fce7c9175f83.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Chicago",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}
