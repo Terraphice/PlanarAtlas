@@ -3187,7 +3187,7 @@ body.privacy-modal-open {
 /* BEM info bar */
 .bem-info-bar {
   position: absolute;
-  bottom: var(--game-bottom-clearance);
+  bottom: calc(var(--game-bottom-clearance) + 44px);
   left: 0;
   right: 0;
   display: flex;
@@ -3328,7 +3328,7 @@ body.privacy-modal-open {
   }
 
   .bem-info-bar {
-    bottom: var(--game-bottom-clearance);
+    bottom: calc(var(--game-bottom-clearance) + 28px);
   }
 }
 
