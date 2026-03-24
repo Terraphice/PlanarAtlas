@@ -4,7 +4,7 @@
 
 import { loadPreferences, savePreferences, readUrlState, writeUrlState } from "./utils.js";
 
-export const STORAGE_KEY = "planechaseGalleryPreferences.v2";
+export const STORAGE_KEY = "planechaseGalleryPreferences.v3";
 
 export const preferences = loadPreferences(STORAGE_KEY);
 
@@ -40,7 +40,7 @@ export function initStateManager({ themeController, topSearch, sidebarSearch, to
       displayState,
       filters,
       themeController.getTheme(),
-      themeController.getPalette(),
+      themeController.getThemeFamily(),
       paginationState
     );
   }

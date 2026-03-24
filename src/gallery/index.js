@@ -78,6 +78,9 @@ const sidebarSearchSuggestions = document.getElementById("sidebar-search-suggest
 const fuzzySearchToggle = document.getElementById("fuzzy-search-toggle");
 const showHiddenToggle = document.getElementById("show-hidden-toggle");
 const inlineAutocompleteToggle = document.getElementById("inline-autocomplete-toggle");
+const galleryThemeSelect = document.getElementById("gallery-theme-select");
+const galleryThemeTrigger = document.getElementById("gallery-theme-trigger");
+const galleryThemeMenu = document.getElementById("gallery-theme-menu");
 const phenomenonAnimationToggle = document.getElementById("phenomenon-animation-toggle");
 const hellridingModeSelect = document.getElementById("hellriding-mode-select");
 const smoothTravelToggle = document.getElementById("smooth-travel-toggle");
@@ -112,6 +115,9 @@ const themeToggleButton = document.getElementById("theme-toggle");
 const confirmDialog = document.getElementById("confirm-dialog");
 const confirmOkButton = document.getElementById("confirm-ok");
 const confirmCancelButton = document.getElementById("confirm-cancel");
+const phyrexiaDialog = document.getElementById("phyrexia-overlay");
+const phyrexiaDialogCloseButton = document.getElementById("phyrexia-close");
+const phyrexiaDialogZhalfirButton = document.getElementById("phyrexia-zhalfir");
 
 const modal = document.getElementById("card-modal");
 const modalImageWrap = document.getElementById("modal-image-wrap");
@@ -134,16 +140,84 @@ const paginationControls = document.getElementById("pagination-controls");
 // ── Toast and theme ───────────────────────────────────────────────────────────
 
 const showToast = initToastManager(toastRegion);
+const PHYREXIA_INTRO_KEY_PREFIX = "planar-atlas-phyrexia-intro-v2";
+let pendingPhyrexianIntroThemeFamily = null;
 const themeController = initThemeController({
   button: themeToggleButton,
+  themeSelect: galleryThemeSelect,
+  themeMenu: galleryThemeMenu,
+  themeTrigger: galleryThemeTrigger,
   initialTheme: preferences.theme,
-  initialPalette: preferences.themePalette,
-  onChange(theme, palette) {
+  initialThemeFamily: preferences.themeFamily,
+  onChange(theme, _themeFamily, themeLabel) {
     stateManager.persistPreferences();
-    const paletteLabel = palette === "standard" ? "" : ` ${capitalize(palette)}`;
-    showToast(`Theme set to ${theme}${paletteLabel}.`);
+    showToast(`${capitalize(theme)} — ${themeLabel}`);
+    maybeShowPhyrexiaIntro();
+  },
+  onSecretTheme() {
+    const switchedToPeace = ["boros", "selesnya"].includes(themeController.getThemeFamily());
+    if (switchedToPeace) {
+      showToast("With the success of the Zhalfir-Switch, the Multiverse is at peace once again. For now.");
+      return;
+    }
+    showToast("You hear the whispers of an ancient and forgotten tongue...");
   }
 });
+
+function getPhyrexiaIntroKey(themeFamily) {
+  return `${PHYREXIA_INTRO_KEY_PREFIX}:${themeFamily}`;
+}
+
+function hasSeenPhyrexiaIntro(themeFamily) {
+  return localStorage.getItem(getPhyrexiaIntroKey(themeFamily)) === "1";
+}
+
+function setSeenPhyrexiaIntro(themeFamily) {
+  try {
+    localStorage.setItem(getPhyrexiaIntroKey(themeFamily), "1");
+  } catch {
+    // ignore storage failures
+  }
+}
+
+function isPhyrexianThemeFamily(themeFamily) {
+  return themeFamily === "new-phyrexian" || themeFamily === "phyrexian";
+}
+
+function maybeShowPhyrexiaIntro() {
+  if (!phyrexiaDialog) return;
+
+  const themeFamily = themeController.getThemeFamily();
+  if (!isPhyrexianThemeFamily(themeFamily)) return;
+  if (hasSeenPhyrexiaIntro(themeFamily)) return;
+
+  pendingPhyrexianIntroThemeFamily = themeFamily;
+  phyrexiaDialog.classList.remove("hidden");
+  phyrexiaDialog.setAttribute("aria-hidden", "false");
+  document.body.classList.add("confirm-open");
+}
+
+function closePhyrexiaIntro({ markSeen = true } = {}) {
+  if (!phyrexiaDialog) return;
+  phyrexiaDialog.classList.add("hidden");
+  phyrexiaDialog.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("confirm-open");
+  if (markSeen && pendingPhyrexianIntroThemeFamily) {
+    setSeenPhyrexiaIntro(pendingPhyrexianIntroThemeFamily);
+  }
+  pendingPhyrexianIntroThemeFamily = null;
+}
+
+function zhalfirSwitchTheme() {
+  if (!pendingPhyrexianIntroThemeFamily) return;
+  const fallbackFamily = pendingPhyrexianIntroThemeFamily === "new-phyrexian"
+    ? "boros"
+    : "selesnya";
+  themeController.setTheme(themeController.getTheme(), {
+    themeFamilyOverride: fallbackFamily
+  });
+  closePhyrexiaIntro();
+}
 
 // ── State manager ─────────────────────────────────────────────────────────────
 
@@ -327,6 +401,7 @@ async function init() {
     syncTagFilterUI();
     applyFilters({ updateUrl: false, preservePage: true });
     tryOpenCardFromHash();
+    maybeShowPhyrexiaIntro();
 
     initDeck({
       cards: allCards,
@@ -583,7 +658,7 @@ function executeClearAll() {
   paginationState.mode = "paginated";
   paginationState.infiniteLoadedCount = 20;
 
-  themeController.setTheme("system", { silent: true, paletteOverride: "standard" });
+  themeController.setTheme("system", { silent: true, themeFamilyOverride: "azorius" });
 
   topSearch.value = "";
   sidebarSearch.value = "";
@@ -610,7 +685,7 @@ function exportProfile() {
     inlineAutocomplete: filters.inlineAutocomplete,
     showHidden: filters.showHidden,
     theme: themeController.getTheme(),
-    themePalette: themeController.getPalette(),
+    themeFamily: themeController.getThemeFamily(),
     pageSize: paginationState.pageSize,
     paginationMode: paginationState.mode,
     phenomenonAnimation: filters.phenomenonAnimation,
@@ -667,10 +742,10 @@ function importProfile() {
     if (["paginated", "infinite"].includes(p.paginationMode)) paginationState.mode = p.paginationMode;
 
     const validThemes = ["system", "dark", "light"];
-    const validPalettes = ["standard", "gruvbox", "atom", "dracula", "solarized", "nord", "catppuccin", "scryfall"];
+    const validThemeFamilies = ["azorius", "boros", "selesnya", "orzhov", "new-phyrexian", "phyrexian"];
     const newTheme = validThemes.includes(p.theme) ? p.theme : "system";
-    const newPalette = validPalettes.includes(p.themePalette) ? p.themePalette : "standard";
-    themeController.setTheme(newTheme, { silent: true, paletteOverride: newPalette });
+    const newThemeFamily = validThemeFamilies.includes(p.themeFamily) ? p.themeFamily : "azorius";
+    themeController.setTheme(newTheme, { silent: true, themeFamilyOverride: newThemeFamily });
   }
 
   if (data.d) importProfileDecks(data.d);
@@ -825,6 +900,11 @@ function bindEvents() {
   confirmDialog?.addEventListener("click", (event) => {
     if (event.target === confirmDialog) hideClearPrefsConfirm();
   });
+  phyrexiaDialogCloseButton?.addEventListener("click", () => closePhyrexiaIntro());
+  phyrexiaDialogZhalfirButton?.addEventListener("click", zhalfirSwitchTheme);
+  phyrexiaDialog?.addEventListener("click", (event) => {
+    if (event.target === phyrexiaDialog) closePhyrexiaIntro();
+  });
 
   randomCardButton.addEventListener("click", (event) => {
     if (getSuppressRandomClick()) {
@@ -881,6 +961,11 @@ function bindEvents() {
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
+      if (phyrexiaDialog && !phyrexiaDialog.classList.contains("hidden")) {
+        closePhyrexiaIntro();
+        return;
+      }
+
       if (confirmDialog && !confirmDialog.classList.contains("hidden")) {
         hideClearPrefsConfirm();
         return;
@@ -1004,6 +1089,16 @@ function bindEvents() {
     syncTagFilterUI();
     applyFilters({ updateUrl: false, preservePage: true });
     tryOpenCardFromHash();
+  });
+
+  window.addEventListener("beforeunload", () => {
+    stateManager.persistPreferences();
+  });
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") {
+      stateManager.persistPreferences();
+    }
   });
 
   window.addEventListener("scroll", scheduleStackActiveUpdate, { passive: true });
