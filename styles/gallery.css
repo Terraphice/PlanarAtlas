@@ -3,7 +3,7 @@
   position: fixed;
   inset: 0;
   z-index: -3;
-  background-image: url('../assets/social-preview.jpg');
+  background-image: var(--parallax-image, url('../assets/social-preview.jpg'));
   background-size: cover;
   background-position: center 30%;
   background-repeat: no-repeat;
@@ -19,6 +19,12 @@ html[data-theme="light"] .parallax-bg {
   opacity: 0.04;
 }
 
+html[data-palette="new-phyrexian"] .parallax-bg,
+html[data-palette="phyrexian"] .parallax-bg {
+  opacity: 0.09;
+  filter: blur(1px) saturate(1.05);
+}
+
 html {
   touch-action: pan-x pan-y;
 }
@@ -26,12 +32,7 @@ html {
 body {
   margin: 0;
   color: var(--text);
-  font-family:
-    ui-sans-serif,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
+  font-family: var(--site-font-family, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
   background:
     radial-gradient(circle at top, color-mix(in srgb, var(--accent) 10%, transparent), transparent 28%),
     linear-gradient(180deg, color-mix(in srgb, var(--bg) 72%, black 28%) 0%, var(--bg) 100%);
@@ -165,12 +166,6 @@ kbd {
   transition: transform 200ms ease, box-shadow 180ms ease, background 180ms ease, border-color 180ms ease;
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
   overflow: visible;
-}
-
-html[data-palette="gruvbox"][data-theme="dark"] .sidebar {
-  background:
-    linear-gradient(180deg, color-mix(in srgb, #32302f 88%, #282828 12%), color-mix(in srgb, #282828 86%, #1d2021 14%));
-  border-right-color: color-mix(in srgb, #665c54 70%, transparent 30%);
 }
 
 .sidebar.open {
@@ -2085,4 +2080,12 @@ body.changelog-open {
   opacity: 0.85;
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+html[data-script="phyrexian"] {
+  --site-font-family: "Phyrexian", "Noto Sans", ui-sans-serif, sans-serif;
+}
+
+html[data-script="phyrexian"] .ms {
+  font-family: Mana, "Mplantin", serif !important;
 }

@@ -1,0 +1,108 @@
+:root {
+  color-scheme: dark;
+  --bg: #102033;
+  --bg-elev-1: #15283f;
+  --bg-elev-2: #1a2f48;
+  --border: #294566;
+  --border-soft: #213b58;
+  --text: #edf3ff;
+  --text-soft: #bfd0eb;
+  --text-faint: #93a8c6;
+  --accent: #67b7ff;
+  --accent-soft: rgba(103, 183, 255, 0.16);
+  --tag-bg: #1c3149;
+  --tag-border: #35587d;
+  --tag-text: #d8e7ff;
+  --shadow: 0 18px 48px rgba(0, 0, 0, 0.36);
+  --parallax-image: url('../assets/social-preview.jpg');
+
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --sidebar-width: 320px;
+  --sidebar-lip-width: 46px;
+  --planechase-ratio: 800 / 559;
+
+  --stack-card-width: clamp(300px, 52vw, 620px);
+  --stack-overlap: calc(var(--stack-card-width) * 0.48);
+  --stack-gap: clamp(4px, 1vw, 12px);
+  --singleton-width: clamp(300px, 58vw, 640px);
+
+  --tone-green-bg: rgba(36, 74, 53, 0.92);
+  --tone-green-border: #3b8a61;
+  --tone-green-text: #d8f6e5;
+  --tone-amber-bg: rgba(88, 56, 18, 0.92);
+  --tone-amber-border: #d59a34;
+  --tone-amber-text: #ffe5b3;
+  --tone-blue-bg: rgba(25, 53, 92, 0.92);
+  --tone-blue-border: #5aa3ff;
+  --tone-blue-text: #ddecff;
+  --tone-red-bg: rgba(89, 29, 29, 0.92);
+  --tone-red-border: #d46161;
+  --tone-red-text: #ffe1e1;
+  --tone-purple-bg: rgba(60, 32, 82, 0.92);
+  --tone-purple-border: #a675df;
+  --tone-purple-text: #f1e6ff;
+  --tone-gray-bg: rgba(55, 60, 68, 0.92);
+  --tone-gray-border: #9aa5b4;
+  --tone-gray-text: #f2f5f8;
+}
+
+html[data-theme="light"] { color-scheme: light; }
+html[data-theme="dark"] { color-scheme: dark; }
+
+@mixin light-theme($bg, $e1, $e2, $border, $soft, $text, $softText, $faint, $accent, $tagBg, $tagBorder, $tagText, $shadow) {
+  --bg: #{$bg};
+  --bg-elev-1: #{$e1};
+  --bg-elev-2: #{$e2};
+  --border: #{$border};
+  --border-soft: #{$soft};
+  --text: #{$text};
+  --text-soft: #{$softText};
+  --text-faint: #{$faint};
+  --accent: #{$accent};
+  --accent-soft: color-mix(in srgb, #{$accent} 14%, transparent);
+  --tag-bg: #{$tagBg};
+  --tag-border: #{$tagBorder};
+  --tag-text: #{$tagText};
+  --shadow: #{$shadow};
+}
+
+@mixin dark-theme($bg, $e1, $e2, $border, $soft, $text, $softText, $faint, $accent, $tagBg, $tagBorder, $tagText, $shadow) {
+  @include light-theme($bg, $e1, $e2, $border, $soft, $text, $softText, $faint, $accent, $tagBg, $tagBorder, $tagText, $shadow);
+}
+
+html[data-palette="azorius"] {
+  @include light-theme(#ffffff, #f7faff, #ecf3ff, #c3d5f2, #d7e4f8, #10223d, #3f5a7c, #6c83a0, #2d63cc, #e8f0ff, #bfd3f7, #1f3e73, 0 18px 48px rgba(35, 73, 124, 0.12));
+}
+
+html[data-palette="boros"] {
+  @include light-theme(#ffffff, #fff8f5, #fff0ea, #f3c4b6, #f9d9d0, #2f1111, #6c3434, #8d5757, #cf3c2f, #ffe9e3, #f4b7ab, #6f1e16, 0 18px 48px rgba(135, 54, 38, 0.12));
+}
+
+html[data-palette="selesnya"] {
+  @include light-theme(#ffffff, #f7fff8, #ebf9ee, #bedec4, #d2ead7, #112b18, #355845, #5a7c67, #2a8f4f, #e7f6ea, #b8dbc1, #1f5b35, 0 18px 48px rgba(45, 93, 58, 0.12));
+}
+
+html[data-palette="orzhov"] {
+  @include light-theme(#ffffff, #fbfbfc, #f2f2f4, #d3d4da, #e4e4e9, #1f1f24, #4a4b54, #70727d, #5e5f6b, #ececf1, #cdced8, #34353e, 0 18px 48px rgba(48, 50, 59, 0.12));
+}
+
+html[data-palette="dimir"] {
+  @include dark-theme(#111b2a, #152334, #1b2c41, #2f4c6c, #26435f, #e8f0ff, #bdd0ea, #8da4c2, #4a97e5, #1b2f44, #36597d, #d4e6ff, 0 18px 48px rgba(0, 0, 0, 0.4));
+}
+
+html[data-palette="rakdos"] {
+  @include dark-theme(#231115, #2e171c, #381d25, #643341, #552937, #ffeef0, #e5b4bd, #bc808c, #dd445f, #3f222b, #72404e, #ffdbe3, 0 18px 48px rgba(0, 0, 0, 0.4));
+}
+
+html[data-palette="golgari"] {
+  @include dark-theme(#111a12, #18261a, #213122, #34593a, #294a2f, #ecfaeb, #c0ddbc, #8fb08f, #54ab62, #223825, #3f6645, #d8f3dc, 0 18px 48px rgba(0, 0, 0, 0.4));
+}
+
+html[data-palette="new-phyrexian"] {
+  @include light-theme(#fff9f7, #fff4f1, #ffeae5, #f2b9b1, #f8d2cb, #2b0f0f, #643330, #8a5350, #cc3a2a, #ffe3df, #f0b1a9, #6f1b12, 0 18px 48px rgba(116, 37, 23, 0.13));
+}
+
+html[data-palette="phyrexian"] {
+  @include dark-theme(#101611, #17211a, #1d2c21, #335941, #284734, #e7f2e7, #bdd0bd, #8da88f, #4ea768, #203327, #3f6148, #d9ecd9, 0 18px 48px rgba(0, 0, 0, 0.4));
+}

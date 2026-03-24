@@ -108,6 +108,7 @@ const settingsContactDeveloperLink = document.getElementById("settings-contact-d
 const settingsExportProfileButton = document.getElementById("settings-export-profile");
 const settingsImportProfileButton = document.getElementById("settings-import-profile");
 const themeToggleButton = document.getElementById("theme-toggle");
+const themeGuildSelect = document.getElementById("theme-guild-select");
 
 const confirmDialog = document.getElementById("confirm-dialog");
 const confirmOkButton = document.getElementById("confirm-ok");
@@ -138,10 +139,10 @@ const themeController = initThemeController({
   button: themeToggleButton,
   initialTheme: preferences.theme,
   initialPalette: preferences.themePalette,
+  themeSelect: themeGuildSelect,
   onChange(theme, palette) {
     stateManager.persistPreferences();
-    const paletteLabel = palette === "standard" ? "" : ` ${capitalize(palette)}`;
-    showToast(`Theme set to ${theme}${paletteLabel}.`);
+    showToast(`Theme set to ${theme} · ${capitalize(palette)}.`);
   }
 });
 
@@ -583,7 +584,7 @@ function executeClearAll() {
   paginationState.mode = "paginated";
   paginationState.infiniteLoadedCount = 20;
 
-  themeController.setTheme("system", { silent: true, paletteOverride: "standard" });
+  themeController.setTheme("system", { silent: true, paletteOverride: "azorius" });
 
   topSearch.value = "";
   sidebarSearch.value = "";
@@ -667,9 +668,9 @@ function importProfile() {
     if (["paginated", "infinite"].includes(p.paginationMode)) paginationState.mode = p.paginationMode;
 
     const validThemes = ["system", "dark", "light"];
-    const validPalettes = ["standard", "gruvbox", "atom", "dracula", "solarized", "nord", "catppuccin", "scryfall"];
+    const validPalettes = ["azorius", "boros", "selesnya", "orzhov", "new-phyrexian", "phyrexian"];
     const newTheme = validThemes.includes(p.theme) ? p.theme : "system";
-    const newPalette = validPalettes.includes(p.themePalette) ? p.themePalette : "standard";
+    const newPalette = validPalettes.includes(p.themePalette) ? p.themePalette : "azorius";
     themeController.setTheme(newTheme, { silent: true, paletteOverride: newPalette });
   }
 

@@ -28,7 +28,7 @@ export function createModalManager({
   getTranscriptCache,
   callbacks
 }) {
-  const ALL_PALETTES = ["standard", "gruvbox", "atom", "dracula", "solarized", "nord", "catppuccin", "scryfall"];
+  const ALL_PALETTES = ["azorius", "boros", "selesnya", "orzhov", "new-phyrexian", "phyrexian"];
   const THEME_PREFERENCES = ["system", "dark", "light"];
   const VIEW_MODES = ["grid", "single", "stack", "list"];
   const GROUP_MODES = ["none", "tag"];

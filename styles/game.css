@@ -2109,25 +2109,6 @@
   }
 }
 
-/* ── Scryfall palette overrides ───────────────────────────────────────────────── */
-
-html[data-palette="scryfall"][data-theme="dark"] body {
-  background:
-    radial-gradient(circle at top, color-mix(in srgb, var(--accent) 8%, transparent), transparent 30%),
-    linear-gradient(180deg, #0d1117 0%, #14181e 40%, #1e2430 100%);
-}
-
-html[data-palette="scryfall"][data-theme="light"] body {
-  background:
-    radial-gradient(circle at top, color-mix(in srgb, var(--accent) 6%, transparent), transparent 30%),
-    linear-gradient(180deg, #2e6db0 0%, #4a8cc8 8%, #eef2f8 28%, #eef2f8 100%);
-}
-
-html[data-palette="scryfall"][data-theme="dark"] .sidebar {
-  background: linear-gradient(180deg, #1e2430, #14181e);
-  border-right-color: #38455a;
-}
-
 /* ── Site footer ──────────────────────────────────────────────────────────────── */
 
 .site-footer {

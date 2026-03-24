@@ -11,7 +11,7 @@ export function loadPreferences(storageKey) {
     inlineAutocomplete: true,
     showHidden: false,
     theme: "system",
-    themePalette: "standard",
+    themePalette: "azorius",
     pageSize: 20,
     paginationMode: "paginated",
     phenomenonAnimation: true,
@@ -33,7 +33,7 @@ export function loadPreferences(storageKey) {
       inlineAutocomplete: parsed.inlineAutocomplete === undefined ? defaults.inlineAutocomplete : Boolean(parsed.inlineAutocomplete),
       showHidden: Boolean(parsed.showHidden),
       theme: ["system", "dark", "light"].includes(parsed.theme) ? parsed.theme : defaults.theme,
-      themePalette: ["standard", "gruvbox", "atom", "dracula", "solarized", "nord", "catppuccin", "scryfall"].includes(parsed.themePalette)
+      themePalette: ["azorius", "boros", "selesnya", "orzhov", "new-phyrexian", "phyrexian"].includes(parsed.themePalette)
         ? parsed.themePalette
         : defaults.themePalette,
       pageSize: [10, 20, 50, 100].includes(parsed.pageSize) ? parsed.pageSize : defaults.pageSize,
@@ -50,7 +50,7 @@ export function loadPreferences(storageKey) {
   }
 }
 
-export function savePreferences(storageKey, displayState, filters, theme = "system", themePalette = "standard", paginationState = {}) {
+export function savePreferences(storageKey, displayState, filters, theme = "system", themePalette = "azorius", paginationState = {}) {
   try {
     localStorage.setItem(
       storageKey,
@@ -628,7 +628,7 @@ export function shuffleArray(arr) {
   return a;
 }
 
-export function getManaClasses(symbol) {
+export function getManaClasses(symbol, { usePhyrexianPwSymbol = false } = {}) {
   const raw = symbol.replace(/\s+/g, "");
 
   const aliases = {
@@ -649,7 +649,7 @@ export function getManaClasses(symbol) {
 
   if (direct.has(normalized)) {
     return normalized === "tap" || normalized === "untap" || normalized === "planeswalker"
-      ? `ms ms-${normalized}`
+      ? `ms ms-${normalized === "planeswalker" && usePhyrexianPwSymbol ? "phyrexian" : normalized}`
       : `ms ms-${normalized} ms-cost`;
   }
 
@@ -676,7 +676,8 @@ export function getManaClasses(symbol) {
 export function enhanceManaSymbols(html) {
   return html.replace(/\{([^}]+)\}/g, (_, rawSymbol) => {
     const symbol = rawSymbol.trim().toLowerCase();
-    const classes = getManaClasses(symbol);
+    const usePhyrexianPwSymbol = typeof document !== "undefined" && document.documentElement?.dataset?.script === "phyrexian";
+    const classes = getManaClasses(symbol, { usePhyrexianPwSymbol });
 
     if (!classes) return `{${escapeHtml(rawSymbol)}}`;
 
