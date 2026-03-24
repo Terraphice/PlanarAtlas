@@ -6,7 +6,8 @@
 import {
   getInferredType,
   getDisplayName,
-  getCardId,
+  getCardSlug,
+  slugifyName,
   uniqueTags,
   isOfficialCard,
   getDerivedTypeTag,
@@ -54,13 +55,15 @@ assert(getDisplayName("Phenomenon_Interplanar_Tunnel.jpg") === "Interplanar Tunn
 assert(getDisplayName("Plane_The_Library_of_Leng.png") === "The Library of Leng", "Multi-word names");
 assert(getDisplayName("Phenomenon_Atlas Consultation.png") === "Atlas Consultation", "Space-separated name");
 
-// ── getCardId ─────────────────────────────────────────────────────────────────
+// ── slugifyName / getCardSlug ────────────────────────────────────────────────
 
-section("getCardId");
-assert(getCardId("Plane_Akoum.png") === "akoum", "Plane_Akoum → akoum");
-assert(getCardId("Phenomenon_Atlas Consultation.png") === "atlas_consultation", "Spaces → underscores");
-assert(getCardId("Phenomenon_Interplanar_Tunnel.jpg") === "interplanar_tunnel", "Underscores normalized");
-assert(getCardId("CustomCard.png") === null, "No type prefix → null");
+section("slugifyName / getCardSlug");
+assert(slugifyName("Akoum") === "akoum", "slugifyName lowercases simple names");
+assert(slugifyName("Atlas Consultation") === "atlas_consultation", "slugifyName converts spaces to underscores");
+assert(getCardSlug("Plane_Akoum.png") === "akoum", "Plane_Akoum → akoum");
+assert(getCardSlug("Phenomenon_Atlas Consultation.png") === "atlas_consultation", "Spaces → underscores");
+assert(getCardSlug("Phenomenon_Interplanar_Tunnel.jpg") === "interplanar_tunnel", "Underscores normalized");
+assert(getCardSlug("CustomCard.png") === null, "No type prefix → null");
 
 // ── uniqueTags ────────────────────────────────────────────────────────────────
 
