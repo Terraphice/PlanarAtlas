@@ -20,6 +20,21 @@ const THEME_FAMILIES = {
     guildIcons: { light: "ms-guild-selesnya", dark: "ms-guild-golgari" },
     resolvedThemes: { light: "selesnya", dark: "golgari" }
   },
+  simic: {
+    labels: { light: "Simic", dark: "Simic" },
+    guildIcons: { light: "ms-guild-simic", dark: "ms-guild-simic" },
+    resolvedThemes: { light: "simic-light", dark: "simic-dark" }
+  },
+  izzet: {
+    labels: { light: "Izzet", dark: "Izzet" },
+    guildIcons: { light: "ms-guild-izzet", dark: "ms-guild-izzet" },
+    resolvedThemes: { light: "izzet-light", dark: "izzet-dark" }
+  },
+  gruul: {
+    labels: { light: "Gruul", dark: "Gruul" },
+    guildIcons: { light: "ms-guild-gruul", dark: "ms-guild-gruul" },
+    resolvedThemes: { light: "gruul-light", dark: "gruul-dark" }
+  },
   orzhov: {
     labels: { light: "Orzhov", dark: "Orzhov" },
     guildIcons: { light: "ms-guild-orzhov", dark: "ms-guild-orzhov" },
@@ -42,8 +57,8 @@ const THEME_FAMILIES = {
 };
 
 const MODE_THEME_OPTIONS = {
-  light: ["azorius", "boros", "selesnya", "orzhov"],
-  dark: ["azorius", "boros", "selesnya", "orzhov"]
+  light: ["azorius", "boros", "selesnya", "simic", "izzet", "gruul", "orzhov"],
+  dark: ["azorius", "boros", "selesnya", "simic", "izzet", "gruul", "orzhov"]
 };
 
 const SECRET_ALT_BY_THEME = {
