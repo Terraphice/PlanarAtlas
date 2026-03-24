@@ -139,7 +139,7 @@ export function renderDeckList() {
 
   const allCards = ctx.getAllCards();
   const sortedEntries = [...deck.entries()]
-    .map(([key, count]) => ({ key, count, card: allCards.find((c) => c.id === key) }))
+    .map(([key, count]) => ({ key, count, card: allCards.find((c) => c.uid === key) }))
     .filter((e) => e.card)
     .sort((a, b) => a.card.displayName.localeCompare(b.card.displayName, undefined, { sensitivity: "base" }));
 
@@ -401,8 +401,8 @@ function autoImportCards(filter) {
 
   let added = 0;
   for (const card of candidates) {
-    if (!deck.has(card.id)) {
-      deck.set(card.id, 1);
+    if (!deck.has(card.uid)) {
+      deck.set(card.uid, 1);
       added++;
     }
   }

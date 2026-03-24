@@ -60,24 +60,24 @@ export function createRenderer({
 
   function loadIllustratorCell(card, cell) {
     const cache = getTranscriptCache();
-    const cached = cache.get(card.id);
+    const cached = cache.get(card.uid);
     if (typeof cached === "string") {
       cell.textContent = parseIllustratorFromTranscript(cached) || "—";
       return;
     }
     if (cached === null) return;
-    cache.set(card.id, null);
+    cache.set(card.uid, null);
     fetch(card.transcriptPath)
       .then(r => (r.ok ? r.text() : ""))
       .then(text => {
         const t = text.trim();
-        cache.set(card.id, t);
+        cache.set(card.uid, t);
         if (cell.isConnected) {
           cell.textContent = parseIllustratorFromTranscript(t) || "—";
         }
       })
       .catch(() => {
-        cache.set(card.id, "");
+        cache.set(card.uid, "");
       });
   }
 
@@ -176,7 +176,7 @@ export function createRenderer({
     cardButton.type = "button";
     cardButton.className = "card-link";
     cardButton.setAttribute("aria-label", `Open viewer for ${card.displayName}`);
-    cardButton.dataset.cardKey = card.id;
+    cardButton.dataset.cardKey = card.uid;
 
     if (displayState.viewMode === "single") cardButton.classList.add("single-card-item");
     if (displayState.viewMode === "stack") {
@@ -196,9 +196,9 @@ export function createRenderer({
 
     const deckOverlay = document.createElement("div");
     deckOverlay.className = "deck-card-overlay";
-    deckOverlay.dataset.cardKey = card.id;
+    deckOverlay.dataset.cardKey = card.uid;
 
-    const deckCount = callbacks.getCardDeckCount(card.id);
+    const deckCount = callbacks.getCardDeckCount(card.uid);
     deckOverlay.innerHTML = `
       <div class="deck-overlay-controls">
         <button class="deck-overlay-btn deck-overlay-dec" data-action="dec" aria-label="Remove one copy" type="button"${deckCount === 0 ? " disabled" : ""}>−</button>
@@ -212,8 +212,8 @@ export function createRenderer({
       event.stopPropagation();
       const btn = event.target.closest("[data-action]");
       if (!btn) return;
-      if (btn.dataset.action === "inc") callbacks.addCardToDeck(card.id);
-      else if (btn.dataset.action === "dec") callbacks.removeCardFromDeck(card.id);
+      if (btn.dataset.action === "inc") callbacks.addCardToDeck(card.uid);
+      else if (btn.dataset.action === "dec") callbacks.removeCardFromDeck(card.uid);
     });
 
     imageWrap.appendChild(deckOverlay);
@@ -264,7 +264,7 @@ export function createRenderer({
 
     cardButton.addEventListener("click", () => {
       if (callbacks.isDeckPanelOpen()) return;
-      callbacks.openModalByKey(card.id, true);
+      callbacks.openModalByKey(card.uid, true);
     });
     return cardButton;
   }
@@ -286,7 +286,7 @@ export function createRenderer({
   function createListCardElement(card) {
     const row = document.createElement("div");
     row.className = "list-card-row";
-    row.dataset.cardKey = card.id;
+    row.dataset.cardKey = card.uid;
 
     const nameBtn = document.createElement("button");
     nameBtn.type = "button";
@@ -295,7 +295,7 @@ export function createRenderer({
     nameBtn.setAttribute("aria-label", `Open viewer for ${card.displayName}`);
     nameBtn.addEventListener("click", () => {
       if (callbacks.isDeckPanelOpen()) return;
-      callbacks.openModalByKey(card.id, true);
+      callbacks.openModalByKey(card.uid, true);
     });
 
     const typeEl = document.createElement("span");
@@ -325,7 +325,7 @@ export function createRenderer({
 
     const deckEl = document.createElement("div");
     deckEl.className = "list-card-deck";
-    const deckCount = callbacks.getCardDeckCount(card.id);
+    const deckCount = callbacks.getCardDeckCount(card.uid);
     deckEl.innerHTML = `
       <button class="list-deck-btn list-deck-dec" data-action="dec" aria-label="Remove one copy" type="button"${deckCount === 0 ? " disabled" : ""}>−</button>
       <span class="list-deck-count">${deckCount > 0 ? String(deckCount) : "·"}</span>
@@ -337,11 +337,11 @@ export function createRenderer({
       if (!btn) return;
       const decBtn = deckEl.querySelector("[data-action='dec']");
       if (btn.dataset.action === "inc") {
-        callbacks.addCardToDeck(card.id);
+        callbacks.addCardToDeck(card.uid);
       } else if (btn.dataset.action === "dec") {
-        callbacks.removeCardFromDeck(card.id);
+        callbacks.removeCardFromDeck(card.uid);
       }
-      const newCount = callbacks.getCardDeckCount(card.id);
+      const newCount = callbacks.getCardDeckCount(card.uid);
       const countEl = deckEl.querySelector(".list-deck-count");
       if (countEl) countEl.textContent = newCount > 0 ? String(newCount) : "·";
       if (decBtn) decBtn.disabled = newCount === 0;

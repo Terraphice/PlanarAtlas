@@ -595,7 +595,7 @@ export function updatePhenomenonBanner() {
 
 async function loadReaderTranscript(card) {
   if (!gameReaderTranscript) return;
-  const cached = readerTranscriptCache.get(card.id);
+  const cached = readerTranscriptCache.get(card.uid);
   if (typeof cached === "string") {
     renderReaderTranscriptMarkdown(cached || "No transcript available.");
     return;
@@ -605,10 +605,10 @@ async function loadReaderTranscript(card) {
     if (!response.ok) throw new Error("Not found");
     const text = await response.text();
     const trimmed = text.trim();
-    readerTranscriptCache.set(card.id, trimmed);
+    readerTranscriptCache.set(card.uid, trimmed);
     if (gameReaderTranscript) renderReaderTranscriptMarkdown(trimmed || "No transcript available.");
   } catch {
-    readerTranscriptCache.set(card.id, "");
+    readerTranscriptCache.set(card.uid, "");
     if (gameReaderTranscript) renderReaderTranscriptMarkdown("No transcript available.");
   }
 }
@@ -922,17 +922,17 @@ export function renderLibraryCards() {
       const item = document.createElement("div");
       item.className = "game-reveal-gallery-item";
       item.innerHTML = `
-        <button class="game-reveal-thumb-btn" data-action="info" data-lib-key="${escapeHtml(card.id)}" type="button" aria-label="View ${escapeHtml(card.displayName)} details">
+        <button class="game-reveal-thumb-btn" data-action="info" data-lib-key="${escapeHtml(card.uid)}" type="button" aria-label="View ${escapeHtml(card.displayName)} details">
           <img class="game-reveal-thumb" src="${card.thumbPath}" alt="${escapeHtml(card.displayName)}" />
         </button>
         <div class="game-reveal-card-name">${escapeHtml(card.displayName)}</div>
         <div class="game-reveal-card-type">${escapeHtml(card.type)}</div>
         <div class="game-reveal-card-actions">
-          <button class="game-reveal-action-btn" data-action="planeswalk" data-lib-key="${escapeHtml(card.id)}" title="Planeswalk to this card" type="button">▶ Planeswalk</button>
-          <button class="game-reveal-action-btn" data-action="active" data-lib-key="${escapeHtml(card.id)}" title="Add to active cards" type="button">+ Active</button>
-          <button class="game-reveal-action-btn" data-action="top" data-lib-key="${escapeHtml(card.id)}" title="Put on top of library" type="button">↑ Top</button>
-          <button class="game-reveal-action-btn" data-action="bottom" data-lib-key="${escapeHtml(card.id)}" title="Put on bottom of library" type="button">↓ Bottom</button>
-          <button class="game-reveal-action-btn game-reveal-action-exile" data-action="exile" data-lib-key="${escapeHtml(card.id)}" title="Exile (remove temporarily)" type="button">✕ Exile</button>
+          <button class="game-reveal-action-btn" data-action="planeswalk" data-lib-key="${escapeHtml(card.uid)}" title="Planeswalk to this card" type="button">▶ Planeswalk</button>
+          <button class="game-reveal-action-btn" data-action="active" data-lib-key="${escapeHtml(card.uid)}" title="Add to active cards" type="button">+ Active</button>
+          <button class="game-reveal-action-btn" data-action="top" data-lib-key="${escapeHtml(card.uid)}" title="Put on top of library" type="button">↑ Top</button>
+          <button class="game-reveal-action-btn" data-action="bottom" data-lib-key="${escapeHtml(card.uid)}" title="Put on bottom of library" type="button">↓ Bottom</button>
+          <button class="game-reveal-action-btn game-reveal-action-exile" data-action="exile" data-lib-key="${escapeHtml(card.uid)}" title="Exile (remove temporarily)" type="button">✕ Exile</button>
         </div>
       `;
       item.addEventListener("click", handleLibraryCardAction);
@@ -952,12 +952,12 @@ export function renderLibraryCards() {
           <span class="game-deck-view-type">${escapeHtml(card.type)}</span>
         </div>
         <div class="game-deck-item-actions">
-          <button class="game-deck-action-btn" data-action="info" data-lib-key="${escapeHtml(card.id)}" title="View card details" type="button">ℹ</button>
-          <button class="game-deck-action-btn" data-action="planeswalk" data-lib-key="${escapeHtml(card.id)}" title="Planeswalk to this card" type="button">▶</button>
-          <button class="game-deck-action-btn" data-action="active" data-lib-key="${escapeHtml(card.id)}" title="Add to active cards" type="button">+</button>
-          <button class="game-deck-action-btn" data-action="top" data-lib-key="${escapeHtml(card.id)}" title="Put on top of library" type="button">↑</button>
-          <button class="game-deck-action-btn" data-action="bottom" data-lib-key="${escapeHtml(card.id)}" title="Put on bottom of library" type="button">↓</button>
-          <button class="game-deck-action-btn game-deck-action-exile" data-action="exile" data-lib-key="${escapeHtml(card.id)}" title="Exile (remove temporarily)" type="button">✕</button>
+          <button class="game-deck-action-btn" data-action="info" data-lib-key="${escapeHtml(card.uid)}" title="View card details" type="button">ℹ</button>
+          <button class="game-deck-action-btn" data-action="planeswalk" data-lib-key="${escapeHtml(card.uid)}" title="Planeswalk to this card" type="button">▶</button>
+          <button class="game-deck-action-btn" data-action="active" data-lib-key="${escapeHtml(card.uid)}" title="Add to active cards" type="button">+</button>
+          <button class="game-deck-action-btn" data-action="top" data-lib-key="${escapeHtml(card.uid)}" title="Put on top of library" type="button">↑</button>
+          <button class="game-deck-action-btn" data-action="bottom" data-lib-key="${escapeHtml(card.uid)}" title="Put on bottom of library" type="button">↓</button>
+          <button class="game-deck-action-btn game-deck-action-exile" data-action="exile" data-lib-key="${escapeHtml(card.uid)}" title="Exile (remove temporarily)" type="button">✕</button>
         </div>
       `;
       ol.appendChild(li);
@@ -1184,7 +1184,7 @@ function handleLibraryCardAction(event) {
   event.stopPropagation();
   const action = btn.dataset.action;
   const key = btn.dataset.libKey;
-  const idx = gameState.remaining.findIndex((c) => c.id === key);
+  const idx = gameState.remaining.findIndex((c) => c.uid === key);
   if (idx === -1) return;
 
   if (action === "info") {

@@ -54,6 +54,8 @@ function section(name) {
 function makeCard({ id, name, type, tags = [] }) {
   return {
     id,
+    uid: `${id}-uid`,
+    slug: id,
     name,
     type,
     image: `cards/images/${name}.png`,
@@ -73,7 +75,7 @@ const rawAkoum = makeCard({
   tags: ["Zendikar", "badge:tr:green:Official"]
 });
 const enriched = enrichCard(rawAkoum);
-assert(enriched.id === "akoum", "id is set");
+assert(enriched.id === "akoum-uid", "id uses uid key");
 assert(enriched.name === "Akoum", "name is set");
 assert(enriched.displayName === "Akoum", "displayName alias equals name");
 assert(enriched.type === "Plane", "type is set");
@@ -86,6 +88,8 @@ assert(enriched.normalizedTags[0] === "zendikar", "normalizedTags are lowercased
 
 const rawOfficial = {
   id: "bant",
+  uid: "bant-uid",
+  slug: "bant",
   name: "Bant",
   type: "Plane",
   image: "cards/images/Bant.png",

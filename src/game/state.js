@@ -3,7 +3,7 @@
 // and game lifecycle transitions (start, exit, reset).
 
 import { shuffleArray } from "../gallery/utils.js";
-import { compressKey, decompressKey, remapLegacyKey, toBase64Url, fromBase64Url } from "../deck/codec.js";
+import { compressKey, toBase64Url, fromBase64Url } from "../deck/codec.js";
 import {
   bemKey,
   resetBemState,
@@ -183,16 +183,16 @@ export function encodeGameState() {
       if (cell.placeholder && !cell.card) {
         grid.push([x, y, null, 1, null, true]);
       } else {
-        const entry = [x, y, compressKey(cell.card.id), cell.faceUp ? 1 : 0];
-        if (cell.queuedCard) entry.push(compressKey(cell.queuedCard.id));
+        const entry = [x, y, compressKey(cell.card.uid), cell.faceUp ? 1 : 0];
+        if (cell.queuedCard) entry.push(compressKey(cell.queuedCard.uid));
         grid.push(entry);
       }
     }
     const obj = {
       m: "bem",
-      r: gameState.remaining.map((c) => compressKey(c.id)),
-      a: gameState.activePlanes.map((c) => compressKey(c.id)),
-      e: gameState.exiled.map((c) => compressKey(c.id)),
+      r: gameState.remaining.map((c) => compressKey(c.uid)),
+      a: gameState.activePlanes.map((c) => compressKey(c.uid)),
+      e: gameState.exiled.map((c) => compressKey(c.uid)),
       c: gameState.chaosCost,
       g: grid,
       px: gameState.bemPos.x,
@@ -205,14 +205,14 @@ export function encodeGameState() {
     }
   }
   const obj = {
-    r: gameState.remaining.map((c) => compressKey(c.id)),
-    a: gameState.activePlanes.map((c) => compressKey(c.id)),
+    r: gameState.remaining.map((c) => compressKey(c.uid)),
+    a: gameState.activePlanes.map((c) => compressKey(c.uid)),
     f: gameState.focusedIndex,
     c: gameState.chaosCost,
-    e: gameState.exiled.map((c) => compressKey(c.id))
+    e: gameState.exiled.map((c) => compressKey(c.uid))
   };
   if (revealedCards.length > 0) {
-    obj.rv = revealedCards.map((c) => compressKey(c.id));
+    obj.rv = revealedCards.map((c) => compressKey(c.uid));
   }
   try {
     return "g2:" + toBase64Url(JSON.stringify(obj));
@@ -222,28 +222,17 @@ export function encodeGameState() {
 }
 
 /**
- * Decodes a "g2:" or legacy "g1:" seed string back into a game state object.
+ * Decodes a "g2:" seed string back into a game state object.
  * @param {string | null | undefined} seed - The seed string to decode.
  * @returns {object | null} The decoded game state, or null if invalid.
  */
 export function decodeGameState(seed) {
-  const isLegacy = seed?.startsWith("g1:");
-  if (!seed?.startsWith("g2:") && !isLegacy) return null;
+  if (!seed?.startsWith("g2:")) return null;
   const allCards = ctx.getAllCards();
   try {
     const raw = fromBase64Url(seed.slice(3));
     const obj = JSON.parse(raw);
-    const lookupCard = (ck) => {
-      let id;
-      if (isLegacy) {
-        id = decompressKey(ck);
-        if (!id) return null;
-        id = remapLegacyKey(id);
-      } else {
-        id = remapLegacyKey(ck);
-      }
-      return allCards.find((c) => c.id === id) || null;
-    };
+    const lookupCard = (ck) => allCards.find((c) => c.uid === ck) || null;
     if (obj.m === "bem") {
       const remaining = (obj.r || []).map(lookupCard).filter(Boolean);
       const activePlanes = (obj.a || []).map(lookupCard).filter(Boolean);

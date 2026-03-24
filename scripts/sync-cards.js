@@ -9,8 +9,7 @@ export function getCardJsonFilename(cardId) {
 }
 
 export function getCardKey(card) {
-  if (typeof card?.id === "string" && card.id) return card.id;
-  if (typeof card?.slug === "string" && card.slug) return card.slug;
+  if (typeof card?.uid === "string" && card.uid) return card.uid;
   return null;
 }
 
@@ -51,7 +50,7 @@ if (isDirectRun) {
   for (const card of cards) {
     const cardKey = getCardKey(card);
     if (!cardKey) {
-      console.warn(`Skipping card with missing or invalid "id"/"slug" field: ${JSON.stringify(card)}`);
+      console.warn(`Skipping card with missing or invalid "uid" field: ${JSON.stringify(card)}`);
       continue;
     }
     const jsonFilename = getCardJsonFilename(cardKey);
@@ -59,15 +58,14 @@ if (isDirectRun) {
 
     const outputPath = join(CARDS_DIR, jsonFilename);
     const output = {
-      id: cardKey,
+      id: card.id,
       uid: card.uid,
       name: card.name,
       type: card.type,
       image: card.image,
       thumb: card.thumb,
       transcript: card.transcript,
-      tags: Array.isArray(card.tags) ? card.tags : [],
-      legacyAssetPaths: card.legacyAssetPaths && typeof card.legacyAssetPaths === "object" ? card.legacyAssetPaths : undefined
+      tags: Array.isArray(card.tags) ? card.tags : []
     };
     if (card.scryfallId !== undefined) {
       output.scryfallId = card.scryfallId;

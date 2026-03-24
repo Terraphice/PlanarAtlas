@@ -1,5 +1,5 @@
 import { isHiddenCard } from "../gallery/utils.js";
-import { toBase64Url, fromBase64Url, decodeDeck, remapLegacyKey } from "./codec.js";
+import { toBase64Url, fromBase64Url, decodeDeck } from "./codec.js";
 
 import { initClassicGame, startClassicGame, gamePlaneswalk, buildMainCardActions } from "../game/classic.js";
 
@@ -99,7 +99,7 @@ function deckCards() {
 function filterValidDeck(map) {
   const valid = new Map();
   for (const [key, count] of map) {
-    if (allCards.some((c) => c.id === key)) valid.set(key, count);
+    if (allCards.some((c) => c.uid === key)) valid.set(key, count);
   }
   return valid;
 }
@@ -107,7 +107,7 @@ function filterValidDeck(map) {
 function buildDeckArray() {
   const result = [];
   for (const [key, count] of deckCards()) {
-    const card = allCards.find((c) => c.id === key);
+    const card = allCards.find((c) => c.uid === key);
     if (card) for (let i = 0; i < count; i++) result.push(card);
   }
   return result;
@@ -117,7 +117,7 @@ function populateDefaultSlot() {
   allDecks[0] = new Map();
   for (const card of allCards) {
     if (!isHiddenCard(card.normalizedTags) && card.normalizedTags.some((t) => t.includes("official"))) {
-      allDecks[0].set(card.id, 1);
+      allDecks[0].set(card.uid, 1);
     }
   }
 }
@@ -155,10 +155,7 @@ function loadDecksFromStorage() {
           if (!Array.isArray(d)) return new Map();
           return new Map(d
             .filter(([k, v]) => typeof k === "string" && typeof v === "number" && v > 0 && v <= MAX_CARD_COUNT)
-            .map(([k, v]) => {
-              const remapped = remapLegacyKey(k);
-              return [remapped, v];
-            })
+            .map(([k, v]) => [k, v])
           );
         })
       : [];
