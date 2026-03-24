@@ -1746,6 +1746,18 @@ button.active-filter-pill:disabled {
   transform: translateY(0);
 }
 
+html[data-phyrexian-script="true"] .toast-region,
+html[data-phyrexian-script="true"] .toast,
+html[data-phyrexian-script="true"] .toast * {
+  font-family:
+    ui-sans-serif,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif !important;
+  text-transform: none !important;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

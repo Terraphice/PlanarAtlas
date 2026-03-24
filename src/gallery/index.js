@@ -140,7 +140,7 @@ const paginationControls = document.getElementById("pagination-controls");
 // ── Toast and theme ───────────────────────────────────────────────────────────
 
 const showToast = initToastManager(toastRegion);
-const PHYREXIA_INTRO_KEY_PREFIX = "planar-atlas-phyrexia-intro-v1";
+const PHYREXIA_INTRO_KEY_PREFIX = "planar-atlas-phyrexia-intro-v2";
 let pendingPhyrexianIntroThemeFamily = null;
 const themeController = initThemeController({
   button: themeToggleButton,

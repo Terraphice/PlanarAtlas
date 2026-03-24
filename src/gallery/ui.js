@@ -170,7 +170,7 @@ export function initThemeController({
 
     for (const optionFamily of options) {
       const family = THEME_FAMILIES[optionFamily];
-      const optionLabel = `— ${family.labels[mode]}`;
+      const optionLabel = ` — ${family.labels[mode]}`;
 
       if (themeSelect) {
         const option = document.createElement("option");
@@ -200,7 +200,7 @@ export function initThemeController({
 
     if (themeTrigger) {
       const family = THEME_FAMILIES[currentFamily];
-      themeTrigger.innerHTML = `<i class="ms ${family.guildIcons[mode]}" aria-hidden="true"></i><span>— ${family.labels[mode]}</span>`;
+      themeTrigger.innerHTML = `<i class="ms ${family.guildIcons[mode]}" aria-hidden="true"></i><span> — ${family.labels[mode]}</span>`;
     }
   }
 
