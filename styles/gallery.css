@@ -676,11 +676,83 @@ kbd {
   width: 100%;
 }
 
-#gallery-theme-select,
-#gallery-theme-select option {
-  font-family:
-    var(--app-font-family),
-    "Mana";
+.settings-theme-picker {
+  position: relative;
+}
+
+.settings-theme-trigger {
+  width: 100%;
+  justify-content: flex-start;
+  gap: 8px;
+  min-height: 42px;
+  padding: 8px 12px;
+  border-radius: 12px;
+}
+
+.settings-theme-trigger .ms {
+  font-size: 1rem;
+}
+
+.settings-theme-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 120;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--bg-elev-1) 98%, transparent);
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.35);
+}
+
+.settings-theme-menu.hidden {
+  display: none;
+}
+
+.settings-theme-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.settings-theme-option:hover,
+.settings-theme-option:focus-visible {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 36%, transparent);
+}
+
+.settings-theme-option.is-active {
+  background: color-mix(in srgb, var(--accent) 20%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+.settings-theme-option .ms {
+  font-size: 1rem;
+}
+
+.settings-theme-native-select {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .settings-menu-actions {

@@ -233,7 +233,11 @@
 
                   <label class="settings-menu-select-row" for="gallery-theme-select">
                     <span>Guild</span>
-                    <select id="gallery-theme-select" class="select-input settings-menu-select-input" aria-label="Guild theme selection"></select>
+                    <div id="gallery-theme-picker" class="settings-theme-picker">
+                      <button id="gallery-theme-trigger" class="neutral-button-base settings-theme-trigger" type="button" aria-haspopup="listbox" aria-expanded="false"></button>
+                      <div id="gallery-theme-menu" class="settings-theme-menu hidden" role="listbox" aria-label="Guild theme selection"></div>
+                      <select id="gallery-theme-select" class="select-input settings-menu-select-input settings-theme-native-select" aria-label="Guild theme selection"></select>
+                    </div>
                   </label>
 
                 </div>

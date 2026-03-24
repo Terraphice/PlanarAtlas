@@ -7,34 +7,34 @@ const STANDARD_THEME_ORDER = ["system", "dark", "light"];
 const THEME_FAMILIES = {
   azorius: {
     labels: { light: "Azorius", dark: "Dimir" },
-    guildSymbols: { light: "\ue90c", dark: "\ue90e" },
+    guildIcons: { light: "ms-guild-azorius", dark: "ms-guild-dimir" },
     resolvedThemes: { light: "azorius", dark: "dimir" }
   },
   boros: {
     labels: { light: "Boros", dark: "Rakdos" },
-    guildSymbols: { light: "\ue90d", dark: "\ue913" },
+    guildIcons: { light: "ms-guild-boros", dark: "ms-guild-rakdos" },
     resolvedThemes: { light: "boros", dark: "rakdos" }
   },
   selesnya: {
     labels: { light: "Selesnya", dark: "Golgari" },
-    guildSymbols: { light: "\ue914", dark: "\ue90f" },
+    guildIcons: { light: "ms-guild-selesnya", dark: "ms-guild-golgari" },
     resolvedThemes: { light: "selesnya", dark: "golgari" }
   },
   orzhov: {
     labels: { light: "Orzhov", dark: "Orzhov" },
-    guildSymbols: { light: "\ue912", dark: "\ue912" },
+    guildIcons: { light: "ms-guild-orzhov", dark: "ms-guild-orzhov" },
     resolvedThemes: { light: "orzhov-light", dark: "orzhov-dark" }
   },
   "new-phyrexian": {
     labels: { light: "New Phyrexian", dark: "New Phyrexian" },
-    guildSymbols: { light: "\ue618", dark: "\ue618" },
+    guildIcons: { light: "ms-ability-phyrexian", dark: "ms-ability-phyrexian" },
     resolvedThemes: { light: "new-phyrexian", dark: "new-phyrexian" },
     phyrexianScript: true,
     phyrexianManaSymbol: true
   },
   phyrexian: {
     labels: { light: "Phyrexian", dark: "Phyrexian" },
-    guildSymbols: { light: "\ue618", dark: "\ue618" },
+    guildIcons: { light: "ms-ability-phyrexian", dark: "ms-ability-phyrexian" },
     resolvedThemes: { light: "phyrexian", dark: "phyrexian" },
     phyrexianScript: true,
     phyrexianManaSymbol: true
@@ -109,6 +109,8 @@ export function initToastManager(container) {
 export function initThemeController({
   button,
   themeSelect = null,
+  themeMenu = null,
+  themeTrigger = null,
   initialTheme = "system",
   initialThemeFamily = "azorius",
   onChange = () => {},
@@ -121,6 +123,7 @@ export function initThemeController({
   let themeFamily = THEME_FAMILIES[initialThemeFamily] ? initialThemeFamily : "azorius";
   let suppressClick = false;
   let longPressTimer = null;
+  let menuOpen = false;
 
   function resolveThemeMode(preference) {
     return preference === "system" ? (media.matches ? "dark" : "light") : preference;
@@ -155,28 +158,57 @@ export function initThemeController({
   }
 
   function updateThemeOptions() {
-    if (!themeSelect) return;
+    if (!themeSelect && !themeMenu) return;
 
     const mode = resolveThemeMode(theme);
     const options = [...MODE_THEME_OPTIONS[mode]];
     const currentFamily = THEME_FAMILIES[themeFamily] ? themeFamily : "azorius";
     if (SECRET_THEME_FAMILIES.has(currentFamily)) options.push(currentFamily);
 
-    themeSelect.innerHTML = "";
+    if (themeSelect) themeSelect.innerHTML = "";
+    if (themeMenu) themeMenu.innerHTML = "";
 
     for (const optionFamily of options) {
-      const option = document.createElement("option");
-      option.value = optionFamily;
       const family = THEME_FAMILIES[optionFamily];
-      option.textContent = `${family.guildSymbols[mode]} — ${family.labels[mode]}`;
-      themeSelect.appendChild(option);
+      const optionLabel = `— ${family.labels[mode]}`;
+
+      if (themeSelect) {
+        const option = document.createElement("option");
+        option.value = optionFamily;
+        option.textContent = optionLabel;
+        themeSelect.appendChild(option);
+      }
+
+      if (themeMenu) {
+        const optionButton = document.createElement("button");
+        optionButton.type = "button";
+        optionButton.className = "settings-theme-option";
+        if (optionFamily === currentFamily) optionButton.classList.add("is-active");
+        optionButton.dataset.themeFamily = optionFamily;
+        optionButton.innerHTML = `<i class="ms ${family.guildIcons[mode]}" aria-hidden="true"></i><span>${optionLabel}</span>`;
+        themeMenu.appendChild(optionButton);
+      }
     }
 
-    if (options.includes(currentFamily)) {
-      themeSelect.value = currentFamily;
-    } else {
-      themeSelect.selectedIndex = -1;
+    if (themeSelect) {
+      if (options.includes(currentFamily)) {
+        themeSelect.value = currentFamily;
+      } else {
+        themeSelect.selectedIndex = -1;
+      }
     }
+
+    if (themeTrigger) {
+      const family = THEME_FAMILIES[currentFamily];
+      themeTrigger.innerHTML = `<i class="ms ${family.guildIcons[mode]}" aria-hidden="true"></i><span>— ${family.labels[mode]}</span>`;
+    }
+  }
+
+  function setMenuOpen(nextOpen) {
+    menuOpen = nextOpen;
+    if (!themeMenu || !themeTrigger) return;
+    themeMenu.classList.toggle("hidden", !menuOpen);
+    themeTrigger.setAttribute("aria-expanded", menuOpen ? "true" : "false");
   }
 
   function syncPlaneswalkerManaGlyphs() {
@@ -315,12 +347,35 @@ export function initThemeController({
     });
   }
 
+  function handleThemeTriggerClick(event) {
+    event.preventDefault();
+    setMenuOpen(!menuOpen);
+  }
+
+  function handleThemeMenuClick(event) {
+    const optionButton = event.target.closest?.(".settings-theme-option");
+    if (!optionButton) return;
+    const nextFamily = optionButton.dataset.themeFamily;
+    if (!nextFamily) return;
+    setTheme(theme, { themeFamilyOverride: nextFamily });
+    setMenuOpen(false);
+  }
+
+  function handleDocumentClick(event) {
+    if (!menuOpen || !themeMenu || !themeTrigger) return;
+    if (themeMenu.contains(event.target) || themeTrigger.contains(event.target)) return;
+    setMenuOpen(false);
+  }
+
   button.addEventListener("click", handleButtonClick);
   button.addEventListener("pointerdown", handlePointerDown);
   button.addEventListener("pointerup", handlePointerUp);
   button.addEventListener("pointercancel", handlePointerCancel);
   button.addEventListener("pointerleave", handlePointerCancel);
   themeSelect?.addEventListener("change", handleThemeSelectChange);
+  themeTrigger?.addEventListener("click", handleThemeTriggerClick);
+  themeMenu?.addEventListener("click", handleThemeMenuClick);
+  document.addEventListener("click", handleDocumentClick);
 
   media.addEventListener?.("change", () => {
     if (theme === "system") {
