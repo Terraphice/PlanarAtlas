@@ -4,7 +4,7 @@
 
 import { loadPreferences, savePreferences, readUrlState, writeUrlState } from "./utils.js";
 
-export const STORAGE_KEY = "planechaseGalleryPreferences.v2";
+export const STORAGE_KEY = "planechaseGalleryPreferences.v3";
 
 export const preferences = loadPreferences(STORAGE_KEY);
 
@@ -33,14 +33,14 @@ export const paginationState = {
   infiniteLoadedCount: preferences.pageSize
 };
 
-export function initStateManager({ themeController, topSearch, sidebarSearch, topSearchGhost, sidebarSearchGhost, fuzzySearchToggle, showHiddenToggle, inlineAutocompleteToggle, phenomenonAnimationToggle, hellridingModeSelect, smoothTravelToggle, bemEdgePlaceholdersToggle, viewModeSelect, groupBySelect, groupTagPickerWrap }) {
+export function initStateManager({ themeController, topSearch, sidebarSearch, topSearchGhost, sidebarSearchGhost, fuzzySearchToggle, showHiddenToggle, inlineAutocompleteToggle, themeFamilySelect, phenomenonAnimationToggle, hellridingModeSelect, smoothTravelToggle, bemEdgePlaceholdersToggle, viewModeSelect, groupBySelect, groupTagPickerWrap }) {
   function persistPreferences() {
     savePreferences(
       STORAGE_KEY,
       displayState,
       filters,
       themeController.getTheme(),
-      themeController.getPalette(),
+      themeController.getThemeFamily(),
       paginationState
     );
   }
@@ -59,6 +59,7 @@ export function initStateManager({ themeController, topSearch, sidebarSearch, to
     fuzzySearchToggle.checked = filters.fuzzy;
     showHiddenToggle.checked = filters.showHidden;
     inlineAutocompleteToggle.checked = filters.inlineAutocomplete;
+    if (themeFamilySelect) themeFamilySelect.value = themeController.getThemeFamily();
     if (phenomenonAnimationToggle) phenomenonAnimationToggle.checked = filters.phenomenonAnimation;
     if (hellridingModeSelect) hellridingModeSelect.value = filters.hellridingMode;
     if (smoothTravelToggle) smoothTravelToggle.checked = filters.smoothTravel;

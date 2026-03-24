@@ -78,6 +78,7 @@ const sidebarSearchSuggestions = document.getElementById("sidebar-search-suggest
 const fuzzySearchToggle = document.getElementById("fuzzy-search-toggle");
 const showHiddenToggle = document.getElementById("show-hidden-toggle");
 const inlineAutocompleteToggle = document.getElementById("inline-autocomplete-toggle");
+const themeFamilySelect = document.getElementById("theme-family-select");
 const phenomenonAnimationToggle = document.getElementById("phenomenon-animation-toggle");
 const hellridingModeSelect = document.getElementById("hellriding-mode-select");
 const smoothTravelToggle = document.getElementById("smooth-travel-toggle");
@@ -137,15 +138,20 @@ const showToast = initToastManager(toastRegion);
 const themeController = initThemeController({
   button: themeToggleButton,
   initialTheme: preferences.theme,
-  initialPalette: preferences.themePalette,
-  onChange(theme, palette) {
+  initialFamily: preferences.themeFamily,
+  onChange(theme, family, resolvedName) {
+    syncThemeFamilyOptions();
     stateManager.persistPreferences();
-    const paletteLabel = palette === "standard" ? "" : ` ${capitalize(palette)}`;
-    showToast(`Theme set to ${theme}${paletteLabel}.`);
+    showToast(`Theme set to ${resolvedName} (${theme}).`);
+  },
+  onSecretThemeUnavailable() {
+    showToast("Secret themes: ALT-click/HOLD while Boros or Golgari is active.");
   }
 });
 
 // ── State manager ─────────────────────────────────────────────────────────────
+
+syncThemeFamilyOptions();
 
 const stateManager = initStateManager({
   themeController,
@@ -156,6 +162,7 @@ const stateManager = initStateManager({
   fuzzySearchToggle,
   showHiddenToggle,
   inlineAutocompleteToggle,
+  themeFamilySelect,
   phenomenonAnimationToggle,
   hellridingModeSelect,
   smoothTravelToggle,
@@ -583,7 +590,8 @@ function executeClearAll() {
   paginationState.mode = "paginated";
   paginationState.infiniteLoadedCount = 20;
 
-  themeController.setTheme("system", { silent: true, paletteOverride: "standard" });
+  themeController.setTheme("system", { silent: true, familyOverride: "azorius_dimir" });
+  syncThemeFamilyOptions();
 
   topSearch.value = "";
   sidebarSearch.value = "";
@@ -610,7 +618,7 @@ function exportProfile() {
     inlineAutocomplete: filters.inlineAutocomplete,
     showHidden: filters.showHidden,
     theme: themeController.getTheme(),
-    themePalette: themeController.getPalette(),
+    themeFamily: themeController.getThemeFamily(),
     pageSize: paginationState.pageSize,
     paginationMode: paginationState.mode,
     phenomenonAnimation: filters.phenomenonAnimation,
@@ -667,10 +675,11 @@ function importProfile() {
     if (["paginated", "infinite"].includes(p.paginationMode)) paginationState.mode = p.paginationMode;
 
     const validThemes = ["system", "dark", "light"];
-    const validPalettes = ["standard", "gruvbox", "atom", "dracula", "solarized", "nord", "catppuccin", "scryfall"];
+    const validFamilies = ["azorius_dimir", "boros_rakdos", "selesnya_golgari", "orzhov", "new_phyrexian", "phyrexian"];
     const newTheme = validThemes.includes(p.theme) ? p.theme : "system";
-    const newPalette = validPalettes.includes(p.themePalette) ? p.themePalette : "standard";
-    themeController.setTheme(newTheme, { silent: true, paletteOverride: newPalette });
+    const newFamily = validFamilies.includes(p.themeFamily) ? p.themeFamily : "azorius_dimir";
+    themeController.setTheme(newTheme, { silent: true, familyOverride: newFamily });
+    syncThemeFamilyOptions();
   }
 
   if (data.d) importProfileDecks(data.d);
@@ -687,8 +696,21 @@ function importProfile() {
 
 // ── Utility ───────────────────────────────────────────────────────────────────
 
-function capitalize(value) {
-  return value ? value[0].toUpperCase() + value.slice(1) : value;
+function syncThemeFamilyOptions() {
+  if (!themeFamilySelect) return;
+
+  const options = themeController.getThemeOptions();
+  const activeFamily = themeController.getThemeFamily();
+
+  themeFamilySelect.innerHTML = "";
+  for (const option of options) {
+    const optionEl = document.createElement("option");
+    optionEl.value = option.value;
+    optionEl.textContent = option.label;
+    themeFamilySelect.appendChild(optionEl);
+  }
+
+  themeFamilySelect.value = activeFamily;
 }
 
 // ── Events ────────────────────────────────────────────────────────────────────
@@ -744,6 +766,16 @@ function bindEvents() {
     stateManager.persistPreferences();
     updateInlineAutocomplete();
     applyFilters();
+  });
+
+  themeFamilySelect?.addEventListener("change", () => {
+    const selected = themeFamilySelect.value;
+    themeController.setTheme(themeController.getTheme(), {
+      familyOverride: selected,
+      animate: true
+    });
+    syncThemeFamilyOptions();
+    stateManager.persistPreferences();
   });
 
   phenomenonAnimationToggle?.addEventListener("change", () => {

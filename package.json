@@ -15,12 +15,14 @@
     "generate:embeds": "node scripts/generate-embeds.js",
     "test:embeds": "node scripts/test-embeds.js",
     "generate:seo": "node scripts/generate-seo.js",
-    "test:seo": "node scripts/test-seo.js"
+    "test:seo": "node scripts/test-seo.js",
+    "styles:build": "sass styles/themes.scss styles/themes.css --no-source-map && sass styles/gallery.scss styles/gallery.css --no-source-map && sass styles/game.scss styles/game.css --no-source-map"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.58.2",
     "eslint": "^10.0.3",
-    "serve": "^14.2.6"
+    "serve": "^14.2.6",
+    "sass": "^1.93.2"
   }
 }

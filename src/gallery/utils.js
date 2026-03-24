@@ -11,7 +11,7 @@ export function loadPreferences(storageKey) {
     inlineAutocomplete: true,
     showHidden: false,
     theme: "system",
-    themePalette: "standard",
+    themeFamily: "azorius_dimir",
     pageSize: 20,
     paginationMode: "paginated",
     phenomenonAnimation: true,
@@ -33,9 +33,9 @@ export function loadPreferences(storageKey) {
       inlineAutocomplete: parsed.inlineAutocomplete === undefined ? defaults.inlineAutocomplete : Boolean(parsed.inlineAutocomplete),
       showHidden: Boolean(parsed.showHidden),
       theme: ["system", "dark", "light"].includes(parsed.theme) ? parsed.theme : defaults.theme,
-      themePalette: ["standard", "gruvbox", "atom", "dracula", "solarized", "nord", "catppuccin", "scryfall"].includes(parsed.themePalette)
-        ? parsed.themePalette
-        : defaults.themePalette,
+      themeFamily: ["azorius_dimir", "boros_rakdos", "selesnya_golgari", "orzhov", "new_phyrexian", "phyrexian"].includes(parsed.themeFamily)
+        ? parsed.themeFamily
+        : defaults.themeFamily,
       pageSize: [10, 20, 50, 100].includes(parsed.pageSize) ? parsed.pageSize : defaults.pageSize,
       paginationMode: ["paginated", "infinite"].includes(parsed.paginationMode) ? parsed.paginationMode : defaults.paginationMode,
       phenomenonAnimation: parsed.phenomenonAnimation === undefined ? defaults.phenomenonAnimation : Boolean(parsed.phenomenonAnimation),
@@ -50,7 +50,7 @@ export function loadPreferences(storageKey) {
   }
 }
 
-export function savePreferences(storageKey, displayState, filters, theme = "system", themePalette = "standard", paginationState = {}) {
+export function savePreferences(storageKey, displayState, filters, theme = "system", themeFamily = "azorius_dimir", paginationState = {}) {
   try {
     localStorage.setItem(
       storageKey,
@@ -62,7 +62,7 @@ export function savePreferences(storageKey, displayState, filters, theme = "syst
         inlineAutocomplete: filters.inlineAutocomplete,
         showHidden: filters.showHidden,
         theme,
-        themePalette,
+        themeFamily,
         pageSize: paginationState.pageSize ?? 20,
         paginationMode: paginationState.mode ?? "paginated",
         phenomenonAnimation: filters.phenomenonAnimation,
@@ -628,6 +628,11 @@ export function shuffleArray(arr) {
   return a;
 }
 
+function shouldUsePhyrexianPlaneswalkerSymbol() {
+  if (typeof document === "undefined") return false;
+  return document.documentElement?.dataset?.phyrexianFont === "true";
+}
+
 export function getManaClasses(symbol) {
   const raw = symbol.replace(/\s+/g, "");
 
@@ -637,14 +642,18 @@ export function getManaClasses(symbol) {
     planeswalk: "planeswalker"
   };
 
-  const normalized = aliases[raw] || raw;
+  let normalized = aliases[raw] || raw;
+
+  if (normalized === "planeswalker" && shouldUsePhyrexianPlaneswalkerSymbol()) {
+    normalized = "p";
+  }
 
   const direct = new Set([
     "w", "u", "b", "r", "g", "c",
     "x", "y", "z",
     "tap", "untap",
     "chaos",
-    "planeswalker"
+    "planeswalker", "p"
   ]);
 
   if (direct.has(normalized)) {

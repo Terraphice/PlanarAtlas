@@ -1,21 +1,34 @@
 // ── gallery-ui.js ─────────────────────────────────────────────────────────────
-// ThemeController (palette and mode cycling) and ToastManager (ephemeral
+// ThemeController (guild/faction and mode cycling) and ToastManager (ephemeral
 // notification toasts).
 
 const STANDARD_THEME_ORDER = ["system", "dark", "light"];
-const HIDDEN_PALETTE_ORDER = ["standard", "gruvbox", "atom", "dracula", "solarized", "nord", "catppuccin", "scryfall"];
+const THEME_FAMILY_ORDER = ["azorius_dimir", "boros_rakdos", "selesnya_golgari", "orzhov", "new_phyrexian", "phyrexian"];
+
 const THEME_ICONS = {
   system: "◐",
   dark: "☾",
   light: "☀"
 };
-const THEME_LABELS = {
+
+const THEME_MODE_LABELS = {
   system: "System",
   dark: "Dark",
   light: "Light"
 };
 
-function isAltPaletteEvent(event) {
+const FAMILY_LABELS = {
+  azorius_dimir: { light: "Azorius", dark: "Dimir" },
+  boros_rakdos: { light: "Boros", dark: "Rakdos" },
+  selesnya_golgari: { light: "Selesnya", dark: "Golgari" },
+  orzhov: { light: "Orzhov", dark: "Orzhov" },
+  new_phyrexian: { light: "New Phyrexian", dark: "New Phyrexian" },
+  phyrexian: { light: "Phyrexian", dark: "Phyrexian" }
+};
+
+const SECRET_FAMILIES = new Set(["new_phyrexian", "phyrexian"]);
+
+function isSecretThemeEvent(event) {
   return Boolean(event?.altKey);
 }
 
@@ -58,38 +71,59 @@ export function initToastManager(container) {
 export function initThemeController({
   button,
   initialTheme = "system",
-  initialPalette = "standard",
-  onChange = () => {}
+  initialFamily = "azorius_dimir",
+  onChange = () => {},
+  onSecretThemeUnavailable = () => {}
 }) {
   const media = window.matchMedia("(prefers-color-scheme: dark)");
   const glyph = button.querySelector(".theme-toggle-glyph");
 
   let theme = STANDARD_THEME_ORDER.includes(initialTheme) ? initialTheme : "system";
-  let palette = HIDDEN_PALETTE_ORDER.includes(initialPalette) ? initialPalette : "standard";
+  let family = THEME_FAMILY_ORDER.includes(initialFamily) ? initialFamily : "azorius_dimir";
   let suppressClick = false;
   let longPressTimer = null;
-  let _longPressFired = false;
 
   function resolveTheme(preference) {
     return preference === "system" ? (media.matches ? "dark" : "light") : preference;
   }
 
+  function getResolvedThemeName() {
+    const resolved = resolveTheme(theme);
+    return FAMILY_LABELS[family]?.[resolved] || FAMILY_LABELS.azorius_dimir[resolved];
+  }
+
+  function isPhyrexianScriptFamily(nextFamily = family) {
+    return nextFamily === "new_phyrexian" || nextFamily === "phyrexian";
+  }
+
   function getAnnouncementLabel() {
-    const themeLabel = THEME_LABELS[theme];
-    if (palette === "standard") return themeLabel;
-    return `${themeLabel} · ${palette[0].toUpperCase()}${palette.slice(1)}`;
+    return `${THEME_MODE_LABELS[theme]} · ${getResolvedThemeName()}`;
+  }
+
+  function getThemeOptions() {
+    const resolved = resolveTheme(theme);
+    return THEME_FAMILY_ORDER.map((value) => ({
+      value,
+      label: FAMILY_LABELS[value][resolved],
+      secret: SECRET_FAMILIES.has(value)
+    }));
   }
 
   function applyTheme({ animate = false } = {}) {
-    document.documentElement.dataset.theme = resolveTheme(theme);
+    const resolvedTheme = resolveTheme(theme);
+    const resolvedThemeName = getResolvedThemeName();
+
+    document.documentElement.dataset.theme = resolvedTheme;
     document.documentElement.dataset.themePreference = theme;
-    document.documentElement.dataset.palette = palette;
+    document.documentElement.dataset.themeFamily = family;
+    document.documentElement.dataset.themeName = resolvedThemeName;
+    document.documentElement.dataset.phyrexianFont = isPhyrexianScriptFamily() ? "true" : "false";
 
     button.dataset.mode = theme;
-    button.dataset.palette = palette;
+    button.dataset.themeFamily = family;
     button.setAttribute(
       "aria-label",
-      `Theme: ${getAnnouncementLabel()}. Click to cycle dark/light mode.`
+      `Theme: ${getAnnouncementLabel()}. Click to cycle light/dark/system mode.`
     );
     button.title = getAnnouncementLabel();
 
@@ -109,30 +143,47 @@ export function initThemeController({
   function setTheme(nextTheme, {
     animate = false,
     silent = false,
-    paletteOverride = palette
+    familyOverride = family
   } = {}) {
     theme = STANDARD_THEME_ORDER.includes(nextTheme) ? nextTheme : "system";
-    palette = HIDDEN_PALETTE_ORDER.includes(paletteOverride) ? paletteOverride : "standard";
+    family = THEME_FAMILY_ORDER.includes(familyOverride) ? familyOverride : "azorius_dimir";
     applyTheme({ animate });
-    if (!silent) onChange(theme, palette);
+    if (!silent) onChange(theme, family, getResolvedThemeName());
   }
 
   function cycleStandardTheme() {
     const currentIndex = STANDARD_THEME_ORDER.indexOf(theme);
     const nextTheme = STANDARD_THEME_ORDER[(currentIndex + 1) % STANDARD_THEME_ORDER.length];
-    setTheme(nextTheme, {
-      animate: true,
-      paletteOverride: "standard"
-    });
+    setTheme(nextTheme, { animate: true });
   }
 
-  function cycleAlternatePalette() {
-    const currentIndex = HIDDEN_PALETTE_ORDER.indexOf(palette);
-    const nextPalette = HIDDEN_PALETTE_ORDER[(currentIndex + 1) % HIDDEN_PALETTE_ORDER.length];
-    setTheme(theme, {
-      animate: true,
-      paletteOverride: nextPalette
-    });
+  function isGolgariActive() {
+    return family === "selesnya_golgari" && resolveTheme(theme) === "dark";
+  }
+
+  function toggleSecretTheme() {
+    if (family === "boros_rakdos") {
+      setTheme(theme, { animate: true, familyOverride: "new_phyrexian" });
+      return true;
+    }
+
+    if (family === "new_phyrexian") {
+      setTheme(theme, { animate: true, familyOverride: "boros_rakdos" });
+      return true;
+    }
+
+    if (isGolgariActive()) {
+      setTheme(theme, { animate: true, familyOverride: "phyrexian" });
+      return true;
+    }
+
+    if (family === "phyrexian") {
+      setTheme(theme, { animate: true, familyOverride: "selesnya_golgari" });
+      return true;
+    }
+
+    onSecretThemeUnavailable();
+    return false;
   }
 
   function handleButtonClick(event) {
@@ -142,9 +193,9 @@ export function initThemeController({
       return;
     }
 
-    if (isAltPaletteEvent(event)) {
+    if (isSecretThemeEvent(event)) {
       event.preventDefault();
-      cycleAlternatePalette();
+      toggleSecretTheme();
       return;
     }
 
@@ -160,13 +211,11 @@ export function initThemeController({
 
   function handlePointerDown(event) {
     if (event.pointerType === "mouse") return;
-    _longPressFired = false;
     clearLongPressTimer();
 
     longPressTimer = window.setTimeout(() => {
-      _longPressFired = true;
       suppressClick = true;
-      cycleAlternatePalette();
+      toggleSecretTheme();
     }, 650);
   }
 
@@ -187,6 +236,7 @@ export function initThemeController({
   media.addEventListener?.("change", () => {
     if (theme === "system") {
       applyTheme();
+      onChange(theme, family, getResolvedThemeName());
     }
   });
 
@@ -196,12 +246,14 @@ export function initThemeController({
     getTheme() {
       return theme;
     },
-    getPalette() {
-      return palette;
+    getThemeFamily() {
+      return family;
     },
+    getThemeOptions,
     getResolvedTheme() {
       return resolveTheme(theme);
     },
+    getResolvedThemeName,
     setTheme(nextTheme, options = {}) {
       setTheme(nextTheme, options);
     }
