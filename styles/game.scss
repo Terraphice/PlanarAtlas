@@ -378,6 +378,31 @@
 
 /* ── Game view ───────────────────────────────────────────────────────────────── */
 
+@mixin atlas-panel-surface($mix: 96%, $blur: 12px, $radius: 16px) {
+  background: color-mix(in srgb, var(--bg-elev-1) $mix, transparent);
+  border: 1px solid var(--border);
+  border-radius: $radius;
+  backdrop-filter: blur($blur);
+}
+
+@mixin atlas-grid-overlay($line-opacity: 9%, $secondary-line-opacity: 7%, $cell-size: 54px) {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--accent) $line-opacity, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--text-soft) $secondary-line-opacity, transparent) 1px, transparent 1px);
+  background-size: $cell-size $cell-size;
+}
+
+@mixin atlas-stripe-overlay($angle: 132deg, $band-size: 86px, $opacity: 6%) {
+  background-image:
+    repeating-linear-gradient(
+      $angle,
+      color-mix(in srgb, var(--accent) $opacity, transparent) 0,
+      color-mix(in srgb, var(--accent) $opacity, transparent) 1px,
+      transparent 1px,
+      transparent $band-size
+    );
+}
+
 :root {
   --game-safe-top: env(safe-area-inset-top, 0px);
   --game-safe-right: env(safe-area-inset-right, 0px);
@@ -432,11 +457,45 @@
   position: fixed;
   inset: 0;
   z-index: 2000;
-  background: var(--bg);
+  isolation: isolate;
+  background:
+    radial-gradient(circle at top, color-mix(in srgb, var(--accent) 8%, transparent), transparent 32%),
+    linear-gradient(180deg, color-mix(in srgb, var(--bg) 86%, black 14%) 0%, color-mix(in srgb, var(--bg) 94%, black 6%) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+}
+
+.game-view::before {
+  content: "";
+  position: absolute;
+  inset: -4%;
+  z-index: -1;
+  background-image: var(--parallax-image);
+  background-size: cover;
+  background-position: center 30%;
+  background-repeat: no-repeat;
+  opacity: 0.08;
+  filter: blur(2px) saturate(0.62);
+  transform: scale(1.05);
+  pointer-events: none;
+}
+
+html[data-theme="light"] .game-view::before {
+  opacity: 0.06;
+}
+
+.game-view::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.7;
+  @include atlas-grid-overlay(8%, 6%, 56px);
+  @include atlas-stripe-overlay(130deg, 94px, 5%);
+  mix-blend-mode: normal;
 }
 
 .game-view.hidden {
@@ -707,12 +766,9 @@
   position: absolute;
   z-index: 20;
   width: min(300px, calc(var(--game-viewport-width) - var(--game-inline-safe-start) - var(--game-inline-safe-end) - 100px));
-  background: color-mix(in srgb, var(--bg-elev-1) 96%, transparent);
-  border: 1px solid var(--border);
-  border-radius: 16px;
+  @include atlas-panel-surface(96%, 12px, 16px);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
   overflow: hidden;
-  backdrop-filter: blur(12px);
   padding: 8px 8px 4px;
   display: flex;
   flex-direction: column;
@@ -1630,14 +1686,11 @@
   z-index: 1;
   width: var(--game-reveal-panel-width);
   max-height: var(--game-reveal-panel-max-height);
-  background: color-mix(in srgb, var(--bg-elev-1) 97%, transparent);
-  border: 1px solid var(--border);
-  border-radius: 18px;
+  @include atlas-panel-surface(97%, 16px, 18px);
   box-shadow: 0 28px 70px rgba(0, 0, 0, 0.6);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  backdrop-filter: blur(16px);
 }
 
 .game-reveal-header {
@@ -2812,9 +2865,10 @@ body.privacy-modal-open {
 .game-mode-dialog-panel {
   position: relative;
   z-index: 1;
-  background: var(--bg-elev-1);
-  border: 1px solid var(--border);
-  border-radius: 20px;
+  @include atlas-panel-surface(97%, 14px, 20px);
+  background-image:
+    linear-gradient(180deg, color-mix(in srgb, var(--accent) 7%, transparent), transparent 46%),
+    repeating-linear-gradient(135deg, color-mix(in srgb, var(--accent) 5%, transparent) 0, color-mix(in srgb, var(--accent) 5%, transparent) 1px, transparent 1px, transparent 80px);
   padding: 28px 24px 20px;
   box-shadow: 0 32px 80px rgba(0, 0, 0, 0.55);
   width: min(480px, calc(100vw - 32px));
@@ -3152,10 +3206,10 @@ body.privacy-modal-open {
 
 /* BEM info bar */
 .bem-info-bar {
-  position: absolute;
-  bottom: 16px;
-  left: 0;
-  right: 0;
+  position: fixed;
+  bottom: var(--game-bottom-clearance);
+  left: var(--game-left-clearance);
+  right: var(--game-right-clearance);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3293,9 +3347,7 @@ body.privacy-modal-open {
     flex: 1;
   }
 
-  .bem-info-bar {
-    bottom: calc(var(--game-block-safe-end) + 8px);
-  }
+  .bem-info-bar { bottom: var(--game-bottom-clearance); }
 }
 
 /* Mobile portrait: BEM grid rotates with the game view */
