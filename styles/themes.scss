@@ -92,172 +92,36 @@ html[data-phyrexian-script="true"] #phyrexia-overlay * {
   text-transform: none !important;
 }
 
-html[data-theme-name="azorius"] {
-  --bg: #ffffff;
-  --bg-elev-1: #f6fbff;
-  --bg-elev-2: #eaf3ff;
-  --border: #b7cce8;
-  --border-soft: #cfdef1;
-  --text: #111827;
-  --text-soft: #31455f;
-  --text-faint: #4f6682;
-  --accent: #2c74cc;
-  --accent-soft: rgba(44, 116, 204, 0.14);
-  --tag-bg: #e7f0fb;
-  --tag-border: #b8cee7;
-  --tag-text: #163455;
-  --parallax-image: url('../assets/theme-azorius.jpg'), url('../assets/social-preview.jpg');
+@mixin theme-vars($bg, $bg-elev-1, $bg-elev-2, $border, $border-soft, $text, $text-soft, $text-faint, $accent, $accent-soft, $tag-bg, $tag-border, $tag-text, $parallax-image) {
+  --bg: #{$bg};
+  --bg-elev-1: #{$bg-elev-1};
+  --bg-elev-2: #{$bg-elev-2};
+  --border: #{$border};
+  --border-soft: #{$border-soft};
+  --text: #{$text};
+  --text-soft: #{$text-soft};
+  --text-faint: #{$text-faint};
+  --accent: #{$accent};
+  --accent-soft: #{$accent-soft};
+  --tag-bg: #{$tag-bg};
+  --tag-border: #{$tag-border};
+  --tag-text: #{$tag-text};
+  --parallax-image: #{$parallax-image};
 }
 
-html[data-theme-name="dimir"] {
-  --bg: #0f1116;
-  --bg-elev-1: #171b24;
-  --bg-elev-2: #1f2633;
-  --border: #2b3648;
-  --border-soft: #243041;
-  --text: #f8fafc;
-  --text-soft: #c3cfdf;
-  --text-faint: #8d9fb9;
-  --accent: #4c78ad;
-  --accent-soft: rgba(76, 120, 173, 0.2);
-  --tag-bg: #202a39;
-  --tag-border: #33465f;
-  --tag-text: #dae5f4;
-  --parallax-image: url('../assets/theme-dimir.jpg'), url('../assets/social-preview.jpg');
+@mixin theme-family($name, $bg, $bg-elev-1, $bg-elev-2, $border, $border-soft, $text, $text-soft, $text-faint, $accent, $accent-soft, $tag-bg, $tag-border, $tag-text, $parallax-image) {
+  html[data-theme-name="#{$name}"] {
+    @include theme-vars($bg, $bg-elev-1, $bg-elev-2, $border, $border-soft, $text, $text-soft, $text-faint, $accent, $accent-soft, $tag-bg, $tag-border, $tag-text, $parallax-image);
+  }
 }
 
-html[data-theme-name="boros"] {
-  --bg: #ffffff;
-  --bg-elev-1: #fff8f8;
-  --bg-elev-2: #ffecec;
-  --border: #ecc0bf;
-  --border-soft: #f6d6d5;
-  --text: #111111;
-  --text-soft: #5a2b2b;
-  --text-faint: #7e3b3a;
-  --accent: #cf2f2f;
-  --accent-soft: rgba(207, 47, 47, 0.16);
-  --tag-bg: #ffe3e3;
-  --tag-border: #efbbbb;
-  --tag-text: #651f1f;
-  --parallax-image: url('../assets/theme-boros.jpg'), url('../assets/social-preview.jpg');
-}
-
-html[data-theme-name="rakdos"] {
-  --bg: #1e1418;
-  --bg-elev-1: #281a20;
-  --bg-elev-2: #351c22;
-  --border: #63313a;
-  --border-soft: #4f2730;
-  --text: #fff7f7;
-  --text-soft: #ecc0c3;
-  --text-faint: #d39a9e;
-  --accent: #db2f3c;
-  --accent-soft: rgba(219, 47, 60, 0.22);
-  --tag-bg: #46242c;
-  --tag-border: #7f3d47;
-  --tag-text: #ffe1e4;
-  --parallax-image: url('../assets/theme-rakdos.jpg'), url('../assets/social-preview.jpg');
-}
-
-html[data-theme-name="selesnya"] {
-  --bg: #ffffff;
-  --bg-elev-1: #f8fff8;
-  --bg-elev-2: #ecf8ec;
-  --border: #c3ddc3;
-  --border-soft: #d8ebd8;
-  --text: #0f1b0f;
-  --text-soft: #2f5530;
-  --text-faint: #4c744e;
-  --accent: #2f8f48;
-  --accent-soft: rgba(47, 143, 72, 0.16);
-  --tag-bg: #e5f4e7;
-  --tag-border: #bdd9c3;
-  --tag-text: #1e4a27;
-  --parallax-image: url('../assets/theme-selesnya.jpg'), url('../assets/social-preview.jpg');
-}
-
-html[data-theme-name="golgari"] {
-  --bg: #121512;
-  --bg-elev-1: #1a201a;
-  --bg-elev-2: #232c23;
-  --border: #364337;
-  --border-soft: #2f3a2f;
-  --text: #f1f7f1;
-  --text-soft: #bacab9;
-  --text-faint: #8ca189;
-  --accent: #4a8048;
-  --accent-soft: rgba(74, 128, 72, 0.22);
-  --tag-bg: #273327;
-  --tag-border: #445a44;
-  --tag-text: #d6ecd7;
-  --parallax-image: url('../assets/theme-golgari.jpg'), url('../assets/social-preview.jpg');
-}
-
-html[data-theme-name="orzhov-light"] {
-  --bg: #ffffff;
-  --bg-elev-1: #fcfbfd;
-  --bg-elev-2: #f2eef5;
-  --border: #d3cadb;
-  --border-soft: #e4ddea;
-  --text: #161218;
-  --text-soft: #3f3346;
-  --text-faint: #64516f;
-  --accent: #5f4b71;
-  --accent-soft: rgba(95, 75, 113, 0.15);
-  --tag-bg: #eee8f3;
-  --tag-border: #cfc1da;
-  --tag-text: #392c44;
-  --parallax-image: url('../assets/theme-orzhov-light.jpg'), url('../assets/social-preview.jpg');
-}
-
-html[data-theme-name="orzhov-dark"] {
-  --bg: #16141a;
-  --bg-elev-1: #222228;
-  --bg-elev-2: #2c2c34;
-  --border: #454853;
-  --border-soft: #393c46;
-  --text: #f8f7fb;
-  --text-soft: #d2d5df;
-  --text-faint: #a7acbb;
-  --accent: #b4afbf;
-  --accent-soft: rgba(180, 175, 191, 0.2);
-  --tag-bg: #343843;
-  --tag-border: #575d6d;
-  --tag-text: #e6e9f2;
-  --parallax-image: url('../assets/theme-orzhov-dark.jpg'), url('../assets/social-preview.jpg');
-}
-
-html[data-theme-name="new-phyrexian"] {
-  --bg: #fffefe;
-  --bg-elev-1: #ffffff;
-  --bg-elev-2: #fbefee;
-  --border: #d6aca8;
-  --border-soft: #e8c8c5;
-  --text: #111111;
-  --text-soft: #4f2323;
-  --text-faint: #713434;
-  --accent: #9b2a2a;
-  --accent-soft: rgba(155, 42, 42, 0.20);
-  --tag-bg: #f6dedd;
-  --tag-border: #d79f9c;
-  --tag-text: #5a1f1f;
-  --parallax-image: url('../assets/theme-new-phyrexian.jpg'), url('../assets/social-preview.jpg');
-}
-
-html[data-theme-name="phyrexian"] {
-  --bg: #161a14;
-  --bg-elev-1: #1f271d;
-  --bg-elev-2: #293227;
-  --border: #44543f;
-  --border-soft: #374632;
-  --text: #f5f8f3;
-  --text-soft: #c3d2bd;
-  --text-faint: #98ae92;
-  --accent: #7ea266;
-  --accent-soft: rgba(126, 162, 102, 0.22);
-  --tag-bg: #2c3a29;
-  --tag-border: #4e6a45;
-  --tag-text: #dcead4;
-  --parallax-image: url('../assets/theme-phyrexian.jpg'), url('../assets/social-preview.jpg');
-}
+@include theme-family("azorius", #ffffff, #f6fbff, #eaf3ff, #b7cce8, #cfdef1, #111827, #31455f, #4f6682, #2c74cc, rgba(44, 116, 204, 0.14), #e7f0fb, #b8cee7, #163455, "url('../assets/theme-azorius.jpg'), url('../assets/social-preview.jpg')");
+@include theme-family("dimir", #0f1116, #171b24, #1f2633, #2b3648, #243041, #f8fafc, #c3cfdf, #8d9fb9, #4c78ad, rgba(76, 120, 173, 0.2), #202a39, #33465f, #dae5f4, "url('../assets/theme-dimir.jpg'), url('../assets/social-preview.jpg')");
+@include theme-family("boros", #ffffff, #fff8f8, #ffecec, #ecc0bf, #f6d6d5, #111111, #5a2b2b, #7e3b3a, #cf2f2f, rgba(207, 47, 47, 0.16), #ffe3e3, #efbbbb, #651f1f, "url('../assets/theme-boros.jpg'), url('../assets/social-preview.jpg')");
+@include theme-family("rakdos", #1e1418, #281a20, #351c22, #63313a, #4f2730, #fff7f7, #ecc0c3, #d39a9e, #db2f3c, rgba(219, 47, 60, 0.22), #46242c, #7f3d47, #ffe1e4, "url('../assets/theme-rakdos.jpg'), url('../assets/social-preview.jpg')");
+@include theme-family("selesnya", #ffffff, #f8fff8, #ecf8ec, #c3ddc3, #d8ebd8, #0f1b0f, #2f5530, #4c744e, #2f8f48, rgba(47, 143, 72, 0.16), #e5f4e7, #bdd9c3, #1e4a27, "url('../assets/theme-selesnya.jpg'), url('../assets/social-preview.jpg')");
+@include theme-family("golgari", #121512, #1a201a, #232c23, #364337, #2f3a2f, #f1f7f1, #bacab9, #8ca189, #4a8048, rgba(74, 128, 72, 0.22), #273327, #445a44, #d6ecd7, "url('../assets/theme-golgari.jpg'), url('../assets/social-preview.jpg')");
+@include theme-family("orzhov-light", #ffffff, #fcfbfd, #f2eef5, #d3cadb, #e4ddea, #161218, #3f3346, #64516f, #5f4b71, rgba(95, 75, 113, 0.15), #eee8f3, #cfc1da, #392c44, "url('../assets/theme-orzhov-light.jpg'), url('../assets/social-preview.jpg')");
+@include theme-family("orzhov-dark", #16141a, #222228, #2c2c34, #454853, #393c46, #f8f7fb, #d2d5df, #a7acbb, #b4afbf, rgba(180, 175, 191, 0.2), #343843, #575d6d, #e6e9f2, "url('../assets/theme-orzhov-dark.jpg'), url('../assets/social-preview.jpg')");
+@include theme-family("new-phyrexian", #fffefe, #ffffff, #fbefee, #d6aca8, #e8c8c5, #111111, #4f2323, #713434, #9b2a2a, rgba(155, 42, 42, 0.20), #f6dedd, #d79f9c, #5a1f1f, "url('../assets/theme-new-phyrexian.jpg'), url('../assets/social-preview.jpg')");
+@include theme-family("phyrexian", #161a14, #1f271d, #293227, #44543f, #374632, #f5f8f3, #c3d2bd, #98ae92, #7ea266, rgba(126, 162, 102, 0.22), #2c3a29, #4e6a45, #dcead4, "url('../assets/theme-phyrexian.jpg'), url('../assets/social-preview.jpg')");

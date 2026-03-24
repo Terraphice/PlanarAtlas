@@ -77,6 +77,28 @@ body::after {
   opacity: 0.9;
 }
 
+.app-shell::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    repeating-linear-gradient(
+      132deg,
+      color-mix(in srgb, var(--accent) 7%, transparent) 0 1px,
+      transparent 1px 18px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--text-soft) 4%, transparent) 0 1px,
+      transparent 1px 32px
+    );
+  background-size: 100% 100%, 32px 32px;
+  background-position: center, center;
+  opacity: 0.32;
+}
+
 @keyframes atlasFloatA {
   0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
   50% { transform: translate3d(4vw, 3vh, 0) scale(1.08); }
