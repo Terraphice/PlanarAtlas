@@ -64,10 +64,21 @@ html[data-phyrexian-script="true"] {
 html[data-phyrexian-script="true"] body,
 html[data-phyrexian-script="true"] body *:not(.ms):not(.symbol-glyph):not(code):not(kbd) {
   font-family: var(--app-font-family) !important;
+  text-transform: lowercase !important;
 }
 
 html[data-phyrexian-script="true"] body {
   font-size: calc(1rem * var(--phyrexian-font-scale));
+}
+
+html[data-phyrexian-script="true"] .toast {
+  font-family:
+    ui-sans-serif,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif !important;
+  text-transform: none !important;
 }
 
 html[data-theme-name="azorius"] {
