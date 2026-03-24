@@ -317,11 +317,8 @@ kbd {
 
 .filter-actions {
   margin-top: auto;
-  position: sticky;
-  bottom: 0;
-  padding-top: 10px;
+  padding-top: 2px;
   padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
-  background: linear-gradient(180deg, color-mix(in srgb, var(--bg-elev-1) 0%, transparent) 0%, color-mix(in srgb, var(--bg-elev-1) 95%, black 5%) 28%);
 }
 
 .sidebar-backdrop {
