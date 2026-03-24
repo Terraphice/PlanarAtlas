@@ -103,6 +103,7 @@ const groupTagSelect = document.getElementById("group-tag-select");
 
 const settingsMenuToggle = document.getElementById("settings-menu-toggle");
 const settingsMenu = document.getElementById("settings-menu");
+const settingsMenuCloseButton = document.getElementById("settings-menu-close");
 const settingsClearPreferencesButton = document.getElementById("settings-clear-preferences");
 const settingsContactDeveloperLink = document.getElementById("settings-contact-developer");
 const settingsExportProfileButton = document.getElementById("settings-export-profile");
@@ -816,6 +817,7 @@ function bindEvents() {
   sidebarBackdrop.addEventListener("click", closeSidebar);
 
   settingsMenuToggle.addEventListener("click", toggleSettingsMenu);
+  settingsMenuCloseButton?.addEventListener("click", closeSettingsMenu);
   settingsClearPreferencesButton.addEventListener("click", showClearPrefsConfirm);
   settingsContactDeveloperLink.addEventListener("click", closeSettingsMenu);
   settingsExportProfileButton?.addEventListener("click", exportProfile);

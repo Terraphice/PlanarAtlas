@@ -26,6 +26,7 @@ let gameRedoStack = [];
 // ── Context (set by initGameStateManager) ────────────────────────────────────
 
 let ctx = null;
+let warmedAssetPaths = new Set();
 
 // ── DOM references ────────────────────────────────────────────────────────────
 
@@ -45,6 +46,31 @@ const classicViewCardBtn = document.getElementById("classic-view-card-btn");
  */
 export function initGameStateManager(context) {
   ctx = context;
+  warmedAssetPaths = new Set();
+}
+
+function warmGameAssets(cards) {
+  if (!Array.isArray(cards) || cards.length === 0) return;
+  if (typeof window === "undefined" || typeof window.requestIdleCallback !== "function") {
+    setTimeout(() => warmGameAssetsNow(cards), 0);
+    return;
+  }
+  window.requestIdleCallback(() => warmGameAssetsNow(cards), { timeout: 1200 });
+}
+
+function warmGameAssetsNow(cards) {
+  const paths = new Set();
+  for (const card of cards) {
+    if (card?.imagePath) paths.add(card.imagePath);
+    if (card?.thumbPath) paths.add(card.thumbPath);
+  }
+  for (const rawPath of paths) {
+    if (typeof rawPath !== "string") continue;
+    const path = rawPath.startsWith("/") ? rawPath : `/${rawPath}`;
+    if (warmedAssetPaths.has(path)) continue;
+    warmedAssetPaths.add(path);
+    fetch(path).catch(() => {});
+  }
 }
 
 // ── History accessors (exported for game-ui.js syncGameToolsState) ────────────
@@ -372,6 +398,13 @@ export function startGameFromState(decoded) {
       gameRevealOverlay?.classList.remove("hidden");
     }
   }
+
+  warmGameAssets([
+    ...(decoded.remaining ?? []),
+    ...(decoded.activePlanes ?? []),
+    ...(decoded.exiled ?? []),
+    ...(decoded.revealed ?? [])
+  ]);
 
   if (window.location.hash !== "#play") {
     history.pushState(null, "", `${window.location.pathname}${window.location.search}#play`);

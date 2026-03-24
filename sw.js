@@ -63,7 +63,7 @@ self.addEventListener("fetch", (event) => {
   if (request.method !== "GET" || url.protocol === "chrome-extension:") return;
 
   // For card images and thumbnails: cache-first with network fallback
-  if (url.pathname.startsWith("/cards/images/") || url.pathname.startsWith("/cards/thumbs/")) {
+  if (url.pathname.includes("/cards/images/") || url.pathname.includes("/cards/thumbs/")) {
     event.respondWith(
       caches.match(request).then((cached) => {
         if (cached) return cached;
@@ -80,7 +80,7 @@ self.addEventListener("fetch", (event) => {
   }
 
   // For transcripts: cache-first with network fallback
-  if (url.pathname.startsWith("/transcripts/")) {
+  if (url.pathname.includes("/transcripts/")) {
     event.respondWith(
       caches.match(request).then((cached) => {
         if (cached) return cached;
@@ -97,7 +97,7 @@ self.addEventListener("fetch", (event) => {
   }
 
   // For per-card JSON: cache-first with network fallback
-  if (url.pathname.startsWith("/cards/") && url.pathname.endsWith(".json")) {
+  if (url.pathname.includes("/cards/") && url.pathname.endsWith(".json")) {
     event.respondWith(
       caches.match(request).then((cached) => {
         if (cached) return cached;
