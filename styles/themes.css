@@ -197,19 +197,19 @@ html[data-theme-name="orzhov-dark"] {
 }
 
 html[data-theme-name="new-phyrexian"] {
-  --bg: #f5efee;
+  --bg: #fffefe;
   --bg-elev-1: #ffffff;
-  --bg-elev-2: #ede1df;
-  --border: #cbb8b3;
-  --border-soft: #e0d2cf;
+  --bg-elev-2: #fff2f1;
+  --border: #e4c2bf;
+  --border-soft: #f0d7d4;
   --text: #111111;
-  --text-soft: #4d2f2b;
-  --text-faint: #704641;
-  --accent: #b83b32;
-  --accent-soft: rgba(184, 59, 50, 0.2);
-  --tag-bg: #ead4d1;
-  --tag-border: #caa9a4;
-  --tag-text: #5a2520;
+  --text-soft: #5a2b2b;
+  --text-faint: #7c3d3c;
+  --accent: #d83934;
+  --accent-soft: rgba(216, 57, 52, 0.18);
+  --tag-bg: #ffe6e3;
+  --tag-border: #eab9b4;
+  --tag-text: #6c2520;
   --parallax-image: url('../assets/theme-new-phyrexian.jpg'), url('../assets/social-preview.jpg');
 }
 
