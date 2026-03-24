@@ -169,6 +169,30 @@ Every card includes a high-resolution image and a plain-text transcript, as well
 
 ---
 
+## Adding a New Card Set (Production Workflow)
+
+If you're importing a new set of cards, use the release workflow command below. It runs generation, sync, and verification steps in the correct order and stops immediately on any failure:
+
+```bash
+npm run cards:prepare-release
+```
+
+This command performs:
+
+1. `npm run generate` (rebuilds `cards.json`, static share embeds, and SEO pages)
+2. `npm run sync` (syncs per-card files under `cards/`)
+3. `npm run test:generate`
+4. `npm run test:sync`
+5. `npm run test` (full smoke test)
+
+Before running it, ensure new files are in place:
+
+- Card images in `cards/images/` (must begin with `Plane_` or `Phenomenon_`)
+- Thumbnail images in `cards/thumbs/` (`.webp`)
+- Transcript files in `cards/transcripts/` (`.md` preferred)
+
+---
+
 ## Profile Seeds
 
 A profile seed is a compact encoded string that captures your entire Planar Atlas state: all preferences, all deck slots and their contents, and your current theme. Share a seed with another player and they can import it to get an identical setup in seconds, no account or file transfer needed.
