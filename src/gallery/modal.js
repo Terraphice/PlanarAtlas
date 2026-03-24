@@ -28,7 +28,7 @@ export function createModalManager({
   getTranscriptCache,
   callbacks
 }) {
-  const ALL_PALETTES = ["standard", "gruvbox", "atom", "dracula", "solarized", "nord", "catppuccin", "scryfall"];
+  const ALL_THEME_FAMILIES = ["azorius", "boros", "selesnya", "orzhov", "new-phyrexian", "phyrexian"];
   const THEME_PREFERENCES = ["system", "dark", "light"];
   const VIEW_MODES = ["grid", "single", "stack", "list"];
   const GROUP_MODES = ["none", "tag"];
@@ -354,10 +354,10 @@ export function createModalManager({
     triggerChaosIcon();
 
     const randomTheme = randomFrom(THEME_PREFERENCES);
-    const randomPalette = randomFrom(ALL_PALETTES);
+    const randomThemeFamily = randomFrom(ALL_THEME_FAMILIES);
     callbacks.themeController.setTheme(randomTheme, {
       silent: true,
-      paletteOverride: randomPalette,
+      themeFamilyOverride: randomThemeFamily,
       animate: true
     });
 

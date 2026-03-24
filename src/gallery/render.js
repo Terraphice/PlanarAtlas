@@ -594,7 +594,7 @@ export function createRenderer({
       pageMeta.appendChild(document.createTextNode("Page "));
       const pageInput = document.createElement("input");
       pageInput.type = "number";
-      pageInput.className = "pagination-page-input";
+      pageInput.className = "pagination-btn pagination-page-input";
       pageInput.value = paginationState.currentPage;
       pageInput.min = 1;
       pageInput.max = totalPages;

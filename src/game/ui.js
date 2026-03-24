@@ -329,7 +329,7 @@ function applyDieResult(roll) {
     gameDieIcon.setAttribute("aria-label", "Chaos!");
     gameBtnTl?.classList.add("game-die-chaos");
   } else if (roll === 6) {
-    gameDieIcon.className = "ms ms-planeswalker";
+    gameDieIcon.className = `ms ${getPlaneswalkerGlyphClass()}`;
     gameDieIcon.setAttribute("aria-label", "Planeswalk!");
     gameBtnTl?.classList.add("game-die-walk");
   } else {
@@ -391,6 +391,10 @@ export function resetDieIcon() {
   gameDieIcon.textContent = "";
   gameDieIcon.removeAttribute("aria-label");
   gameBtnTl?.classList.remove("game-die-chaos", "game-die-walk", "game-die-blank");
+}
+
+function getPlaneswalkerGlyphClass() {
+  return document?.documentElement?.dataset?.phyrexianMana === "true" ? "ms-ability-phyrexian" : "ms-planeswalker";
 }
 
 // ── Game menus ────────────────────────────────────────────────────────────────

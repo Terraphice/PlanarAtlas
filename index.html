@@ -231,6 +231,15 @@
                     <span>Tab Autocompletion</span>
                   </label>
 
+                  <label class="settings-menu-select-row" for="gallery-theme-select">
+                    <span>Guild Theme</span>
+                    <div id="gallery-theme-picker" class="settings-theme-picker">
+                      <button id="gallery-theme-trigger" class="neutral-button-base settings-theme-trigger" type="button" aria-haspopup="listbox" aria-expanded="false"></button>
+                      <div id="gallery-theme-menu" class="settings-theme-menu hidden" role="listbox" aria-label="Guild Theme selection"></div>
+                      <select id="gallery-theme-select" class="select-input settings-menu-select-input settings-theme-native-select" aria-label="Guild Theme selection"></select>
+                    </div>
+                  </label>
+
                 </div>
 
                 <div class="settings-menu-section">
@@ -252,12 +261,12 @@
                   </label>
 
                   <label class="settings-menu-select-row" for="hellriding-mode-select">
-                    <span>Hellriding Mode (BEM) - Hellriding Pheomena Settings</span>
+                    <span>Hellriding Style</span>
                     <select id="hellriding-mode-select" class="select-input settings-menu-select-input">
-                      <option value="safe">Safe Hellriding - No Map Phenomena, 0% Bonus HR Phenomena</option>
-                      <option value="normal">Normal Hellriding - Phenomena Appear on Map, 0% Bonus HR Phenomena</option>
-                      <option value="risky">Risky Hellriding - No Map Phenomena, 66.6% Bonus HR Phenomena</option>
-                      <option value="extreme">Extreme Hellriding - No Map Phenomena, 100% Bonus HR Phenomena</option>
+                      <option value="safe">Safe Hellriding</option>
+                      <option value="normal">Normal Hellriding</option>
+                      <option value="risky">Risky Hellriding</option>
+                      <option value="extreme">Extreme Hellriding</option>
                     </select>
                   </label>
                 </div>
@@ -283,7 +292,7 @@
 
                 <div class="settings-menu-section settings-menu-fineprint-section">
                   <p class="settings-menu-fineprint">
-                    Don&#39;t like the style? <strong>HOLD</strong> on! <strong>ALT</strong>ernate themes may be available to those with the knowledge to find them.
+                    Looking for something more... compleat? <strong>HOLD</strong> on, ancient <strong>ALT</strong>ernatives may yet find you.
                   </p>
                 </div>
               </div>
@@ -473,7 +482,8 @@
           <span class="game-mode-option-desc">Planeswalk through a shared deck, one card at a time.</span>
         </button>
         <button id="game-mode-bem-btn" class="game-mode-option" type="button">
-          <span class="game-mode-option-icon"><i class="ms ms-chaos" aria-hidden="true"></i></span>          <span class="game-mode-option-name">Blind Eternities Map</span>
+          <span class="game-mode-option-icon"><i class="ms ms-chaos" aria-hidden="true"></i></span>
+          <span class="game-mode-option-name">Blind Eternities Map</span>
           <span class="game-mode-option-desc">Navigate the Blind Eternities!</span>
         </button>
       </div>
@@ -709,6 +719,20 @@
       <div class="confirm-actions">
         <button id="confirm-cancel" class="neutral-button-base confirm-btn confirm-cancel" type="button">Cancel</button>
         <button id="confirm-ok" class="confirm-btn confirm-ok danger-surface danger-surface-interactive" type="button">Reset All</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="phyrexia-overlay" class="game-tutorial-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="phyrexia-title" aria-hidden="true">
+    <div class="game-tutorial-backdrop"></div>
+    <div class="game-tutorial-panel phyrexia-dialog-panel">
+      <h2 id="phyrexia-title" class="game-tutorial-title phyrexia-dialog-title">Phyrexia Invades</h2>
+      <div id="phyrexia-body" class="game-tutorial-body phyrexia-dialog-body">
+        <p>An ancient oil now stains the Multiverse. The Omenpaths are open, and the Machine Orthodoxy has crossed into Planar Atlas.</p>
+      </div>
+      <div class="game-tutorial-footer">
+        <button id="phyrexia-close" class="game-tutorial-close-btn" type="button">Compleation</button>
+        <button id="phyrexia-zhalfir" class="game-tutorial-close-btn danger-surface danger-surface-interactive" type="button">Resistance</button>
       </div>
     </div>
   </div>

@@ -1,4 +1,12 @@
 
+@mixin atlas-pattern-lattice($line-opacity: 8%, $secondary-line-opacity: 6%, $cell-size: 72px, $stripe-opacity: 5%, $stripe-size: 108px) {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--accent) $line-opacity, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--text-soft) $secondary-line-opacity, transparent) 1px, transparent 1px),
+    repeating-linear-gradient(132deg, color-mix(in srgb, var(--accent) $stripe-opacity, transparent) 0, color-mix(in srgb, var(--accent) $stripe-opacity, transparent) 1px, transparent 1px, transparent $stripe-size);
+  background-size: $cell-size $cell-size, $cell-size $cell-size, auto;
+}
+
 .parallax-bg {
   position: fixed;
   inset: 0;
@@ -70,8 +78,11 @@ body::after {
   inset: 0;
   pointer-events: none;
   z-index: -1;
-  background-image: radial-gradient(circle at 20% 22%, color-mix(in srgb, var(--accent) 7%, transparent) 0%, transparent 18%), radial-gradient(circle at 82% 16%, color-mix(in srgb, var(--text-soft) 5%, transparent) 0%, transparent 20%), radial-gradient(circle at 74% 78%, color-mix(in srgb, var(--accent) 5%, transparent) 0%, transparent 22%), linear-gradient(to right, color-mix(in srgb, var(--accent) 7%, transparent) 1px, transparent 1px), linear-gradient(to bottom, color-mix(in srgb, var(--text-soft) 5%, transparent) 1px, transparent 1px), repeating-linear-gradient(132deg, color-mix(in srgb, var(--accent) 4%, transparent) 0, color-mix(in srgb, var(--accent) 4%, transparent) 1px, transparent 1px, transparent 112px);
-  background-size: auto, auto, auto, 74px 74px, 74px 74px, auto;
+  background:
+    radial-gradient(circle at 20% 22%, color-mix(in srgb, var(--accent) 7%, transparent) 0%, transparent 18%),
+    radial-gradient(circle at 82% 16%, color-mix(in srgb, var(--text-soft) 5%, transparent) 0%, transparent 20%),
+    radial-gradient(circle at 74% 78%, color-mix(in srgb, var(--accent) 5%, transparent) 0%, transparent 22%);
+  @include atlas-pattern-lattice(7%, 5%, 74px, 4%, 112px);
   opacity: 0.9;
 }
 

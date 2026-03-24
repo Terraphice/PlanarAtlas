@@ -378,6 +378,31 @@
 
 /* ── Game view ───────────────────────────────────────────────────────────────── */
 
+@mixin atlas-panel-surface($mix: 96%, $blur: 12px, $radius: 16px) {
+  background: color-mix(in srgb, var(--bg-elev-1) $mix, transparent);
+  border: 1px solid var(--border);
+  border-radius: $radius;
+  backdrop-filter: blur($blur);
+}
+
+@mixin atlas-grid-overlay($line-opacity: 9%, $secondary-line-opacity: 7%, $cell-size: 54px) {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--accent) $line-opacity, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--text-soft) $secondary-line-opacity, transparent) 1px, transparent 1px);
+  background-size: $cell-size $cell-size;
+}
+
+@mixin atlas-stripe-overlay($angle: 132deg, $band-size: 86px, $opacity: 6%) {
+  background-image:
+    repeating-linear-gradient(
+      $angle,
+      color-mix(in srgb, var(--accent) $opacity, transparent) 0,
+      color-mix(in srgb, var(--accent) $opacity, transparent) 1px,
+      transparent 1px,
+      transparent $band-size
+    );
+}
+
 :root {
   --game-safe-top: env(safe-area-inset-top, 0px);
   --game-safe-right: env(safe-area-inset-right, 0px);
@@ -433,7 +458,9 @@
   inset: 0;
   z-index: 2000;
   isolation: isolate;
-  background: radial-gradient(circle at top, color-mix(in srgb, var(--accent) 8%, transparent), transparent 32%), linear-gradient(180deg, color-mix(in srgb, var(--bg) 86%, black 14%) 0%, color-mix(in srgb, var(--bg) 94%, black 6%) 100%);
+  background:
+    radial-gradient(circle at top, color-mix(in srgb, var(--accent) 8%, transparent), transparent 32%),
+    linear-gradient(180deg, color-mix(in srgb, var(--bg) 86%, black 14%) 0%, color-mix(in srgb, var(--bg) 94%, black 6%) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -455,7 +482,7 @@
   pointer-events: none;
 }
 
-html[data-theme=light] .game-view::before {
+html[data-theme="light"] .game-view::before {
   opacity: 0.06;
 }
 
@@ -466,8 +493,8 @@ html[data-theme=light] .game-view::before {
   z-index: -1;
   pointer-events: none;
   opacity: 0.7;
-  background-image: linear-gradient(to right, color-mix(in srgb, var(--accent) 8%, transparent) 1px, transparent 1px), linear-gradient(to bottom, color-mix(in srgb, var(--text-soft) 6%, transparent) 1px, transparent 1px), repeating-linear-gradient(130deg, color-mix(in srgb, var(--accent) 5%, transparent) 0, color-mix(in srgb, var(--accent) 5%, transparent) 1px, transparent 1px, transparent 94px);
-  background-size: 56px 56px, 56px 56px, auto;
+  @include atlas-grid-overlay(8%, 6%, 56px);
+  @include atlas-stripe-overlay(130deg, 94px, 5%);
   mix-blend-mode: normal;
 }
 
@@ -739,10 +766,7 @@ html[data-theme=light] .game-view::before {
   position: absolute;
   z-index: 20;
   width: min(300px, calc(var(--game-viewport-width) - var(--game-inline-safe-start) - var(--game-inline-safe-end) - 100px));
-  background: color-mix(in srgb, var(--bg-elev-1) 96%, transparent);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  backdrop-filter: blur(12px);
+  @include atlas-panel-surface(96%, 12px, 16px);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
   overflow: hidden;
   padding: 8px 8px 4px;
@@ -1662,10 +1686,7 @@ html[data-theme=light] .game-view::before {
   z-index: 1;
   width: var(--game-reveal-panel-width);
   max-height: var(--game-reveal-panel-max-height);
-  background: color-mix(in srgb, var(--bg-elev-1) 97%, transparent);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  backdrop-filter: blur(16px);
+  @include atlas-panel-surface(97%, 16px, 18px);
   box-shadow: 0 28px 70px rgba(0, 0, 0, 0.6);
   display: flex;
   flex-direction: column;
@@ -2844,11 +2865,10 @@ body.privacy-modal-open {
 .game-mode-dialog-panel {
   position: relative;
   z-index: 1;
-  background: color-mix(in srgb, var(--bg-elev-1) 97%, transparent);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  backdrop-filter: blur(14px);
-  background-image: linear-gradient(180deg, color-mix(in srgb, var(--accent) 7%, transparent), transparent 46%), repeating-linear-gradient(135deg, color-mix(in srgb, var(--accent) 5%, transparent) 0, color-mix(in srgb, var(--accent) 5%, transparent) 1px, transparent 1px, transparent 80px);
+  @include atlas-panel-surface(97%, 14px, 20px);
+  background-image:
+    linear-gradient(180deg, color-mix(in srgb, var(--accent) 7%, transparent), transparent 46%),
+    repeating-linear-gradient(135deg, color-mix(in srgb, var(--accent) 5%, transparent) 0, color-mix(in srgb, var(--accent) 5%, transparent) 1px, transparent 1px, transparent 80px);
   padding: 28px 24px 20px;
   box-shadow: 0 32px 80px rgba(0, 0, 0, 0.55);
   width: min(480px, calc(100vw - 32px));
@@ -3327,9 +3347,7 @@ body.privacy-modal-open {
     flex: 1;
   }
 
-  .bem-info-bar {
-    bottom: var(--game-bottom-clearance);
-  }
+  .bem-info-bar { bottom: var(--game-bottom-clearance); }
 }
 
 /* Mobile portrait: BEM grid rotates with the game view */
