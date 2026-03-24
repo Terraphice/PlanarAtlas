@@ -1,4 +1,40 @@
 
+%atlas-floating-blob {
+  content: "";
+  position: fixed;
+  pointer-events: none;
+  z-index: -2;
+  border-radius: 999px;
+  filter: blur(70px);
+  opacity: 0.55;
+}
+
+@mixin atlas-pattern-layer($stripe-opacity: 0.34, $grid-opacity: 0.24, $extras...) {
+  background:
+    repeating-linear-gradient(
+      var(--theme-stripe-angle),
+      color-mix(in srgb, var(--theme-stripe-color) calc(#{$stripe-opacity} * 100%), transparent) 0,
+      color-mix(in srgb, var(--theme-stripe-color) calc(#{$stripe-opacity} * 100%), transparent) 1px,
+      transparent 1px,
+      transparent var(--theme-stripe-size)
+    ),
+    repeating-linear-gradient(
+      0deg,
+      color-mix(in srgb, var(--theme-grid-color) calc(#{$grid-opacity} * 100%), transparent) 0,
+      color-mix(in srgb, var(--theme-grid-color) calc(#{$grid-opacity} * 100%), transparent) 1px,
+      transparent 1px,
+      transparent var(--theme-grid-size)
+    ),
+    repeating-linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--theme-grid-color) calc(#{$grid-opacity} * 100%), transparent) 0,
+      color-mix(in srgb, var(--theme-grid-color) calc(#{$grid-opacity} * 100%), transparent) 1px,
+      transparent 1px,
+      transparent var(--theme-grid-size)
+    ),
+    $extras;
+}
+
 .parallax-bg {
   position: fixed;
   inset: 0;
@@ -27,9 +63,10 @@ body {
   margin: 0;
   color: var(--text);
   font-family: var(--app-font-family);
-  background:
+  @include atlas-pattern-layer(0.22, 0, 
     radial-gradient(circle at top, color-mix(in srgb, var(--accent) 10%, transparent), transparent 28%),
-    linear-gradient(180deg, color-mix(in srgb, var(--bg) 72%, black 28%) 0%, var(--bg) 100%);
+    linear-gradient(180deg, color-mix(in srgb, var(--bg) 72%, black 28%) 0%, var(--bg) 100%)
+  );
   transition: background 180ms ease, color 180ms ease;
   position: relative;
   overflow-x: hidden;
@@ -37,13 +74,7 @@ body {
 
 body::before,
 body::after {
-  content: "";
-  position: fixed;
-  pointer-events: none;
-  z-index: -2;
-  border-radius: 999px;
-  filter: blur(70px);
-  opacity: 0.55;
+  @extend %atlas-floating-blob;
 }
 
 body::before {
@@ -70,10 +101,11 @@ body::after {
   inset: 0;
   pointer-events: none;
   z-index: -1;
-  background:
+  @include atlas-pattern-layer(0.22, 0.15, 
     radial-gradient(circle at 20% 22%, color-mix(in srgb, var(--accent) 7%, transparent) 0%, transparent 18%),
     radial-gradient(circle at 82% 16%, color-mix(in srgb, var(--text-soft) 5%, transparent) 0%, transparent 20%),
-    radial-gradient(circle at 74% 78%, color-mix(in srgb, var(--accent) 5%, transparent) 0%, transparent 22%);
+    radial-gradient(circle at 74% 78%, color-mix(in srgb, var(--accent) 5%, transparent) 0%, transparent 22%)
+  );
   opacity: 0.9;
 }
 

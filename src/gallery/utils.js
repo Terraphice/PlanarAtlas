@@ -679,7 +679,7 @@ export function getManaClasses(symbol, { phyrexianMana = false } = {}) {
 export function enhanceManaSymbols(html) {
   return html.replace(/\{([^}]+)\}/g, (_, rawSymbol) => {
     const symbol = rawSymbol.trim().toLowerCase();
-    const phyrexianMana = document?.documentElement?.dataset?.phyrexianMana === "true";
+    const phyrexianMana = globalThis.document?.documentElement?.dataset?.phyrexianMana === "true";
     const classes = getManaClasses(symbol, { phyrexianMana });
 
     if (!classes) return `{${escapeHtml(rawSymbol)}}`;

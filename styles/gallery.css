@@ -28,6 +28,7 @@ body {
   color: var(--text);
   font-family: var(--app-font-family);
   background:
+    repeating-linear-gradient(var(--theme-stripe-angle), color-mix(in srgb, var(--theme-stripe-color) 22%, transparent) 0, color-mix(in srgb, var(--theme-stripe-color) 22%, transparent) 1px, transparent 1px, transparent var(--theme-stripe-size)),
     radial-gradient(circle at top, color-mix(in srgb, var(--accent) 10%, transparent), transparent 28%),
     linear-gradient(180deg, color-mix(in srgb, var(--bg) 72%, black 28%) 0%, var(--bg) 100%);
   transition: background 180ms ease, color 180ms ease;
@@ -71,6 +72,9 @@ body::after {
   pointer-events: none;
   z-index: -1;
   background:
+    repeating-linear-gradient(var(--theme-stripe-angle), color-mix(in srgb, var(--theme-stripe-color) 22%, transparent) 0, color-mix(in srgb, var(--theme-stripe-color) 22%, transparent) 1px, transparent 1px, transparent var(--theme-stripe-size)),
+    repeating-linear-gradient(0deg, color-mix(in srgb, var(--theme-grid-color) 15%, transparent) 0, color-mix(in srgb, var(--theme-grid-color) 15%, transparent) 1px, transparent 1px, transparent var(--theme-grid-size)),
+    repeating-linear-gradient(90deg, color-mix(in srgb, var(--theme-grid-color) 15%, transparent) 0, color-mix(in srgb, var(--theme-grid-color) 15%, transparent) 1px, transparent 1px, transparent var(--theme-grid-size)),
     radial-gradient(circle at 20% 22%, color-mix(in srgb, var(--accent) 7%, transparent) 0%, transparent 18%),
     radial-gradient(circle at 82% 16%, color-mix(in srgb, var(--text-soft) 5%, transparent) 0%, transparent 20%),
     radial-gradient(circle at 74% 78%, color-mix(in srgb, var(--accent) 5%, transparent) 0%, transparent 22%);
