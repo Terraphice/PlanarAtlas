@@ -81,6 +81,17 @@ html[data-phyrexian-script="true"] .toast {
   text-transform: none !important;
 }
 
+html[data-phyrexian-script="true"] #phyrexia-overlay,
+html[data-phyrexian-script="true"] #phyrexia-overlay * {
+  font-family:
+    ui-sans-serif,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif !important;
+  text-transform: none !important;
+}
+
 html[data-theme-name="azorius"] {
   --bg: #ffffff;
   --bg-elev-1: #f6fbff;

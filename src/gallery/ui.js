@@ -75,7 +75,7 @@ export function initToastManager(container) {
   let hideTimer = null;
   let removeTimer = null;
 
-  return function showToast(message, duration = 1400) {
+  return function showToast(message, duration = 2200) {
     clearTimeout(hideTimer);
     clearTimeout(removeTimer);
 
