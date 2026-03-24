@@ -58,6 +58,16 @@
 
 html[data-phyrexian-script="true"] {
   --app-font-family: "PlanarAtlasPhyrexian", "Segoe UI", sans-serif;
+  --phyrexian-font-scale: 1.18;
+}
+
+html[data-phyrexian-script="true"] body,
+html[data-phyrexian-script="true"] body *:not(.ms):not(.symbol-glyph):not(code):not(kbd) {
+  font-family: var(--app-font-family) !important;
+}
+
+html[data-phyrexian-script="true"] body {
+  font-size: calc(1rem * var(--phyrexian-font-scale));
 }
 
 html[data-theme-name="azorius"] {
@@ -199,17 +209,17 @@ html[data-theme-name="orzhov-dark"] {
 html[data-theme-name="new-phyrexian"] {
   --bg: #fffefe;
   --bg-elev-1: #ffffff;
-  --bg-elev-2: #fff2f1;
-  --border: #e4c2bf;
-  --border-soft: #f0d7d4;
+  --bg-elev-2: #fbefee;
+  --border: #d6aca8;
+  --border-soft: #e8c8c5;
   --text: #111111;
-  --text-soft: #5a2b2b;
-  --text-faint: #7c3d3c;
-  --accent: #d83934;
-  --accent-soft: rgba(216, 57, 52, 0.18);
-  --tag-bg: #ffe6e3;
-  --tag-border: #eab9b4;
-  --tag-text: #6c2520;
+  --text-soft: #4f2323;
+  --text-faint: #713434;
+  --accent: #9b2a2a;
+  --accent-soft: rgba(155, 42, 42, 0.20);
+  --tag-bg: #f6dedd;
+  --tag-border: #d79f9c;
+  --tag-text: #5a1f1f;
   --parallax-image: url('../assets/theme-new-phyrexian.jpg'), url('../assets/social-preview.jpg');
 }
 
