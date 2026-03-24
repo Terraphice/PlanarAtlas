@@ -113,6 +113,23 @@ function buildDeckArray() {
   return result;
 }
 
+function prefetchDeckAssets() {
+  const uniqueCards = new Map();
+  for (const card of buildDeckArray()) {
+    if (!uniqueCards.has(card.id)) uniqueCards.set(card.id, card);
+  }
+
+  for (const card of uniqueCards.values()) {
+    const paths = [card.imagePath, card.thumbPath, card.transcriptPath];
+    for (const path of paths) {
+      if (!path) continue;
+      fetch(path).catch(() => {
+        // ignore warm-cache failures
+      });
+    }
+  }
+}
+
 function populateDefaultSlot() {
   allDecks[0] = new Map();
   for (const card of allCards) {
@@ -451,11 +468,13 @@ function bindDeckEvents() {
 
   gameModeClassicBtn?.addEventListener("click", () => {
     hideGameModeDialog();
+    prefetchDeckAssets();
     maybeShowTutorial("classic", startClassicGame);
   });
 
   gameModeBemBtn?.addEventListener("click", () => {
     hideGameModeDialog();
+    prefetchDeckAssets();
     maybeShowTutorial("bem", startBemGame);
   });
 

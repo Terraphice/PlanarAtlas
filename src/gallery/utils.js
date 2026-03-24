@@ -92,15 +92,23 @@ export function enrichCard(card) {
   const normalizedTags = tags.map((tag) => tag.toLowerCase());
   const searchableNormalizedTags = getSearchableNormalizedTags(tags);
 
+  const normalizeAssetPath = (path) => {
+    if (typeof path !== "string") return "";
+    const value = path.trim();
+    if (!value) return "";
+    if (value.startsWith("/") || /^[a-z]+:/i.test(value)) return value;
+    return `/${value}`;
+  };
+
   return {
     ...card,
     id: card.id,
     name: card.name,
     displayName: card.name,
     type: card.type,
-    imagePath: card.image,
-    thumbPath: card.thumb,
-    transcriptPath: card.transcript,
+    imagePath: normalizeAssetPath(card.image),
+    thumbPath: normalizeAssetPath(card.thumb),
+    transcriptPath: normalizeAssetPath(card.transcript),
     tags,
     normalizedTags,
     searchableNormalizedTags,

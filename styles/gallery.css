@@ -602,6 +602,14 @@ html[data-palette="gruvbox"][data-theme="dark"] .sidebar {
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.38);
 }
 
+.settings-menu-close {
+  position: sticky;
+  top: 0;
+  margin-left: auto;
+  margin-bottom: 10px;
+  z-index: 2;
+}
+
 .settings-menu.hidden {
   display: none;
 }
@@ -1789,6 +1797,10 @@ button.active-filter-pill:disabled {
     max-width: none;
     max-height: calc(100vh - 24px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
     border-radius: 16px;
+  }
+
+  .settings-menu-close {
+    top: env(safe-area-inset-top, 0px);
   }
 
   .sidebar-lip {
