@@ -27,14 +27,14 @@ const THEME_FAMILIES = {
   },
   "new-phyrexian": {
     labels: { light: "New Phyrexian", dark: "New Phyrexian" },
-    guildSymbols: { light: "⟡", dark: "⟡" },
+    guildSymbols: { light: "\ue618", dark: "\ue618" },
     resolvedThemes: { light: "new-phyrexian", dark: "new-phyrexian" },
     phyrexianScript: true,
     phyrexianManaSymbol: true
   },
   phyrexian: {
     labels: { light: "Phyrexian", dark: "Phyrexian" },
-    guildSymbols: { light: "⟡", dark: "⟡" },
+    guildSymbols: { light: "\ue618", dark: "\ue618" },
     resolvedThemes: { light: "phyrexian", dark: "phyrexian" },
     phyrexianScript: true,
     phyrexianManaSymbol: true
@@ -48,7 +48,9 @@ const MODE_THEME_OPTIONS = {
 
 const SECRET_ALT_BY_THEME = {
   boros: "new-phyrexian",
-  golgari: "phyrexian"
+  golgari: "phyrexian",
+  "new-phyrexian": "boros",
+  phyrexian: "selesnya"
 };
 const SECRET_THEME_FAMILIES = new Set(["new-phyrexian", "phyrexian"]);
 
