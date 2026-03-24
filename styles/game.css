@@ -432,11 +432,43 @@
   position: fixed;
   inset: 0;
   z-index: 2000;
-  background: var(--bg);
+  isolation: isolate;
+  background: radial-gradient(circle at top, color-mix(in srgb, var(--accent) 8%, transparent), transparent 32%), linear-gradient(180deg, color-mix(in srgb, var(--bg) 86%, black 14%) 0%, color-mix(in srgb, var(--bg) 94%, black 6%) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+}
+
+.game-view::before {
+  content: "";
+  position: absolute;
+  inset: -4%;
+  z-index: -1;
+  background-image: var(--parallax-image);
+  background-size: cover;
+  background-position: center 30%;
+  background-repeat: no-repeat;
+  opacity: 0.08;
+  filter: blur(2px) saturate(0.62);
+  transform: scale(1.05);
+  pointer-events: none;
+}
+
+html[data-theme=light] .game-view::before {
+  opacity: 0.06;
+}
+
+.game-view::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.7;
+  background-image: linear-gradient(to right, color-mix(in srgb, var(--accent) 8%, transparent) 1px, transparent 1px), linear-gradient(to bottom, color-mix(in srgb, var(--text-soft) 6%, transparent) 1px, transparent 1px), repeating-linear-gradient(130deg, color-mix(in srgb, var(--accent) 5%, transparent) 0, color-mix(in srgb, var(--accent) 5%, transparent) 1px, transparent 1px, transparent 94px);
+  background-size: 56px 56px, 56px 56px, auto;
+  mix-blend-mode: normal;
 }
 
 .game-view.hidden {
@@ -710,9 +742,9 @@
   background: color-mix(in srgb, var(--bg-elev-1) 96%, transparent);
   border: 1px solid var(--border);
   border-radius: 16px;
+  backdrop-filter: blur(12px);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
   overflow: hidden;
-  backdrop-filter: blur(12px);
   padding: 8px 8px 4px;
   display: flex;
   flex-direction: column;
@@ -1633,11 +1665,11 @@
   background: color-mix(in srgb, var(--bg-elev-1) 97%, transparent);
   border: 1px solid var(--border);
   border-radius: 18px;
+  backdrop-filter: blur(16px);
   box-shadow: 0 28px 70px rgba(0, 0, 0, 0.6);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  backdrop-filter: blur(16px);
 }
 
 .game-reveal-header {
@@ -2812,9 +2844,11 @@ body.privacy-modal-open {
 .game-mode-dialog-panel {
   position: relative;
   z-index: 1;
-  background: var(--bg-elev-1);
+  background: color-mix(in srgb, var(--bg-elev-1) 97%, transparent);
   border: 1px solid var(--border);
   border-radius: 20px;
+  backdrop-filter: blur(14px);
+  background-image: linear-gradient(180deg, color-mix(in srgb, var(--accent) 7%, transparent), transparent 46%), repeating-linear-gradient(135deg, color-mix(in srgb, var(--accent) 5%, transparent) 0, color-mix(in srgb, var(--accent) 5%, transparent) 1px, transparent 1px, transparent 80px);
   padding: 28px 24px 20px;
   box-shadow: 0 32px 80px rgba(0, 0, 0, 0.55);
   width: min(480px, calc(100vw - 32px));

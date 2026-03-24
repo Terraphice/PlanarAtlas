@@ -16,13 +16,14 @@
     "test:embeds": "node scripts/test-embeds.js",
     "generate:seo": "node scripts/generate-seo.js",
     "test:seo": "node scripts/test-seo.js",
-    "styles:build": "npx sass styles/themes.scss styles/themes.css --no-source-map && npx sass styles/gallery.scss styles/gallery.css --no-source-map && npx sass styles/game.scss styles/game.css --no-source-map",
-    "styles:watch": "npx sass --watch styles/themes.scss:styles/themes.css styles/gallery.scss:styles/gallery.css styles/game.scss:styles/game.css"
+    "styles:build": "sass styles/themes.scss styles/themes.css --no-source-map && sass styles/gallery.scss styles/gallery.css --no-source-map && sass styles/game.scss styles/game.css --no-source-map",
+    "styles:watch": "sass --watch styles/themes.scss:styles/themes.css styles/gallery.scss:styles/gallery.css styles/game.scss:styles/game.css"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.58.2",
     "eslint": "^10.0.3",
+    "sass": "^1.93.2",
     "serve": "^14.2.6"
   }
 }
