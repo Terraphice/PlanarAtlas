@@ -15,7 +15,9 @@
     "generate:embeds": "node scripts/generate-embeds.js",
     "test:embeds": "node scripts/test-embeds.js",
     "generate:seo": "node scripts/generate-seo.js",
-    "test:seo": "node scripts/test-seo.js"
+    "test:seo": "node scripts/test-seo.js",
+    "styles:build": "npx sass styles/themes.scss styles/themes.css --no-source-map && npx sass styles/gallery.scss styles/gallery.css --no-source-map && npx sass styles/game.scss styles/game.css --no-source-map",
+    "styles:watch": "npx sass --watch styles/themes.scss:styles/themes.css styles/gallery.scss:styles/gallery.css styles/game.scss:styles/game.css"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

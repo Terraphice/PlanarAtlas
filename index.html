@@ -231,6 +231,15 @@
                     <span>Tab Autocompletion</span>
                   </label>
 
+                  <label class="settings-menu-select-row" for="gallery-theme-select">
+                    <span>Guild</span>
+                    <div id="gallery-theme-picker" class="settings-theme-picker">
+                      <button id="gallery-theme-trigger" class="neutral-button-base settings-theme-trigger" type="button" aria-haspopup="listbox" aria-expanded="false"></button>
+                      <div id="gallery-theme-menu" class="settings-theme-menu hidden" role="listbox" aria-label="Guild theme selection"></div>
+                      <select id="gallery-theme-select" class="select-input settings-menu-select-input settings-theme-native-select" aria-label="Guild theme selection"></select>
+                    </div>
+                  </label>
+
                 </div>
 
                 <div class="settings-menu-section">
@@ -283,7 +292,7 @@
 
                 <div class="settings-menu-section settings-menu-fineprint-section">
                   <p class="settings-menu-fineprint">
-                    Don&#39;t like the style? <strong>HOLD</strong> on! <strong>ALT</strong>ernate themes may be available to those with the knowledge to find them.
+                    Looking for something... compleat? <strong>HOLD</strong> or <strong>ALT</strong>-click on the theme button and listen closely.
                   </p>
                 </div>
               </div>
@@ -709,6 +718,20 @@
       <div class="confirm-actions">
         <button id="confirm-cancel" class="neutral-button-base confirm-btn confirm-cancel" type="button">Cancel</button>
         <button id="confirm-ok" class="confirm-btn confirm-ok danger-surface danger-surface-interactive" type="button">Reset All</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="phyrexia-overlay" class="game-tutorial-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="phyrexia-title" aria-hidden="true">
+    <div class="game-tutorial-backdrop"></div>
+    <div class="game-tutorial-panel phyrexia-dialog-panel">
+      <h2 id="phyrexia-title" class="game-tutorial-title phyrexia-dialog-title">Phyrexia Invades</h2>
+      <div id="phyrexia-body" class="game-tutorial-body phyrexia-dialog-body">
+        <p>An ancient oil now stains the Multiverse. The Machine Orthodoxy has crossed into Planar Atlas.</p>
+      </div>
+      <div class="game-tutorial-footer">
+        <button id="phyrexia-close" class="game-tutorial-close-btn" type="button">Stand Firm</button>
+        <button id="phyrexia-zhalfir" class="game-tutorial-close-btn danger-surface danger-surface-interactive" type="button">Zhalfir-Switch</button>
       </div>
     </div>
   </div>

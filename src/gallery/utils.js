@@ -11,7 +11,7 @@ export function loadPreferences(storageKey) {
     inlineAutocomplete: true,
     showHidden: false,
     theme: "system",
-    themePalette: "standard",
+    themeFamily: "azorius",
     pageSize: 20,
     paginationMode: "paginated",
     phenomenonAnimation: true,
@@ -33,9 +33,9 @@ export function loadPreferences(storageKey) {
       inlineAutocomplete: parsed.inlineAutocomplete === undefined ? defaults.inlineAutocomplete : Boolean(parsed.inlineAutocomplete),
       showHidden: Boolean(parsed.showHidden),
       theme: ["system", "dark", "light"].includes(parsed.theme) ? parsed.theme : defaults.theme,
-      themePalette: ["standard", "gruvbox", "atom", "dracula", "solarized", "nord", "catppuccin", "scryfall"].includes(parsed.themePalette)
-        ? parsed.themePalette
-        : defaults.themePalette,
+      themeFamily: ["azorius", "boros", "selesnya", "orzhov", "new-phyrexian", "phyrexian"].includes(parsed.themeFamily)
+        ? parsed.themeFamily
+        : defaults.themeFamily,
       pageSize: [10, 20, 50, 100].includes(parsed.pageSize) ? parsed.pageSize : defaults.pageSize,
       paginationMode: ["paginated", "infinite"].includes(parsed.paginationMode) ? parsed.paginationMode : defaults.paginationMode,
       phenomenonAnimation: parsed.phenomenonAnimation === undefined ? defaults.phenomenonAnimation : Boolean(parsed.phenomenonAnimation),
@@ -50,7 +50,7 @@ export function loadPreferences(storageKey) {
   }
 }
 
-export function savePreferences(storageKey, displayState, filters, theme = "system", themePalette = "standard", paginationState = {}) {
+export function savePreferences(storageKey, displayState, filters, theme = "system", themeFamily = "azorius", paginationState = {}) {
   try {
     localStorage.setItem(
       storageKey,
@@ -62,7 +62,7 @@ export function savePreferences(storageKey, displayState, filters, theme = "syst
         inlineAutocomplete: filters.inlineAutocomplete,
         showHidden: filters.showHidden,
         theme,
-        themePalette,
+        themeFamily,
         pageSize: paginationState.pageSize ?? 20,
         paginationMode: paginationState.mode ?? "paginated",
         phenomenonAnimation: filters.phenomenonAnimation,
@@ -628,7 +628,7 @@ export function shuffleArray(arr) {
   return a;
 }
 
-export function getManaClasses(symbol) {
+export function getManaClasses(symbol, { phyrexianMana = false } = {}) {
   const raw = symbol.replace(/\s+/g, "");
 
   const aliases = {
@@ -648,6 +648,9 @@ export function getManaClasses(symbol) {
   ]);
 
   if (direct.has(normalized)) {
+    if (normalized === "planeswalker" && phyrexianMana) {
+      return "ms ms-ability-phyrexian";
+    }
     return normalized === "tap" || normalized === "untap" || normalized === "planeswalker"
       ? `ms ms-${normalized}`
       : `ms ms-${normalized} ms-cost`;
@@ -676,7 +679,8 @@ export function getManaClasses(symbol) {
 export function enhanceManaSymbols(html) {
   return html.replace(/\{([^}]+)\}/g, (_, rawSymbol) => {
     const symbol = rawSymbol.trim().toLowerCase();
-    const classes = getManaClasses(symbol);
+    const phyrexianMana = document?.documentElement?.dataset?.phyrexianMana === "true";
+    const classes = getManaClasses(symbol, { phyrexianMana });
 
     if (!classes) return `{${escapeHtml(rawSymbol)}}`;
 
