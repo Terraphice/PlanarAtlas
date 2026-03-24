@@ -113,6 +113,9 @@ const themeToggleButton = document.getElementById("theme-toggle");
 const confirmDialog = document.getElementById("confirm-dialog");
 const confirmOkButton = document.getElementById("confirm-ok");
 const confirmCancelButton = document.getElementById("confirm-cancel");
+const phyrexiaDialog = document.getElementById("phyrexia-overlay");
+const phyrexiaDialogCloseButton = document.getElementById("phyrexia-close");
+const phyrexiaDialogZhalfirButton = document.getElementById("phyrexia-zhalfir");
 
 const modal = document.getElementById("card-modal");
 const modalImageWrap = document.getElementById("modal-image-wrap");
@@ -135,6 +138,8 @@ const paginationControls = document.getElementById("pagination-controls");
 // ── Toast and theme ───────────────────────────────────────────────────────────
 
 const showToast = initToastManager(toastRegion);
+const PHYREXIA_INTRO_KEY = "planar-atlas-phyrexia-intro-v1";
+let pendingPhyrexianIntroThemeFamily = null;
 const themeController = initThemeController({
   button: themeToggleButton,
   themeSelect: galleryThemeSelect,
@@ -143,8 +148,61 @@ const themeController = initThemeController({
   onChange(theme, _themeFamily, resolvedThemeName) {
     stateManager.persistPreferences();
     showToast(`Theme set to ${capitalize(theme)} · ${resolvedThemeName.replaceAll("-", " ")}.`);
+    maybeShowPhyrexiaIntro();
+  },
+  onSecretTheme() {
+    showToast("You hear the whispers of an ancient and forgotten tongue...");
   }
 });
+
+function hasSeenPhyrexiaIntro() {
+  return localStorage.getItem(PHYREXIA_INTRO_KEY) === "1";
+}
+
+function setSeenPhyrexiaIntro() {
+  try {
+    localStorage.setItem(PHYREXIA_INTRO_KEY, "1");
+  } catch {
+    // ignore storage failures
+  }
+}
+
+function isPhyrexianThemeFamily(themeFamily) {
+  return themeFamily === "new-phyrexian" || themeFamily === "phyrexian";
+}
+
+function maybeShowPhyrexiaIntro() {
+  if (!phyrexiaDialog) return;
+  if (hasSeenPhyrexiaIntro()) return;
+
+  const themeFamily = themeController.getThemeFamily();
+  if (!isPhyrexianThemeFamily(themeFamily)) return;
+
+  pendingPhyrexianIntroThemeFamily = themeFamily;
+  phyrexiaDialog.classList.remove("hidden");
+  phyrexiaDialog.setAttribute("aria-hidden", "false");
+  document.body.classList.add("confirm-open");
+}
+
+function closePhyrexiaIntro({ markSeen = true } = {}) {
+  if (!phyrexiaDialog) return;
+  phyrexiaDialog.classList.add("hidden");
+  phyrexiaDialog.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("confirm-open");
+  if (markSeen) setSeenPhyrexiaIntro();
+  pendingPhyrexianIntroThemeFamily = null;
+}
+
+function zhalfirSwitchTheme() {
+  if (!pendingPhyrexianIntroThemeFamily) return;
+  const fallbackFamily = pendingPhyrexianIntroThemeFamily === "new-phyrexian"
+    ? "boros"
+    : "selesnya";
+  themeController.setTheme(themeController.getTheme(), {
+    themeFamilyOverride: fallbackFamily
+  });
+  closePhyrexiaIntro();
+}
 
 // ── State manager ─────────────────────────────────────────────────────────────
 
@@ -328,6 +386,7 @@ async function init() {
     syncTagFilterUI();
     applyFilters({ updateUrl: false, preservePage: true });
     tryOpenCardFromHash();
+    maybeShowPhyrexiaIntro();
 
     initDeck({
       cards: allCards,
@@ -826,6 +885,11 @@ function bindEvents() {
   confirmDialog?.addEventListener("click", (event) => {
     if (event.target === confirmDialog) hideClearPrefsConfirm();
   });
+  phyrexiaDialogCloseButton?.addEventListener("click", () => closePhyrexiaIntro());
+  phyrexiaDialogZhalfirButton?.addEventListener("click", zhalfirSwitchTheme);
+  phyrexiaDialog?.addEventListener("click", (event) => {
+    if (event.target === phyrexiaDialog) closePhyrexiaIntro();
+  });
 
   randomCardButton.addEventListener("click", (event) => {
     if (getSuppressRandomClick()) {
@@ -882,6 +946,11 @@ function bindEvents() {
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
+      if (phyrexiaDialog && !phyrexiaDialog.classList.contains("hidden")) {
+        closePhyrexiaIntro();
+        return;
+      }
+
       if (confirmDialog && !confirmDialog.classList.contains("hidden")) {
         hideClearPrefsConfirm();
         return;

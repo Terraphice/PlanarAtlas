@@ -294,8 +294,10 @@ kbd {
 
 .sidebar-content {
   padding: 16px;
-  overflow: auto;
-  height: calc(100vh - 77px);
+  padding-bottom: calc(28px + env(safe-area-inset-bottom, 0px));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  height: calc(100dvh - 77px);
 }
 
 .sidebar-backdrop {
@@ -517,12 +519,16 @@ kbd {
   color: color-mix(in srgb, var(--text) 28%, transparent);
   pointer-events: none;
   z-index: 1;
+  border-color: transparent;
+  background: transparent;
 }
 
 .search-input-real {
   position: relative;
   z-index: 2;
   background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 .search-suggestions {
@@ -580,7 +586,7 @@ kbd {
   z-index: 80;
   width: min(440px, calc(100vw - 24px));
   max-width: calc(100vw - 24px);
-  max-height: min(72vh, 680px);
+  max-height: min(72dvh, 680px);
   overflow: auto;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
@@ -589,6 +595,35 @@ kbd {
   border: 1px solid var(--border);
   border-radius: 16px;
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.38);
+}
+
+.phyrexia-dialog-panel,
+.phyrexia-dialog-title,
+.phyrexia-dialog-body,
+#phyrexia-overlay .game-tutorial-close-btn {
+  font-family:
+    ui-sans-serif,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif !important;
+}
+
+.phyrexia-dialog-title {
+  font-size: clamp(1.6rem, 4vw, 2.1rem);
+  text-align: center;
+}
+
+.phyrexia-dialog-body {
+  font-size: 1.08rem;
+  line-height: 1.6;
+  text-align: center;
+}
+
+#phyrexia-overlay .game-tutorial-footer {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
 }
 
 .settings-menu.hidden {

@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "PlanarAtlasPhyrexian";
+  src: url("../assets/fonts/PhyrexianFont.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   color-scheme: dark;
   --bg: #101822;
@@ -49,7 +57,7 @@
 }
 
 html[data-phyrexian-script="true"] {
-  --app-font-family: "Noto Sans PhagsPa", "Segoe UI", sans-serif;
+  --app-font-family: "PlanarAtlasPhyrexian", "Segoe UI", sans-serif;
 }
 
 html[data-theme-name="azorius"] {
@@ -106,17 +114,17 @@ html[data-theme-name="boros"] {
 html[data-theme-name="rakdos"] {
   --bg: #1e1418;
   --bg-elev-1: #281a20;
-  --bg-elev-2: #322029;
-  --border: #53303b;
-  --border-soft: #442832;
+  --bg-elev-2: #351c22;
+  --border: #63313a;
+  --border-soft: #4f2730;
   --text: #fff7f7;
-  --text-soft: #e4b6be;
-  --text-faint: #c58f98;
-  --accent: #d64a5c;
-  --accent-soft: rgba(214, 74, 92, 0.2);
-  --tag-bg: #3a252f;
-  --tag-border: #6b3d4b;
-  --tag-text: #ffdce2;
+  --text-soft: #ecc0c3;
+  --text-faint: #d39a9e;
+  --accent: #db2f3c;
+  --accent-soft: rgba(219, 47, 60, 0.22);
+  --tag-bg: #46242c;
+  --tag-border: #7f3d47;
+  --tag-text: #ffe1e4;
   --parallax-image: url('../assets/theme-rakdos.jpg'), url('../assets/social-preview.jpg');
 }
 

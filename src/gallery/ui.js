@@ -102,7 +102,8 @@ export function initThemeController({
   themeSelect = null,
   initialTheme = "system",
   initialThemeFamily = "azorius",
-  onChange = () => {}
+  onChange = () => {},
+  onSecretTheme = () => {}
 }) {
   const media = window.matchMedia("(prefers-color-scheme: dark)");
   const glyph = button.querySelector(".theme-toggle-glyph");
@@ -242,6 +243,7 @@ export function initThemeController({
       animate: true,
       themeFamilyOverride: secretFamily
     });
+    onSecretTheme(secretFamily, currentThemeName);
 
     return true;
   }
