@@ -1678,15 +1678,10 @@ button.active-filter-pill:disabled {
 
 .pagination-page-input {
   width: 4.75em;
-  min-height: 34px;
+  min-height: 0;
   text-align: center;
-  border: 1px solid var(--border);
-  background: var(--bg-elev-2);
-  color: var(--text);
-  border-radius: 8px;
-  padding: 4px 8px;
-  font-size: 0.84rem;
-  font-weight: 700;
+  padding-inline: 8px;
+  font-size: 0.88rem;
   line-height: 1.2;
   appearance: auto;
 }
