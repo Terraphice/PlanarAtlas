@@ -78,6 +78,7 @@ const sidebarSearchSuggestions = document.getElementById("sidebar-search-suggest
 const fuzzySearchToggle = document.getElementById("fuzzy-search-toggle");
 const showHiddenToggle = document.getElementById("show-hidden-toggle");
 const inlineAutocompleteToggle = document.getElementById("inline-autocomplete-toggle");
+const galleryThemeSelect = document.getElementById("gallery-theme-select");
 const phenomenonAnimationToggle = document.getElementById("phenomenon-animation-toggle");
 const hellridingModeSelect = document.getElementById("hellriding-mode-select");
 const smoothTravelToggle = document.getElementById("smooth-travel-toggle");
@@ -136,12 +137,15 @@ const paginationControls = document.getElementById("pagination-controls");
 const showToast = initToastManager(toastRegion);
 const themeController = initThemeController({
   button: themeToggleButton,
+  themeSelect: galleryThemeSelect,
   initialTheme: preferences.theme,
-  initialPalette: preferences.themePalette,
-  onChange(theme, palette) {
+  initialThemeGroup: preferences.themeGroup,
+  onChange(theme) {
     stateManager.persistPreferences();
-    const paletteLabel = palette === "standard" ? "" : ` ${capitalize(palette)}`;
-    showToast(`Theme set to ${theme}${paletteLabel}.`);
+    showToast(`Theme set to ${themeController.getResolvedThemeName()} (${theme}).`);
+  },
+  onUnavailableSecretTheme() {
+    showToast("Secret themes awaken only from Boros or Golgari.");
   }
 });
 
@@ -583,7 +587,7 @@ function executeClearAll() {
   paginationState.mode = "paginated";
   paginationState.infiniteLoadedCount = 20;
 
-  themeController.setTheme("system", { silent: true, paletteOverride: "standard" });
+  themeController.setTheme("system", { silent: true, themeGroupOverride: "azorius" });
 
   topSearch.value = "";
   sidebarSearch.value = "";
@@ -610,7 +614,7 @@ function exportProfile() {
     inlineAutocomplete: filters.inlineAutocomplete,
     showHidden: filters.showHidden,
     theme: themeController.getTheme(),
-    themePalette: themeController.getPalette(),
+    themeGroup: themeController.getThemeGroup(),
     pageSize: paginationState.pageSize,
     paginationMode: paginationState.mode,
     phenomenonAnimation: filters.phenomenonAnimation,
@@ -667,10 +671,10 @@ function importProfile() {
     if (["paginated", "infinite"].includes(p.paginationMode)) paginationState.mode = p.paginationMode;
 
     const validThemes = ["system", "dark", "light"];
-    const validPalettes = ["standard", "gruvbox", "atom", "dracula", "solarized", "nord", "catppuccin", "scryfall"];
+    const validThemeGroups = ["azorius", "boros", "selesnya", "orzhov", "newphyrexian", "phyrexian"];
     const newTheme = validThemes.includes(p.theme) ? p.theme : "system";
-    const newPalette = validPalettes.includes(p.themePalette) ? p.themePalette : "standard";
-    themeController.setTheme(newTheme, { silent: true, paletteOverride: newPalette });
+    const newThemeGroup = validThemeGroups.includes(p.themeGroup) ? p.themeGroup : "azorius";
+    themeController.setTheme(newTheme, { silent: true, themeGroupOverride: newThemeGroup });
   }
 
   if (data.d) importProfileDecks(data.d);
@@ -685,11 +689,6 @@ function importProfile() {
   showToast("Profile imported.");
 }
 
-// ── Utility ───────────────────────────────────────────────────────────────────
-
-function capitalize(value) {
-  return value ? value[0].toUpperCase() + value.slice(1) : value;
-}
 
 // ── Events ────────────────────────────────────────────────────────────────────
 

@@ -11,7 +11,7 @@ export function loadPreferences(storageKey) {
     inlineAutocomplete: true,
     showHidden: false,
     theme: "system",
-    themePalette: "standard",
+    themeGroup: "azorius",
     pageSize: 20,
     paginationMode: "paginated",
     phenomenonAnimation: true,
@@ -33,9 +33,9 @@ export function loadPreferences(storageKey) {
       inlineAutocomplete: parsed.inlineAutocomplete === undefined ? defaults.inlineAutocomplete : Boolean(parsed.inlineAutocomplete),
       showHidden: Boolean(parsed.showHidden),
       theme: ["system", "dark", "light"].includes(parsed.theme) ? parsed.theme : defaults.theme,
-      themePalette: ["standard", "gruvbox", "atom", "dracula", "solarized", "nord", "catppuccin", "scryfall"].includes(parsed.themePalette)
-        ? parsed.themePalette
-        : defaults.themePalette,
+      themeGroup: ["azorius", "boros", "selesnya", "orzhov", "newphyrexian", "phyrexian"].includes(parsed.themeGroup)
+        ? parsed.themeGroup
+        : defaults.themeGroup,
       pageSize: [10, 20, 50, 100].includes(parsed.pageSize) ? parsed.pageSize : defaults.pageSize,
       paginationMode: ["paginated", "infinite"].includes(parsed.paginationMode) ? parsed.paginationMode : defaults.paginationMode,
       phenomenonAnimation: parsed.phenomenonAnimation === undefined ? defaults.phenomenonAnimation : Boolean(parsed.phenomenonAnimation),
@@ -50,7 +50,7 @@ export function loadPreferences(storageKey) {
   }
 }
 
-export function savePreferences(storageKey, displayState, filters, theme = "system", themePalette = "standard", paginationState = {}) {
+export function savePreferences(storageKey, displayState, filters, theme = "system", themeGroup = "azorius", paginationState = {}) {
   try {
     localStorage.setItem(
       storageKey,
@@ -62,7 +62,7 @@ export function savePreferences(storageKey, displayState, filters, theme = "syst
         inlineAutocomplete: filters.inlineAutocomplete,
         showHidden: filters.showHidden,
         theme,
-        themePalette,
+        themeGroup,
         pageSize: paginationState.pageSize ?? 20,
         paginationMode: paginationState.mode ?? "paginated",
         phenomenonAnimation: filters.phenomenonAnimation,
