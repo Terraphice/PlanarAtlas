@@ -151,13 +151,15 @@ kbd {
   left: 0;
   z-index: 1100;
   width: min(var(--sidebar-width), calc(100vw - 24px));
-  height: 100vh;
+  height: 100dvh;
   background: color-mix(in srgb, var(--bg-elev-1) 96%, black 4%);
   border-right: 1px solid color-mix(in srgb, var(--border) 58%, transparent 42%);
   transform: translateX(-100%);
   transition: transform 200ms ease, box-shadow 180ms ease, background 180ms ease, border-color 180ms ease;
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
   overflow: visible;
+  display: flex;
+  flex-direction: column;
 }
 
 .sidebar.open {
@@ -292,10 +294,20 @@ kbd {
 
 .sidebar-content {
   padding: 16px;
-  padding-bottom: calc(28px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: 16px;
   overflow-y: auto;
   overscroll-behavior: contain;
-  height: calc(100dvh - 77px);
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.filter-actions {
+  margin-top: auto;
+  padding-top: 2px;
+  padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
 }
 
 .sidebar-backdrop {
@@ -852,7 +864,6 @@ kbd {
 
 .filter-block {
   padding: 14px;
-  margin-bottom: 14px;
 }
 
 .filter-label {
