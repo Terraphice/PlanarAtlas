@@ -181,18 +181,18 @@ html[data-theme-name="orzhov-light"] {
 
 html[data-theme-name="orzhov-dark"] {
   --bg: #16141a;
-  --bg-elev-1: #201d26;
-  --bg-elev-2: #2a2432;
-  --border: #44374f;
-  --border-soft: #382e42;
+  --bg-elev-1: #222228;
+  --bg-elev-2: #2c2c34;
+  --border: #454853;
+  --border-soft: #393c46;
   --text: #f8f7fb;
-  --text-soft: #d4cbe2;
-  --text-faint: #af9fc4;
-  --accent: #b8a0d6;
-  --accent-soft: rgba(184, 160, 214, 0.2);
-  --tag-bg: #342d3f;
-  --tag-border: #564a66;
-  --tag-text: #e9e0f8;
+  --text-soft: #d2d5df;
+  --text-faint: #a7acbb;
+  --accent: #b4afbf;
+  --accent-soft: rgba(180, 175, 191, 0.2);
+  --tag-bg: #343843;
+  --tag-border: #575d6d;
+  --tag-text: #e6e9f2;
   --parallax-image: url('../assets/theme-orzhov-dark.jpg'), url('../assets/social-preview.jpg');
 }
 

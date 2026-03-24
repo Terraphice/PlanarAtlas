@@ -648,9 +648,11 @@ export function getManaClasses(symbol, { phyrexianMana = false } = {}) {
   ]);
 
   if (direct.has(normalized)) {
-    const manaKey = normalized === "planeswalker" && phyrexianMana ? "phyrexian" : normalized;
-    return manaKey === "tap" || manaKey === "untap" || manaKey === "planeswalker" || manaKey === "phyrexian"
-      ? `ms ms-${manaKey}`
+    if (normalized === "planeswalker" && phyrexianMana) {
+      return "ms ms-p ms-cost";
+    }
+    return normalized === "tap" || normalized === "untap" || normalized === "planeswalker"
+      ? `ms ms-${normalized}`
       : `ms ms-${normalized} ms-cost`;
   }
 

@@ -1894,6 +1894,13 @@
   border-color: var(--tone-green-border);
 }
 
+html[data-theme="light"] .game-deck-action-btn,
+html[data-theme="light"] .game-reveal-action-btn,
+html[data-theme="light"] .game-reveal-view-btn,
+html[data-theme="light"] .game-reveal-close {
+  color: var(--text);
+}
+
 /* Reveal footer */
 
 .game-reveal-footer {

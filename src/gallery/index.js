@@ -145,9 +145,9 @@ const themeController = initThemeController({
   themeSelect: galleryThemeSelect,
   initialTheme: preferences.theme,
   initialThemeFamily: preferences.themeFamily,
-  onChange(theme, _themeFamily, resolvedThemeName) {
+  onChange(theme, _themeFamily, themeLabel) {
     stateManager.persistPreferences();
-    showToast(`Theme set to ${capitalize(theme)} · ${resolvedThemeName.replaceAll("-", " ")}.`);
+    showToast(`${capitalize(theme)} — ${themeLabel}`);
     maybeShowPhyrexiaIntro();
   },
   onSecretTheme() {
@@ -1074,6 +1074,16 @@ function bindEvents() {
     syncTagFilterUI();
     applyFilters({ updateUrl: false, preservePage: true });
     tryOpenCardFromHash();
+  });
+
+  window.addEventListener("beforeunload", () => {
+    stateManager.persistPreferences();
+  });
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") {
+      stateManager.persistPreferences();
+    }
   });
 
   window.addEventListener("scroll", scheduleStackActiveUpdate, { passive: true });

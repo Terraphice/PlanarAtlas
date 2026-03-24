@@ -36,14 +36,15 @@ const THEME_FAMILIES = {
 };
 
 const MODE_THEME_OPTIONS = {
-  light: ["azorius", "boros", "selesnya", "orzhov", "new-phyrexian"],
-  dark: ["azorius", "boros", "selesnya", "orzhov", "phyrexian"]
+  light: ["azorius", "boros", "selesnya", "orzhov"],
+  dark: ["azorius", "boros", "selesnya", "orzhov"]
 };
 
 const SECRET_ALT_BY_THEME = {
   boros: "new-phyrexian",
   golgari: "phyrexian"
 };
+const SECRET_THEME_FAMILIES = new Set(["new-phyrexian", "phyrexian"]);
 
 const THEME_ICONS = {
   system: "◐",
@@ -161,19 +162,23 @@ export function initThemeController({
       themeSelect.appendChild(option);
     }
 
-    const fallbackFamily = options.includes(currentFamily) ? currentFamily : options[0];
-    themeSelect.value = fallbackFamily;
-    if (fallbackFamily !== themeFamily) {
-      themeFamily = fallbackFamily;
+    if (options.includes(currentFamily)) {
+      themeSelect.value = currentFamily;
+    } else {
+      themeSelect.selectedIndex = -1;
     }
   }
 
   function syncPlaneswalkerManaGlyphs() {
     const usePhyrexian = isPhyrexianManaSymbolEnabled();
-    const icons = document.querySelectorAll("i.ms-planeswalker, i.ms-phyrexian");
+    const icons = document.querySelectorAll("i.ms-planeswalker, i.ms-phyrexian, i.ms-p");
     for (const icon of icons) {
-      icon.classList.remove("ms-planeswalker", "ms-phyrexian");
-      icon.classList.add(usePhyrexian ? "ms-phyrexian" : "ms-planeswalker");
+      icon.classList.remove("ms-planeswalker", "ms-phyrexian", "ms-p", "ms-cost");
+      if (usePhyrexian) {
+        icon.classList.add("ms-p", "ms-cost");
+      } else {
+        icon.classList.add("ms-planeswalker");
+      }
     }
   }
 
@@ -215,17 +220,19 @@ export function initThemeController({
   function setTheme(nextTheme, {
     animate = false,
     silent = false,
-    themeFamilyOverride = themeFamily
+    themeFamilyOverride = themeFamily,
+    allowSecretFamily = false
   } = {}) {
     theme = STANDARD_THEME_ORDER.includes(nextTheme) ? nextTheme : "system";
 
     const mode = resolveThemeMode(theme);
     const validFamilies = MODE_THEME_OPTIONS[mode];
     const candidateFamily = THEME_FAMILIES[themeFamilyOverride] ? themeFamilyOverride : "azorius";
-    themeFamily = validFamilies.includes(candidateFamily) ? candidateFamily : validFamilies[0];
+    const isAllowedSecret = SECRET_THEME_FAMILIES.has(candidateFamily) && (allowSecretFamily || themeFamily === candidateFamily);
+    themeFamily = validFamilies.includes(candidateFamily) || isAllowedSecret ? candidateFamily : validFamilies[0];
 
     applyTheme({ animate });
-    if (!silent) onChange(theme, themeFamily, getResolvedThemeName());
+    if (!silent) onChange(theme, themeFamily, getThemeLabelForCurrentMode());
   }
 
   function cycleStandardTheme() {
@@ -241,7 +248,8 @@ export function initThemeController({
 
     setTheme(theme, {
       animate: true,
-      themeFamilyOverride: secretFamily
+      themeFamilyOverride: secretFamily,
+      allowSecretFamily: true
     });
     onSecretTheme(secretFamily, currentThemeName);
 
@@ -307,7 +315,7 @@ export function initThemeController({
   media.addEventListener?.("change", () => {
     if (theme === "system") {
       applyTheme();
-      onChange(theme, themeFamily, getResolvedThemeName());
+      onChange(theme, themeFamily, getThemeLabelForCurrentMode());
     }
   });
 
