@@ -92,6 +92,7 @@ const randomCardButton = document.getElementById("random-card-button");
 const playGameButton = document.getElementById("play-game-button");
 const mainPanel = document.querySelector(".main-panel");
 const topbarCopy = document.querySelector(".topbar .topbar-copy");
+const topbar = document.querySelector(".topbar");
 
 const clearTagFiltersButton = document.getElementById("clear-tag-filters");
 const clearAllFiltersButton = document.getElementById("clear-all-filters");
@@ -103,7 +104,6 @@ const groupTagSelect = document.getElementById("group-tag-select");
 
 const settingsMenuToggle = document.getElementById("settings-menu-toggle");
 const settingsMenu = document.getElementById("settings-menu");
-const settingsMenuCloseButton = document.getElementById("settings-menu-close");
 const settingsClearPreferencesButton = document.getElementById("settings-clear-preferences");
 const settingsContactDeveloperLink = document.getElementById("settings-contact-developer");
 const settingsExportProfileButton = document.getElementById("settings-export-profile");
@@ -528,6 +528,7 @@ function toggleSidebar() {
 // ── Settings menu ─────────────────────────────────────────────────────────────
 
 function openSettingsMenu() {
+  syncSettingsMenuViewportPosition();
   settingsMenu.classList.remove("hidden");
   settingsMenuToggle.setAttribute("aria-expanded", "true");
 }
@@ -541,6 +542,12 @@ function closeSettingsMenu() {
 function toggleSettingsMenu() {
   if (settingsMenu.classList.contains("hidden")) openSettingsMenu();
   else closeSettingsMenu();
+}
+
+function syncSettingsMenuViewportPosition() {
+  const topbarBottom = Math.max(0, Math.ceil(topbar?.getBoundingClientRect().bottom ?? 0));
+  const offset = topbarBottom + 8;
+  document.documentElement.style.setProperty("--settings-menu-top-offset", `${offset}px`);
 }
 
 // ── Confirm dialog ────────────────────────────────────────────────────────────
@@ -817,11 +824,14 @@ function bindEvents() {
   sidebarBackdrop.addEventListener("click", closeSidebar);
 
   settingsMenuToggle.addEventListener("click", toggleSettingsMenu);
-  settingsMenuCloseButton?.addEventListener("click", closeSettingsMenu);
   settingsClearPreferencesButton.addEventListener("click", showClearPrefsConfirm);
   settingsContactDeveloperLink.addEventListener("click", closeSettingsMenu);
   settingsExportProfileButton?.addEventListener("click", exportProfile);
   settingsImportProfileButton?.addEventListener("click", importProfile);
+  window.addEventListener("resize", syncSettingsMenuViewportPosition, { passive: true });
+  window.visualViewport?.addEventListener("resize", syncSettingsMenuViewportPosition, { passive: true });
+  window.visualViewport?.addEventListener("scroll", syncSettingsMenuViewportPosition, { passive: true });
+  syncSettingsMenuViewportPosition();
   confirmOkButton?.addEventListener("click", executeClearAll);
   confirmCancelButton?.addEventListener("click", hideClearPrefsConfirm);
   confirmDialog?.addEventListener("click", (event) => {
