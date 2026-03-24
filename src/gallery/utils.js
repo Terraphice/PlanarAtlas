@@ -649,7 +649,7 @@ export function getManaClasses(symbol, { phyrexianMana = false } = {}) {
 
   if (direct.has(normalized)) {
     if (normalized === "planeswalker" && phyrexianMana) {
-      return "ms ms-p ms-cost";
+      return "ms ms-ability-phyrexian";
     }
     return normalized === "tap" || normalized === "untap" || normalized === "planeswalker"
       ? `ms ms-${normalized}`

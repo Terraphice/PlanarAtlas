@@ -7,28 +7,34 @@ const STANDARD_THEME_ORDER = ["system", "dark", "light"];
 const THEME_FAMILIES = {
   azorius: {
     labels: { light: "Azorius", dark: "Dimir" },
+    guildSymbols: { light: "{W/U}", dark: "{U/B}" },
     resolvedThemes: { light: "azorius", dark: "dimir" }
   },
   boros: {
     labels: { light: "Boros", dark: "Rakdos" },
+    guildSymbols: { light: "{R/W}", dark: "{B/R}" },
     resolvedThemes: { light: "boros", dark: "rakdos" }
   },
   selesnya: {
     labels: { light: "Selesnya", dark: "Golgari" },
+    guildSymbols: { light: "{G/W}", dark: "{B/G}" },
     resolvedThemes: { light: "selesnya", dark: "golgari" }
   },
   orzhov: {
     labels: { light: "Orzhov", dark: "Orzhov" },
+    guildSymbols: { light: "{W/B}", dark: "{W/B}" },
     resolvedThemes: { light: "orzhov-light", dark: "orzhov-dark" }
   },
   "new-phyrexian": {
     labels: { light: "New Phyrexian", dark: "New Phyrexian" },
+    guildSymbols: { light: "{R/W/P}", dark: "{R/W/P}" },
     resolvedThemes: { light: "new-phyrexian", dark: "new-phyrexian" },
     phyrexianScript: true,
     phyrexianManaSymbol: true
   },
   phyrexian: {
     labels: { light: "Phyrexian", dark: "Phyrexian" },
+    guildSymbols: { light: "{B/G/P}", dark: "{B/G/P}" },
     resolvedThemes: { light: "phyrexian", dark: "phyrexian" },
     phyrexianScript: true,
     phyrexianManaSymbol: true
@@ -150,15 +156,17 @@ export function initThemeController({
     if (!themeSelect) return;
 
     const mode = resolveThemeMode(theme);
-    const options = MODE_THEME_OPTIONS[mode];
+    const options = [...MODE_THEME_OPTIONS[mode]];
     const currentFamily = THEME_FAMILIES[themeFamily] ? themeFamily : "azorius";
+    if (SECRET_THEME_FAMILIES.has(currentFamily)) options.push(currentFamily);
 
     themeSelect.innerHTML = "";
 
     for (const optionFamily of options) {
       const option = document.createElement("option");
       option.value = optionFamily;
-      option.textContent = THEME_FAMILIES[optionFamily].labels[mode];
+      const family = THEME_FAMILIES[optionFamily];
+      option.textContent = `${family.guildSymbols[mode]} — ${family.labels[mode]}`;
       themeSelect.appendChild(option);
     }
 
@@ -171,11 +179,11 @@ export function initThemeController({
 
   function syncPlaneswalkerManaGlyphs() {
     const usePhyrexian = isPhyrexianManaSymbolEnabled();
-    const icons = document.querySelectorAll("i.ms-planeswalker, i.ms-phyrexian, i.ms-p");
+    const icons = document.querySelectorAll("i.ms-planeswalker, i.ms-phyrexian, i.ms-p, i.ms-ability-phyrexian");
     for (const icon of icons) {
-      icon.classList.remove("ms-planeswalker", "ms-phyrexian", "ms-p", "ms-cost");
+      icon.classList.remove("ms-planeswalker", "ms-phyrexian", "ms-p", "ms-cost", "ms-ability-phyrexian");
       if (usePhyrexian) {
-        icon.classList.add("ms-p", "ms-cost");
+        icon.classList.add("ms-ability-phyrexian");
       } else {
         icon.classList.add("ms-planeswalker");
       }

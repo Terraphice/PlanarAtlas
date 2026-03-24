@@ -394,7 +394,7 @@ export function resetDieIcon() {
 }
 
 function getPlaneswalkerGlyphClass() {
-  return document?.documentElement?.dataset?.phyrexianMana === "true" ? "ms-p ms-cost" : "ms-planeswalker";
+  return document?.documentElement?.dataset?.phyrexianMana === "true" ? "ms-ability-phyrexian" : "ms-planeswalker";
 }
 
 // ── Game menus ────────────────────────────────────────────────────────────────

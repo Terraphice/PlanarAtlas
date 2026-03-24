@@ -3780,6 +3780,7 @@ body.privacy-modal-open {
   padding: 10px 20px;
   font-size: 0.9rem;
   font-weight: 700;
+  border-radius: 10px;
 }
 
 .confirm-cancel {
