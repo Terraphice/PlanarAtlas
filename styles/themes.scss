@@ -6,6 +6,14 @@
   font-display: swap;
 }
 
+@mixin theme-pattern($primary, $secondary, $gridColor, $gridSize: 56px, $opacity: 0.2) {
+  --theme-pattern-primary: #{$primary};
+  --theme-pattern-secondary: #{$secondary};
+  --theme-grid-color: #{$gridColor};
+  --theme-grid-size: #{$gridSize};
+  --theme-pattern-opacity: #{$opacity};
+}
+
 :root {
   color-scheme: dark;
   --bg: #101822;
@@ -29,6 +37,7 @@
   --planechase-ratio: 800 / 559;
   --parallax-image: url('../assets/social-preview.jpg');
   --app-font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  @include theme-pattern(rgba(126, 194, 255, 0.3), rgba(142, 160, 188, 0.16), rgba(126, 194, 255, 0.12));
 
   --stack-card-width: clamp(300px, 52vw, 620px);
   --stack-overlap: calc(var(--stack-card-width) * 0.48);
@@ -107,6 +116,7 @@ html[data-theme-name="azorius"] {
   --tag-border: #b8cee7;
   --tag-text: #163455;
   --parallax-image: url('../assets/theme-azorius.jpg'), url('../assets/social-preview.jpg');
+  @include theme-pattern(rgba(44, 116, 204, 0.28), rgba(85, 134, 194, 0.2), rgba(44, 116, 204, 0.14), 62px, 0.22);
 }
 
 html[data-theme-name="dimir"] {
@@ -124,6 +134,7 @@ html[data-theme-name="dimir"] {
   --tag-border: #33465f;
   --tag-text: #dae5f4;
   --parallax-image: url('../assets/theme-dimir.jpg'), url('../assets/social-preview.jpg');
+  @include theme-pattern(rgba(76, 120, 173, 0.28), rgba(28, 40, 60, 0.3), rgba(120, 156, 202, 0.12), 54px, 0.2);
 }
 
 html[data-theme-name="boros"] {
@@ -141,6 +152,7 @@ html[data-theme-name="boros"] {
   --tag-border: #efbbbb;
   --tag-text: #651f1f;
   --parallax-image: url('../assets/theme-boros.jpg'), url('../assets/social-preview.jpg');
+  @include theme-pattern(rgba(207, 47, 47, 0.28), rgba(245, 157, 85, 0.22), rgba(210, 84, 84, 0.12), 64px, 0.22);
 }
 
 html[data-theme-name="rakdos"] {
@@ -158,6 +170,7 @@ html[data-theme-name="rakdos"] {
   --tag-border: #7f3d47;
   --tag-text: #ffe1e4;
   --parallax-image: url('../assets/theme-rakdos.jpg'), url('../assets/social-preview.jpg');
+  @include theme-pattern(rgba(219, 47, 60, 0.28), rgba(131, 38, 47, 0.3), rgba(223, 105, 120, 0.12), 58px, 0.2);
 }
 
 html[data-theme-name="selesnya"] {
@@ -175,6 +188,7 @@ html[data-theme-name="selesnya"] {
   --tag-border: #bdd9c3;
   --tag-text: #1e4a27;
   --parallax-image: url('../assets/theme-selesnya.jpg'), url('../assets/social-preview.jpg');
+  @include theme-pattern(rgba(47, 143, 72, 0.26), rgba(116, 176, 129, 0.2), rgba(66, 146, 88, 0.12), 60px, 0.2);
 }
 
 html[data-theme-name="golgari"] {
@@ -192,6 +206,7 @@ html[data-theme-name="golgari"] {
   --tag-border: #445a44;
   --tag-text: #d6ecd7;
   --parallax-image: url('../assets/theme-golgari.jpg'), url('../assets/social-preview.jpg');
+  @include theme-pattern(rgba(74, 128, 72, 0.28), rgba(46, 78, 44, 0.3), rgba(132, 179, 128, 0.12), 52px, 0.2);
 }
 
 html[data-theme-name="orzhov-light"] {
@@ -209,6 +224,7 @@ html[data-theme-name="orzhov-light"] {
   --tag-border: #cfc1da;
   --tag-text: #392c44;
   --parallax-image: url('../assets/theme-orzhov-light.jpg'), url('../assets/social-preview.jpg');
+  @include theme-pattern(rgba(95, 75, 113, 0.26), rgba(171, 152, 187, 0.2), rgba(116, 90, 136, 0.12), 62px, 0.22);
 }
 
 html[data-theme-name="orzhov-dark"] {
@@ -226,6 +242,7 @@ html[data-theme-name="orzhov-dark"] {
   --tag-border: #575d6d;
   --tag-text: #e6e9f2;
   --parallax-image: url('../assets/theme-orzhov-dark.jpg'), url('../assets/social-preview.jpg');
+  @include theme-pattern(rgba(180, 175, 191, 0.22), rgba(95, 103, 122, 0.2), rgba(180, 175, 191, 0.11), 56px, 0.18);
 }
 
 html[data-theme-name="new-phyrexian"] {
@@ -243,6 +260,7 @@ html[data-theme-name="new-phyrexian"] {
   --tag-border: #d79f9c;
   --tag-text: #5a1f1f;
   --parallax-image: url('../assets/theme-new-phyrexian.jpg'), url('../assets/social-preview.jpg');
+  @include theme-pattern(rgba(155, 42, 42, 0.24), rgba(210, 139, 139, 0.2), rgba(183, 77, 77, 0.12), 60px, 0.2);
 }
 
 html[data-theme-name="phyrexian"] {
@@ -260,4 +278,5 @@ html[data-theme-name="phyrexian"] {
   --tag-border: #4e6a45;
   --tag-text: #dcead4;
   --parallax-image: url('../assets/theme-phyrexian.jpg'), url('../assets/social-preview.jpg');
+  @include theme-pattern(rgba(126, 162, 102, 0.24), rgba(79, 111, 63, 0.22), rgba(146, 177, 124, 0.12), 58px, 0.2);
 }

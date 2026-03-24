@@ -432,11 +432,47 @@
   position: fixed;
   inset: 0;
   z-index: 2000;
-  background: var(--bg);
+  isolation: isolate;
+  background: radial-gradient(circle at top, color-mix(in srgb, var(--accent) 8%, transparent), transparent 32%), linear-gradient(180deg, color-mix(in srgb, var(--bg) 86%, black 14%) 0%, color-mix(in srgb, var(--bg) 94%, black 6%) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+}
+
+.game-view::before {
+  content: "";
+  position: absolute;
+  inset: -4%;
+  z-index: -2;
+  background-image: var(--parallax-image);
+  background-size: cover;
+  background-position: center 30%;
+  background-repeat: no-repeat;
+  opacity: 0.08;
+  filter: blur(2px) saturate(0.62);
+  transform: scale(1.05);
+  pointer-events: none;
+}
+
+.game-view::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--theme-pattern-secondary) 36%, transparent) 0 2px,
+    transparent 2px 24px
+  ), linear-gradient(to right, color-mix(in srgb, var(--theme-grid-color) 100%, transparent) 1px, transparent 1px), linear-gradient(to bottom, color-mix(in srgb, var(--theme-grid-color) 100%, transparent) 1px, transparent 1px);
+  background-size: auto, var(--theme-grid-size) var(--theme-grid-size), var(--theme-grid-size) var(--theme-grid-size);
+  opacity: calc(var(--theme-pattern-opacity) * 0.9);
+  mask-image: radial-gradient(circle at center, black 35%, transparent 96%);
+}
+
+html[data-theme=light] .game-view::before {
+  opacity: 0.06;
 }
 
 .game-view.hidden {

@@ -1,4 +1,12 @@
 
+@mixin themed-grid-overlay($opacity: 0.18) {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--theme-grid-color) 100%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--theme-grid-color) 100%, transparent) 1px, transparent 1px);
+  background-size: var(--theme-grid-size) var(--theme-grid-size);
+  opacity: $opacity;
+}
+
 .parallax-bg {
   position: fixed;
   inset: 0;
@@ -28,6 +36,11 @@ body {
   color: var(--text);
   font-family: var(--app-font-family);
   background:
+    repeating-linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--theme-pattern-primary) 35%, transparent) 0 2px,
+      transparent 2px 20px
+    ),
     radial-gradient(circle at top, color-mix(in srgb, var(--accent) 10%, transparent), transparent 28%),
     linear-gradient(180deg, color-mix(in srgb, var(--bg) 72%, black 28%) 0%, var(--bg) 100%);
   transition: background 180ms ease, color 180ms ease;
@@ -75,6 +88,16 @@ body::after {
     radial-gradient(circle at 82% 16%, color-mix(in srgb, var(--text-soft) 5%, transparent) 0%, transparent 20%),
     radial-gradient(circle at 74% 78%, color-mix(in srgb, var(--accent) 5%, transparent) 0%, transparent 22%);
   opacity: 0.9;
+}
+
+.app-shell::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  @include themed-grid-overlay(var(--theme-pattern-opacity));
+  mask-image: radial-gradient(circle at center, black 22%, transparent 85%);
 }
 
 @keyframes atlasFloatA {

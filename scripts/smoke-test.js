@@ -178,6 +178,9 @@ section("7. Key static assets");
 
 const requiredFiles = [
   "index.html",
+  "styles/themes.scss",
+  "styles/gallery.scss",
+  "styles/game.scss",
   "styles/themes.css",
   "styles/gallery.css",
   "styles/game.css",
@@ -274,6 +277,62 @@ try {
   }
 } catch (e) {
   fail(`Failed to read index.html for footer integration: ${e.message}`);
+}
+
+// ── 10. Stylesheet contract checks ────────────────────────────────────────────
+
+section("10. Stylesheet contract checks");
+
+try {
+  const gameScssPath = join(ROOT, "styles/game.scss");
+  const gameCssPath = join(ROOT, "styles/game.css");
+  const themesScssPath = join(ROOT, "styles/themes.scss");
+  const themesCssPath = join(ROOT, "styles/themes.css");
+  const packageJsonPath = join(ROOT, "package.json");
+  const gameScss = readFileSync(gameScssPath, "utf8");
+  const gameCss = readFileSync(gameCssPath, "utf8");
+  const themesScss = readFileSync(themesScssPath, "utf8");
+  const themesCss = readFileSync(themesCssPath, "utf8");
+  const packageJson = JSON.parse(readFileSync(packageJsonPath, "utf8"));
+
+  if (gameScss.includes(".game-view::before") && gameCss.includes(".game-view::before")) {
+    pass("game mode parallax layer selector exists in SCSS and CSS");
+  } else {
+    fail("missing .game-view::before parallax selector in SCSS/CSS");
+  }
+
+  if (gameScss.includes("var(--parallax-image)") && gameCss.includes("var(--parallax-image)")) {
+    pass("game mode parallax layer uses shared theme image variable in SCSS and CSS");
+  } else {
+    fail("game mode parallax layer is not using shared theme image variable");
+  }
+
+  if (gameScss.includes(".game-view::after") && gameCss.includes(".game-view::after")) {
+    pass("game mode patterned overlay selector exists in SCSS and CSS");
+  } else {
+    fail("missing .game-view::after patterned overlay selector in SCSS/CSS");
+  }
+
+  if (themesScss.includes("@mixin theme-pattern") && themesCss.includes("--theme-pattern-primary")) {
+    pass("theme pattern mixin/variables exist in SCSS and CSS");
+  } else {
+    fail("theme pattern mixin/variables missing from SCSS/CSS");
+  }
+
+  const stylesBuild = packageJson?.scripts?.["styles:build"] || "";
+  if (stylesBuild.includes("sass ") && !stylesBuild.includes("npx sass")) {
+    pass("styles:build uses local sass binary (no networked npx fetch)");
+  } else {
+    fail("styles:build should use local sass binary");
+  }
+
+  if (packageJson?.devDependencies?.sass) {
+    pass("package.json includes sass devDependency");
+  } else {
+    fail("package.json missing sass devDependency");
+  }
+} catch (e) {
+  fail(`Failed stylesheet contract check: ${e.message}`);
 }
 
 // ── Summary ───────────────────────────────────────────────────────────────────
