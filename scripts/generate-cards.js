@@ -1,6 +1,7 @@
 import { readFileSync, writeFileSync, readdirSync, existsSync } from "fs";
 import { join, extname, dirname, resolve } from "path";
 import { fileURLToPath } from "url";
+import { randomUUID } from "crypto";
 
 // ── Exported helper functions (also used by tests) ────────────────────────────
 
@@ -16,13 +17,15 @@ export function getDisplayName(filename) {
   return withoutTypePrefix.replace(/[_-]+/g, " ").trim();
 }
 
-export function getCardId(filename) {
-  // id is derived purely from the card name (no type prefix).
-  // Planes and phenomena won't share names in practice, so there is no collision risk.
+export function getCardSlug(filename) {
   const type = getInferredType(filename);
   if (!type) return null;
   const name = getDisplayName(filename);
-  return name
+  return slugifyName(name);
+}
+
+export function slugifyName(name) {
+  return String(name)
     .toLowerCase()
     .replace(/\u2014/g, "-")
     .replace(/\s+/g, "_")
@@ -102,10 +105,35 @@ function readExistingCards(filepath) {
 
 function normalizeExistingCard(card) {
   const type = typeof card.type === "string" ? card.type : null;
+  const mergedTags = mergeCardTags(card.tags, type);
+  const official = isOfficialCard(mergedTags);
+  const fallbackName = typeof card.name === "string" ? card.name : "";
+
   return {
     ...card,
-    tags: mergeCardTags(card.tags, type)
+    slug: typeof card.slug === "string" && card.slug ? card.slug : (typeof card.id === "string" ? card.id : slugifyName(fallbackName)),
+    uid: getCardUid(card, official),
+    tags: mergedTags
   };
+}
+
+function getInitialSlug(cardName, existingCard) {
+  if (typeof existingCard?.slug === "string" && existingCard.slug.trim()) {
+    return existingCard.slug.trim();
+  }
+  return slugifyName(cardName);
+}
+
+function getCardUid(existingCard, isOfficial) {
+  if (typeof existingCard?.uid === "string" && existingCard.uid.trim()) {
+    return existingCard.uid.trim();
+  }
+
+  if (isOfficial && typeof existingCard?.scryfallId === "string" && existingCard.scryfallId.trim()) {
+    return `scryfall_${existingCard.scryfallId.trim()}`;
+  }
+
+  return randomUUID();
 }
 
 
@@ -121,7 +149,11 @@ if (isDirectRun) {
   const OUTPUT_FILE = join(ROOT, "cards.json");
 
   const existingCards = readExistingCards(OUTPUT_FILE);
-  const existingById = new Map(existingCards.map((card) => [card.id, card]));
+  const existingBySlug = new Map();
+  for (const card of existingCards) {
+    if (typeof card.slug === "string" && card.slug) existingBySlug.set(card.slug, card);
+    if (typeof card.id === "string" && card.id) existingBySlug.set(card.id, card);
+  }
 
   const cards = [];
 
@@ -143,10 +175,13 @@ if (isDirectRun) {
   let files;
   try {
     files = readdirSync(IMAGES_DIR, { withFileTypes: true });
+    files.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: "base" }));
   } catch (err) {
     console.error(`Failed to read image directory: ${err.message}`);
     process.exit(1);
   }
+
+  const usedSlugs = new Set();
 
   for (const entry of files) {
     if (!entry.isFile()) continue;
@@ -157,14 +192,28 @@ if (isDirectRun) {
     const type = getInferredType(entry.name);
     if (!type) continue;
 
-    const id = getCardId(entry.name);
+    const baseSlug = getCardSlug(entry.name);
     const name = getDisplayName(entry.name);
-    const existing = existingById.get(id) || {};
+    const existing = existingBySlug.get(baseSlug) || {};
 
     const mergedTags = mergeCardTags(existing.tags, type);
+    const official = isOfficialCard(mergedTags);
+
+    const initialSlug = getInitialSlug(name, existing);
+    let slug = initialSlug;
+    if (usedSlugs.has(slug)) {
+      let i = 2;
+      const dedupeBase = slugifyName(name);
+      while (usedSlugs.has(`${dedupeBase}-${i}`)) i += 1;
+      slug = `${dedupeBase}-${i}`;
+    }
+    usedSlugs.add(slug);
+
+    const uid = getCardUid(existing, official);
 
     const card = {
-      id,
+      uid,
+      slug,
       name,
       type,
       image: `cards/images/${name}${extname(entry.name)}`,
@@ -173,7 +222,7 @@ if (isDirectRun) {
       tags: mergedTags
     };
 
-    if (isOfficialCard(mergedTags)) {
+    if (official) {
       card.scryfallId = existing.scryfallId !== undefined ? existing.scryfallId : null;
     }
 
