@@ -3,7 +3,7 @@
 // Unit tests for sync-cards.js helper functions.
 // Run with: node scripts/test-sync.js
 
-import { getCardJsonFilename } from "./sync-cards.js";
+import { getCardJsonFilename, getCardKey } from "./sync-cards.js";
 
 let passed = 0;
 let failed = 0;
@@ -29,6 +29,13 @@ assert(getCardJsonFilename("akoum") === "akoum.json", "akoum → akoum.json");
 assert(getCardJsonFilename("atlas_consultation") === "atlas_consultation.json", "phenomenon id → .json");
 assert(getCardJsonFilename("the_library_of_leng") === "the_library_of_leng.json", "multi-word id");
 assert(getCardJsonFilename("interplanar_tunnel") === "interplanar_tunnel.json", "phenomenon id");
+
+// ── getCardKey ───────────────────────────────────────────────────────────────
+
+section("getCardKey");
+assert(getCardKey({ id: "akoum", slug: "akoum" }) === "akoum", "Uses id when present");
+assert(getCardKey({ slug: "akoum" }) === "akoum", "Falls back to slug");
+assert(getCardKey({}) === null, "Null when no id/slug");
 
 // ── Summary ───────────────────────────────────────────────────────────────────
 

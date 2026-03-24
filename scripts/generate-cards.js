@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync, readdirSync, existsSync } from "fs";
+import { readFileSync, writeFileSync, existsSync } from "fs";
 import { join, extname, dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 import { randomUUID } from "crypto";
@@ -86,6 +86,22 @@ export function mergeCardTags(existingTags, type) {
   return derivedTypeTag ? uniqueTags([...mergedTags, derivedTypeTag]) : mergedTags;
 }
 
+export function getCanonicalAssetPaths(uid, imageExtension = ".png") {
+  return {
+    image: `cards/images/${uid}${imageExtension}`,
+    thumb: `cards/thumbs/${uid}.webp`,
+    transcript: `cards/transcripts/${uid}.md`
+  };
+}
+
+export function getLegacyAssetPaths(name, imageExtension = ".png") {
+  return {
+    image: `cards/images/${name}${imageExtension}`,
+    thumb: `cards/thumbs/${name}.webp`,
+    transcript: `cards/transcripts/${name}.md`
+  };
+}
+
 // ── Internal helpers ──────────────────────────────────────────────────────────
 
 function readExistingCards(filepath) {
@@ -108,20 +124,28 @@ function normalizeExistingCard(card) {
   const mergedTags = mergeCardTags(card.tags, type);
   const official = isOfficialCard(mergedTags);
   const fallbackName = typeof card.name === "string" ? card.name : "";
+  const uid = getCardUid(card, official);
+  const imageExt = getImageExtension(card.image);
+  const canonicalAssets = getCanonicalAssetPaths(uid, imageExt);
+  const legacyAssets = card.legacyAssetPaths && typeof card.legacyAssetPaths === "object"
+    ? card.legacyAssetPaths
+    : getLegacyAssetPaths(fallbackName, imageExt);
 
   return {
     ...card,
+    id: typeof card.id === "string" && card.id ? card.id : slugifyName(fallbackName),
     slug: typeof card.slug === "string" && card.slug ? card.slug : (typeof card.id === "string" ? card.id : slugifyName(fallbackName)),
-    uid: getCardUid(card, official),
+    uid,
+    image: canonicalAssets.image,
+    thumb: canonicalAssets.thumb,
+    transcript: canonicalAssets.transcript,
+    legacyAssetPaths: {
+      image: typeof legacyAssets.image === "string" ? legacyAssets.image : getLegacyAssetPaths(fallbackName, imageExt).image,
+      thumb: typeof legacyAssets.thumb === "string" ? legacyAssets.thumb : getLegacyAssetPaths(fallbackName, imageExt).thumb,
+      transcript: typeof legacyAssets.transcript === "string" ? legacyAssets.transcript : getLegacyAssetPaths(fallbackName, imageExt).transcript
+    },
     tags: mergedTags
   };
-}
-
-function getInitialSlug(cardName, existingCard) {
-  if (typeof existingCard?.slug === "string" && existingCard.slug.trim()) {
-    return existingCard.slug.trim();
-  }
-  return slugifyName(cardName);
 }
 
 function getCardUid(existingCard, isOfficial) {
@@ -136,6 +160,11 @@ function getCardUid(existingCard, isOfficial) {
   return randomUUID();
 }
 
+function getImageExtension(imagePath) {
+  const ext = typeof imagePath === "string" ? extname(imagePath).toLowerCase() : "";
+  return ext || ".png";
+}
+
 
 const __filename = fileURLToPath(import.meta.url);
 const isDirectRun = resolve(process.argv[1]) === resolve(__filename);
@@ -144,89 +173,18 @@ if (isDirectRun) {
   const __dirname = dirname(__filename);
   const ROOT = join(__dirname, "..");
 
-  const IMAGES_DIR = join(ROOT, "cards", "images");
-  const VALID_EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".webp", ".avif"]);
   const OUTPUT_FILE = join(ROOT, "cards.json");
 
   const existingCards = readExistingCards(OUTPUT_FILE);
-  const existingBySlug = new Map();
-  for (const card of existingCards) {
-    if (typeof card.slug === "string" && card.slug) existingBySlug.set(card.slug, card);
-    if (typeof card.id === "string" && card.id) existingBySlug.set(card.id, card);
-  }
-
   const cards = [];
-
-  if (!existsSync(IMAGES_DIR)) {
-    if (existingCards.length === 0) {
-      console.error(`Image directory not found: cards/images/`);
-      process.exit(1);
-    }
-
-    const normalizedCards = existingCards
-      .map(normalizeExistingCard)
-      .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: "base" }));
-
-    writeFileSync(OUTPUT_FILE, JSON.stringify(normalizedCards, null, 2) + "\n");
-    console.log(`Normalized cards.json tags for ${normalizedCards.length} cards from existing card data.`);
-    process.exit(0);
-  }
-
-  let files;
-  try {
-    files = readdirSync(IMAGES_DIR, { withFileTypes: true });
-    files.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: "base" }));
-  } catch (err) {
-    console.error(`Failed to read image directory: ${err.message}`);
+  if (existingCards.length === 0) {
+    console.error("cards.json is empty. Add cards with uid metadata before generating.");
     process.exit(1);
   }
 
-  const usedSlugs = new Set();
-
-  for (const entry of files) {
-    if (!entry.isFile()) continue;
-
-    const extension = extname(entry.name).toLowerCase();
-    if (!VALID_EXTENSIONS.has(extension)) continue;
-
-    const type = getInferredType(entry.name);
-    if (!type) continue;
-
-    const baseSlug = getCardSlug(entry.name);
-    const name = getDisplayName(entry.name);
-    const existing = existingBySlug.get(baseSlug) || {};
-
-    const mergedTags = mergeCardTags(existing.tags, type);
-    const official = isOfficialCard(mergedTags);
-
-    const initialSlug = getInitialSlug(name, existing);
-    let slug = initialSlug;
-    if (usedSlugs.has(slug)) {
-      let i = 2;
-      const dedupeBase = slugifyName(name);
-      while (usedSlugs.has(`${dedupeBase}-${i}`)) i += 1;
-      slug = `${dedupeBase}-${i}`;
-    }
-    usedSlugs.add(slug);
-
-    const uid = getCardUid(existing, official);
-
-    const card = {
-      uid,
-      slug,
-      name,
-      type,
-      image: `cards/images/${name}${extname(entry.name)}`,
-      thumb: `cards/thumbs/${name}.webp`,
-      transcript: `cards/transcripts/${name}.md`,
-      tags: mergedTags
-    };
-
-    if (official) {
-      card.scryfallId = existing.scryfallId !== undefined ? existing.scryfallId : null;
-    }
-
-    cards.push(card);
+  for (const existing of existingCards) {
+    if (!existing || typeof existing !== "object") continue;
+    cards.push(normalizeExistingCard(existing));
   }
 
   cards.sort((a, b) => {
@@ -238,7 +196,7 @@ if (isDirectRun) {
 
   if (cards.length === 0) {
     if (existingCards.length === 0) {
-      console.error("No valid card images found. Refusing to overwrite cards.json.");
+      console.error("No valid cards found. Refusing to overwrite cards.json.");
       process.exit(1);
     }
 

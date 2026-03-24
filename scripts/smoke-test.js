@@ -62,6 +62,10 @@ for (const card of cards) {
     fail(`Card "${card.id}" is missing "name" string`);
     schemaErrors++;
   }
+  if (typeof card.uid !== "string" || !card.uid) {
+    fail(`Card "${card.id}" is missing "uid" string`);
+    schemaErrors++;
+  }
   if (card.type !== "Plane" && card.type !== "Phenomenon") {
     fail(`Card "${card.id}" has invalid "type": ${JSON.stringify(card.type)}`);
     schemaErrors++;
@@ -89,15 +93,10 @@ let missingImages = 0;
 for (const card of cards) {
   const imagePath = join(ROOT, card.image);
   if (!existsSync(imagePath)) {
-    // Image files may still use the old Plane_/Phenomenon_ prefix on disk until
-    // they are manually renamed. Warn but don't fail.
-    const dir = card.image.slice(0, card.image.lastIndexOf("/") + 1);
-    const file = card.image.slice(card.image.lastIndexOf("/") + 1);
-    const ext = file.slice(file.lastIndexOf("."));
-    const stem = file.slice(0, file.lastIndexOf("."));
-    const oldPlanePath = join(ROOT, dir + "Plane_" + stem + ext);
-    const oldPhenPath = join(ROOT, dir + "Phenomenon_" + stem + ext);
-    if (!existsSync(oldPlanePath) && !existsSync(oldPhenPath)) {
+    const legacyImagePath = typeof card?.legacyAssetPaths?.image === "string"
+      ? join(ROOT, card.legacyAssetPaths.image)
+      : null;
+    if (!legacyImagePath || !existsSync(legacyImagePath)) {
       console.warn(`  ⚠ Image not found at new or old path: ${card.image}`);
       missingImages++;
     }
@@ -116,8 +115,11 @@ section("4. Transcript file check");
 let missingTranscripts = 0;
 for (const card of cards) {
   const mdPath = join(ROOT, card.transcript);
+  const legacyMdPath = typeof card?.legacyAssetPaths?.transcript === "string"
+    ? join(ROOT, card.legacyAssetPaths.transcript)
+    : null;
   const txtPath = mdPath.replace(/\.md$/, ".txt");
-  if (!existsSync(mdPath) && !existsSync(txtPath)) {
+  if (!existsSync(mdPath) && !existsSync(txtPath) && (!legacyMdPath || !existsSync(legacyMdPath))) {
     missingTranscripts++;
   }
 }
