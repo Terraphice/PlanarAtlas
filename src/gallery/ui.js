@@ -1,21 +1,63 @@
 // ── gallery-ui.js ─────────────────────────────────────────────────────────────
-// ThemeController (palette and mode cycling) and ToastManager (ephemeral
+// ThemeController (theme family + mode cycling) and ToastManager (ephemeral
 // notification toasts).
 
 const STANDARD_THEME_ORDER = ["system", "dark", "light"];
-const HIDDEN_PALETTE_ORDER = ["standard", "gruvbox", "atom", "dracula", "solarized", "nord", "catppuccin", "scryfall"];
+
+const THEME_FAMILIES = {
+  azorius: {
+    labels: { light: "Azorius", dark: "Dimir" },
+    resolvedThemes: { light: "azorius", dark: "dimir" }
+  },
+  boros: {
+    labels: { light: "Boros", dark: "Rakdos" },
+    resolvedThemes: { light: "boros", dark: "rakdos" }
+  },
+  selesnya: {
+    labels: { light: "Selesnya", dark: "Golgari" },
+    resolvedThemes: { light: "selesnya", dark: "golgari" }
+  },
+  orzhov: {
+    labels: { light: "Orzhov", dark: "Orzhov" },
+    resolvedThemes: { light: "orzhov-light", dark: "orzhov-dark" }
+  },
+  "new-phyrexian": {
+    labels: { light: "New Phyrexian", dark: "New Phyrexian" },
+    resolvedThemes: { light: "new-phyrexian", dark: "new-phyrexian" },
+    phyrexianScript: true,
+    phyrexianManaSymbol: true
+  },
+  phyrexian: {
+    labels: { light: "Phyrexian", dark: "Phyrexian" },
+    resolvedThemes: { light: "phyrexian", dark: "phyrexian" },
+    phyrexianScript: true,
+    phyrexianManaSymbol: true
+  }
+};
+
+const MODE_THEME_OPTIONS = {
+  light: ["azorius", "boros", "selesnya", "orzhov", "new-phyrexian"],
+  dark: ["azorius", "boros", "selesnya", "orzhov", "phyrexian"]
+};
+
+const SECRET_ALT_BY_THEME = {
+  boros: "new-phyrexian",
+  golgari: "phyrexian"
+};
+
 const THEME_ICONS = {
   system: "◐",
   dark: "☾",
   light: "☀"
 };
+
 const THEME_LABELS = {
   system: "System",
   dark: "Dark",
   light: "Light"
 };
 
-function isAltPaletteEvent(event) {
+function isAltThemeEvent(event) {
   return Boolean(event?.altKey);
 }
 
@@ -57,36 +99,99 @@ export function initToastManager(container) {
 
 export function initThemeController({
   button,
+  themeSelect = null,
   initialTheme = "system",
-  initialPalette = "standard",
+  initialThemeFamily = "azorius",
   onChange = () => {}
 }) {
   const media = window.matchMedia("(prefers-color-scheme: dark)");
   const glyph = button.querySelector(".theme-toggle-glyph");
 
   let theme = STANDARD_THEME_ORDER.includes(initialTheme) ? initialTheme : "system";
-  let palette = HIDDEN_PALETTE_ORDER.includes(initialPalette) ? initialPalette : "standard";
+  let themeFamily = THEME_FAMILIES[initialThemeFamily] ? initialThemeFamily : "azorius";
   let suppressClick = false;
   let longPressTimer = null;
-  let _longPressFired = false;
 
-  function resolveTheme(preference) {
+  function resolveThemeMode(preference) {
     return preference === "system" ? (media.matches ? "dark" : "light") : preference;
   }
 
+  function getResolvedThemeName() {
+    const mode = resolveThemeMode(theme);
+    const family = THEME_FAMILIES[themeFamily] || THEME_FAMILIES.azorius;
+    return family.resolvedThemes[mode];
+  }
+
+  function isPhyrexianScriptEnabled() {
+    const family = THEME_FAMILIES[themeFamily] || THEME_FAMILIES.azorius;
+    return Boolean(family.phyrexianScript);
+  }
+
+  function isPhyrexianManaSymbolEnabled() {
+    const family = THEME_FAMILIES[themeFamily] || THEME_FAMILIES.azorius;
+    return Boolean(family.phyrexianManaSymbol);
+  }
+
+  function getThemeLabelForCurrentMode() {
+    const mode = resolveThemeMode(theme);
+    const family = THEME_FAMILIES[themeFamily] || THEME_FAMILIES.azorius;
+    return family.labels[mode];
+  }
+
   function getAnnouncementLabel() {
-    const themeLabel = THEME_LABELS[theme];
-    if (palette === "standard") return themeLabel;
-    return `${themeLabel} · ${palette[0].toUpperCase()}${palette.slice(1)}`;
+    const modeLabel = THEME_LABELS[theme];
+    const themeLabel = getThemeLabelForCurrentMode();
+    return `${modeLabel} · ${themeLabel}`;
+  }
+
+  function updateThemeOptions() {
+    if (!themeSelect) return;
+
+    const mode = resolveThemeMode(theme);
+    const options = MODE_THEME_OPTIONS[mode];
+    const currentFamily = THEME_FAMILIES[themeFamily] ? themeFamily : "azorius";
+
+    themeSelect.innerHTML = "";
+
+    for (const optionFamily of options) {
+      const option = document.createElement("option");
+      option.value = optionFamily;
+      option.textContent = THEME_FAMILIES[optionFamily].labels[mode];
+      themeSelect.appendChild(option);
+    }
+
+    const fallbackFamily = options.includes(currentFamily) ? currentFamily : options[0];
+    themeSelect.value = fallbackFamily;
+    if (fallbackFamily !== themeFamily) {
+      themeFamily = fallbackFamily;
+    }
+  }
+
+  function syncPlaneswalkerManaGlyphs() {
+    const usePhyrexian = isPhyrexianManaSymbolEnabled();
+    const icons = document.querySelectorAll("i.ms-planeswalker, i.ms-phyrexian");
+    for (const icon of icons) {
+      icon.classList.remove("ms-planeswalker", "ms-phyrexian");
+      icon.classList.add(usePhyrexian ? "ms-phyrexian" : "ms-planeswalker");
+    }
   }
 
   function applyTheme({ animate = false } = {}) {
-    document.documentElement.dataset.theme = resolveTheme(theme);
+    const resolvedMode = resolveThemeMode(theme);
+    const resolvedThemeName = getResolvedThemeName();
+
+    updateThemeOptions();
+
+    document.documentElement.dataset.theme = resolvedMode;
     document.documentElement.dataset.themePreference = theme;
-    document.documentElement.dataset.palette = palette;
+    document.documentElement.dataset.themeName = resolvedThemeName;
+    document.documentElement.dataset.themeFamily = themeFamily;
+    document.documentElement.dataset.phyrexianScript = isPhyrexianScriptEnabled() ? "true" : "false";
+    document.documentElement.dataset.phyrexianMana = isPhyrexianManaSymbolEnabled() ? "true" : "false";
+    syncPlaneswalkerManaGlyphs();
 
     button.dataset.mode = theme;
-    button.dataset.palette = palette;
+    button.dataset.themeFamily = themeFamily;
     button.setAttribute(
       "aria-label",
       `Theme: ${getAnnouncementLabel()}. Click to cycle dark/light mode.`
@@ -109,30 +214,36 @@ export function initThemeController({
   function setTheme(nextTheme, {
     animate = false,
     silent = false,
-    paletteOverride = palette
+    themeFamilyOverride = themeFamily
   } = {}) {
     theme = STANDARD_THEME_ORDER.includes(nextTheme) ? nextTheme : "system";
-    palette = HIDDEN_PALETTE_ORDER.includes(paletteOverride) ? paletteOverride : "standard";
+
+    const mode = resolveThemeMode(theme);
+    const validFamilies = MODE_THEME_OPTIONS[mode];
+    const candidateFamily = THEME_FAMILIES[themeFamilyOverride] ? themeFamilyOverride : "azorius";
+    themeFamily = validFamilies.includes(candidateFamily) ? candidateFamily : validFamilies[0];
+
     applyTheme({ animate });
-    if (!silent) onChange(theme, palette);
+    if (!silent) onChange(theme, themeFamily, getResolvedThemeName());
   }
 
   function cycleStandardTheme() {
     const currentIndex = STANDARD_THEME_ORDER.indexOf(theme);
     const nextTheme = STANDARD_THEME_ORDER[(currentIndex + 1) % STANDARD_THEME_ORDER.length];
-    setTheme(nextTheme, {
-      animate: true,
-      paletteOverride: "standard"
-    });
+    setTheme(nextTheme, { animate: true });
   }
 
-  function cycleAlternatePalette() {
-    const currentIndex = HIDDEN_PALETTE_ORDER.indexOf(palette);
-    const nextPalette = HIDDEN_PALETTE_ORDER[(currentIndex + 1) % HIDDEN_PALETTE_ORDER.length];
+  function tryToggleSecretTheme() {
+    const currentThemeName = getResolvedThemeName();
+    const secretFamily = SECRET_ALT_BY_THEME[currentThemeName];
+    if (!secretFamily) return false;
+
     setTheme(theme, {
       animate: true,
-      paletteOverride: nextPalette
+      themeFamilyOverride: secretFamily
     });
+
+    return true;
   }
 
   function handleButtonClick(event) {
@@ -142,9 +253,9 @@ export function initThemeController({
       return;
     }
 
-    if (isAltPaletteEvent(event)) {
+    if (isAltThemeEvent(event)) {
       event.preventDefault();
-      cycleAlternatePalette();
+      tryToggleSecretTheme();
       return;
     }
 
@@ -160,13 +271,11 @@ export function initThemeController({
 
   function handlePointerDown(event) {
     if (event.pointerType === "mouse") return;
-    _longPressFired = false;
     clearLongPressTimer();
 
     longPressTimer = window.setTimeout(() => {
-      _longPressFired = true;
-      suppressClick = true;
-      cycleAlternatePalette();
+      const changed = tryToggleSecretTheme();
+      suppressClick = changed;
     }, 650);
   }
 
@@ -178,15 +287,25 @@ export function initThemeController({
     clearLongPressTimer();
   }
 
+  function handleThemeSelectChange() {
+    if (!themeSelect) return;
+    const nextFamily = themeSelect.value;
+    setTheme(theme, {
+      themeFamilyOverride: nextFamily
+    });
+  }
+
   button.addEventListener("click", handleButtonClick);
   button.addEventListener("pointerdown", handlePointerDown);
   button.addEventListener("pointerup", handlePointerUp);
   button.addEventListener("pointercancel", handlePointerCancel);
   button.addEventListener("pointerleave", handlePointerCancel);
+  themeSelect?.addEventListener("change", handleThemeSelectChange);
 
   media.addEventListener?.("change", () => {
     if (theme === "system") {
       applyTheme();
+      onChange(theme, themeFamily, getResolvedThemeName());
     }
   });
 
@@ -196,14 +315,18 @@ export function initThemeController({
     getTheme() {
       return theme;
     },
-    getPalette() {
-      return palette;
+    getThemeFamily() {
+      return themeFamily;
     },
-    getResolvedTheme() {
-      return resolveTheme(theme);
+    getResolvedThemeName() {
+      return getResolvedThemeName();
+    },
+    getResolvedThemeMode() {
+      return resolveThemeMode(theme);
     },
     setTheme(nextTheme, options = {}) {
       setTheme(nextTheme, options);
-    }
+    },
+    updateThemeOptions
   };
 }

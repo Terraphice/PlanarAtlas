@@ -78,6 +78,7 @@ const sidebarSearchSuggestions = document.getElementById("sidebar-search-suggest
 const fuzzySearchToggle = document.getElementById("fuzzy-search-toggle");
 const showHiddenToggle = document.getElementById("show-hidden-toggle");
 const inlineAutocompleteToggle = document.getElementById("inline-autocomplete-toggle");
+const galleryThemeSelect = document.getElementById("gallery-theme-select");
 const phenomenonAnimationToggle = document.getElementById("phenomenon-animation-toggle");
 const hellridingModeSelect = document.getElementById("hellriding-mode-select");
 const smoothTravelToggle = document.getElementById("smooth-travel-toggle");
@@ -136,12 +137,12 @@ const paginationControls = document.getElementById("pagination-controls");
 const showToast = initToastManager(toastRegion);
 const themeController = initThemeController({
   button: themeToggleButton,
+  themeSelect: galleryThemeSelect,
   initialTheme: preferences.theme,
-  initialPalette: preferences.themePalette,
-  onChange(theme, palette) {
+  initialThemeFamily: preferences.themeFamily,
+  onChange(theme, _themeFamily, resolvedThemeName) {
     stateManager.persistPreferences();
-    const paletteLabel = palette === "standard" ? "" : ` ${capitalize(palette)}`;
-    showToast(`Theme set to ${theme}${paletteLabel}.`);
+    showToast(`Theme set to ${capitalize(theme)} · ${resolvedThemeName.replaceAll("-", " ")}.`);
   }
 });
 
@@ -583,7 +584,7 @@ function executeClearAll() {
   paginationState.mode = "paginated";
   paginationState.infiniteLoadedCount = 20;
 
-  themeController.setTheme("system", { silent: true, paletteOverride: "standard" });
+  themeController.setTheme("system", { silent: true, themeFamilyOverride: "azorius" });
 
   topSearch.value = "";
   sidebarSearch.value = "";
@@ -610,7 +611,7 @@ function exportProfile() {
     inlineAutocomplete: filters.inlineAutocomplete,
     showHidden: filters.showHidden,
     theme: themeController.getTheme(),
-    themePalette: themeController.getPalette(),
+    themeFamily: themeController.getThemeFamily(),
     pageSize: paginationState.pageSize,
     paginationMode: paginationState.mode,
     phenomenonAnimation: filters.phenomenonAnimation,
@@ -667,10 +668,10 @@ function importProfile() {
     if (["paginated", "infinite"].includes(p.paginationMode)) paginationState.mode = p.paginationMode;
 
     const validThemes = ["system", "dark", "light"];
-    const validPalettes = ["standard", "gruvbox", "atom", "dracula", "solarized", "nord", "catppuccin", "scryfall"];
+    const validThemeFamilies = ["azorius", "boros", "selesnya", "orzhov", "new-phyrexian", "phyrexian"];
     const newTheme = validThemes.includes(p.theme) ? p.theme : "system";
-    const newPalette = validPalettes.includes(p.themePalette) ? p.themePalette : "standard";
-    themeController.setTheme(newTheme, { silent: true, paletteOverride: newPalette });
+    const newThemeFamily = validThemeFamilies.includes(p.themeFamily) ? p.themeFamily : "azorius";
+    themeController.setTheme(newTheme, { silent: true, themeFamilyOverride: newThemeFamily });
   }
 
   if (data.d) importProfileDecks(data.d);
