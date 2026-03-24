@@ -33,9 +33,8 @@ assert(getCardJsonFilename("interplanar_tunnel") === "interplanar_tunnel.json", 
 // ── getCardKey ───────────────────────────────────────────────────────────────
 
 section("getCardKey");
-assert(getCardKey({ id: "akoum", slug: "akoum" }) === "akoum", "Uses id when present");
-assert(getCardKey({ slug: "akoum" }) === "akoum", "Falls back to slug");
-assert(getCardKey({}) === null, "Null when no id/slug");
+assert(getCardKey({ uid: "69127fa3-878a-44c3-a42e-5901b58a010e" }) === "69127fa3-878a-44c3-a42e-5901b58a010e", "Uses uid");
+assert(getCardKey({}) === null, "Null when no uid");
 
 // ── Summary ───────────────────────────────────────────────────────────────────
 

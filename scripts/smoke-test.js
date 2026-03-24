@@ -93,19 +93,14 @@ let missingImages = 0;
 for (const card of cards) {
   const imagePath = join(ROOT, card.image);
   if (!existsSync(imagePath)) {
-    const legacyImagePath = typeof card?.legacyAssetPaths?.image === "string"
-      ? join(ROOT, card.legacyAssetPaths.image)
-      : null;
-    if (!legacyImagePath || !existsSync(legacyImagePath)) {
-      console.warn(`  ⚠ Image not found at new or old path: ${card.image}`);
-      missingImages++;
-    }
+    console.warn(`  ⚠ Image not found: ${card.image}`);
+    missingImages++;
   }
 }
 if (missingImages === 0) {
-  pass(`All ${cards.length} referenced image files exist (or found at legacy path)`);
+  pass(`All ${cards.length} referenced image files exist`);
 } else {
-  pass(`${cards.length - missingImages} of ${cards.length} image files found (${missingImages} missing at both new and legacy paths — image files may need renaming)`);
+  pass(`${cards.length - missingImages} of ${cards.length} image files found (${missingImages} missing — image files may need regeneration)`);
 }
 
 // ── 4. Transcript files (soft check — not all cards need transcripts) ─────────
@@ -115,11 +110,8 @@ section("4. Transcript file check");
 let missingTranscripts = 0;
 for (const card of cards) {
   const mdPath = join(ROOT, card.transcript);
-  const legacyMdPath = typeof card?.legacyAssetPaths?.transcript === "string"
-    ? join(ROOT, card.legacyAssetPaths.transcript)
-    : null;
   const txtPath = mdPath.replace(/\.md$/, ".txt");
-  if (!existsSync(mdPath) && !existsSync(txtPath) && (!legacyMdPath || !existsSync(legacyMdPath))) {
+  if (!existsSync(mdPath) && !existsSync(txtPath)) {
     missingTranscripts++;
   }
 }
@@ -135,7 +127,7 @@ section("5. Per-card JSON file check");
 
 let missingCardJson = 0;
 for (const card of cards) {
-  const jsonFilename = card.id + ".json";
+  const jsonFilename = card.uid + ".json";
   const jsonPath = join(ROOT, "cards", jsonFilename);
   if (!existsSync(jsonPath)) {
     missingCardJson++;

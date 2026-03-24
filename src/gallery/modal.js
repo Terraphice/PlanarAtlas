@@ -3,7 +3,6 @@
 // phenomenon flip animation, and URL hash synchronisation.
 
 import { compareTags, enhanceManaSymbols } from "./utils.js";
-import { remapLegacyKey } from "../deck/codec.js";
 
 export function createModalManager({
   modal,
@@ -44,7 +43,7 @@ export function createModalManager({
 
   function updateUrlForCard(card) {
     const params = new URLSearchParams(window.location.search);
-    params.set("card", card.id);
+    params.set("card", card.slug || card.uid);
 
     const hash = window.location.hash.startsWith("#card=") ? "" : window.location.hash;
     const query = params.toString();
@@ -113,18 +112,18 @@ export function createModalManager({
 
   function openModalByKey(cardKey, updateHash = true) {
     const filteredCards = getFilteredCards();
-    let index = filteredCards.findIndex((card) => card.id === cardKey);
+    let index = filteredCards.findIndex((card) => card.uid === cardKey);
+    if (index === -1) {
+      index = filteredCards.findIndex((card) => card.slug === cardKey);
+    }
 
     if (index === -1) {
       const allCards = getAllCards();
-      let resolvedKey = cardKey;
-      if (!allCards.some((c) => c.id === resolvedKey)) {
-        resolvedKey = remapLegacyKey(cardKey);
-      }
-      const cardInAll = allCards.find((card) => card.id === resolvedKey);
+      const cardInAll = allCards.find((card) => card.uid === cardKey || card.slug === cardKey);
       if (!cardInAll) return;
+      const resolvedKey = cardInAll.uid;
 
-      if (!filteredCards.some((card) => card.id === resolvedKey)) {
+      if (!filteredCards.some((card) => card.uid === resolvedKey)) {
         const newFiltered = [...allCards];
         callbacks.sortCards(newFiltered);
         paginationState.currentPage = 1;
@@ -134,7 +133,7 @@ export function createModalManager({
       }
 
       const updatedFiltered = getFilteredCards();
-      index = updatedFiltered.findIndex((card) => card.id === resolvedKey);
+      index = updatedFiltered.findIndex((card) => card.uid === resolvedKey);
       if (index === -1) return;
     }
 
@@ -170,7 +169,7 @@ export function createModalManager({
     const scryfallQuery = encodeURIComponent(`"${card.name}"`);
     modalScryfallLink.href = `https://scryfall.com/search?q=${scryfallQuery}&utm_source=planar-atlas&utm_medium=referral`;
 
-    callbacks.setModalCardKey(card.id);
+    callbacks.setModalCardKey(card.uid);
 
     modalTagList.innerHTML = "";
     const orderedTags = [...card.tags].sort(compareTags);
@@ -187,7 +186,7 @@ export function createModalManager({
     preloadAdjacentImages();
 
     const transcriptCache = getTranscriptCache();
-    const cached = transcriptCache.get(card.id);
+    const cached = transcriptCache.get(card.uid);
     if (typeof cached === "string") {
       renderTranscriptMarkdown(cached || "No transcript available.");
       return;
@@ -199,10 +198,10 @@ export function createModalManager({
       const response = await fetch(card.transcriptPath);
       if (!response.ok) throw new Error("Transcript not found");
       const transcript = await response.text();
-      transcriptCache.set(card.id, transcript.trim());
+      transcriptCache.set(card.uid, transcript.trim());
       renderTranscriptMarkdown(transcript.trim() || "No transcript available.");
     } catch {
-      transcriptCache.set(card.id, "");
+      transcriptCache.set(card.uid, "");
       renderTranscriptMarkdown("No transcript available.");
     }
   }
@@ -278,7 +277,8 @@ export function createModalManager({
   async function copyCurrentCardLink() {
     if (currentModalIndex < 0 || currentModalIndex >= getFilteredCards().length) return;
     const currentCard = getFilteredCards()[currentModalIndex];
-    const shareUrl = `${window.location.origin}/share/card/${encodeURIComponent(currentCard.id)}/`;
+    const shareSegment = currentCard.slug || currentCard.uid;
+    const shareUrl = `${window.location.origin}/share/card/${encodeURIComponent(shareSegment)}/`;
 
     try {
       await navigator.clipboard.writeText(shareUrl);
@@ -294,7 +294,7 @@ export function createModalManager({
     const filteredCards = getFilteredCards();
     if (!filteredCards.length) return;
     const randomIndex = Math.floor(Math.random() * filteredCards.length);
-    openModalByKey(filteredCards[randomIndex].id, true);
+    openModalByKey(filteredCards[randomIndex].uid, true);
   }
 
   function handleRandomPointerDown(event) {

@@ -126,14 +126,14 @@ function generateEmbedPages(rootDir) {
   const tagMap = new Map();
 
   for (const card of cards) {
-    const cardId = card.id;
+    const cardSlug = card.slug || card.uid;
     const cardTitle = `${card.name} · ${card.type} | Planar Atlas`;
     const cardDescription = buildCardDescription(card);
     const cardImage = toAbsoluteUrl(card.thumb || card.image || "assets/social-preview.jpg");
-    const canonicalUrl = `${SITE_ORIGIN}/share/card/${encodeURIComponent(cardId)}/`;
-    const redirectTarget = `${SITE_ORIGIN}/?card=${encodeURIComponent(cardId)}`;
+    const canonicalUrl = `${SITE_ORIGIN}/share/card/${encodeURIComponent(cardSlug)}/`;
+    const redirectTarget = `${SITE_ORIGIN}/?card=${encodeURIComponent(cardSlug)}`;
 
-    writePage(rootDir, `share/card/${cardId}`, buildMetaPage({
+    writePage(rootDir, `share/card/${cardSlug}`, buildMetaPage({
       title: cardTitle,
       description: cardDescription,
       imageUrl: cardImage,

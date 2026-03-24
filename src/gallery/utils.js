@@ -94,7 +94,7 @@ export function enrichCard(card) {
 
   return {
     ...card,
-    id: card.id,
+    id: card.uid,
     name: card.name,
     displayName: card.name,
     type: card.type,
@@ -327,7 +327,7 @@ export function matchesParsedQuery(card, parsedQuery, filters, transcriptCache =
   }
 
   if (parsedQuery.oracleTerms.length > 0 || parsedQuery.negOracleTerms.length > 0) {
-    const cached = transcriptCache ? transcriptCache.get(card.id) : null;
+    const cached = transcriptCache ? transcriptCache.get(card.uid) : null;
     const cardText = (typeof cached === "string" ? cached : "").toLowerCase();
 
     for (const value of parsedQuery.oracleTerms) {

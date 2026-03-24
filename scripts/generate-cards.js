@@ -94,14 +94,6 @@ export function getCanonicalAssetPaths(uid, imageExtension = ".png") {
   };
 }
 
-export function getLegacyAssetPaths(name, imageExtension = ".png") {
-  return {
-    image: `cards/images/${name}${imageExtension}`,
-    thumb: `cards/thumbs/${name}.webp`,
-    transcript: `cards/transcripts/${name}.md`
-  };
-}
-
 // ── Internal helpers ──────────────────────────────────────────────────────────
 
 function readExistingCards(filepath) {
@@ -127,23 +119,15 @@ function normalizeExistingCard(card) {
   const uid = getCardUid(card, official);
   const imageExt = getImageExtension(card.image);
   const canonicalAssets = getCanonicalAssetPaths(uid, imageExt);
-  const legacyAssets = card.legacyAssetPaths && typeof card.legacyAssetPaths === "object"
-    ? card.legacyAssetPaths
-    : getLegacyAssetPaths(fallbackName, imageExt);
 
   return {
     ...card,
     id: typeof card.id === "string" && card.id ? card.id : slugifyName(fallbackName),
-    slug: typeof card.slug === "string" && card.slug ? card.slug : (typeof card.id === "string" ? card.id : slugifyName(fallbackName)),
+    slug: typeof card.slug === "string" && card.slug ? card.slug : slugifyName(fallbackName),
     uid,
     image: canonicalAssets.image,
     thumb: canonicalAssets.thumb,
     transcript: canonicalAssets.transcript,
-    legacyAssetPaths: {
-      image: typeof legacyAssets.image === "string" ? legacyAssets.image : getLegacyAssetPaths(fallbackName, imageExt).image,
-      thumb: typeof legacyAssets.thumb === "string" ? legacyAssets.thumb : getLegacyAssetPaths(fallbackName, imageExt).thumb,
-      transcript: typeof legacyAssets.transcript === "string" ? legacyAssets.transcript : getLegacyAssetPaths(fallbackName, imageExt).transcript
-    },
     tags: mergedTags
   };
 }
