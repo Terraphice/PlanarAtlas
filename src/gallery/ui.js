@@ -7,34 +7,34 @@ const STANDARD_THEME_ORDER = ["system", "dark", "light"];
 const THEME_FAMILIES = {
   azorius: {
     labels: { light: "Azorius", dark: "Dimir" },
-    guildSymbols: { light: "{W/U}", dark: "{U/B}" },
+    guildSymbols: { light: "\ue90c", dark: "\ue90e" },
     resolvedThemes: { light: "azorius", dark: "dimir" }
   },
   boros: {
     labels: { light: "Boros", dark: "Rakdos" },
-    guildSymbols: { light: "{R/W}", dark: "{B/R}" },
+    guildSymbols: { light: "\ue90d", dark: "\ue913" },
     resolvedThemes: { light: "boros", dark: "rakdos" }
   },
   selesnya: {
     labels: { light: "Selesnya", dark: "Golgari" },
-    guildSymbols: { light: "{G/W}", dark: "{B/G}" },
+    guildSymbols: { light: "\ue914", dark: "\ue90f" },
     resolvedThemes: { light: "selesnya", dark: "golgari" }
   },
   orzhov: {
     labels: { light: "Orzhov", dark: "Orzhov" },
-    guildSymbols: { light: "{W/B}", dark: "{W/B}" },
+    guildSymbols: { light: "\ue912", dark: "\ue912" },
     resolvedThemes: { light: "orzhov-light", dark: "orzhov-dark" }
   },
   "new-phyrexian": {
     labels: { light: "New Phyrexian", dark: "New Phyrexian" },
-    guildSymbols: { light: "{R/W/P}", dark: "{R/W/P}" },
+    guildSymbols: { light: "⟡", dark: "⟡" },
     resolvedThemes: { light: "new-phyrexian", dark: "new-phyrexian" },
     phyrexianScript: true,
     phyrexianManaSymbol: true
   },
   phyrexian: {
     labels: { light: "Phyrexian", dark: "Phyrexian" },
-    guildSymbols: { light: "{B/G/P}", dark: "{B/G/P}" },
+    guildSymbols: { light: "⟡", dark: "⟡" },
     resolvedThemes: { light: "phyrexian", dark: "phyrexian" },
     phyrexianScript: true,
     phyrexianManaSymbol: true

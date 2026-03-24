@@ -676,6 +676,13 @@ kbd {
   width: 100%;
 }
 
+#gallery-theme-select,
+#gallery-theme-select option {
+  font-family:
+    "Mana",
+    var(--app-font-family);
+}
+
 .settings-menu-actions {
   display: flex;
   flex-direction: column;
