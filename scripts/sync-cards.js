@@ -58,7 +58,6 @@ if (isDirectRun) {
 
     const outputPath = join(CARDS_DIR, jsonFilename);
     const output = {
-      id: card.id,
       uid: card.uid,
       name: card.name,
       type: card.type,

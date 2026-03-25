@@ -54,28 +54,24 @@ section("2. Card schema validation");
 
 let schemaErrors = 0;
 for (const card of cards) {
-  if (typeof card.id !== "string" || !card.id) {
-    fail(`Card missing "id" field: ${JSON.stringify(card)}`);
-    schemaErrors++;
-  }
   if (typeof card.name !== "string" || !card.name) {
-    fail(`Card "${card.id}" is missing "name" string`);
+    fail(`Card "${card.uid || "<missing uid>"}" is missing "name" string`);
     schemaErrors++;
   }
   if (typeof card.uid !== "string" || !card.uid) {
-    fail(`Card "${card.id}" is missing "uid" string`);
+    fail(`Card missing "uid" string: ${JSON.stringify(card)}`);
     schemaErrors++;
   }
   if (card.type !== "Plane" && card.type !== "Phenomenon") {
-    fail(`Card "${card.id}" has invalid "type": ${JSON.stringify(card.type)}`);
+    fail(`Card "${card.uid || "<missing uid>"}" has invalid "type": ${JSON.stringify(card.type)}`);
     schemaErrors++;
   }
   if (typeof card.image !== "string" || !card.image) {
-    fail(`Card "${card.id}" is missing "image" string`);
+    fail(`Card "${card.uid || "<missing uid>"}" is missing "image" string`);
     schemaErrors++;
   }
   if (!Array.isArray(card.tags)) {
-    fail(`Card "${card.id}" is missing "tags" array`);
+    fail(`Card "${card.uid || "<missing uid>"}" is missing "tags" array`);
     schemaErrors++;
   }
 }
