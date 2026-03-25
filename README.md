@@ -187,10 +187,18 @@ This command performs:
 
 Before running it, ensure new files are in place:
 
-- Card images in `cards/images/` (must begin with `Plane_` or `Phenomenon_`; `.png`, `.jpg`, and `.jpeg` are supported)
+- Card images in `cards/images/` (`.png`, `.jpg`, and `.jpeg` are supported)
 - Transcript files in `cards/transcripts/` (`.md` preferred)
 
 Thumbnails in `cards/thumbs/` are generated automatically from `cards.json` using `npm run generate:thumbs`, and are included in the full `npm run generate` workflow.
+
+To bulk-import new images that are not yet represented in `cards.json`, run `npm run generate` with optional flags:
+
+```bash
+node scripts/generate-cards.js --custom --type plane --set PBT
+```
+
+When these flags are provided, orphaned images in `cards/images/` are converted into new card records. Each new card gets a generated UID, its image is renamed to the UID filename, and a placeholder transcript is created automatically. The card `name` is inferred from the original image filename (for example, `Example Plane.jpg` becomes `"Example Plane"`).
 
 ---
 
