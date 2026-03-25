@@ -2,7 +2,7 @@ import { mkdirSync, readFileSync, writeFileSync } from "fs";
 import { dirname, join, resolve } from "path";
 import { fileURLToPath } from "url";
 
-const SITE_ORIGIN = "https://planechase.terraphice.dev";
+const SITE_ORIGIN = "https://planaratlas.terraphice.dev";
 const SECURITY_CONTACT = "mailto:me@terraphice.dev";
 const SECURITY_POLICY = `${SITE_ORIGIN}/PRIVACY.md`;
 const SECURITY_CANONICAL = `${SITE_ORIGIN}/.well-known/security.txt`;

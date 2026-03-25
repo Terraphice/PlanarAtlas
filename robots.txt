@@ -5,4 +5,4 @@ Disallow: /cards/
 Disallow: /transcripts/
 Disallow: /scripts/
 
-Sitemap: https://planechase.terraphice.dev/sitemap.xml
+Sitemap: https://planaratlas.terraphice.dev/sitemap.xml
