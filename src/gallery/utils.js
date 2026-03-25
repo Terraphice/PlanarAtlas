@@ -78,7 +78,7 @@ export function savePreferences(storageKey, displayState, filters, theme = "syst
 
 /**
  * Enriches a raw card object from cards.json with runtime fields.
- * @param {{ id: string, name: string, type: string, image: string, thumb: string, transcript: string, tags: string[], scryfallId?: string|null }} card - Raw card data.
+ * @param {{ uid: string, name: string, type: string, image: string, thumb: string, transcript: string, tags: string[], scryfallId?: string|null }} card - Raw card data.
  * @returns {object} Enriched card with id, name, displayName (alias), type, imagePath, thumbPath, transcriptPath, tags, normalizedTags, scryfallId.
  */
 export function enrichCard(card) {
