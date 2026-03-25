@@ -13,7 +13,8 @@ import {
   getDerivedTypeTag,
   mergeCardTags,
   getCanonicalAssetPaths,
-  getUniqueSlug
+  getUniqueSlug,
+  parseCliOptions
 } from "./generate-cards.js";
 
 let passed = 0;
@@ -56,6 +57,7 @@ assert(getDisplayName("Plane_Akoum.png") === "Akoum", "Strips 'Plane_' prefix an
 assert(getDisplayName("Phenomenon_Interplanar_Tunnel.jpg") === "Interplanar Tunnel", "Strips Phenomenon_ and converts underscores");
 assert(getDisplayName("Plane_The_Library_of_Leng.png") === "The Library of Leng", "Multi-word names");
 assert(getDisplayName("Phenomenon_Atlas Consultation.png") === "Atlas Consultation", "Space-separated name");
+assert(getDisplayName("Example Plane.jpg") === "Example Plane", "Non-prefixed filenames keep human-readable name");
 
 // ── canonical asset paths ────────────────────────────────────────────────────
 
@@ -76,6 +78,26 @@ const slugTracker = new Map();
 assert(getUniqueSlug("academy_at_tolaria_west", slugTracker) === "academy_at_tolaria_west", "First slug is unchanged");
 assert(getUniqueSlug("academy_at_tolaria_west", slugTracker) === "academy_at_tolaria_west_2", "Second duplicate gets _2 suffix");
 assert(getUniqueSlug("academy_at_tolaria_west", slugTracker) === "academy_at_tolaria_west_3", "Third duplicate gets _3 suffix");
+
+// ── parseCliOptions ───────────────────────────────────────────────────────────
+
+section("parseCliOptions");
+assert(
+  deepEqual(parseCliOptions(["--official", "--type", "plane", "--set", "OPCA"]), {
+    classification: "official",
+    type: "Plane",
+    setCode: "OPCA"
+  }),
+  "Parses separate argument forms"
+);
+assert(
+  deepEqual(parseCliOptions(["--custom", "--type=phenomenon", "--set=PBT"]), {
+    classification: "custom",
+    type: "Phenomenon",
+    setCode: "PBT"
+  }),
+  "Parses equals-sign argument forms"
+);
 
 // ── slugifyName / getCardSlug ────────────────────────────────────────────────
 
