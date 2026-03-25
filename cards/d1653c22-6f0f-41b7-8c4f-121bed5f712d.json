@@ -1,0 +1,17 @@
+{
+  "id": "city_hall",
+  "uid": "d1653c22-6f0f-41b7-8c4f-121bed5f712d",
+  "name": "City Hall",
+  "type": "Plane",
+  "image": "cards/images/d1653c22-6f0f-41b7-8c4f-121bed5f712d.png",
+  "thumb": "cards/thumbs/d1653c22-6f0f-41b7-8c4f-121bed5f712d.webp",
+  "transcript": "cards/transcripts/d1653c22-6f0f-41b7-8c4f-121bed5f712d.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Chicago",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

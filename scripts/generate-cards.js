@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync, existsSync } from "fs";
+import { readFileSync, writeFileSync, existsSync, renameSync } from "fs";
 import { join, extname, dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 import { randomUUID } from "crypto";
@@ -86,12 +86,19 @@ export function mergeCardTags(existingTags, type) {
   return derivedTypeTag ? uniqueTags([...mergedTags, derivedTypeTag]) : mergedTags;
 }
 
-export function getCanonicalAssetPaths(uid, imageExtension = ".png") {
+export function getCanonicalAssetPaths(cardUid, imageExtension = ".png") {
   return {
-    image: `cards/images/${uid}${imageExtension}`,
-    thumb: `cards/thumbs/${uid}.webp`,
-    transcript: `cards/transcripts/${uid}.md`
+    image: `cards/images/${cardUid}${imageExtension}`,
+    thumb: `cards/thumbs/${cardUid}.webp`,
+    transcript: `cards/transcripts/${cardUid}.md`
   };
+}
+
+export function getUniqueSlug(baseSlug, seenCounts) {
+  const normalizedBase = (baseSlug || "").trim() || "card";
+  const count = (seenCounts.get(normalizedBase) || 0) + 1;
+  seenCounts.set(normalizedBase, count);
+  return count === 1 ? normalizedBase : `${normalizedBase}_${count}`;
 }
 
 // ── Internal helpers ──────────────────────────────────────────────────────────
@@ -111,19 +118,18 @@ function readExistingCards(filepath) {
 
 // ── Main script (only runs when executed directly) ────────────────────────────
 
-function normalizeExistingCard(card) {
+function normalizeExistingCard(card, id, slug) {
   const type = typeof card.type === "string" ? card.type : null;
   const mergedTags = mergeCardTags(card.tags, type);
   const official = isOfficialCard(mergedTags);
-  const fallbackName = typeof card.name === "string" ? card.name : "";
   const uid = getCardUid(card, official);
   const imageExt = getImageExtension(card.image);
   const canonicalAssets = getCanonicalAssetPaths(uid, imageExt);
 
   return {
     ...card,
-    id: typeof card.id === "string" && card.id ? card.id : slugifyName(fallbackName),
-    slug: typeof card.slug === "string" && card.slug ? card.slug : slugifyName(fallbackName),
+    id,
+    slug,
     uid,
     image: canonicalAssets.image,
     thumb: canonicalAssets.thumb,
@@ -149,6 +155,21 @@ function getImageExtension(imagePath) {
   return ext || ".png";
 }
 
+function tryRenameAsset(root, previousPath, nextPath) {
+  if (!previousPath || !nextPath || previousPath === nextPath) return;
+
+  const from = join(root, previousPath);
+  const to = join(root, nextPath);
+  if (!existsSync(from) || existsSync(to)) return;
+
+  try {
+    renameSync(from, to);
+    console.log(`Renamed: ${previousPath} -> ${nextPath}`);
+  } catch (err) {
+    console.warn(`Could not rename ${previousPath} -> ${nextPath}: ${err.message}`);
+  }
+}
+
 
 const __filename = fileURLToPath(import.meta.url);
 const isDirectRun = resolve(process.argv[1]) === resolve(__filename);
@@ -166,9 +187,21 @@ if (isDirectRun) {
     process.exit(1);
   }
 
+  const slugTracker = new Map();
+
   for (const existing of existingCards) {
     if (!existing || typeof existing !== "object") continue;
-    cards.push(normalizeExistingCard(existing));
+    const fallbackName = typeof existing.name === "string" ? existing.name : "";
+    const baseSlug = slugifyName(fallbackName) || "card";
+    const nextSlug = getUniqueSlug(baseSlug, slugTracker);
+    const nextId = nextSlug;
+    const normalizedCard = normalizeExistingCard(existing, nextId, nextSlug);
+
+    tryRenameAsset(ROOT, existing.image, normalizedCard.image);
+    tryRenameAsset(ROOT, existing.thumb, normalizedCard.thumb);
+    tryRenameAsset(ROOT, existing.transcript, normalizedCard.transcript);
+
+    cards.push(normalizedCard);
   }
 
   cards.sort((a, b) => {
@@ -184,8 +217,15 @@ if (isDirectRun) {
       process.exit(1);
     }
 
+    const fallbackSlugTracker = new Map();
     const normalizedCards = existingCards
-      .map(normalizeExistingCard)
+      .filter((card) => card && typeof card === "object")
+      .map((card) => {
+        const fallbackName = typeof card.name === "string" ? card.name : "";
+        const baseSlug = slugifyName(fallbackName) || "card";
+        const nextSlug = getUniqueSlug(baseSlug, fallbackSlugTracker);
+        return normalizeExistingCard(card, nextSlug, nextSlug);
+      })
       .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: "base" }));
 
     writeFileSync(OUTPUT_FILE, JSON.stringify(normalizedCards, null, 2) + "\n");

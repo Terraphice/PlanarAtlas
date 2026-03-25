@@ -1,0 +1,17 @@
+{
+  "id": "new_new_york",
+  "uid": "5de42dfa-27ac-4631-aa86-06b6a583352b",
+  "name": "New New York",
+  "type": "Plane",
+  "image": "cards/images/5de42dfa-27ac-4631-aa86-06b6a583352b.png",
+  "thumb": "cards/thumbs/5de42dfa-27ac-4631-aa86-06b6a583352b.webp",
+  "transcript": "cards/transcripts/5de42dfa-27ac-4631-aa86-06b6a583352b.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "New Earth",
+    "WHO",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

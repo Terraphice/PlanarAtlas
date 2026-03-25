@@ -1,0 +1,17 @@
+{
+  "id": "stroopwafel_cafe",
+  "uid": "67620606-e42a-42a6-b534-3d39232901e7",
+  "name": "Stroopwafel Cafe",
+  "type": "Plane",
+  "image": "cards/images/67620606-e42a-42a6-b534-3d39232901e7.png",
+  "thumb": "cards/thumbs/67620606-e42a-42a6-b534-3d39232901e7.webp",
+  "transcript": "cards/transcripts/67620606-e42a-42a6-b534-3d39232901e7.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Amsterdam",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

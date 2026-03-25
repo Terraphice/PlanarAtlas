@@ -1,0 +1,16 @@
+{
+  "id": "tazeem",
+  "uid": "1f6f5808-7e8f-4cbf-95d8-3eacf849f42e",
+  "name": "Tazeem",
+  "type": "Plane",
+  "image": "cards/images/1f6f5808-7e8f-4cbf-95d8-3eacf849f42e.png",
+  "thumb": "cards/thumbs/1f6f5808-7e8f-4cbf-95d8-3eacf849f42e.webp",
+  "transcript": "cards/transcripts/1f6f5808-7e8f-4cbf-95d8-3eacf849f42e.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Zendikar",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

@@ -1,0 +1,16 @@
+{
+  "id": "glimmervoid_basin",
+  "uid": "04b208f7-baca-4485-ada3-f43402ea9998",
+  "name": "Glimmervoid Basin",
+  "type": "Plane",
+  "image": "cards/images/04b208f7-baca-4485-ada3-f43402ea9998.png",
+  "thumb": "cards/thumbs/04b208f7-baca-4485-ada3-f43402ea9998.webp",
+  "transcript": "cards/transcripts/04b208f7-baca-4485-ada3-f43402ea9998.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Mirrodin",
+    "MOC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

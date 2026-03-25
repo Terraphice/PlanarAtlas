@@ -1,0 +1,17 @@
+{
+  "id": "prestons_stage",
+  "uid": "b269d1ed-aeee-441a-9f3e-ccd58e73d348",
+  "name": "Preston's Stage",
+  "type": "Plane",
+  "image": "cards/images/b269d1ed-aeee-441a-9f3e-ccd58e73d348.png",
+  "thumb": "cards/thumbs/b269d1ed-aeee-441a-9f3e-ccd58e73d348.webp",
+  "transcript": "cards/transcripts/b269d1ed-aeee-441a-9f3e-ccd58e73d348.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Las Vegas",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

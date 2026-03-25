@@ -1,0 +1,16 @@
+{
+  "id": "mad_labs",
+  "uid": "25cc2896-df67-4075-b349-1164b8989584",
+  "name": "Mad Labs",
+  "type": "Phenomenon",
+  "image": "cards/images/25cc2896-df67-4075-b349-1164b8989584.png",
+  "thumb": "cards/thumbs/25cc2896-df67-4075-b349-1164b8989584.webp",
+  "transcript": "cards/transcripts/25cc2896-df67-4075-b349-1164b8989584.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:purple:Phenomenon"
+  ],
+  "scryfallId": null
+}

@@ -1,0 +1,16 @@
+{
+  "id": "enigma_ridges",
+  "uid": "78318adb-852b-4333-895e-5f2e5b9142bb",
+  "name": "Enigma Ridges",
+  "type": "Plane",
+  "image": "cards/images/78318adb-852b-4333-895e-5f2e5b9142bb.png",
+  "thumb": "cards/thumbs/78318adb-852b-4333-895e-5f2e5b9142bb.webp",
+  "transcript": "cards/transcripts/78318adb-852b-4333-895e-5f2e5b9142bb.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Echoir",
+    "MOC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

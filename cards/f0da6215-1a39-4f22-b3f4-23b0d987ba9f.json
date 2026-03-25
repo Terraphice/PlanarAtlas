@@ -1,0 +1,17 @@
+{
+  "id": "sky_deck",
+  "uid": "f0da6215-1a39-4f22-b3f4-23b0d987ba9f",
+  "name": "Sky Deck",
+  "type": "Plane",
+  "image": "cards/images/f0da6215-1a39-4f22-b3f4-23b0d987ba9f.png",
+  "thumb": "cards/thumbs/f0da6215-1a39-4f22-b3f4-23b0d987ba9f.webp",
+  "transcript": "cards/transcripts/f0da6215-1a39-4f22-b3f4-23b0d987ba9f.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Chicago",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

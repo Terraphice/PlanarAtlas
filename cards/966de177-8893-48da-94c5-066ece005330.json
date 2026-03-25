@@ -1,0 +1,16 @@
+{
+  "id": "strixhaven",
+  "uid": "966de177-8893-48da-94c5-066ece005330",
+  "name": "Strixhaven",
+  "type": "Plane",
+  "image": "cards/images/966de177-8893-48da-94c5-066ece005330.png",
+  "thumb": "cards/thumbs/966de177-8893-48da-94c5-066ece005330.webp",
+  "transcript": "cards/transcripts/966de177-8893-48da-94c5-066ece005330.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Arcavios",
+    "MOC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

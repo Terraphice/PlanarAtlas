@@ -1,0 +1,17 @@
+{
+  "id": "lake_silencio",
+  "uid": "c8d51535-de90-4407-a93e-a227cc4d82f0",
+  "name": "Lake Silencio",
+  "type": "Plane",
+  "image": "cards/images/c8d51535-de90-4407-a93e-a227cc4d82f0.png",
+  "thumb": "cards/thumbs/c8d51535-de90-4407-a93e-a227cc4d82f0.webp",
+  "transcript": "cards/transcripts/c8d51535-de90-4407-a93e-a227cc4d82f0.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Earth",
+    "WHO",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

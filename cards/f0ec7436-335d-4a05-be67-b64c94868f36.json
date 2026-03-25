@@ -1,0 +1,17 @@
+{
+  "id": "stormcage_containment_facility",
+  "uid": "f0ec7436-335d-4a05-be67-b64c94868f36",
+  "name": "Stormcage Containment Facility",
+  "type": "Plane",
+  "image": "cards/images/f0ec7436-335d-4a05-be67-b64c94868f36.png",
+  "thumb": "cards/thumbs/f0ec7436-335d-4a05-be67-b64c94868f36.webp",
+  "transcript": "cards/transcripts/f0ec7436-335d-4a05-be67-b64c94868f36.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Unknown Planet",
+    "WHO",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

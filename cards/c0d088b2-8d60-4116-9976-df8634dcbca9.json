@@ -1,0 +1,17 @@
+{
+  "id": "bad_wolf_bay",
+  "uid": "c0d088b2-8d60-4116-9976-df8634dcbca9",
+  "name": "Bad Wolf Bay",
+  "type": "Plane",
+  "image": "cards/images/c0d088b2-8d60-4116-9976-df8634dcbca9.png",
+  "thumb": "cards/thumbs/c0d088b2-8d60-4116-9976-df8634dcbca9.webp",
+  "transcript": "cards/transcripts/c0d088b2-8d60-4116-9976-df8634dcbca9.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Earth",
+    "WHO",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

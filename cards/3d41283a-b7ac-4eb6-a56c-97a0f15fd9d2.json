@@ -1,0 +1,16 @@
+{
+  "id": "stairs_to_infinity",
+  "uid": "3d41283a-b7ac-4eb6-a56c-97a0f15fd9d2",
+  "name": "Stairs to Infinity",
+  "type": "Plane",
+  "image": "cards/images/3d41283a-b7ac-4eb6-a56c-97a0f15fd9d2.png",
+  "thumb": "cards/thumbs/3d41283a-b7ac-4eb6-a56c-97a0f15fd9d2.webp",
+  "transcript": "cards/transcripts/3d41283a-b7ac-4eb6-a56c-97a0f15fd9d2.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Xerex",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

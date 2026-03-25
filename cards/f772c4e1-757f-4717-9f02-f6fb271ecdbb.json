@@ -1,0 +1,17 @@
+{
+  "id": "shrinking_plane",
+  "uid": "f772c4e1-757f-4717-9f02-f6fb271ecdbb",
+  "name": "Shrinking Plane",
+  "type": "Plane",
+  "image": "cards/images/f772c4e1-757f-4717-9f02-f6fb271ecdbb.png",
+  "thumb": "cards/thumbs/f772c4e1-757f-4717-9f02-f6fb271ecdbb.webp",
+  "transcript": "cards/transcripts/f772c4e1-757f-4717-9f02-f6fb271ecdbb.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Foldaria",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

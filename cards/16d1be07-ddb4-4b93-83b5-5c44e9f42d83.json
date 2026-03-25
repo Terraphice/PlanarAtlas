@@ -1,0 +1,16 @@
+{
+  "id": "akoum",
+  "uid": "16d1be07-ddb4-4b93-83b5-5c44e9f42d83",
+  "name": "Akoum",
+  "type": "Plane",
+  "image": "cards/images/16d1be07-ddb4-4b93-83b5-5c44e9f42d83.png",
+  "thumb": "cards/thumbs/16d1be07-ddb4-4b93-83b5-5c44e9f42d83.webp",
+  "transcript": "cards/transcripts/16d1be07-ddb4-4b93-83b5-5c44e9f42d83.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Zendikar",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

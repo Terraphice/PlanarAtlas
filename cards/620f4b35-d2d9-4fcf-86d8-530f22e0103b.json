@@ -1,0 +1,17 @@
+{
+  "id": "new_players_journey",
+  "uid": "620f4b35-d2d9-4fcf-86d8-530f22e0103b",
+  "name": "New Player's Journey",
+  "type": "Plane",
+  "image": "cards/images/620f4b35-d2d9-4fcf-86d8-530f22e0103b.png",
+  "thumb": "cards/thumbs/620f4b35-d2d9-4fcf-86d8-530f22e0103b.webp",
+  "transcript": "cards/transcripts/620f4b35-d2d9-4fcf-86d8-530f22e0103b.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Foundations",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

@@ -1,0 +1,16 @@
+{
+  "id": "the_dark_barony",
+  "uid": "379a437b-96b8-4c00-b7f7-9dcf1896c0ee",
+  "name": "The Dark Barony",
+  "type": "Plane",
+  "image": "cards/images/379a437b-96b8-4c00-b7f7-9dcf1896c0ee.png",
+  "thumb": "cards/thumbs/379a437b-96b8-4c00-b7f7-9dcf1896c0ee.webp",
+  "transcript": "cards/transcripts/379a437b-96b8-4c00-b7f7-9dcf1896c0ee.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Ulgrotha",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

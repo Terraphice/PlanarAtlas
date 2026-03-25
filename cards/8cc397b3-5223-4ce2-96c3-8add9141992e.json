@@ -1,0 +1,16 @@
+{
+  "id": "the_hippodrome",
+  "uid": "8cc397b3-5223-4ce2-96c3-8add9141992e",
+  "name": "The Hippodrome",
+  "type": "Plane",
+  "image": "cards/images/8cc397b3-5223-4ce2-96c3-8add9141992e.png",
+  "thumb": "cards/thumbs/8cc397b3-5223-4ce2-96c3-8add9141992e.webp",
+  "transcript": "cards/transcripts/8cc397b3-5223-4ce2-96c3-8add9141992e.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Segovia",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

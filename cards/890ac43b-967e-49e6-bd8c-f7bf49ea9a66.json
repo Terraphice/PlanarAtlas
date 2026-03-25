@@ -1,0 +1,16 @@
+{
+  "id": "edge_of_malacol",
+  "uid": "890ac43b-967e-49e6-bd8c-f7bf49ea9a66",
+  "name": "Edge of Malacol",
+  "type": "Plane",
+  "image": "cards/images/890ac43b-967e-49e6-bd8c-f7bf49ea9a66.png",
+  "thumb": "cards/thumbs/890ac43b-967e-49e6-bd8c-f7bf49ea9a66.webp",
+  "transcript": "cards/transcripts/890ac43b-967e-49e6-bd8c-f7bf49ea9a66.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Belenon",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

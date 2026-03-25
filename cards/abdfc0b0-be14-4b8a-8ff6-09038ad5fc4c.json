@@ -1,0 +1,16 @@
+{
+  "id": "pin_trading",
+  "uid": "abdfc0b0-be14-4b8a-8ff6-09038ad5fc4c",
+  "name": "Pin Trading",
+  "type": "Phenomenon",
+  "image": "cards/images/abdfc0b0-be14-4b8a-8ff6-09038ad5fc4c.png",
+  "thumb": "cards/thumbs/abdfc0b0-be14-4b8a-8ff6-09038ad5fc4c.webp",
+  "transcript": "cards/transcripts/abdfc0b0-be14-4b8a-8ff6-09038ad5fc4c.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:purple:Phenomenon"
+  ],
+  "scryfallId": null
+}

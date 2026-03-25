@@ -1,0 +1,17 @@
+{
+  "id": "math_is_for_blockers_plane",
+  "uid": "3f70debf-6a3e-47bf-96da-f640c8e2916f",
+  "name": "Math is for Blockers (Plane)",
+  "type": "Plane",
+  "image": "cards/images/3f70debf-6a3e-47bf-96da-f640c8e2916f.png",
+  "thumb": "cards/thumbs/3f70debf-6a3e-47bf-96da-f640c8e2916f.webp",
+  "transcript": "cards/transcripts/3f70debf-6a3e-47bf-96da-f640c8e2916f.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Secret Lair",
+    "hidden",
+    "PSSC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

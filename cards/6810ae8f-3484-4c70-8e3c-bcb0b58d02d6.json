@@ -1,0 +1,17 @@
+{
+  "id": "lil_giri_saves_the_day",
+  "uid": "6810ae8f-3484-4c70-8e3c-bcb0b58d02d6",
+  "name": "Li'l Giri Saves the Day",
+  "type": "Plane",
+  "image": "cards/images/6810ae8f-3484-4c70-8e3c-bcb0b58d02d6.png",
+  "thumb": "cards/thumbs/6810ae8f-3484-4c70-8e3c-bcb0b58d02d6.webp",
+  "transcript": "cards/transcripts/6810ae8f-3484-4c70-8e3c-bcb0b58d02d6.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Secret Lair",
+    "hidden",
+    "PSSC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

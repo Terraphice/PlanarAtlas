@@ -1,0 +1,16 @@
+{
+  "id": "bloodhill_bastion",
+  "uid": "6f10df1f-2192-42bd-89aa-dd7579300acf",
+  "name": "Bloodhill Bastion",
+  "type": "Plane",
+  "image": "cards/images/6f10df1f-2192-42bd-89aa-dd7579300acf.png",
+  "thumb": "cards/thumbs/6f10df1f-2192-42bd-89aa-dd7579300acf.webp",
+  "transcript": "cards/transcripts/6f10df1f-2192-42bd-89aa-dd7579300acf.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Equilor",
+    "MOC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

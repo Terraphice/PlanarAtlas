@@ -1,0 +1,16 @@
+{
+  "id": "glen_elendra",
+  "uid": "f5ddf4b8-e4d6-490e-859a-6b89e42094b5",
+  "name": "Glen Elendra",
+  "type": "Plane",
+  "image": "cards/images/f5ddf4b8-e4d6-490e-859a-6b89e42094b5.png",
+  "thumb": "cards/thumbs/f5ddf4b8-e4d6-490e-859a-6b89e42094b5.webp",
+  "transcript": "cards/transcripts/f5ddf4b8-e4d6-490e-859a-6b89e42094b5.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Lorwyn",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

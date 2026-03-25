@@ -1,0 +1,15 @@
+{
+  "id": "mephidross",
+  "uid": "04d3532a-416c-4a12-ad1e-abf6d077f011",
+  "name": "Mephidross",
+  "type": "Plane",
+  "image": "cards/images/04d3532a-416c-4a12-ad1e-abf6d077f011.png",
+  "thumb": "cards/thumbs/04d3532a-416c-4a12-ad1e-abf6d077f011.webp",
+  "transcript": "cards/transcripts/04d3532a-416c-4a12-ad1e-abf6d077f011.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "Mirrodin",
+    "PBT",
+    ":top:badge:tr:green:Plane"
+  ]
+}

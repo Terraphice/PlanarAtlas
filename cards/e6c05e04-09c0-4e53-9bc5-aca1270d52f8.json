@@ -1,0 +1,17 @@
+{
+  "id": "aplan_mortarium",
+  "uid": "e6c05e04-09c0-4e53-9bc5-aca1270d52f8",
+  "name": "Aplan Mortarium",
+  "type": "Plane",
+  "image": "cards/images/e6c05e04-09c0-4e53-9bc5-aca1270d52f8.png",
+  "thumb": "cards/thumbs/e6c05e04-09c0-4e53-9bc5-aca1270d52f8.webp",
+  "transcript": "cards/transcripts/e6c05e04-09c0-4e53-9bc5-aca1270d52f8.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Alfava Metraxis",
+    "WHO",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

@@ -1,0 +1,14 @@
+{
+  "id": "cleansing_dawn",
+  "uid": "ff825c48-e94f-43f4-b0c3-1732f8c03933",
+  "name": "Cleansing Dawn",
+  "type": "Phenomenon",
+  "image": "cards/images/ff825c48-e94f-43f4-b0c3-1732f8c03933.png",
+  "thumb": "cards/thumbs/ff825c48-e94f-43f4-b0c3-1732f8c03933.webp",
+  "transcript": "cards/transcripts/ff825c48-e94f-43f4-b0c3-1732f8c03933.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "PBT",
+    ":top:badge:tr:purple:Phenomenon"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "kilnspire_district",
+  "uid": "ae85b544-aaec-4929-9baa-77597b818f36",
+  "name": "Kilnspire District",
+  "type": "Plane",
+  "image": "cards/images/ae85b544-aaec-4929-9baa-77597b818f36.png",
+  "thumb": "cards/thumbs/ae85b544-aaec-4929-9baa-77597b818f36.webp",
+  "transcript": "cards/transcripts/ae85b544-aaec-4929-9baa-77597b818f36.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Ravnica",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

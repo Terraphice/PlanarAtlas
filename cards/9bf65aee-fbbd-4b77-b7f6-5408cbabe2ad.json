@@ -1,0 +1,17 @@
+{
+  "id": "asmoranomardicadaistinaculdacars_kitchen",
+  "uid": "9bf65aee-fbbd-4b77-b7f6-5408cbabe2ad",
+  "name": "Asmoranomardicadaistinaculdacar's Kitchen",
+  "type": "Plane",
+  "image": "cards/images/9bf65aee-fbbd-4b77-b7f6-5408cbabe2ad.png",
+  "thumb": "cards/thumbs/9bf65aee-fbbd-4b77-b7f6-5408cbabe2ad.webp",
+  "transcript": "cards/transcripts/9bf65aee-fbbd-4b77-b7f6-5408cbabe2ad.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Hell",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

@@ -1,0 +1,17 @@
+{
+  "id": "the_cave_of_skulls",
+  "uid": "bee2b423-61d0-40c0-a8e2-d04778dedd48",
+  "name": "The Cave of Skulls",
+  "type": "Plane",
+  "image": "cards/images/bee2b423-61d0-40c0-a8e2-d04778dedd48.png",
+  "thumb": "cards/thumbs/bee2b423-61d0-40c0-a8e2-d04778dedd48.webp",
+  "transcript": "cards/transcripts/bee2b423-61d0-40c0-a8e2-d04778dedd48.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Earth",
+    "WHO",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

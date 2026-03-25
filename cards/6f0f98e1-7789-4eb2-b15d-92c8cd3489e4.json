@@ -1,0 +1,17 @@
+{
+  "id": "amys_home",
+  "uid": "6f0f98e1-7789-4eb2-b15d-92c8cd3489e4",
+  "name": "Amy's Home",
+  "type": "Plane",
+  "image": "cards/images/6f0f98e1-7789-4eb2-b15d-92c8cd3489e4.png",
+  "thumb": "cards/thumbs/6f0f98e1-7789-4eb2-b15d-92c8cd3489e4.webp",
+  "transcript": "cards/transcripts/6f0f98e1-7789-4eb2-b15d-92c8cd3489e4.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Earth",
+    "WHO",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

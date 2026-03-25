@@ -1,0 +1,16 @@
+{
+  "id": "kessig",
+  "uid": "af174b25-d905-40ca-a911-e7695d7e64f9",
+  "name": "Kessig",
+  "type": "Plane",
+  "image": "cards/images/af174b25-d905-40ca-a911-e7695d7e64f9.png",
+  "thumb": "cards/thumbs/af174b25-d905-40ca-a911-e7695d7e64f9.webp",
+  "transcript": "cards/transcripts/af174b25-d905-40ca-a911-e7695d7e64f9.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Innistrad",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

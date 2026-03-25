@@ -1,0 +1,16 @@
+{
+  "id": "truga_jungle",
+  "uid": "6419cd4d-4259-45d0-a9e7-eef63e899ac3",
+  "name": "Truga Jungle",
+  "type": "Plane",
+  "image": "cards/images/6419cd4d-4259-45d0-a9e7-eef63e899ac3.png",
+  "thumb": "cards/thumbs/6419cd4d-4259-45d0-a9e7-eef63e899ac3.webp",
+  "transcript": "cards/transcripts/6419cd4d-4259-45d0-a9e7-eef63e899ac3.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Ergamon",
+    "MOC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

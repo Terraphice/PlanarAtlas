@@ -1,0 +1,16 @@
+{
+  "id": "naar_isle",
+  "uid": "c1dcfb52-31ba-4564-86ba-8fd41f895b76",
+  "name": "Naar Isle",
+  "type": "Plane",
+  "image": "cards/images/c1dcfb52-31ba-4564-86ba-8fd41f895b76.png",
+  "thumb": "cards/thumbs/c1dcfb52-31ba-4564-86ba-8fd41f895b76.webp",
+  "transcript": "cards/transcripts/c1dcfb52-31ba-4564-86ba-8fd41f895b76.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Wildfire",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

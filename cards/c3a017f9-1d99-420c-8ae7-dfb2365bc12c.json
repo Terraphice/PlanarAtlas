@@ -1,0 +1,16 @@
+{
+  "id": "sans_mercy",
+  "uid": "c3a017f9-1d99-420c-8ae7-dfb2365bc12c",
+  "name": "Sans Mercy",
+  "type": "Plane",
+  "image": "cards/images/c3a017f9-1d99-420c-8ae7-dfb2365bc12c.png",
+  "thumb": "cards/thumbs/c3a017f9-1d99-420c-8ae7-dfb2365bc12c.webp",
+  "transcript": "cards/transcripts/c3a017f9-1d99-420c-8ae7-dfb2365bc12c.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Secret Lair",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

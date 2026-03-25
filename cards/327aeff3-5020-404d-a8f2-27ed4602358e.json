@@ -1,0 +1,16 @@
+{
+  "id": "windriddle_palaces",
+  "uid": "327aeff3-5020-404d-a8f2-27ed4602358e",
+  "name": "Windriddle Palaces",
+  "type": "Plane",
+  "image": "cards/images/327aeff3-5020-404d-a8f2-27ed4602358e.png",
+  "thumb": "cards/thumbs/327aeff3-5020-404d-a8f2-27ed4602358e.webp",
+  "transcript": "cards/transcripts/327aeff3-5020-404d-a8f2-27ed4602358e.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Belenon",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

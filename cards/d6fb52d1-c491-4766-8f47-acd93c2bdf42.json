@@ -1,0 +1,16 @@
+{
+  "id": "otaria",
+  "uid": "d6fb52d1-c491-4766-8f47-acd93c2bdf42",
+  "name": "Otaria",
+  "type": "Plane",
+  "image": "cards/images/d6fb52d1-c491-4766-8f47-acd93c2bdf42.png",
+  "thumb": "cards/thumbs/d6fb52d1-c491-4766-8f47-acd93c2bdf42.webp",
+  "transcript": "cards/transcripts/d6fb52d1-c491-4766-8f47-acd93c2bdf42.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Dominaria",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

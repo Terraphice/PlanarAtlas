@@ -1,0 +1,16 @@
+{
+  "id": "the_great_aerie",
+  "uid": "7b00d91b-0ef2-4edf-8290-ab5b75d34082",
+  "name": "The Great Aerie",
+  "type": "Plane",
+  "image": "cards/images/7b00d91b-0ef2-4edf-8290-ab5b75d34082.png",
+  "thumb": "cards/thumbs/7b00d91b-0ef2-4edf-8290-ab5b75d34082.webp",
+  "transcript": "cards/transcripts/7b00d91b-0ef2-4edf-8290-ab5b75d34082.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Tarkir",
+    "MOC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

@@ -1,0 +1,16 @@
+{
+  "id": "mount_keralia",
+  "uid": "66584b08-03e9-4144-9eff-e14118400715",
+  "name": "Mount Keralia",
+  "type": "Plane",
+  "image": "cards/images/66584b08-03e9-4144-9eff-e14118400715.png",
+  "thumb": "cards/thumbs/66584b08-03e9-4144-9eff-e14118400715.webp",
+  "transcript": "cards/transcripts/66584b08-03e9-4144-9eff-e14118400715.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Regatha",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

@@ -1,0 +1,17 @@
+{
+  "id": "the_food_court",
+  "uid": "d7d77238-db78-4008-ba98-f29c0bc4eb86",
+  "name": "The Food Court",
+  "type": "Plane",
+  "image": "cards/images/d7d77238-db78-4008-ba98-f29c0bc4eb86.png",
+  "thumb": "cards/thumbs/d7d77238-db78-4008-ba98-f29c0bc4eb86.webp",
+  "transcript": "cards/transcripts/d7d77238-db78-4008-ba98-f29c0bc4eb86.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Eldraine",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

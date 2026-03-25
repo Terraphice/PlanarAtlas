@@ -1,0 +1,17 @@
+{
+  "id": "two_streams_facility",
+  "uid": "509c0a2c-59bb-45c5-8485-e2665a80b96f",
+  "name": "Two Streams Facility",
+  "type": "Plane",
+  "image": "cards/images/509c0a2c-59bb-45c5-8485-e2665a80b96f.png",
+  "thumb": "cards/thumbs/509c0a2c-59bb-45c5-8485-e2665a80b96f.webp",
+  "transcript": "cards/transcripts/509c0a2c-59bb-45c5-8485-e2665a80b96f.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Apalapucia",
+    "WHO",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

@@ -1,0 +1,17 @@
+{
+  "id": "the_moonbase",
+  "uid": "dfe8cf2a-d785-4ce5-b25d-7258bb470820",
+  "name": "The Moonbase",
+  "type": "Plane",
+  "image": "cards/images/dfe8cf2a-d785-4ce5-b25d-7258bb470820.png",
+  "thumb": "cards/thumbs/dfe8cf2a-d785-4ce5-b25d-7258bb470820.webp",
+  "transcript": "cards/transcripts/dfe8cf2a-d785-4ce5-b25d-7258bb470820.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Moon",
+    "WHO",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

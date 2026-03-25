@@ -1,0 +1,14 @@
+{
+  "id": "time_spiral",
+  "uid": "e111b2b0-25ff-4480-bf0c-ff015f5742eb",
+  "name": "Time Spiral",
+  "type": "Phenomenon",
+  "image": "cards/images/e111b2b0-25ff-4480-bf0c-ff015f5742eb.png",
+  "thumb": "cards/thumbs/e111b2b0-25ff-4480-bf0c-ff015f5742eb.webp",
+  "transcript": "cards/transcripts/e111b2b0-25ff-4480-bf0c-ff015f5742eb.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "PBT",
+    ":top:badge:tr:purple:Phenomenon"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "lethe_lake",
+  "uid": "01aadffa-a85c-4302-b810-ea73ba584024",
+  "name": "Lethe Lake",
+  "type": "Plane",
+  "image": "cards/images/01aadffa-a85c-4302-b810-ea73ba584024.png",
+  "thumb": "cards/thumbs/01aadffa-a85c-4302-b810-ea73ba584024.webp",
+  "transcript": "cards/transcripts/01aadffa-a85c-4302-b810-ea73ba584024.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Arkhos",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

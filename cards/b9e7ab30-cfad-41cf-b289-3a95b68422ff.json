@@ -1,0 +1,16 @@
+{
+  "id": "paliano",
+  "uid": "b9e7ab30-cfad-41cf-b289-3a95b68422ff",
+  "name": "Paliano",
+  "type": "Plane",
+  "image": "cards/images/b9e7ab30-cfad-41cf-b289-3a95b68422ff.png",
+  "thumb": "cards/thumbs/b9e7ab30-cfad-41cf-b289-3a95b68422ff.webp",
+  "transcript": "cards/transcripts/b9e7ab30-cfad-41cf-b289-3a95b68422ff.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Fiora",
+    "MOC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

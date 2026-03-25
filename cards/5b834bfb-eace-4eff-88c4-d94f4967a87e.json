@@ -1,0 +1,17 @@
+{
+  "id": "the_pyramid_of_mars",
+  "uid": "5b834bfb-eace-4eff-88c4-d94f4967a87e",
+  "name": "The Pyramid of Mars",
+  "type": "Plane",
+  "image": "cards/images/5b834bfb-eace-4eff-88c4-d94f4967a87e.png",
+  "thumb": "cards/thumbs/5b834bfb-eace-4eff-88c4-d94f4967a87e.webp",
+  "transcript": "cards/transcripts/5b834bfb-eace-4eff-88c4-d94f4967a87e.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Mars",
+    "WHO",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

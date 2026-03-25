@@ -1,0 +1,16 @@
+{
+  "id": "furnace_layer",
+  "uid": "43cf2cc9-fad2-4ac7-ab33-abac8b609b18",
+  "name": "Furnace Layer",
+  "type": "Plane",
+  "image": "cards/images/43cf2cc9-fad2-4ac7-ab33-abac8b609b18.png",
+  "thumb": "cards/thumbs/43cf2cc9-fad2-4ac7-ab33-abac8b609b18.webp",
+  "transcript": "cards/transcripts/43cf2cc9-fad2-4ac7-ab33-abac8b609b18.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "New Phyrexia",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

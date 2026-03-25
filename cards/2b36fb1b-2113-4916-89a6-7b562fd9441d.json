@@ -1,0 +1,15 @@
+{
+  "id": "gamalgoth_first_city",
+  "uid": "2b36fb1b-2113-4916-89a6-7b562fd9441d",
+  "name": "Gamalgoth First City",
+  "type": "Plane",
+  "image": "cards/images/2b36fb1b-2113-4916-89a6-7b562fd9441d.png",
+  "thumb": "cards/thumbs/2b36fb1b-2113-4916-89a6-7b562fd9441d.webp",
+  "transcript": "cards/transcripts/2b36fb1b-2113-4916-89a6-7b562fd9441d.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "Phyrexia",
+    "PBT",
+    ":top:badge:tr:green:Plane"
+  ]
+}

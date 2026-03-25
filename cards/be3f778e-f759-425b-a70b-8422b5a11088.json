@@ -1,0 +1,15 @@
+{
+  "id": "time_distortion",
+  "uid": "be3f778e-f759-425b-a70b-8422b5a11088",
+  "name": "Time Distortion",
+  "type": "Phenomenon",
+  "image": "cards/images/be3f778e-f759-425b-a70b-8422b5a11088.png",
+  "thumb": "cards/thumbs/be3f778e-f759-425b-a70b-8422b5a11088.webp",
+  "transcript": "cards/transcripts/be3f778e-f759-425b-a70b-8422b5a11088.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "OPCA",
+    ":top:badge:tr:purple:Phenomenon"
+  ],
+  "scryfallId": null
+}

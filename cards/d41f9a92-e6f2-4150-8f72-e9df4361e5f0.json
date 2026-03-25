@@ -1,0 +1,16 @@
+{
+  "id": "esper",
+  "uid": "d41f9a92-e6f2-4150-8f72-e9df4361e5f0",
+  "name": "Esper",
+  "type": "Plane",
+  "image": "cards/images/d41f9a92-e6f2-4150-8f72-e9df4361e5f0.png",
+  "thumb": "cards/thumbs/d41f9a92-e6f2-4150-8f72-e9df4361e5f0.webp",
+  "transcript": "cards/transcripts/d41f9a92-e6f2-4150-8f72-e9df4361e5f0.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Alara",
+    "MOC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

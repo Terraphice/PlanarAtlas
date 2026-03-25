@@ -1,0 +1,14 @@
+{
+  "id": "ichor_trail",
+  "uid": "e3d3be34-b609-419b-8ba4-534f2de7cc9f",
+  "name": "Ichor Trail",
+  "type": "Phenomenon",
+  "image": "cards/images/e3d3be34-b609-419b-8ba4-534f2de7cc9f.png",
+  "thumb": "cards/thumbs/e3d3be34-b609-419b-8ba4-534f2de7cc9f.webp",
+  "transcript": "cards/transcripts/e3d3be34-b609-419b-8ba4-534f2de7cc9f.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "PBT",
+    ":top:badge:tr:purple:Phenomenon"
+  ]
+}

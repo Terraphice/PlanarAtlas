@@ -1,0 +1,16 @@
+{
+  "id": "gavony",
+  "uid": "74ab5fcf-1ec8-42a5-8df4-81d02b590fd4",
+  "name": "Gavony",
+  "type": "Plane",
+  "image": "cards/images/74ab5fcf-1ec8-42a5-8df4-81d02b590fd4.png",
+  "thumb": "cards/thumbs/74ab5fcf-1ec8-42a5-8df4-81d02b590fd4.webp",
+  "transcript": "cards/transcripts/74ab5fcf-1ec8-42a5-8df4-81d02b590fd4.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Innistrad",
+    "MOC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

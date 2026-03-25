@@ -1,0 +1,16 @@
+{
+  "id": "norns_dominion",
+  "uid": "ec4b8644-cebc-436a-ad26-46f57cb7c376",
+  "name": "Norn's Dominion",
+  "type": "Plane",
+  "image": "cards/images/ec4b8644-cebc-436a-ad26-46f57cb7c376.png",
+  "thumb": "cards/thumbs/ec4b8644-cebc-436a-ad26-46f57cb7c376.webp",
+  "transcript": "cards/transcripts/ec4b8644-cebc-436a-ad26-46f57cb7c376.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "New Phyrexia",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

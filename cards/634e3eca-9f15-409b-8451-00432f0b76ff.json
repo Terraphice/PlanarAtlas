@@ -1,0 +1,17 @@
+{
+  "id": "city_of_the_daleks",
+  "uid": "634e3eca-9f15-409b-8451-00432f0b76ff",
+  "name": "City of the Daleks",
+  "type": "Plane",
+  "image": "cards/images/634e3eca-9f15-409b-8451-00432f0b76ff.png",
+  "thumb": "cards/thumbs/634e3eca-9f15-409b-8451-00432f0b76ff.webp",
+  "transcript": "cards/transcripts/634e3eca-9f15-409b-8451-00432f0b76ff.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Skaro",
+    "WHO",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

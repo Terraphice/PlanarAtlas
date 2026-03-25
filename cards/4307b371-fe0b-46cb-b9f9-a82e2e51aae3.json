@@ -1,0 +1,16 @@
+{
+  "id": "black_lotus_lounge",
+  "uid": "4307b371-fe0b-46cb-b9f9-a82e2e51aae3",
+  "name": "Black Lotus Lounge",
+  "type": "Plane",
+  "image": "cards/images/4307b371-fe0b-46cb-b9f9-a82e2e51aae3.png",
+  "thumb": "cards/thumbs/4307b371-fe0b-46cb-b9f9-a82e2e51aae3.webp",
+  "transcript": "cards/transcripts/4307b371-fe0b-46cb-b9f9-a82e2e51aae3.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

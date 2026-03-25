@@ -1,0 +1,15 @@
+{
+  "id": "chaotic_aether",
+  "uid": "a5ee809d-5598-456c-a301-63a0c2a04ce1",
+  "name": "Chaotic Aether",
+  "type": "Phenomenon",
+  "image": "cards/images/a5ee809d-5598-456c-a301-63a0c2a04ce1.png",
+  "thumb": "cards/thumbs/a5ee809d-5598-456c-a301-63a0c2a04ce1.webp",
+  "transcript": "cards/transcripts/a5ee809d-5598-456c-a301-63a0c2a04ce1.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "MOC",
+    ":top:badge:tr:purple:Phenomenon"
+  ],
+  "scryfallId": null
+}

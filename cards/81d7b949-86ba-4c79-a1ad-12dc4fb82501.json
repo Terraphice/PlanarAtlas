@@ -1,0 +1,14 @@
+{
+  "id": "surging_vitality",
+  "uid": "81d7b949-86ba-4c79-a1ad-12dc4fb82501",
+  "name": "Surging Vitality",
+  "type": "Phenomenon",
+  "image": "cards/images/81d7b949-86ba-4c79-a1ad-12dc4fb82501.png",
+  "thumb": "cards/thumbs/81d7b949-86ba-4c79-a1ad-12dc4fb82501.webp",
+  "transcript": "cards/transcripts/81d7b949-86ba-4c79-a1ad-12dc4fb82501.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "PBT",
+    ":top:badge:tr:purple:Phenomenon"
+  ]
+}

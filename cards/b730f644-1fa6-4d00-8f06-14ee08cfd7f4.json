@@ -1,0 +1,17 @@
+{
+  "id": "the_sphere",
+  "uid": "b730f644-1fa6-4d00-8f06-14ee08cfd7f4",
+  "name": "The Sphere",
+  "type": "Plane",
+  "image": "cards/images/b730f644-1fa6-4d00-8f06-14ee08cfd7f4.png",
+  "thumb": "cards/thumbs/b730f644-1fa6-4d00-8f06-14ee08cfd7f4.webp",
+  "transcript": "cards/transcripts/b730f644-1fa6-4d00-8f06-14ee08cfd7f4.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Las Vegas",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

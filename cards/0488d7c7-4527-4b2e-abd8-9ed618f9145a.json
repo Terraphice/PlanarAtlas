@@ -1,0 +1,17 @@
+{
+  "id": "welcome_to_valley",
+  "uid": "0488d7c7-4527-4b2e-abd8-9ed618f9145a",
+  "name": "Welcome to Valley",
+  "type": "Plane",
+  "image": "cards/images/0488d7c7-4527-4b2e-abd8-9ed618f9145a.png",
+  "thumb": "cards/thumbs/0488d7c7-4527-4b2e-abd8-9ed618f9145a.webp",
+  "transcript": "cards/transcripts/0488d7c7-4527-4b2e-abd8-9ed618f9145a.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Bloomburrow",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

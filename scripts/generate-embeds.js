@@ -126,7 +126,7 @@ function generateEmbedPages(rootDir) {
   const tagMap = new Map();
 
   for (const card of cards) {
-    const cardSlug = card.slug || card.uid;
+    const cardSlug = card.uid || card.slug;
     const cardTitle = `${card.name} · ${card.type} | Planar Atlas`;
     const cardDescription = buildCardDescription(card);
     const cardImage = toAbsoluteUrl(card.thumb || card.image || "assets/social-preview.jpg");

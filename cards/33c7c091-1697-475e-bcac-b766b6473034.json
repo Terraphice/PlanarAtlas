@@ -1,0 +1,16 @@
+{
+  "id": "the_golden_city_of_orazca",
+  "uid": "33c7c091-1697-475e-bcac-b766b6473034",
+  "name": "The Golden City of Orazca",
+  "type": "Plane",
+  "image": "cards/images/33c7c091-1697-475e-bcac-b766b6473034.png",
+  "thumb": "cards/thumbs/33c7c091-1697-475e-bcac-b766b6473034.webp",
+  "transcript": "cards/transcripts/33c7c091-1697-475e-bcac-b766b6473034.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Ixalan",
+    "MOC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

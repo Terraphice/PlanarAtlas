@@ -1,0 +1,16 @@
+{
+  "id": "tember_city",
+  "uid": "16996686-1592-4aa5-b9c9-a06814603b20",
+  "name": "Tember City",
+  "type": "Plane",
+  "image": "cards/images/16996686-1592-4aa5-b9c9-a06814603b20.png",
+  "thumb": "cards/thumbs/16996686-1592-4aa5-b9c9-a06814603b20.webp",
+  "transcript": "cards/transcripts/16996686-1592-4aa5-b9c9-a06814603b20.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Kinshala",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

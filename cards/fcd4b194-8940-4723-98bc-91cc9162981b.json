@@ -1,0 +1,16 @@
+{
+  "id": "valors_reach",
+  "uid": "fcd4b194-8940-4723-98bc-91cc9162981b",
+  "name": "Valor's Reach",
+  "type": "Plane",
+  "image": "cards/images/fcd4b194-8940-4723-98bc-91cc9162981b.png",
+  "thumb": "cards/thumbs/fcd4b194-8940-4723-98bc-91cc9162981b.webp",
+  "transcript": "cards/transcripts/fcd4b194-8940-4723-98bc-91cc9162981b.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Kylem",
+    "MOC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

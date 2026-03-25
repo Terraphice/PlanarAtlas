@@ -1,0 +1,16 @@
+{
+  "id": "shiv",
+  "uid": "5819b7d6-61ca-4336-b635-97c0e3d4140a",
+  "name": "Shiv",
+  "type": "Plane",
+  "image": "cards/images/5819b7d6-61ca-4336-b635-97c0e3d4140a.png",
+  "thumb": "cards/thumbs/5819b7d6-61ca-4336-b635-97c0e3d4140a.webp",
+  "transcript": "cards/transcripts/5819b7d6-61ca-4336-b635-97c0e3d4140a.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Dominaria",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

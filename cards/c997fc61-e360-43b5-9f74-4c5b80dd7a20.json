@@ -1,0 +1,16 @@
+{
+  "id": "the_fourth_sphere",
+  "uid": "c997fc61-e360-43b5-9f74-4c5b80dd7a20",
+  "name": "The Fourth Sphere",
+  "type": "Plane",
+  "image": "cards/images/c997fc61-e360-43b5-9f74-4c5b80dd7a20.png",
+  "thumb": "cards/thumbs/c997fc61-e360-43b5-9f74-4c5b80dd7a20.webp",
+  "transcript": "cards/transcripts/c997fc61-e360-43b5-9f74-4c5b80dd7a20.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Phyrexia",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

@@ -1,0 +1,16 @@
+{
+  "id": "mirrored_depths",
+  "uid": "5d07827b-b602-477f-8c4f-1ec49381b8e8",
+  "name": "Mirrored Depths",
+  "type": "Plane",
+  "image": "cards/images/5d07827b-b602-477f-8c4f-1ec49381b8e8.png",
+  "thumb": "cards/thumbs/5d07827b-b602-477f-8c4f-1ec49381b8e8.webp",
+  "transcript": "cards/transcripts/5d07827b-b602-477f-8c4f-1ec49381b8e8.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Karsus",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

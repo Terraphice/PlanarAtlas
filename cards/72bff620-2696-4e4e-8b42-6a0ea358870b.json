@@ -1,0 +1,16 @@
+{
+  "id": "panopticon",
+  "uid": "72bff620-2696-4e4e-8b42-6a0ea358870b",
+  "name": "Panopticon",
+  "type": "Plane",
+  "image": "cards/images/72bff620-2696-4e4e-8b42-6a0ea358870b.png",
+  "thumb": "cards/thumbs/72bff620-2696-4e4e-8b42-6a0ea358870b.webp",
+  "transcript": "cards/transcripts/72bff620-2696-4e4e-8b42-6a0ea358870b.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Mirrodin",
+    "MOC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

@@ -1,0 +1,16 @@
+{
+  "id": "stensia",
+  "uid": "75c5ae28-18d5-4e16-b4f0-c9c6c38b8752",
+  "name": "Stensia",
+  "type": "Plane",
+  "image": "cards/images/75c5ae28-18d5-4e16-b4f0-c9c6c38b8752.png",
+  "thumb": "cards/thumbs/75c5ae28-18d5-4e16-b4f0-c9c6c38b8752.webp",
+  "transcript": "cards/transcripts/75c5ae28-18d5-4e16-b4f0-c9c6c38b8752.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Innistrad",
+    "MOC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

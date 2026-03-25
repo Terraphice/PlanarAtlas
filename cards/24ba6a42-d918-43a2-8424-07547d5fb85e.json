@@ -1,0 +1,16 @@
+{
+  "id": "year_end_review",
+  "uid": "24ba6a42-d918-43a2-8424-07547d5fb85e",
+  "name": "Year End Review",
+  "type": "Phenomenon",
+  "image": "cards/images/24ba6a42-d918-43a2-8424-07547d5fb85e.png",
+  "thumb": "cards/thumbs/24ba6a42-d918-43a2-8424-07547d5fb85e.webp",
+  "transcript": "cards/transcripts/24ba6a42-d918-43a2-8424-07547d5fb85e.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:purple:Phenomenon"
+  ],
+  "scryfallId": null
+}

@@ -1,0 +1,16 @@
+{
+  "id": "the_pro_tour",
+  "uid": "c45ac06b-a833-4efd-bf28-fb403d2f52f0",
+  "name": "The Pro Tour",
+  "type": "Plane",
+  "image": "cards/images/c45ac06b-a833-4efd-bf28-fb403d2f52f0.png",
+  "thumb": "cards/thumbs/c45ac06b-a833-4efd-bf28-fb403d2f52f0.webp",
+  "transcript": "cards/transcripts/c45ac06b-a833-4efd-bf28-fb403d2f52f0.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "PUNK",
+    "hidden",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

@@ -1,0 +1,16 @@
+{
+  "id": "undercity_reaches",
+  "uid": "a6d7b4e8-4862-4b34-904e-717c412761c7",
+  "name": "Undercity Reaches",
+  "type": "Plane",
+  "image": "cards/images/a6d7b4e8-4862-4b34-904e-717c412761c7.png",
+  "thumb": "cards/thumbs/a6d7b4e8-4862-4b34-904e-717c412761c7.webp",
+  "transcript": "cards/transcripts/a6d7b4e8-4862-4b34-904e-717c412761c7.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Ravnica",
+    "MOC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

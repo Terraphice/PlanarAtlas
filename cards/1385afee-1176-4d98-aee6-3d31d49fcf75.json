@@ -1,0 +1,16 @@
+{
+  "id": "grand_ossuary",
+  "uid": "1385afee-1176-4d98-aee6-3d31d49fcf75",
+  "name": "Grand Ossuary",
+  "type": "Plane",
+  "image": "cards/images/1385afee-1176-4d98-aee6-3d31d49fcf75.png",
+  "thumb": "cards/thumbs/1385afee-1176-4d98-aee6-3d31d49fcf75.webp",
+  "transcript": "cards/transcripts/1385afee-1176-4d98-aee6-3d31d49fcf75.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Ravnica",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

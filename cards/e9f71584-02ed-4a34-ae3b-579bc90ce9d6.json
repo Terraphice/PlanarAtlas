@@ -1,0 +1,16 @@
+{
+  "id": "horizon_boughs",
+  "uid": "e9f71584-02ed-4a34-ae3b-579bc90ce9d6",
+  "name": "Horizon Boughs",
+  "type": "Plane",
+  "image": "cards/images/e9f71584-02ed-4a34-ae3b-579bc90ce9d6.png",
+  "thumb": "cards/thumbs/e9f71584-02ed-4a34-ae3b-579bc90ce9d6.webp",
+  "transcript": "cards/transcripts/e9f71584-02ed-4a34-ae3b-579bc90ce9d6.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Pyrulea",
+    "OPCA",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

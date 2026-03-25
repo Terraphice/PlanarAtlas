@@ -1,0 +1,15 @@
+{
+  "id": "the_tangle",
+  "uid": "7b2e3b17-f4b9-42f6-b0d4-72fc1a2855ad",
+  "name": "The Tangle",
+  "type": "Plane",
+  "image": "cards/images/7b2e3b17-f4b9-42f6-b0d4-72fc1a2855ad.png",
+  "thumb": "cards/thumbs/7b2e3b17-f4b9-42f6-b0d4-72fc1a2855ad.webp",
+  "transcript": "cards/transcripts/7b2e3b17-f4b9-42f6-b0d4-72fc1a2855ad.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "Mirrodin",
+    "PBT",
+    ":top:badge:tr:green:Plane"
+  ]
+}

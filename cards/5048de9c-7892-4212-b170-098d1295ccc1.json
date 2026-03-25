@@ -1,0 +1,17 @@
+{
+  "id": "we_hope_you_like_squirrels",
+  "uid": "5048de9c-7892-4212-b170-098d1295ccc1",
+  "name": "We Hope You Like Squirrels",
+  "type": "Plane",
+  "image": "cards/images/5048de9c-7892-4212-b170-098d1295ccc1.png",
+  "thumb": "cards/thumbs/5048de9c-7892-4212-b170-098d1295ccc1.webp",
+  "transcript": "cards/transcripts/5048de9c-7892-4212-b170-098d1295ccc1.md",
+  "tags": [
+    ":top:badge:tr:green:Official",
+    "Secret Lair",
+    "hidden",
+    "PSSC",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}
