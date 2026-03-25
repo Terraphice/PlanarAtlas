@@ -6,7 +6,7 @@ import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
-const SITE_ORIGIN = "https://planechase.terraphice.dev";
+const SITE_ORIGIN = "https://planaratlas.terraphice.dev";
 
 let failures = 0;
 

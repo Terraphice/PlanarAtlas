@@ -9,12 +9,12 @@
 Browse a fully searchable gallery of every plane and phenomenon, build and share custom decks, and assist
 live Planechase games, all in a single installable web app with no accounts and no servers. (Games require real-life Magic: The Gathering cards, and are not fully simulated. The game utility tools only simulate the planar deck and planar map for Blind Eternities Map mode, for use with real cards. Please support Wizard of The Coast and Magic: The Gathering, use/buy real cards!)
 
-[![Live Site](https://img.shields.io/badge/Live_Site-planechase.terraphice.dev-6366f1?style=for-the-badge&logo=firefox&logoColor=white)](https://planechase.terraphice.dev)
-[![PWA](https://img.shields.io/badge/PWA-Installable_&_Offline-22c55e?style=for-the-badge&logo=pwa&logoColor=white)](https://planechase.terraphice.dev)
+[![Live Site](https://img.shields.io/badge/Live_Site-planaratlas.terraphice.dev-6366f1?style=for-the-badge&logo=firefox&logoColor=white)](https://planaratlas.terraphice.dev)
+[![PWA](https://img.shields.io/badge/PWA-Installable_&_Offline-22c55e?style=for-the-badge&logo=pwa&logoColor=white)](https://planaratlas.terraphice.dev)
 
-[![Total Cards](https://img.shields.io/badge/Total_Cards-230-6366f1?style=for-the-badge)](https://planechase.terraphice.dev)
-[![Official Cards](https://img.shields.io/badge/Official_Cards-206-22c55e?style=for-the-badge)](https://planechase.terraphice.dev)
-[![Custom Cards](https://img.shields.io/badge/Custom_Cards-24-f59e0b?style=for-the-badge)](https://planechase.terraphice.dev)
+[![Total Cards](https://img.shields.io/badge/Total_Cards-230-6366f1?style=for-the-badge)](https://planaratlas.terraphice.dev)
+[![Official Cards](https://img.shields.io/badge/Official_Cards-206-22c55e?style=for-the-badge)](https://planaratlas.terraphice.dev)
+[![Custom Cards](https://img.shields.io/badge/Custom_Cards-24-f59e0b?style=for-the-badge)](https://planaratlas.terraphice.dev)
 
 </div>
 

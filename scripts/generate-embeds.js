@@ -2,7 +2,7 @@ import { mkdirSync, readFileSync, rmSync, writeFileSync } from "fs";
 import { dirname, join, resolve } from "path";
 import { fileURLToPath } from "url";
 
-const SITE_ORIGIN = "https://planechase.terraphice.dev";
+const SITE_ORIGIN = "https://planaratlas.terraphice.dev";
 
 function escapeHtml(value) {
   return String(value)
