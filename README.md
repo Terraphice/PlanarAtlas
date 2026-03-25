@@ -187,9 +187,10 @@ This command performs:
 
 Before running it, ensure new files are in place:
 
-- Card images in `cards/images/` (must begin with `Plane_` or `Phenomenon_`)
-- Thumbnail images in `cards/thumbs/` (`.webp`)
+- Card images in `cards/images/` (must begin with `Plane_` or `Phenomenon_`; `.png`, `.jpg`, and `.jpeg` are supported)
 - Transcript files in `cards/transcripts/` (`.md` preferred)
+
+Thumbnails in `cards/thumbs/` are generated automatically from `cards.json` using `npm run generate:thumbs`, and are included in the full `npm run generate` workflow.
 
 ---
 

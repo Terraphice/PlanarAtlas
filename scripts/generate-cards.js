@@ -118,7 +118,7 @@ function readExistingCards(filepath) {
 
 // ── Main script (only runs when executed directly) ────────────────────────────
 
-function normalizeExistingCard(card, id, slug) {
+function normalizeExistingCard(card, slug) {
   const type = typeof card.type === "string" ? card.type : null;
   const mergedTags = mergeCardTags(card.tags, type);
   const official = isOfficialCard(mergedTags);
@@ -126,9 +126,10 @@ function normalizeExistingCard(card, id, slug) {
   const imageExt = getImageExtension(card.image);
   const canonicalAssets = getCanonicalAssetPaths(uid, imageExt);
 
+  const { id: _legacyId, ...rest } = card;
+
   return {
-    ...card,
-    id,
+    ...rest,
     slug,
     uid,
     image: canonicalAssets.image,
@@ -194,8 +195,7 @@ if (isDirectRun) {
     const fallbackName = typeof existing.name === "string" ? existing.name : "";
     const baseSlug = slugifyName(fallbackName) || "card";
     const nextSlug = getUniqueSlug(baseSlug, slugTracker);
-    const nextId = nextSlug;
-    const normalizedCard = normalizeExistingCard(existing, nextId, nextSlug);
+    const normalizedCard = normalizeExistingCard(existing, nextSlug);
 
     tryRenameAsset(ROOT, existing.image, normalizedCard.image);
     tryRenameAsset(ROOT, existing.thumb, normalizedCard.thumb);
@@ -224,7 +224,7 @@ if (isDirectRun) {
         const fallbackName = typeof card.name === "string" ? card.name : "";
         const baseSlug = slugifyName(fallbackName) || "card";
         const nextSlug = getUniqueSlug(baseSlug, fallbackSlugTracker);
-        return normalizeExistingCard(card, nextSlug, nextSlug);
+        return normalizeExistingCard(card, nextSlug);
       })
       .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: "base" }));
 

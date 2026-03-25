@@ -2,7 +2,7 @@
   "type": "module",
   "scripts": {
     "version:sync": "node scripts/update-version.js",
-    "generate": "node scripts/generate-cards.js && node scripts/generate-embeds.js && node scripts/generate-seo.js",
+    "generate": "node scripts/generate-cards.js && node scripts/generate-thumbs.js && node scripts/generate-embeds.js && node scripts/generate-seo.js",
     "sync": "node scripts/sync-cards.js",
     "test": "node scripts/smoke-test.js",
     "test:codec": "node scripts/test-codec.js",
@@ -18,7 +18,8 @@
     "test:seo": "node scripts/test-seo.js",
     "styles:build": "sass styles/themes.scss styles/themes.css --no-source-map && sass styles/gallery.scss styles/gallery.css --no-source-map && sass styles/game.scss styles/game.css --no-source-map",
     "styles:watch": "sass --watch styles/themes.scss:styles/themes.css styles/gallery.scss:styles/gallery.css styles/game.scss:styles/game.css",
-    "cards:prepare-release": "node scripts/prepare-card-release.js"
+    "cards:prepare-release": "node scripts/prepare-card-release.js",
+    "generate:thumbs": "node scripts/generate-thumbs.js"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

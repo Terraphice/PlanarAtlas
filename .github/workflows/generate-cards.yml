@@ -7,6 +7,9 @@ on:
     paths:
       - cards/images/**
       - scripts/generate-cards.js
+      - scripts/generate-thumbs.js
+      - package-lock.json
+      - package.json
 
 jobs:
   generate:
@@ -17,17 +20,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Run generate-cards.js
-        run: node scripts/generate-cards.js
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
 
-      - name: Commit updated cards.json
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run card generation scripts
+        run: |
+          node scripts/generate-cards.js
+          node scripts/generate-thumbs.js
+
+      - name: Commit updated card metadata and thumbnails
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add cards.json
+          git add cards.json cards/thumbs/
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
-            git commit -m "chore: regenerate cards.json from image files"
+            git commit -m "chore: regenerate cards metadata and thumbnails"
             git push
           fi
