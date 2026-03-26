@@ -1,0 +1,14 @@
+{
+  "uid": "6ea01cd8-8445-43f3-b9f8-aa0b8a7838e5",
+  "name": "Krosan Canopy",
+  "type": "Plane",
+  "image": "cards/images/6ea01cd8-8445-43f3-b9f8-aa0b8a7838e5.png",
+  "thumb": "cards/thumbs/6ea01cd8-8445-43f3-b9f8-aa0b8a7838e5.webp",
+  "transcript": "cards/transcripts/6ea01cd8-8445-43f3-b9f8-aa0b8a7838e5.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

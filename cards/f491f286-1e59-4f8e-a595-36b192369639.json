@@ -1,0 +1,14 @@
+{
+  "uid": "f491f286-1e59-4f8e-a595-36b192369639",
+  "name": "The Cliffs at Sungdol",
+  "type": "Plane",
+  "image": "cards/images/f491f286-1e59-4f8e-a595-36b192369639.png",
+  "thumb": "cards/thumbs/f491f286-1e59-4f8e-a595-36b192369639.webp",
+  "transcript": "cards/transcripts/f491f286-1e59-4f8e-a595-36b192369639.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

@@ -1,0 +1,14 @@
+{
+  "uid": "6a18e382-4ef3-4c2e-845e-9550e304c647",
+  "name": "Spatial Twinning",
+  "type": "Phenomenon",
+  "image": "cards/images/6a18e382-4ef3-4c2e-845e-9550e304c647.png",
+  "thumb": "cards/thumbs/6a18e382-4ef3-4c2e-845e-9550e304c647.webp",
+  "transcript": "cards/transcripts/6a18e382-4ef3-4c2e-845e-9550e304c647.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:purple:Phenomenon"
+  ],
+  "scryfallId": null
+}

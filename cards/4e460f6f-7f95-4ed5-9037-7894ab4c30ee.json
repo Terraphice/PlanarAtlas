@@ -1,0 +1,14 @@
+{
+  "uid": "4e460f6f-7f95-4ed5-9037-7894ab4c30ee",
+  "name": "Potentia Cascades",
+  "type": "Plane",
+  "image": "cards/images/4e460f6f-7f95-4ed5-9037-7894ab4c30ee.png",
+  "thumb": "cards/thumbs/4e460f6f-7f95-4ed5-9037-7894ab4c30ee.webp",
+  "transcript": "cards/transcripts/4e460f6f-7f95-4ed5-9037-7894ab4c30ee.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

@@ -1,0 +1,14 @@
+{
+  "uid": "a9808799-d4a8-40c6-9861-8ece840df567",
+  "name": "Sliver Lair",
+  "type": "Plane",
+  "image": "cards/images/a9808799-d4a8-40c6-9861-8ece840df567.png",
+  "thumb": "cards/thumbs/a9808799-d4a8-40c6-9861-8ece840df567.webp",
+  "transcript": "cards/transcripts/a9808799-d4a8-40c6-9861-8ece840df567.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

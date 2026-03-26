@@ -1,0 +1,14 @@
+{
+  "uid": "8ad2dc7c-9a6d-410c-94e9-de692d4232dc",
+  "name": "Steamflogger Workshop",
+  "type": "Plane",
+  "image": "cards/images/8ad2dc7c-9a6d-410c-94e9-de692d4232dc.png",
+  "thumb": "cards/thumbs/8ad2dc7c-9a6d-410c-94e9-de692d4232dc.webp",
+  "transcript": "cards/transcripts/8ad2dc7c-9a6d-410c-94e9-de692d4232dc.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

@@ -1,0 +1,14 @@
+{
+  "uid": "0ac1589c-da2f-4ef7-a3c0-e00ef94c76ad",
+  "name": "Zonot Six",
+  "type": "Plane",
+  "image": "cards/images/0ac1589c-da2f-4ef7-a3c0-e00ef94c76ad.png",
+  "thumb": "cards/thumbs/0ac1589c-da2f-4ef7-a3c0-e00ef94c76ad.webp",
+  "transcript": "cards/transcripts/0ac1589c-da2f-4ef7-a3c0-e00ef94c76ad.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

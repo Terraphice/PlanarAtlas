@@ -1,0 +1,14 @@
+{
+  "uid": "bb4760e9-81d9-4890-9bd5-24febfa53d4a",
+  "name": "Yomiji's Threshold",
+  "type": "Plane",
+  "image": "cards/images/bb4760e9-81d9-4890-9bd5-24febfa53d4a.png",
+  "thumb": "cards/thumbs/bb4760e9-81d9-4890-9bd5-24febfa53d4a.webp",
+  "transcript": "cards/transcripts/bb4760e9-81d9-4890-9bd5-24febfa53d4a.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

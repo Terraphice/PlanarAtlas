@@ -1,0 +1,14 @@
+{
+  "uid": "1a9abd22-9861-4b0c-919d-9807cada041d",
+  "name": "Tomb of the Eternals",
+  "type": "Plane",
+  "image": "cards/images/1a9abd22-9861-4b0c-919d-9807cada041d.png",
+  "thumb": "cards/thumbs/1a9abd22-9861-4b0c-919d-9807cada041d.webp",
+  "transcript": "cards/transcripts/1a9abd22-9861-4b0c-919d-9807cada041d.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

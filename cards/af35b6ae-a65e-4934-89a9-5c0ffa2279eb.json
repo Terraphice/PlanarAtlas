@@ -1,0 +1,14 @@
+{
+  "uid": "af35b6ae-a65e-4934-89a9-5c0ffa2279eb",
+  "name": "Scallywag's Dock",
+  "type": "Plane",
+  "image": "cards/images/af35b6ae-a65e-4934-89a9-5c0ffa2279eb.png",
+  "thumb": "cards/thumbs/af35b6ae-a65e-4934-89a9-5c0ffa2279eb.webp",
+  "transcript": "cards/transcripts/af35b6ae-a65e-4934-89a9-5c0ffa2279eb.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

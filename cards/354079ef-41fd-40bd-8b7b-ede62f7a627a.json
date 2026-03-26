@@ -1,0 +1,14 @@
+{
+  "uid": "354079ef-41fd-40bd-8b7b-ede62f7a627a",
+  "name": "Iquati Memory Scape",
+  "type": "Plane",
+  "image": "cards/images/354079ef-41fd-40bd-8b7b-ede62f7a627a.png",
+  "thumb": "cards/thumbs/354079ef-41fd-40bd-8b7b-ede62f7a627a.webp",
+  "transcript": "cards/transcripts/354079ef-41fd-40bd-8b7b-ede62f7a627a.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

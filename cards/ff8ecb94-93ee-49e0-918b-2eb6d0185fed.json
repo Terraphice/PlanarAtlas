@@ -1,0 +1,14 @@
+{
+  "uid": "ff8ecb94-93ee-49e0-918b-2eb6d0185fed",
+  "name": "Past Blast!",
+  "type": "Phenomenon",
+  "image": "cards/images/ff8ecb94-93ee-49e0-918b-2eb6d0185fed.png",
+  "thumb": "cards/thumbs/ff8ecb94-93ee-49e0-918b-2eb6d0185fed.webp",
+  "transcript": "cards/transcripts/ff8ecb94-93ee-49e0-918b-2eb6d0185fed.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:purple:Phenomenon"
+  ],
+  "scryfallId": null
+}

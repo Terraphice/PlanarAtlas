@@ -1,0 +1,14 @@
+{
+  "uid": "92b0dac0-1b7f-4f8e-95f5-65ca3a86f563",
+  "name": "Ixalan, the Binding Isle",
+  "type": "Plane",
+  "image": "cards/images/92b0dac0-1b7f-4f8e-95f5-65ca3a86f563.png",
+  "thumb": "cards/thumbs/92b0dac0-1b7f-4f8e-95f5-65ca3a86f563.webp",
+  "transcript": "cards/transcripts/92b0dac0-1b7f-4f8e-95f5-65ca3a86f563.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

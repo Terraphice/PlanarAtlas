@@ -1,0 +1,14 @@
+{
+  "uid": "7a067d4e-3463-4594-b5bd-c99400a567a0",
+  "name": "Lake of Herons",
+  "type": "Plane",
+  "image": "cards/images/7a067d4e-3463-4594-b5bd-c99400a567a0.png",
+  "thumb": "cards/thumbs/7a067d4e-3463-4594-b5bd-c99400a567a0.webp",
+  "transcript": "cards/transcripts/7a067d4e-3463-4594-b5bd-c99400a567a0.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

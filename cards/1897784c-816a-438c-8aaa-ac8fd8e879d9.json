@@ -1,0 +1,14 @@
+{
+  "uid": "1897784c-816a-438c-8aaa-ac8fd8e879d9",
+  "name": "Trial of the Mindful",
+  "type": "Plane",
+  "image": "cards/images/1897784c-816a-438c-8aaa-ac8fd8e879d9.png",
+  "thumb": "cards/thumbs/1897784c-816a-438c-8aaa-ac8fd8e879d9.webp",
+  "transcript": "cards/transcripts/1897784c-816a-438c-8aaa-ac8fd8e879d9.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

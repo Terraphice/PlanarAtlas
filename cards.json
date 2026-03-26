@@ -65,6 +65,21 @@
     "uid": "6f0f98e1-7789-4eb2-b15d-92c8cd3489e4"
   },
   {
+    "uid": "7705c7ec-7e30-42f2-8c10-7e45b44f50b2",
+    "name": "Anomaly Miasma",
+    "type": "Plane",
+    "slug": "anomaly_miasma",
+    "image": "cards/images/7705c7ec-7e30-42f2-8c10-7e45b44f50b2.png",
+    "thumb": "cards/thumbs/7705c7ec-7e30-42f2-8c10-7e45b44f50b2.webp",
+    "transcript": "cards/transcripts/7705c7ec-7e30-42f2-8c10-7e45b44f50b2.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
     "name": "Antarctic Research Base",
     "type": "Plane",
     "image": "cards/images/733548d6-7b36-49ff-a51f-a8216f7bc99f.png",
@@ -518,6 +533,51 @@
     "uid": "42b0a7bb-ece0-435f-82b0-7a66185df372"
   },
   {
+    "uid": "a9837912-a546-4312-ba7d-fffcca6ac2e6",
+    "name": "Digestion Chamber",
+    "type": "Plane",
+    "slug": "digestion_chamber",
+    "image": "cards/images/a9837912-a546-4312-ba7d-fffcca6ac2e6.png",
+    "thumb": "cards/thumbs/a9837912-a546-4312-ba7d-fffcca6ac2e6.webp",
+    "transcript": "cards/transcripts/a9837912-a546-4312-ba7d-fffcca6ac2e6.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
+    "uid": "11f7a592-d4b9-4115-b9e8-8b357eb461ca",
+    "name": "Dimir Underground",
+    "type": "Plane",
+    "slug": "dimir_underground",
+    "image": "cards/images/11f7a592-d4b9-4115-b9e8-8b357eb461ca.png",
+    "thumb": "cards/thumbs/11f7a592-d4b9-4115-b9e8-8b357eb461ca.webp",
+    "transcript": "cards/transcripts/11f7a592-d4b9-4115-b9e8-8b357eb461ca.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
+    "uid": "445ccb4d-886b-4012-bc80-d84371b6c464",
+    "name": "Direct Order",
+    "type": "Phenomenon",
+    "slug": "direct_order",
+    "image": "cards/images/445ccb4d-886b-4012-bc80-d84371b6c464.png",
+    "thumb": "cards/thumbs/445ccb4d-886b-4012-bc80-d84371b6c464.webp",
+    "transcript": "cards/transcripts/445ccb4d-886b-4012-bc80-d84371b6c464.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:purple:Phenomenon"
+    ],
+    "scryfallId": null
+  },
+  {
     "name": "Disturbed Slumber",
     "type": "Phenomenon",
     "image": "cards/images/a11e32fb-e86c-44a1-91e3-129d7d2068e1.png",
@@ -611,6 +671,21 @@
     "uid": "78318adb-852b-4333-895e-5f2e5b9142bb"
   },
   {
+    "uid": "ea1c85d3-b11c-4b2b-931b-5b9fa54cd984",
+    "name": "Eradication Chamber",
+    "type": "Plane",
+    "slug": "eradication_chamber",
+    "image": "cards/images/ea1c85d3-b11c-4b2b-931b-5b9fa54cd984.png",
+    "thumb": "cards/thumbs/ea1c85d3-b11c-4b2b-931b-5b9fa54cd984.webp",
+    "transcript": "cards/transcripts/ea1c85d3-b11c-4b2b-931b-5b9fa54cd984.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
     "name": "Esper",
     "type": "Plane",
     "image": "cards/images/d41f9a92-e6f2-4150-8f72-e9df4361e5f0.png",
@@ -691,6 +766,21 @@
     "uid": "b1d08b99-dca9-4a05-abe9-0601ea8b0762"
   },
   {
+    "uid": "491f346b-c8e2-4772-a7e1-ed0f93fda1de",
+    "name": "Fields of Forever",
+    "type": "Plane",
+    "slug": "fields_of_forever",
+    "image": "cards/images/491f346b-c8e2-4772-a7e1-ed0f93fda1de.png",
+    "thumb": "cards/thumbs/491f346b-c8e2-4772-a7e1-ed0f93fda1de.webp",
+    "transcript": "cards/transcripts/491f346b-c8e2-4772-a7e1-ed0f93fda1de.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
     "name": "Fields of Summer",
     "type": "Plane",
     "image": "cards/images/9ebb052e-6656-4624-ade2-8b00c334ac4c.png",
@@ -738,6 +828,21 @@
     "scryfallId": null,
     "slug": "fixed_point_in_time",
     "uid": "eb0dc8ef-db8d-4c63-aca6-b9d7bc376a34"
+  },
+  {
+    "uid": "888934d4-7dd4-4eed-8734-b4e2b8c38fd4",
+    "name": "Fragile Image Cliffs",
+    "type": "Plane",
+    "slug": "fragile_image_cliffs",
+    "image": "cards/images/888934d4-7dd4-4eed-8734-b4e2b8c38fd4.png",
+    "thumb": "cards/thumbs/888934d4-7dd4-4eed-8734-b4e2b8c38fd4.webp",
+    "transcript": "cards/transcripts/888934d4-7dd4-4eed-8734-b4e2b8c38fd4.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
   },
   {
     "name": "Furnace Layer",
@@ -836,6 +941,21 @@
     "uid": "d35fae8f-d5e3-4a95-8ef9-dc6b2d33a7dc"
   },
   {
+    "uid": "0c693948-a1a2-45dd-b695-6d943692ca7d",
+    "name": "Ghirapur Fairground",
+    "type": "Plane",
+    "slug": "ghirapur_fairground",
+    "image": "cards/images/0c693948-a1a2-45dd-b695-6d943692ca7d.png",
+    "thumb": "cards/thumbs/0c693948-a1a2-45dd-b695-6d943692ca7d.webp",
+    "transcript": "cards/transcripts/0c693948-a1a2-45dd-b695-6d943692ca7d.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
     "name": "Ghirapur Grand Prix",
     "type": "Plane",
     "image": "cards/images/250b7242-8faa-47f7-98ea-af6805a6c187.png",
@@ -851,6 +971,21 @@
     "scryfallId": null,
     "slug": "ghirapur_grand_prix",
     "uid": "250b7242-8faa-47f7-98ea-af6805a6c187"
+  },
+  {
+    "uid": "52dbd341-0d26-40de-b61d-767bb9f76e94",
+    "name": "Glacial Prison",
+    "type": "Plane",
+    "slug": "glacial_prison",
+    "image": "cards/images/52dbd341-0d26-40de-b61d-767bb9f76e94.png",
+    "thumb": "cards/thumbs/52dbd341-0d26-40de-b61d-767bb9f76e94.webp",
+    "transcript": "cards/transcripts/52dbd341-0d26-40de-b61d-767bb9f76e94.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
   },
   {
     "name": "Glen Elendra",
@@ -897,6 +1032,21 @@
     ],
     "slug": "glimpse_of_fate",
     "uid": "8194b440-d495-4c07-8022-91361aae4252"
+  },
+  {
+    "uid": "7abb7dde-8fb5-4f5a-a833-6af71583c627",
+    "name": "Glistening Oilfield",
+    "type": "Plane",
+    "slug": "glistening_oilfield",
+    "image": "cards/images/7abb7dde-8fb5-4f5a-a833-6af71583c627.png",
+    "thumb": "cards/thumbs/7abb7dde-8fb5-4f5a-a833-6af71583c627.webp",
+    "transcript": "cards/transcripts/7abb7dde-8fb5-4f5a-a833-6af71583c627.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
   },
   {
     "name": "Goldmeadow",
@@ -990,6 +1140,21 @@
     ],
     "slug": "halcyon_floating_capital",
     "uid": "c377ae9d-5dc7-49f2-8ca0-9033183add9f"
+  },
+  {
+    "uid": "abfe7606-e4ec-4e77-bb2a-1ddaecdd6216",
+    "name": "Hanweir",
+    "type": "Plane",
+    "slug": "hanweir",
+    "image": "cards/images/abfe7606-e4ec-4e77-bb2a-1ddaecdd6216.png",
+    "thumb": "cards/thumbs/abfe7606-e4ec-4e77-bb2a-1ddaecdd6216.webp",
+    "transcript": "cards/transcripts/abfe7606-e4ec-4e77-bb2a-1ddaecdd6216.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
   },
   {
     "name": "Happy Yargle Day!",
@@ -1214,6 +1379,21 @@
     "uid": "a594bce1-1c0e-4033-b8e6-6d4eb8145fc1"
   },
   {
+    "uid": "354079ef-41fd-40bd-8b7b-ede62f7a627a",
+    "name": "Iquati Memory Scape",
+    "type": "Plane",
+    "slug": "iquati_memory_scape",
+    "image": "cards/images/354079ef-41fd-40bd-8b7b-ede62f7a627a.png",
+    "thumb": "cards/thumbs/354079ef-41fd-40bd-8b7b-ede62f7a627a.webp",
+    "transcript": "cards/transcripts/354079ef-41fd-40bd-8b7b-ede62f7a627a.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
     "name": "Isle of Vesuva",
     "type": "Plane",
     "image": "cards/images/f8869f2d-c07d-49f1-83bd-6adc2958b140.png",
@@ -1228,6 +1408,51 @@
     "scryfallId": null,
     "slug": "isle_of_vesuva",
     "uid": "f8869f2d-c07d-49f1-83bd-6adc2958b140"
+  },
+  {
+    "uid": "bbd06449-2753-4dd0-8184-e210b25f691d",
+    "name": "Itlimoc",
+    "type": "Plane",
+    "slug": "itlimoc",
+    "image": "cards/images/bbd06449-2753-4dd0-8184-e210b25f691d.png",
+    "thumb": "cards/thumbs/bbd06449-2753-4dd0-8184-e210b25f691d.webp",
+    "transcript": "cards/transcripts/bbd06449-2753-4dd0-8184-e210b25f691d.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
+    "uid": "92b0dac0-1b7f-4f8e-95f5-65ca3a86f563",
+    "name": "Ixalan, the Binding Isle",
+    "type": "Plane",
+    "slug": "ixalan_the_binding_isle",
+    "image": "cards/images/92b0dac0-1b7f-4f8e-95f5-65ca3a86f563.png",
+    "thumb": "cards/thumbs/92b0dac0-1b7f-4f8e-95f5-65ca3a86f563.webp",
+    "transcript": "cards/transcripts/92b0dac0-1b7f-4f8e-95f5-65ca3a86f563.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
+    "uid": "c3cc9d72-66d6-4a2a-9332-94b15cd7f7bb",
+    "name": "Izzet Inventarium",
+    "type": "Plane",
+    "slug": "izzet_inventarium",
+    "image": "cards/images/c3cc9d72-66d6-4a2a-9332-94b15cd7f7bb.png",
+    "thumb": "cards/thumbs/c3cc9d72-66d6-4a2a-9332-94b15cd7f7bb.webp",
+    "transcript": "cards/transcripts/c3cc9d72-66d6-4a2a-9332-94b15cd7f7bb.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
   },
   {
     "name": "Izzet Steam Maze",
@@ -1277,6 +1502,21 @@
     "scryfallId": null,
     "slug": "jund",
     "uid": "8e6194d6-7693-4930-8ab6-ac7e49702a30"
+  },
+  {
+    "uid": "b2ee1be3-4e6f-4129-8879-89e42cb1cf0b",
+    "name": "Kalonia",
+    "type": "Plane",
+    "slug": "kalonia",
+    "image": "cards/images/b2ee1be3-4e6f-4129-8879-89e42cb1cf0b.png",
+    "thumb": "cards/thumbs/b2ee1be3-4e6f-4129-8879-89e42cb1cf0b.webp",
+    "transcript": "cards/transcripts/b2ee1be3-4e6f-4129-8879-89e42cb1cf0b.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
   },
   {
     "name": "Kerblam! Warehouse",
@@ -1376,6 +1616,21 @@
     "uid": "b91d4516-f7e6-461c-89b6-f311bc561152"
   },
   {
+    "uid": "6ea01cd8-8445-43f3-b9f8-aa0b8a7838e5",
+    "name": "Krosan Canopy",
+    "type": "Plane",
+    "slug": "krosan_canopy",
+    "image": "cards/images/6ea01cd8-8445-43f3-b9f8-aa0b8a7838e5.png",
+    "thumb": "cards/thumbs/6ea01cd8-8445-43f3-b9f8-aa0b8a7838e5.webp",
+    "transcript": "cards/transcripts/6ea01cd8-8445-43f3-b9f8-aa0b8a7838e5.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
     "name": "Lair of the Ashen Idol",
     "type": "Plane",
     "image": "cards/images/42cf6078-e346-4ca1-bd98-bcbd47f6cba5.png",
@@ -1390,6 +1645,21 @@
     "scryfallId": null,
     "slug": "lair_of_the_ashen_idol",
     "uid": "42cf6078-e346-4ca1-bd98-bcbd47f6cba5"
+  },
+  {
+    "uid": "7a067d4e-3463-4594-b5bd-c99400a567a0",
+    "name": "Lake of Herons",
+    "type": "Plane",
+    "slug": "lake_of_herons",
+    "image": "cards/images/7a067d4e-3463-4594-b5bd-c99400a567a0.png",
+    "thumb": "cards/thumbs/7a067d4e-3463-4594-b5bd-c99400a567a0.webp",
+    "transcript": "cards/transcripts/7a067d4e-3463-4594-b5bd-c99400a567a0.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
   },
   {
     "name": "Lake Silencio",
@@ -1487,6 +1757,21 @@
     ],
     "slug": "lotus_basin",
     "uid": "324fe0b9-e96e-4988-b382-c9f43324410b"
+  },
+  {
+    "uid": "f2aca55c-35b9-413f-ad5b-506ba326a41b",
+    "name": "Lurenbaum Fortress",
+    "type": "Plane",
+    "slug": "lurenbaum_fortress",
+    "image": "cards/images/f2aca55c-35b9-413f-ad5b-506ba326a41b.png",
+    "thumb": "cards/thumbs/f2aca55c-35b9-413f-ad5b-506ba326a41b.webp",
+    "transcript": "cards/transcripts/f2aca55c-35b9-413f-ad5b-506ba326a41b.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
   },
   {
     "name": "Mad Labs",
@@ -1911,6 +2196,36 @@
     "uid": "d7063239-a8cd-4316-aee7-bcc3012fd5bd"
   },
   {
+    "uid": "33f98fe9-e680-4844-b3e9-81be89734597",
+    "name": "Nyx",
+    "type": "Plane",
+    "slug": "nyx_2",
+    "image": "cards/images/33f98fe9-e680-4844-b3e9-81be89734597.png",
+    "thumb": "cards/thumbs/33f98fe9-e680-4844-b3e9-81be89734597.webp",
+    "transcript": "cards/transcripts/33f98fe9-e680-4844-b3e9-81be89734597.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
+    "uid": "cb775f38-8de8-4f54-b8b0-c041d87e83c6",
+    "name": "Okiba Gang Academy",
+    "type": "Plane",
+    "slug": "okiba_gang_academy",
+    "image": "cards/images/cb775f38-8de8-4f54-b8b0-c041d87e83c6.png",
+    "thumb": "cards/thumbs/cb775f38-8de8-4f54-b8b0-c041d87e83c6.webp",
+    "transcript": "cards/transcripts/cb775f38-8de8-4f54-b8b0-c041d87e83c6.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
     "name": "Omenpath Instability",
     "type": "Phenomenon",
     "image": "cards/images/8409ed23-e7f0-4cb1-8aea-48b0fa51df6e.png",
@@ -2071,6 +2386,21 @@
     "uid": "72bff620-2696-4e4e-8b42-6a0ea358870b"
   },
   {
+    "uid": "ff8ecb94-93ee-49e0-918b-2eb6d0185fed",
+    "name": "Past Blast!",
+    "type": "Phenomenon",
+    "slug": "past_blast",
+    "image": "cards/images/ff8ecb94-93ee-49e0-918b-2eb6d0185fed.png",
+    "thumb": "cards/thumbs/ff8ecb94-93ee-49e0-918b-2eb6d0185fed.webp",
+    "transcript": "cards/transcripts/ff8ecb94-93ee-49e0-918b-2eb6d0185fed.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:purple:Phenomenon"
+    ],
+    "scryfallId": null
+  },
+  {
     "name": "Pin Collector's Booth",
     "type": "Plane",
     "image": "cards/images/ce6e1615-b132-419b-ae8c-d0f1c63cb3fb.png",
@@ -2149,6 +2479,21 @@
     "scryfallId": null,
     "slug": "pools_of_becoming",
     "uid": "cc44eb90-4dc9-4a01-a17d-1d41515cf083"
+  },
+  {
+    "uid": "4e460f6f-7f95-4ed5-9037-7894ab4c30ee",
+    "name": "Potentia Cascades",
+    "type": "Plane",
+    "slug": "potentia_cascades",
+    "image": "cards/images/4e460f6f-7f95-4ed5-9037-7894ab4c30ee.png",
+    "thumb": "cards/thumbs/4e460f6f-7f95-4ed5-9037-7894ab4c30ee.webp",
+    "transcript": "cards/transcripts/4e460f6f-7f95-4ed5-9037-7894ab4c30ee.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
   },
   {
     "name": "Prahv",
@@ -2330,6 +2675,21 @@
     "uid": "84f38c77-14b4-4fc7-90a5-da4c58ed95ad"
   },
   {
+    "uid": "b1136c5b-c5f7-459a-88b5-766e1873beb2",
+    "name": "Salivation Chamber",
+    "type": "Plane",
+    "slug": "salivation_chamber",
+    "image": "cards/images/b1136c5b-c5f7-459a-88b5-766e1873beb2.png",
+    "thumb": "cards/thumbs/b1136c5b-c5f7-459a-88b5-766e1873beb2.webp",
+    "transcript": "cards/transcripts/b1136c5b-c5f7-459a-88b5-766e1873beb2.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
     "name": "Sanctum of Serra",
     "type": "Plane",
     "image": "cards/images/b201d39c-1016-49e4-b163-27c8fa89cfa6.png",
@@ -2360,6 +2720,21 @@
     "scryfallId": null,
     "slug": "sans_mercy",
     "uid": "c3a017f9-1d99-420c-8ae7-dfb2365bc12c"
+  },
+  {
+    "uid": "af35b6ae-a65e-4934-89a9-5c0ffa2279eb",
+    "name": "Scallywag's Dock",
+    "type": "Plane",
+    "slug": "scallywags_dock",
+    "image": "cards/images/af35b6ae-a65e-4934-89a9-5c0ffa2279eb.png",
+    "thumb": "cards/thumbs/af35b6ae-a65e-4934-89a9-5c0ffa2279eb.webp",
+    "transcript": "cards/transcripts/af35b6ae-a65e-4934-89a9-5c0ffa2279eb.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
   },
   {
     "name": "Sea of Sand",
@@ -2494,6 +2869,21 @@
     "uid": "4163c59e-def9-406a-96a9-9d10b7de1389"
   },
   {
+    "uid": "77275b7d-b8f1-4f29-a314-5a1451265753",
+    "name": "Skylight Tower",
+    "type": "Plane",
+    "slug": "skylight_tower",
+    "image": "cards/images/77275b7d-b8f1-4f29-a314-5a1451265753.png",
+    "thumb": "cards/thumbs/77275b7d-b8f1-4f29-a314-5a1451265753.webp",
+    "transcript": "cards/transcripts/77275b7d-b8f1-4f29-a314-5a1451265753.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
     "name": "Sleeper Agent",
     "type": "Phenomenon",
     "image": "cards/images/1ef69bc5-70d5-4a8e-9fb6-8976801bbad8.png",
@@ -2506,6 +2896,21 @@
     ],
     "slug": "sleeper_agent",
     "uid": "1ef69bc5-70d5-4a8e-9fb6-8976801bbad8"
+  },
+  {
+    "uid": "a9808799-d4a8-40c6-9861-8ece840df567",
+    "name": "Sliver Lair",
+    "type": "Plane",
+    "slug": "sliver_lair",
+    "image": "cards/images/a9808799-d4a8-40c6-9861-8ece840df567.png",
+    "thumb": "cards/thumbs/a9808799-d4a8-40c6-9861-8ece840df567.webp",
+    "transcript": "cards/transcripts/a9808799-d4a8-40c6-9861-8ece840df567.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
   },
   {
     "name": "Sokenzan",
@@ -2556,6 +2961,21 @@
     "uid": "e901a8b5-a5e0-41d8-adbf-cec432635146"
   },
   {
+    "uid": "6a18e382-4ef3-4c2e-845e-9550e304c647",
+    "name": "Spatial Twinning",
+    "type": "Phenomenon",
+    "slug": "spatial_twinning",
+    "image": "cards/images/6a18e382-4ef3-4c2e-845e-9550e304c647.png",
+    "thumb": "cards/thumbs/6a18e382-4ef3-4c2e-845e-9550e304c647.webp",
+    "transcript": "cards/transcripts/6a18e382-4ef3-4c2e-845e-9550e304c647.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:purple:Phenomenon"
+    ],
+    "scryfallId": null
+  },
+  {
     "name": "Spectrox Mines",
     "type": "Plane",
     "image": "cards/images/7a37dce4-669d-4670-9a1c-45780d9db23a.png",
@@ -2587,6 +3007,21 @@
     "scryfallId": null,
     "slug": "stairs_to_infinity",
     "uid": "3d41283a-b7ac-4eb6-a56c-97a0f15fd9d2"
+  },
+  {
+    "uid": "8ad2dc7c-9a6d-410c-94e9-de692d4232dc",
+    "name": "Steamflogger Workshop",
+    "type": "Plane",
+    "slug": "steamflogger_workshop",
+    "image": "cards/images/8ad2dc7c-9a6d-410c-94e9-de692d4232dc.png",
+    "thumb": "cards/thumbs/8ad2dc7c-9a6d-410c-94e9-de692d4232dc.webp",
+    "transcript": "cards/transcripts/8ad2dc7c-9a6d-410c-94e9-de692d4232dc.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
   },
   {
     "name": "Stensia",
@@ -2816,6 +3251,21 @@
     "uid": "a10656c3-8a70-4a43-b6a9-11c81cb55351"
   },
   {
+    "uid": "6cbc3252-c7c8-4a7e-a605-ac9dacb86040",
+    "name": "Temple of Heliud",
+    "type": "Plane",
+    "slug": "temple_of_heliud",
+    "image": "cards/images/6cbc3252-c7c8-4a7e-a605-ac9dacb86040.png",
+    "thumb": "cards/thumbs/6cbc3252-c7c8-4a7e-a605-ac9dacb86040.webp",
+    "transcript": "cards/transcripts/6cbc3252-c7c8-4a7e-a605-ac9dacb86040.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
     "name": "Ten Wizards Mountain",
     "type": "Plane",
     "image": "cards/images/be2f9acf-1b7a-419b-99b8-c211bc4f06f2.png",
@@ -2863,6 +3313,21 @@
     "scryfallId": null,
     "slug": "the_bean",
     "uid": "869bd76d-4999-4ffc-9da2-bb93e1f06c48"
+  },
+  {
+    "uid": "e4cc3284-3f2a-42e6-a322-5a6dbfc63e75",
+    "name": "The Blind Eternities",
+    "type": "Plane",
+    "slug": "the_blind_eternities",
+    "image": "cards/images/e4cc3284-3f2a-42e6-a322-5a6dbfc63e75.png",
+    "thumb": "cards/thumbs/e4cc3284-3f2a-42e6-a322-5a6dbfc63e75.webp",
+    "transcript": "cards/transcripts/e4cc3284-3f2a-42e6-a322-5a6dbfc63e75.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
   },
   {
     "name": "The Caldaia",
@@ -2913,6 +3378,21 @@
     "scryfallId": null,
     "slug": "the_cheetah_planet",
     "uid": "741fdf3c-44b1-4755-9bf4-d3b149429203"
+  },
+  {
+    "uid": "f491f286-1e59-4f8e-a595-36b192369639",
+    "name": "The Cliffs at Sungdol",
+    "type": "Plane",
+    "slug": "the_cliffs_at_sungdol",
+    "image": "cards/images/f491f286-1e59-4f8e-a595-36b192369639.png",
+    "thumb": "cards/thumbs/f491f286-1e59-4f8e-a595-36b192369639.webp",
+    "transcript": "cards/transcripts/f491f286-1e59-4f8e-a595-36b192369639.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
   },
   {
     "name": "The Command Zone",
@@ -3158,6 +3638,21 @@
     "uid": "559494ce-1870-42d7-b16d-fcd3d2626bba"
   },
   {
+    "uid": "75fec8ef-41ca-441e-ae98-75072a43c8a4",
+    "name": "The Great Red Spot",
+    "type": "Plane",
+    "slug": "the_great_red_spot",
+    "image": "cards/images/75fec8ef-41ca-441e-ae98-75072a43c8a4.png",
+    "thumb": "cards/thumbs/75fec8ef-41ca-441e-ae98-75072a43c8a4.webp",
+    "transcript": "cards/transcripts/75fec8ef-41ca-441e-ae98-75072a43c8a4.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
     "name": "The Hippodrome",
     "type": "Plane",
     "image": "cards/images/8cc397b3-5223-4ce2-96c3-8add9141992e.png",
@@ -3172,6 +3667,21 @@
     "scryfallId": null,
     "slug": "the_hippodrome",
     "uid": "8cc397b3-5223-4ce2-96c3-8add9141992e"
+  },
+  {
+    "uid": "e013d071-f9f4-48ef-b52e-29218966a77a",
+    "name": "The Infinite Dunes",
+    "type": "Plane",
+    "slug": "the_infinite_dunes",
+    "image": "cards/images/e013d071-f9f4-48ef-b52e-29218966a77a.png",
+    "thumb": "cards/thumbs/e013d071-f9f4-48ef-b52e-29218966a77a.webp",
+    "transcript": "cards/transcripts/e013d071-f9f4-48ef-b52e-29218966a77a.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
   },
   {
     "name": "The Lux Foundation Library",
@@ -3307,6 +3817,21 @@
     "uid": "b730f644-1fa6-4d00-8f06-14ee08cfd7f4"
   },
   {
+    "uid": "7addbf97-1d10-4b4b-a19f-7c03bb33476b",
+    "name": "The Sun Coast",
+    "type": "Plane",
+    "slug": "the_sun_coast",
+    "image": "cards/images/7addbf97-1d10-4b4b-a19f-7c03bb33476b.png",
+    "thumb": "cards/thumbs/7addbf97-1d10-4b4b-a19f-7c03bb33476b.webp",
+    "transcript": "cards/transcripts/7addbf97-1d10-4b4b-a19f-7c03bb33476b.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
     "name": "The Tangle",
     "type": "Plane",
     "image": "cards/images/7b2e3b17-f4b9-42f6-b0d4-72fc1a2855ad.png",
@@ -3402,6 +3927,21 @@
     "uid": "61bd2c8c-2466-410d-b7db-1e2d340af949"
   },
   {
+    "uid": "f3612b56-7b8e-4daf-8ff3-ef7507c43283",
+    "name": "Throne Room of Pailano",
+    "type": "Plane",
+    "slug": "throne_room_of_pailano",
+    "image": "cards/images/f3612b56-7b8e-4daf-8ff3-ef7507c43283.png",
+    "thumb": "cards/thumbs/f3612b56-7b8e-4daf-8ff3-ef7507c43283.webp",
+    "transcript": "cards/transcripts/f3612b56-7b8e-4daf-8ff3-ef7507c43283.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
     "name": "Time Distortion",
     "type": "Phenomenon",
     "image": "cards/images/be3f778e-f759-425b-a70b-8422b5a11088.png",
@@ -3429,6 +3969,36 @@
     ],
     "slug": "time_spiral",
     "uid": "e111b2b0-25ff-4480-bf0c-ff015f5742eb"
+  },
+  {
+    "uid": "1a9abd22-9861-4b0c-919d-9807cada041d",
+    "name": "Tomb of the Eternals",
+    "type": "Plane",
+    "slug": "tomb_of_the_eternals",
+    "image": "cards/images/1a9abd22-9861-4b0c-919d-9807cada041d.png",
+    "thumb": "cards/thumbs/1a9abd22-9861-4b0c-919d-9807cada041d.webp",
+    "transcript": "cards/transcripts/1a9abd22-9861-4b0c-919d-9807cada041d.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
+    "uid": "e1d34b23-75a5-4a4d-9b9f-4d926d7e69c3",
+    "name": "Torrent of Refraction",
+    "type": "Plane",
+    "slug": "torrent_of_refraction",
+    "image": "cards/images/e1d34b23-75a5-4a4d-9b9f-4d926d7e69c3.png",
+    "thumb": "cards/thumbs/e1d34b23-75a5-4a4d-9b9f-4d926d7e69c3.webp",
+    "transcript": "cards/transcripts/e1d34b23-75a5-4a4d-9b9f-4d926d7e69c3.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
   },
   {
     "name": "Towashi",
@@ -3461,6 +4031,21 @@
     "scryfallId": null,
     "slug": "trail_of_the_mage_rings",
     "uid": "6ca4791c-4678-43ff-99a8-b0ddff272b0d"
+  },
+  {
+    "uid": "1897784c-816a-438c-8aaa-ac8fd8e879d9",
+    "name": "Trial of the Mindful",
+    "type": "Plane",
+    "slug": "trial_of_the_mindful",
+    "image": "cards/images/1897784c-816a-438c-8aaa-ac8fd8e879d9.png",
+    "thumb": "cards/thumbs/1897784c-816a-438c-8aaa-ac8fd8e879d9.webp",
+    "transcript": "cards/transcripts/1897784c-816a-438c-8aaa-ac8fd8e879d9.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
   },
   {
     "name": "Truga Jungle",
@@ -3510,6 +4095,21 @@
     "scryfallId": null,
     "slug": "two_streams_facility",
     "uid": "509c0a2c-59bb-45c5-8485-e2665a80b96f"
+  },
+  {
+    "uid": "12dcf5f5-b363-4e58-964e-330e724a5802",
+    "name": "Ugin's Resevoir",
+    "type": "Plane",
+    "slug": "ugins_resevoir",
+    "image": "cards/images/12dcf5f5-b363-4e58-964e-330e724a5802.png",
+    "thumb": "cards/thumbs/12dcf5f5-b363-4e58-964e-330e724a5802.webp",
+    "transcript": "cards/transcripts/12dcf5f5-b363-4e58-964e-330e724a5802.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
   },
   {
     "name": "Undercity Reaches",
@@ -3625,6 +4225,21 @@
     "uid": "4bc4144e-f2a9-46be-9a58-fd0ae16c0fb6"
   },
   {
+    "uid": "2b889488-af23-4a76-8882-be5f8f566b36",
+    "name": "Vhelnish, Sanctum of the Lich Lord",
+    "type": "Plane",
+    "slug": "vhelnish_sanctum_of_the_lich_lord",
+    "image": "cards/images/2b889488-af23-4a76-8882-be5f8f566b36.png",
+    "thumb": "cards/thumbs/2b889488-af23-4a76-8882-be5f8f566b36.webp",
+    "transcript": "cards/transcripts/2b889488-af23-4a76-8882-be5f8f566b36.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
     "name": "We Hope You Like Squirrels",
     "type": "Plane",
     "image": "cards/images/5048de9c-7892-4212-b170-098d1295ccc1.png",
@@ -3706,5 +4321,50 @@
     "scryfallId": null,
     "slug": "year_end_review",
     "uid": "24ba6a42-d918-43a2-8424-07547d5fb85e"
+  },
+  {
+    "uid": "bb4760e9-81d9-4890-9bd5-24febfa53d4a",
+    "name": "Yomiji's Threshold",
+    "type": "Plane",
+    "slug": "yomijis_threshold",
+    "image": "cards/images/bb4760e9-81d9-4890-9bd5-24febfa53d4a.png",
+    "thumb": "cards/thumbs/bb4760e9-81d9-4890-9bd5-24febfa53d4a.webp",
+    "transcript": "cards/transcripts/bb4760e9-81d9-4890-9bd5-24febfa53d4a.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
+  },
+  {
+    "uid": "2e409502-b835-4185-8325-eb93529e2d8b",
+    "name": "Your God Pharaoh Has Returned",
+    "type": "Phenomenon",
+    "slug": "your_god_pharaoh_has_returned",
+    "image": "cards/images/2e409502-b835-4185-8325-eb93529e2d8b.png",
+    "thumb": "cards/thumbs/2e409502-b835-4185-8325-eb93529e2d8b.webp",
+    "transcript": "cards/transcripts/2e409502-b835-4185-8325-eb93529e2d8b.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:purple:Phenomenon"
+    ],
+    "scryfallId": null
+  },
+  {
+    "uid": "0ac1589c-da2f-4ef7-a3c0-e00ef94c76ad",
+    "name": "Zonot Six",
+    "type": "Plane",
+    "slug": "zonot_six",
+    "image": "cards/images/0ac1589c-da2f-4ef7-a3c0-e00ef94c76ad.png",
+    "thumb": "cards/thumbs/0ac1589c-da2f-4ef7-a3c0-e00ef94c76ad.webp",
+    "transcript": "cards/transcripts/0ac1589c-da2f-4ef7-a3c0-e00ef94c76ad.md",
+    "tags": [
+      ":top:badge:tr:amber:Custom",
+      "P19",
+      ":top:badge:tr:green:Plane"
+    ],
+    "scryfallId": null
   }
 ]

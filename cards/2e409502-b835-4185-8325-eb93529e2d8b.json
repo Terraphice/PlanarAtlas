@@ -1,0 +1,14 @@
+{
+  "uid": "2e409502-b835-4185-8325-eb93529e2d8b",
+  "name": "Your God Pharaoh Has Returned",
+  "type": "Phenomenon",
+  "image": "cards/images/2e409502-b835-4185-8325-eb93529e2d8b.png",
+  "thumb": "cards/thumbs/2e409502-b835-4185-8325-eb93529e2d8b.webp",
+  "transcript": "cards/transcripts/2e409502-b835-4185-8325-eb93529e2d8b.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:purple:Phenomenon"
+  ],
+  "scryfallId": null
+}

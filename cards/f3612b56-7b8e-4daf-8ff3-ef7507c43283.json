@@ -1,0 +1,14 @@
+{
+  "uid": "f3612b56-7b8e-4daf-8ff3-ef7507c43283",
+  "name": "Throne Room of Pailano",
+  "type": "Plane",
+  "image": "cards/images/f3612b56-7b8e-4daf-8ff3-ef7507c43283.png",
+  "thumb": "cards/thumbs/f3612b56-7b8e-4daf-8ff3-ef7507c43283.webp",
+  "transcript": "cards/transcripts/f3612b56-7b8e-4daf-8ff3-ef7507c43283.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

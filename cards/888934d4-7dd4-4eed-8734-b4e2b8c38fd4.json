@@ -1,0 +1,14 @@
+{
+  "uid": "888934d4-7dd4-4eed-8734-b4e2b8c38fd4",
+  "name": "Fragile Image Cliffs",
+  "type": "Plane",
+  "image": "cards/images/888934d4-7dd4-4eed-8734-b4e2b8c38fd4.png",
+  "thumb": "cards/thumbs/888934d4-7dd4-4eed-8734-b4e2b8c38fd4.webp",
+  "transcript": "cards/transcripts/888934d4-7dd4-4eed-8734-b4e2b8c38fd4.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

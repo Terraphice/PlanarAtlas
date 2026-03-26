@@ -1,0 +1,14 @@
+{
+  "uid": "a9837912-a546-4312-ba7d-fffcca6ac2e6",
+  "name": "Digestion Chamber",
+  "type": "Plane",
+  "image": "cards/images/a9837912-a546-4312-ba7d-fffcca6ac2e6.png",
+  "thumb": "cards/thumbs/a9837912-a546-4312-ba7d-fffcca6ac2e6.webp",
+  "transcript": "cards/transcripts/a9837912-a546-4312-ba7d-fffcca6ac2e6.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

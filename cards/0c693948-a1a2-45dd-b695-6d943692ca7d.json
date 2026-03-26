@@ -1,0 +1,14 @@
+{
+  "uid": "0c693948-a1a2-45dd-b695-6d943692ca7d",
+  "name": "Ghirapur Fairground",
+  "type": "Plane",
+  "image": "cards/images/0c693948-a1a2-45dd-b695-6d943692ca7d.png",
+  "thumb": "cards/thumbs/0c693948-a1a2-45dd-b695-6d943692ca7d.webp",
+  "transcript": "cards/transcripts/0c693948-a1a2-45dd-b695-6d943692ca7d.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

@@ -1,0 +1,14 @@
+{
+  "uid": "f2aca55c-35b9-413f-ad5b-506ba326a41b",
+  "name": "Lurenbaum Fortress",
+  "type": "Plane",
+  "image": "cards/images/f2aca55c-35b9-413f-ad5b-506ba326a41b.png",
+  "thumb": "cards/thumbs/f2aca55c-35b9-413f-ad5b-506ba326a41b.webp",
+  "transcript": "cards/transcripts/f2aca55c-35b9-413f-ad5b-506ba326a41b.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

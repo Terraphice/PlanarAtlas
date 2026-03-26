@@ -1,0 +1,14 @@
+{
+  "uid": "c3cc9d72-66d6-4a2a-9332-94b15cd7f7bb",
+  "name": "Izzet Inventarium",
+  "type": "Plane",
+  "image": "cards/images/c3cc9d72-66d6-4a2a-9332-94b15cd7f7bb.png",
+  "thumb": "cards/thumbs/c3cc9d72-66d6-4a2a-9332-94b15cd7f7bb.webp",
+  "transcript": "cards/transcripts/c3cc9d72-66d6-4a2a-9332-94b15cd7f7bb.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

@@ -1,0 +1,14 @@
+{
+  "uid": "52dbd341-0d26-40de-b61d-767bb9f76e94",
+  "name": "Glacial Prison",
+  "type": "Plane",
+  "image": "cards/images/52dbd341-0d26-40de-b61d-767bb9f76e94.png",
+  "thumb": "cards/thumbs/52dbd341-0d26-40de-b61d-767bb9f76e94.webp",
+  "transcript": "cards/transcripts/52dbd341-0d26-40de-b61d-767bb9f76e94.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

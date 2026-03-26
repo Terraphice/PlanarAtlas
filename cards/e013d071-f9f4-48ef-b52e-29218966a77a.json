@@ -1,0 +1,14 @@
+{
+  "uid": "e013d071-f9f4-48ef-b52e-29218966a77a",
+  "name": "The Infinite Dunes",
+  "type": "Plane",
+  "image": "cards/images/e013d071-f9f4-48ef-b52e-29218966a77a.png",
+  "thumb": "cards/thumbs/e013d071-f9f4-48ef-b52e-29218966a77a.webp",
+  "transcript": "cards/transcripts/e013d071-f9f4-48ef-b52e-29218966a77a.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

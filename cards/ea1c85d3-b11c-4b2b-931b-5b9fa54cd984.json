@@ -1,0 +1,14 @@
+{
+  "uid": "ea1c85d3-b11c-4b2b-931b-5b9fa54cd984",
+  "name": "Eradication Chamber",
+  "type": "Plane",
+  "image": "cards/images/ea1c85d3-b11c-4b2b-931b-5b9fa54cd984.png",
+  "thumb": "cards/thumbs/ea1c85d3-b11c-4b2b-931b-5b9fa54cd984.webp",
+  "transcript": "cards/transcripts/ea1c85d3-b11c-4b2b-931b-5b9fa54cd984.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

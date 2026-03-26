@@ -1,0 +1,14 @@
+{
+  "uid": "e4cc3284-3f2a-42e6-a322-5a6dbfc63e75",
+  "name": "The Blind Eternities",
+  "type": "Plane",
+  "image": "cards/images/e4cc3284-3f2a-42e6-a322-5a6dbfc63e75.png",
+  "thumb": "cards/thumbs/e4cc3284-3f2a-42e6-a322-5a6dbfc63e75.webp",
+  "transcript": "cards/transcripts/e4cc3284-3f2a-42e6-a322-5a6dbfc63e75.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

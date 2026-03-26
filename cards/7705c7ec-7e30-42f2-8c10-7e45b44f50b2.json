@@ -1,0 +1,14 @@
+{
+  "uid": "7705c7ec-7e30-42f2-8c10-7e45b44f50b2",
+  "name": "Anomaly Miasma",
+  "type": "Plane",
+  "image": "cards/images/7705c7ec-7e30-42f2-8c10-7e45b44f50b2.png",
+  "thumb": "cards/thumbs/7705c7ec-7e30-42f2-8c10-7e45b44f50b2.webp",
+  "transcript": "cards/transcripts/7705c7ec-7e30-42f2-8c10-7e45b44f50b2.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

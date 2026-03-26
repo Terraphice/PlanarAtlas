@@ -1,0 +1,14 @@
+{
+  "uid": "2b889488-af23-4a76-8882-be5f8f566b36",
+  "name": "Vhelnish, Sanctum of the Lich Lord",
+  "type": "Plane",
+  "image": "cards/images/2b889488-af23-4a76-8882-be5f8f566b36.png",
+  "thumb": "cards/thumbs/2b889488-af23-4a76-8882-be5f8f566b36.webp",
+  "transcript": "cards/transcripts/2b889488-af23-4a76-8882-be5f8f566b36.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

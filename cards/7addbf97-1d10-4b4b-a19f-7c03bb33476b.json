@@ -1,0 +1,14 @@
+{
+  "uid": "7addbf97-1d10-4b4b-a19f-7c03bb33476b",
+  "name": "The Sun Coast",
+  "type": "Plane",
+  "image": "cards/images/7addbf97-1d10-4b4b-a19f-7c03bb33476b.png",
+  "thumb": "cards/thumbs/7addbf97-1d10-4b4b-a19f-7c03bb33476b.webp",
+  "transcript": "cards/transcripts/7addbf97-1d10-4b4b-a19f-7c03bb33476b.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

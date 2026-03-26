@@ -1,0 +1,14 @@
+{
+  "uid": "12dcf5f5-b363-4e58-964e-330e724a5802",
+  "name": "Ugin's Resevoir",
+  "type": "Plane",
+  "image": "cards/images/12dcf5f5-b363-4e58-964e-330e724a5802.png",
+  "thumb": "cards/thumbs/12dcf5f5-b363-4e58-964e-330e724a5802.webp",
+  "transcript": "cards/transcripts/12dcf5f5-b363-4e58-964e-330e724a5802.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

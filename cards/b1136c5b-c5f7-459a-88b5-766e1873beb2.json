@@ -1,0 +1,14 @@
+{
+  "uid": "b1136c5b-c5f7-459a-88b5-766e1873beb2",
+  "name": "Salivation Chamber",
+  "type": "Plane",
+  "image": "cards/images/b1136c5b-c5f7-459a-88b5-766e1873beb2.png",
+  "thumb": "cards/thumbs/b1136c5b-c5f7-459a-88b5-766e1873beb2.webp",
+  "transcript": "cards/transcripts/b1136c5b-c5f7-459a-88b5-766e1873beb2.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

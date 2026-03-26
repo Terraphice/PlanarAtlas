@@ -1,0 +1,14 @@
+{
+  "uid": "77275b7d-b8f1-4f29-a314-5a1451265753",
+  "name": "Skylight Tower",
+  "type": "Plane",
+  "image": "cards/images/77275b7d-b8f1-4f29-a314-5a1451265753.png",
+  "thumb": "cards/thumbs/77275b7d-b8f1-4f29-a314-5a1451265753.webp",
+  "transcript": "cards/transcripts/77275b7d-b8f1-4f29-a314-5a1451265753.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

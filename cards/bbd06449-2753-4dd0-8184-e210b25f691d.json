@@ -1,0 +1,14 @@
+{
+  "uid": "bbd06449-2753-4dd0-8184-e210b25f691d",
+  "name": "Itlimoc",
+  "type": "Plane",
+  "image": "cards/images/bbd06449-2753-4dd0-8184-e210b25f691d.png",
+  "thumb": "cards/thumbs/bbd06449-2753-4dd0-8184-e210b25f691d.webp",
+  "transcript": "cards/transcripts/bbd06449-2753-4dd0-8184-e210b25f691d.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

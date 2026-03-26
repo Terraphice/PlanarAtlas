@@ -1,0 +1,14 @@
+{
+  "uid": "b2ee1be3-4e6f-4129-8879-89e42cb1cf0b",
+  "name": "Kalonia",
+  "type": "Plane",
+  "image": "cards/images/b2ee1be3-4e6f-4129-8879-89e42cb1cf0b.png",
+  "thumb": "cards/thumbs/b2ee1be3-4e6f-4129-8879-89e42cb1cf0b.webp",
+  "transcript": "cards/transcripts/b2ee1be3-4e6f-4129-8879-89e42cb1cf0b.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

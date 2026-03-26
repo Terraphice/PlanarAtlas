@@ -1,0 +1,14 @@
+{
+  "uid": "6cbc3252-c7c8-4a7e-a605-ac9dacb86040",
+  "name": "Temple of Heliud",
+  "type": "Plane",
+  "image": "cards/images/6cbc3252-c7c8-4a7e-a605-ac9dacb86040.png",
+  "thumb": "cards/thumbs/6cbc3252-c7c8-4a7e-a605-ac9dacb86040.webp",
+  "transcript": "cards/transcripts/6cbc3252-c7c8-4a7e-a605-ac9dacb86040.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

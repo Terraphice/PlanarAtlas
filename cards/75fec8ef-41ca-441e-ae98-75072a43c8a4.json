@@ -1,0 +1,14 @@
+{
+  "uid": "75fec8ef-41ca-441e-ae98-75072a43c8a4",
+  "name": "The Great Red Spot",
+  "type": "Plane",
+  "image": "cards/images/75fec8ef-41ca-441e-ae98-75072a43c8a4.png",
+  "thumb": "cards/thumbs/75fec8ef-41ca-441e-ae98-75072a43c8a4.webp",
+  "transcript": "cards/transcripts/75fec8ef-41ca-441e-ae98-75072a43c8a4.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

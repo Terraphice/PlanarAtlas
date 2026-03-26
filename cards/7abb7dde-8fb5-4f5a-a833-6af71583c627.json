@@ -1,0 +1,14 @@
+{
+  "uid": "7abb7dde-8fb5-4f5a-a833-6af71583c627",
+  "name": "Glistening Oilfield",
+  "type": "Plane",
+  "image": "cards/images/7abb7dde-8fb5-4f5a-a833-6af71583c627.png",
+  "thumb": "cards/thumbs/7abb7dde-8fb5-4f5a-a833-6af71583c627.webp",
+  "transcript": "cards/transcripts/7abb7dde-8fb5-4f5a-a833-6af71583c627.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

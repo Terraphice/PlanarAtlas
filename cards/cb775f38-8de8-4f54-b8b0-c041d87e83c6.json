@@ -1,0 +1,14 @@
+{
+  "uid": "cb775f38-8de8-4f54-b8b0-c041d87e83c6",
+  "name": "Okiba Gang Academy",
+  "type": "Plane",
+  "image": "cards/images/cb775f38-8de8-4f54-b8b0-c041d87e83c6.png",
+  "thumb": "cards/thumbs/cb775f38-8de8-4f54-b8b0-c041d87e83c6.webp",
+  "transcript": "cards/transcripts/cb775f38-8de8-4f54-b8b0-c041d87e83c6.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}

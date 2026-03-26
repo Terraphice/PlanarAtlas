@@ -1,0 +1,14 @@
+{
+  "uid": "445ccb4d-886b-4012-bc80-d84371b6c464",
+  "name": "Direct Order",
+  "type": "Phenomenon",
+  "image": "cards/images/445ccb4d-886b-4012-bc80-d84371b6c464.png",
+  "thumb": "cards/thumbs/445ccb4d-886b-4012-bc80-d84371b6c464.webp",
+  "transcript": "cards/transcripts/445ccb4d-886b-4012-bc80-d84371b6c464.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:purple:Phenomenon"
+  ],
+  "scryfallId": null
+}

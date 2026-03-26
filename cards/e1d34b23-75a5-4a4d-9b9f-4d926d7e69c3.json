@@ -1,0 +1,14 @@
+{
+  "uid": "e1d34b23-75a5-4a4d-9b9f-4d926d7e69c3",
+  "name": "Torrent of Refraction",
+  "type": "Plane",
+  "image": "cards/images/e1d34b23-75a5-4a4d-9b9f-4d926d7e69c3.png",
+  "thumb": "cards/thumbs/e1d34b23-75a5-4a4d-9b9f-4d926d7e69c3.webp",
+  "transcript": "cards/transcripts/e1d34b23-75a5-4a4d-9b9f-4d926d7e69c3.md",
+  "tags": [
+    ":top:badge:tr:amber:Custom",
+    "P19",
+    ":top:badge:tr:green:Plane"
+  ],
+  "scryfallId": null
+}
