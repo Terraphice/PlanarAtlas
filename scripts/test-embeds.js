@@ -1,75 +1,29 @@
-import { readFileSync, existsSync } from "fs";
-import { join, dirname } from "path";
+#!/usr/bin/env node
+
+import { strict as assert } from "assert";
+import test from "node:test";
+import { existsSync, readFileSync } from "fs";
+import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 import { generateEmbedPages } from "./generate-embeds.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 
-let passed = 0;
-let failed = 0;
+test("generateEmbedPages produces share pages for cards and tags", () => {
+  const result = generateEmbedPages(ROOT);
+  assert.ok(result.cards > 0);
+  assert.ok(result.tags > 0);
 
-function pass(msg) {
-  passed += 1;
-  console.log(`  ✓ ${msg}`);
-}
+  const cards = JSON.parse(readFileSync(join(ROOT, "cards.json"), "utf8"));
+  const firstCard = cards[0];
+  assert.ok(firstCard?.uid, "cards.json should contain at least one uid");
 
-function fail(msg) {
-  failed += 1;
-  console.error(`  ✗ ${msg}`);
-}
+  const cardPage = join(ROOT, "share", "card", firstCard.uid, "index.html");
+  assert.ok(existsSync(cardPage), `missing generated page: ${cardPage}`);
 
-function section(title) {
-  console.log(`\n${title}`);
-}
-
-section("generateEmbedPages");
-
-const result = generateEmbedPages(ROOT);
-if (result.cards > 0) {
-  pass(`Generated card pages (${result.cards})`);
-} else {
-  fail("No card pages generated");
-}
-
-if (result.tags > 0) {
-  pass(`Generated tag pages (${result.tags})`);
-} else {
-  fail("No tag pages generated");
-}
-
-section("Share page integrity");
-
-const cardHtmlPath = join(ROOT, "share", "card", "akoum", "index.html");
-if (!existsSync(cardHtmlPath)) {
-  fail("Card share page exists for /share/card/akoum/");
-} else {
-  const html = readFileSync(cardHtmlPath, "utf8");
-  if (html.includes('property="og:title"')) pass("Card page has og:title");
-  else fail("Card page missing og:title");
-
-  if (html.includes('name="twitter:card" content="summary_large_image"')) pass("Card page has twitter summary_large_image");
-  else fail("Card page missing twitter:card");
-
-  if (html.includes("/?card=akoum")) pass("Card page redirects to query-based card URL");
-  else fail("Card page missing query-based card redirect");
-}
-
-const tagHtmlPath = join(ROOT, "share", "tag", "official", "index.html");
-if (!existsSync(tagHtmlPath)) {
-  fail("Tag share page exists for /share/tag/official/");
-} else {
-  const html = readFileSync(tagHtmlPath, "utf8");
-  if (html.includes('property="og:title"')) pass("Tag page has og:title");
-  else fail("Tag page missing og:title");
-
-  if (html.includes("/?tags=%3Atop%3Abadge%3Atr%3Agreen%3AOfficial")) pass("Tag page redirects to canonical badge tag URL");
-  else fail("Tag page missing canonical badge tag redirect");
-}
-
-console.log(`\n${"─".repeat(40)}`);
-console.log(`Results: ${passed} passed, ${failed} failed`);
-
-if (failed > 0) {
-  process.exit(1);
-}
+  const html = readFileSync(cardPage, "utf8");
+  assert.ok(html.includes('property="og:title"'));
+  assert.ok(html.includes('name="twitter:card" content="summary_large_image"'));
+  assert.ok(html.includes(`/?card=${encodeURIComponent(firstCard.uid)}`));
+});

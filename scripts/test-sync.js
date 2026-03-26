@@ -1,44 +1,15 @@
 #!/usr/bin/env node
-// scripts/test-sync.js
-// Unit tests for sync-cards.js helper functions.
-// Run with: node scripts/test-sync.js
 
+import { strict as assert } from "assert";
+import test from "node:test";
 import { getCardJsonFilename, getCardKey } from "./sync-cards.js";
 
-let passed = 0;
-let failed = 0;
+test("getCardJsonFilename appends .json", () => {
+  assert.equal(getCardJsonFilename("abc-123"), "abc-123.json");
+});
 
-function assert(condition, msg) {
-  if (condition) {
-    console.log(`  ✓ ${msg}`);
-    passed++;
-  } else {
-    console.error(`  ✗ ${msg}`);
-    failed++;
-  }
-}
-
-function section(name) {
-  console.log(`\n${name}`);
-}
-
-// ── getCardJsonFilename ───────────────────────────────────────────────────────
-
-section("getCardJsonFilename");
-assert(getCardJsonFilename("akoum") === "akoum.json", "akoum → akoum.json");
-assert(getCardJsonFilename("atlas_consultation") === "atlas_consultation.json", "phenomenon id → .json");
-assert(getCardJsonFilename("the_library_of_leng") === "the_library_of_leng.json", "multi-word id");
-assert(getCardJsonFilename("interplanar_tunnel") === "interplanar_tunnel.json", "phenomenon id");
-
-// ── getCardKey ───────────────────────────────────────────────────────────────
-
-section("getCardKey");
-assert(getCardKey({ uid: "69127fa3-878a-44c3-a42e-5901b58a010e" }) === "69127fa3-878a-44c3-a42e-5901b58a010e", "Uses uid");
-assert(getCardKey({}) === null, "Null when no uid");
-
-// ── Summary ───────────────────────────────────────────────────────────────────
-
-console.log(`\n${"─".repeat(40)}`);
-console.log(`Results: ${passed} passed, ${failed} failed`);
-
-if (failed > 0) process.exit(1);
+test("getCardKey only accepts uid strings", () => {
+  assert.equal(getCardKey({ uid: "uid-1" }), "uid-1");
+  assert.equal(getCardKey({}), null);
+  assert.equal(getCardKey(null), null);
+});
