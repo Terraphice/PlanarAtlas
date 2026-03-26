@@ -35,6 +35,7 @@ let readerCardPath = "";
 let bemZoomLevel = "default";
 let pendingGameMode = null;
 const readerTranscriptCache = new Map();
+let readerImageLoadToken = 0;
 
 // ── Context (set by initGameUI) ───────────────────────────────────────────────
 
@@ -483,9 +484,18 @@ export function openGameReaderView(card, actions = [], options = {}) {
   readerCardPath = readerImagePath;
 
   if (gameReaderImage) {
-    gameReaderImage.src = readerImagePath;
+    const loadToken = ++readerImageLoadToken;
+    gameReaderImage.src = "assets/card-preview.jpg";
     gameReaderImage.alt = isFaceDown ? "Face-down card" : card.displayName;
-}
+    if (!isFaceDown && readerImagePath !== "assets/card-preview.jpg") {
+      const preloaded = new Image();
+      preloaded.onload = () => {
+        if (loadToken !== readerImageLoadToken || !gameReaderImage) return;
+        gameReaderImage.src = readerImagePath;
+      };
+      preloaded.src = readerImagePath;
+    }
+  }
   closeReaderZoom();
   if (gameReaderCardName) gameReaderCardName.textContent = isFaceDown ? "Unknown" : card.displayName;
   if (gameReaderCardType) gameReaderCardType.textContent = isFaceDown ? "Unknown" : (card.type || "");
@@ -1468,6 +1478,10 @@ function bindGameUIEvents() {
     }
     ctx.pushGameHistory();
     const top = gameState.remaining.shift();
+    if (!top) {
+      ctx.showToast("No cards remaining in the library.");
+      return;
+    }
     gameState.activePlanes.push(top);
     if (gameState.mode === "bem") {
       updateBemInfoBar();
@@ -1486,6 +1500,10 @@ function bindGameUIEvents() {
     }
     ctx.pushGameHistory();
     const bottom = gameState.remaining.pop();
+    if (!bottom) {
+      ctx.showToast("No cards remaining in the library.");
+      return;
+    }
     gameState.activePlanes.push(bottom);
     if (gameState.mode === "bem") {
       updateBemInfoBar();

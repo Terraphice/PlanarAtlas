@@ -105,6 +105,12 @@ function bemRevealOrthogonalsAround(nx, ny) {
         adjCell.card = null;
         adjCell.placeholder = true;
       }
+    } else if (adjCell.placeholder && !adjCell.card) {
+      const nextCard = bemDrawForMap(remaining, { avoidPhenomena: antiPhenomena });
+      if (nextCard) {
+        adjCell.card = nextCard;
+        delete adjCell.placeholder;
+      }
     }
 
     adjCell.faceUp = true;
@@ -333,9 +339,9 @@ export function bemMovePlayer(nx, ny) {
     if (cell.card?.type !== "Phenomenon" && gameState.recentPhenomena?.length > 0) {
       gameState.recentPhenomena = [];
     }
+    bemRemoveFalloff();
     bemRevealOrthogonalsAround(nx, ny);
     bemPlaneswalkPending = false;
-    bemRemoveFalloff();
     bemDiscoverAdjacent();
     renderBemMap();
     updateBemInfoBar();
@@ -382,10 +388,9 @@ export function bemMovePlayer(nx, ny) {
     gameState.recentPhenomena = [];
   }
 
-  bemRevealOrthogonalsAround(nx, ny);
-
-  bemPlaneswalkPending = false;
   bemRemoveFalloff();
+  bemRevealOrthogonalsAround(nx, ny);
+  bemPlaneswalkPending = false;
   bemDiscoverAdjacent();
 
   renderBemMap();

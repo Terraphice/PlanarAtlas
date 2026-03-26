@@ -188,7 +188,12 @@ export function buildMainCardActions(focusedIdx) {
         }
         ctx.pushHistory?.();
         const top = gameState.remaining.shift();
+        if (!top) {
+          showToast("No cards remaining in the library.");
+          return;
+        }
         gameState.activePlanes.push(top);
+        gameState.focusedIndex = gameState.activePlanes.length - 1;
         closeGameReaderView();
         updateGameView();
         showToast(`${top.displayName} added simultaneously.`);
