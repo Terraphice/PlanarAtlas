@@ -277,7 +277,7 @@ export function createModalManager({
   async function copyCurrentCardLink() {
     if (currentModalIndex < 0 || currentModalIndex >= getFilteredCards().length) return;
     const currentCard = getFilteredCards()[currentModalIndex];
-    const shareSegment = currentCard.slug || currentCard.uid;
+    const shareSegment = currentCard.uid || currentCard.slug;
     const shareUrl = `${window.location.origin}/share/card/${encodeURIComponent(shareSegment)}/`;
 
     try {

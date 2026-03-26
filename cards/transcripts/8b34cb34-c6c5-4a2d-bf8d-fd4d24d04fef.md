@@ -7,5 +7,5 @@ When you encounter Omenpath Shortcut, reveal the top six cards of the planar dec
 *(Then planeswalk away from this phenomenon.)*
 
 Illustrated by: Daren Bader
-Set: Planechase Booster — Terraphice
+Set: Planechase Booster — Terraphice (PBT)
 Rarity: N/A

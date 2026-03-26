@@ -5,5 +5,5 @@ Plane — Placeholder Text
 Placeholder Text
 
 Illustrated by: Unknown Artist
-Set: Placeholder Text
+Set: Planechase 2019 (P19)
 Rarity: N/A
