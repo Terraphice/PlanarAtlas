@@ -93,7 +93,17 @@ function bemRevealOrthogonalsAround(nx, ny) {
 
   for (const { dx: odx, dy: ody } of orthDirs) {
     const adjCell = bemGrid.get(bemKey(nx + odx, ny + ody));
-    if (!adjCell || adjCell.faceUp) continue;
+    if (!adjCell) continue;
+
+    if (adjCell.placeholder && !adjCell.card) {
+      const replacement = bemDrawForMap(remaining, { avoidPhenomena: antiPhenomena });
+      if (replacement) {
+        adjCell.card = replacement;
+        adjCell.placeholder = false;
+      }
+    }
+
+    if (adjCell.faceUp) continue;
 
     if (antiPhenomena && adjCell.card?.type === "Phenomenon") {
       replacedPhenomena.push(adjCell.card);
