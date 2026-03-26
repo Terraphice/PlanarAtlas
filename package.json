@@ -2,14 +2,14 @@
   "type": "module",
   "scripts": {
     "version:sync": "node scripts/update-version.js",
-    "generate": "node scripts/generate-cards.js && node scripts/generate-thumbs.js && node scripts/generate-embeds.js && node scripts/generate-seo.js",
+    "generate": "node scripts/generate-all.js",
     "sync": "node scripts/sync-cards.js",
     "test": "node scripts/smoke-test.js",
     "test:codec": "node scripts/test-codec.js",
     "test:utils": "node scripts/test-utils.js",
     "test:generate": "node scripts/test-generate.js",
     "test:sync": "node scripts/test-sync.js",
-    "test:unit": "node scripts/test-codec.js && node scripts/test-utils.js && node scripts/test-generate.js && node scripts/test-sync.js && node scripts/test-embeds.js && node scripts/test-seo.js",
+    "test:unit": "node scripts/test-codec.js && node scripts/test-utils.js && node scripts/test-generate.js && node scripts/test-sync.js && node scripts/test-embeds.js && node scripts/test-seo.js && node scripts/test-cli-options.js",
     "test:e2e": "npx playwright test",
     "lint": "eslint .",
     "generate:embeds": "node scripts/generate-embeds.js",
@@ -19,7 +19,9 @@
     "styles:build": "sass styles/themes.scss styles/themes.css --no-source-map && sass styles/gallery.scss styles/gallery.css --no-source-map && sass styles/game.scss styles/game.css --no-source-map",
     "styles:watch": "sass --watch styles/themes.scss:styles/themes.css styles/gallery.scss:styles/gallery.css styles/game.scss:styles/game.css",
     "cards:prepare-release": "node scripts/prepare-card-release.js",
-    "generate:thumbs": "node scripts/generate-thumbs.js"
+    "generate:thumbs": "node scripts/generate-thumbs.js",
+    "generate:cards": "node scripts/generate-cards.js",
+    "test:cli": "node scripts/test-cli-options.js"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

@@ -2,6 +2,7 @@ import { readFileSync, writeFileSync, existsSync, renameSync, readdirSync, mkdir
 import { join, extname, dirname, resolve, basename } from "path";
 import { fileURLToPath } from "url";
 import { randomUUID } from "crypto";
+import { parseReleaseOptions } from "./lib/cli-options.js";
 
 const SUPPORTED_IMAGE_EXTENSIONS = new Set([".png", ".jpg", ".jpeg"]);
 
@@ -103,61 +104,7 @@ export function getUniqueSlug(baseSlug, seenCounts) {
   return count === 1 ? normalizedBase : `${normalizedBase}_${count}`;
 }
 
-export function parseCliOptions(argv = []) {
-  const options = {
-    classification: null,
-    type: null,
-    setCode: null
-  };
-
-  for (let i = 0; i < argv.length; i++) {
-    const arg = argv[i];
-    if (!arg.startsWith("--")) continue;
-
-    const [flag, inlineValue] = arg.split("=", 2);
-    const hasInlineValue = typeof inlineValue === "string";
-    const nextValue = hasInlineValue ? inlineValue : argv[i + 1];
-
-    const consumeNext = () => {
-      if (!hasInlineValue) i++;
-      return nextValue;
-    };
-
-    if (flag === "--official") {
-      options.classification = "official";
-      continue;
-    }
-
-    if (flag === "--custom") {
-      options.classification = "custom";
-      continue;
-    }
-
-    if (flag === "--type" && nextValue) {
-      options.type = consumeNext();
-      continue;
-    }
-
-    if (flag === "--set" && nextValue) {
-      options.setCode = consumeNext();
-    }
-  }
-
-  const normalizedType = String(options.type || "").trim().toLowerCase();
-  if (normalizedType === "plane") options.type = "Plane";
-  else if (normalizedType === "phenomenon") options.type = "Phenomenon";
-  else options.type = null;
-
-  const normalizedClassification = String(options.classification || "").trim().toLowerCase();
-  if (normalizedClassification !== "official" && normalizedClassification !== "custom") {
-    options.classification = null;
-  }
-
-  const normalizedSetCode = String(options.setCode || "").trim();
-  options.setCode = normalizedSetCode || null;
-
-  return options;
-}
+export const parseCliOptions = parseReleaseOptions;
 
 // ── Internal helpers ──────────────────────────────────────────────────────────
 
@@ -287,7 +234,7 @@ if (isDirectRun) {
     console.error("cards.json is empty. Add cards with uid metadata before generating.");
     process.exit(1);
   }
-  const cliOptions = parseCliOptions(process.argv.slice(2));
+  const cliOptions = parseReleaseOptions(process.argv.slice(2));
 
   const slugTracker = new Map();
 
