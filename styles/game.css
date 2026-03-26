@@ -748,7 +748,7 @@ html[data-theme=light] .game-view::before {
   padding: 8px 8px 4px;
   display: flex;
   flex-direction: column;
-  max-height: var(--game-menu-max-height);
+  max-height: min(var(--game-menu-max-height), calc(var(--game-viewport-height) - var(--game-top-clearance) - var(--game-menu-offset-bottom)));
 }
 
 .game-menu-scroll {
@@ -2394,6 +2394,7 @@ body.privacy-modal-open {
   padding-block: calc(var(--game-block-safe-start) + var(--game-reader-padding-block)) calc(var(--game-block-safe-end) + var(--game-reader-padding-block));
   padding-inline: calc(var(--game-inline-safe-start) + var(--game-reader-padding-inline)) calc(var(--game-inline-safe-end) + var(--game-reader-padding-inline));
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .game-reader-view.hidden {
@@ -2577,6 +2578,8 @@ body.privacy-modal-open {
   color: var(--text-soft);
   overflow-y: auto;
   flex: 1 1 auto;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 .game-reader-transcript p { margin: 0 0 0.5em; }
