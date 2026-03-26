@@ -182,6 +182,11 @@ export function buildMainCardActions(focusedIdx) {
       action: () => {
         const gameState = getGameState();
         if (!gameState) return;
+        const focusedCard = gameState.activePlanes[focusedIdx];
+        if (!focusedCard) {
+          showToast("This card is no longer active.");
+          return;
+        }
         if (gameState.remaining.length === 0) {
           showToast("No cards remaining in the library.");
           return;
@@ -189,9 +194,10 @@ export function buildMainCardActions(focusedIdx) {
         ctx.pushHistory?.();
         const top = gameState.remaining.shift();
         gameState.activePlanes.push(top);
+        gameState.focusedIndex = gameState.activePlanes.length - 1;
         closeGameReaderView();
         updateGameView();
-        showToast(`${top.displayName} added simultaneously.`);
+        showToast(`${focusedCard.displayName} added simultaneously.`);
       }
     },
     {

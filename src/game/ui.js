@@ -35,6 +35,7 @@ let readerCardPath = "";
 let bemZoomLevel = "default";
 let pendingGameMode = null;
 const readerTranscriptCache = new Map();
+let readerImageLoadToken = 0;
 
 // ── Context (set by initGameUI) ───────────────────────────────────────────────
 
@@ -478,14 +479,28 @@ export function openGameReaderView(card, actions = [], options = {}) {
   if (!gameReaderView || !card) return;
 
   const isFaceDown = Boolean(options.faceDown);
-  const readerImagePath = isFaceDown ? "assets/card-preview.jpg" : card.imagePath;
+  const placeholderImagePath = "assets/card-preview.jpg";
+  const readerImagePath = isFaceDown ? placeholderImagePath : card.imagePath;
 
   readerCardPath = readerImagePath;
 
   if (gameReaderImage) {
-    gameReaderImage.src = readerImagePath;
+    const loadToken = ++readerImageLoadToken;
+    gameReaderImage.src = placeholderImagePath;
     gameReaderImage.alt = isFaceDown ? "Face-down card" : card.displayName;
-}
+    if (!isFaceDown) {
+      const preloader = new Image();
+      preloader.onload = () => {
+        if (loadToken !== readerImageLoadToken) return;
+        gameReaderImage.src = readerImagePath;
+      };
+      preloader.onerror = () => {
+        if (loadToken !== readerImageLoadToken) return;
+        gameReaderImage.src = readerImagePath;
+      };
+      preloader.src = readerImagePath;
+    }
+  }
   closeReaderZoom();
   if (gameReaderCardName) gameReaderCardName.textContent = isFaceDown ? "Unknown" : card.displayName;
   if (gameReaderCardType) gameReaderCardType.textContent = isFaceDown ? "Unknown" : (card.type || "");

@@ -401,7 +401,7 @@
   --game-side-panel-right: var(--game-right-clearance);
   --game-side-panel-max-height: calc(var(--game-viewport-height) - var(--game-block-safe-start) - var(--game-block-safe-end) - 160px);
   --game-menu-offset-bottom: calc(var(--game-block-safe-end) + 96px);
-  --game-menu-max-height: min(calc(var(--game-viewport-height) - var(--game-block-safe-start) - var(--game-block-safe-end) - 32px), 520px);
+  --game-menu-max-height: min(calc(var(--game-viewport-height) - var(--game-block-safe-start) - var(--game-menu-offset-bottom) - 12px), 520px);
   --game-banner-top: var(--game-top-clearance);
   --game-banner-max-width: calc(100% - var(--game-left-clearance) - var(--game-right-clearance) - 168px);
   --game-reveal-padding: 16px;
@@ -2005,7 +2005,7 @@ html[data-theme="light"] .game-reveal-close {
     --game-main-padding-bottom: calc(var(--game-block-safe-end) + 48px);
     --game-main-padding-left: calc(var(--game-inline-safe-start) + 12px);
     --game-menu-offset-bottom: calc(var(--game-block-safe-end) + 62px);
-    --game-menu-max-height: calc(var(--game-viewport-height) - var(--game-block-safe-start) - var(--game-block-safe-end) - 24px);
+    --game-menu-max-height: calc(var(--game-viewport-height) - var(--game-block-safe-start) - var(--game-menu-offset-bottom) - 10px);
     --game-banner-max-width: calc(100% - var(--game-left-clearance) - var(--game-right-clearance) - 144px);
     --game-side-panel-max-height: calc(var(--game-viewport-height) - var(--game-block-safe-start) - var(--game-block-safe-end) - 112px);
     --bem-grid-padding-block: 128px;
@@ -2073,7 +2073,7 @@ html[data-theme="light"] .game-reveal-close {
     --game-main-padding-left: calc(var(--game-inline-safe-start) + 12px);
     --game-side-panel-max-height: calc(var(--game-viewport-height) - var(--game-block-safe-start) - var(--game-block-safe-end) - 120px);
     --game-menu-offset-bottom: calc(var(--game-block-safe-end) + 58px);
-    --game-menu-max-height: min(calc(var(--game-viewport-height) - var(--game-block-safe-start) - var(--game-block-safe-end) - 32px), 480px);
+    --game-menu-max-height: min(calc(var(--game-viewport-height) - var(--game-block-safe-start) - var(--game-menu-offset-bottom) - 10px), 480px);
     --game-banner-max-width: calc(100% - var(--game-left-clearance) - var(--game-right-clearance) - 160px);
     --game-reveal-panel-width: min(600px, calc(var(--game-viewport-width) - var(--game-inline-safe-start) - var(--game-inline-safe-end) - 32px));
     --game-reveal-panel-max-height: calc(var(--game-viewport-height) - var(--game-block-safe-start) - var(--game-block-safe-end) - 32px);
@@ -2674,16 +2674,17 @@ body.privacy-modal-open {
 
 @media (pointer: coarse) and (orientation: portrait) {
   .game-reader-view {
-    top: calc((100dvh - 100dvw) / 2);
+    top: 50%;
     right: auto;
     bottom: auto;
-    left: calc((100dvw - 100dvh) / 2);
+    left: 50%;
     width: 100dvh;
     height: 100dvw;
     padding-block: calc(var(--game-block-safe-start) + var(--game-reader-padding-block)) calc(var(--game-block-safe-end) + var(--game-reader-padding-block));
     padding-inline: calc(var(--game-inline-safe-start) + var(--game-reader-padding-inline)) calc(var(--game-inline-safe-end) + var(--game-reader-padding-inline));
-    transform: rotate(-90deg);
+    transform: translate(-50%, -50%) rotate(-90deg);
     transform-origin: center center;
+    text-size-adjust: 100%;
   }
 
   .game-reader-panel {

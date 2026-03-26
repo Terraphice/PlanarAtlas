@@ -117,6 +117,7 @@ function bemDiscoverAdjacent() {
   const { bemGrid, bemPos, remaining } = ctx.getGameState();
   const antiPhenomena = bemShouldAvoidPhenomena();
   const { x: px, y: py } = bemPos;
+  const replacedPhenomena = [];
 
   const dirs = [
     { dx: 0, dy: -1, faceUp: true },
@@ -135,7 +136,11 @@ function bemDiscoverAdjacent() {
     const key = bemKey(nx, ny);
     if (!bemGrid.has(key)) {
       if (faceUp) {
-        const card = bemDrawForMap(remaining, { avoidPhenomena: antiPhenomena });
+        let card = bemDrawForMap(remaining, { avoidPhenomena: antiPhenomena });
+        if (antiPhenomena && card?.type === "Phenomenon") {
+          replacedPhenomena.push(card);
+          card = bemDrawForMap(remaining, { avoidPhenomena: true });
+        }
         if (card) {
           bemGrid.set(key, { card, faceUp: true });
         } else {
@@ -147,6 +152,8 @@ function bemDiscoverAdjacent() {
       }
     }
   }
+
+  bemRestorePhenomenaToTop(remaining, replacedPhenomena);
 }
 
 function bemRemoveFalloff() {
