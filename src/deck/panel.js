@@ -33,7 +33,6 @@ const deckConflictLeftCard = document.getElementById("deck-conflict-left-card");
 const deckConflictRightCard = document.getElementById("deck-conflict-right-card");
 const deckConflictLeftSelect = document.getElementById("deck-conflict-left-select");
 const deckConflictRightSelect = document.getElementById("deck-conflict-right-select");
-const deckLinkBtn = document.getElementById("deck-link-btn");
 const deckClearBtn = document.getElementById("deck-clear-btn");
 const deckCloseBtn = document.getElementById("deck-close-btn");
 const deckButton = document.getElementById("deck-button");
@@ -788,7 +787,6 @@ function bindDeckPanelEvents() {
     event.stopPropagation();
     toggleFormatMenu(deckImportMenu);
   });
-  deckLinkBtn?.addEventListener("click", shareDeckLink);
 
   deckSlotSelect?.addEventListener("change", () => {
     const slot = parseInt(deckSlotSelect.value, 10);
@@ -884,6 +882,11 @@ function bindDeckPanelEvents() {
     if (!button) return;
     const format = button.dataset.format;
     closeFormatMenus();
+
+    if (format === "LINK") {
+      shareDeckLink();
+      return;
+    }
 
     if (format === "CLIP") {
       exportDeckSeedToClipboard();
