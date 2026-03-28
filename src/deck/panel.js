@@ -184,10 +184,16 @@ export function renderDeckList() {
 }
 
 function getDeckCardMeta(card) {
-  const normalized = new Set((card.normalizedTags || []).map((tag) => tag.toLowerCase()));
-  const source = normalized.has("official") ? "Official" : (normalized.has("custom") ? "Custom" : "Unknown");
+  const source = getCardSourceLabel(card);
   const setCode = getSetCodeFromCard(card);
   return `${source} • ${card.type}${setCode ? ` • ${setCode}` : ""}`;
+}
+
+function getCardSourceLabel(card) {
+  const normalizedTags = (card.normalizedTags || []).map((tag) => tag.toLowerCase());
+  if (normalizedTags.some((tag) => tag.includes("official"))) return "Official";
+  if (normalizedTags.some((tag) => tag.includes("custom"))) return "Custom";
+  return "Unknown";
 }
 
 // ── Deck slot management ──────────────────────────────────────────────────────
@@ -574,12 +580,12 @@ async function resolveConflict(name, options, instanceLabel) {
     deckConflictLeftCard.innerHTML = `
       <img src="${left.thumbPath}" alt="${escapeHtml(left.displayName)}" loading="lazy" />
       <h4>${escapeHtml(left.displayName)}</h4>
-      <p>${escapeHtml(left.type)}${getSetCodeFromCard(left) ? ` • ${escapeHtml(getSetCodeFromCard(left))}` : ""}</p>
+      <p>${escapeHtml(getCardSourceLabel(left))} • ${escapeHtml(left.type)}${getSetCodeFromCard(left) ? ` • ${escapeHtml(getSetCodeFromCard(left))}` : ""}</p>
     `;
     deckConflictRightCard.innerHTML = `
       <img src="${right.thumbPath}" alt="${escapeHtml(right.displayName)}" loading="lazy" />
       <h4>${escapeHtml(right.displayName)}</h4>
-      <p>${escapeHtml(right.type)}${getSetCodeFromCard(right) ? ` • ${escapeHtml(getSetCodeFromCard(right))}` : ""}</p>
+      <p>${escapeHtml(getCardSourceLabel(right))} • ${escapeHtml(right.type)}${getSetCodeFromCard(right) ? ` • ${escapeHtml(getSetCodeFromCard(right))}` : ""}</p>
     `;
 
     const select = (card) => {
