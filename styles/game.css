@@ -1192,12 +1192,14 @@ html[data-theme=light] .game-view::before {
 .deck-import-conflict-panel {
   position: relative;
   z-index: 1;
-  width: min(940px, 100% - 28px);
+  width: min(760px, 100% - 24px);
+  max-height: min(92vh, 760px);
   border-radius: 14px;
   border: 1px solid var(--border);
   background: var(--bg-elev-1);
   box-shadow: var(--shadow-strong);
   padding: 14px;
+  overflow: auto;
 }
 
 .deck-import-conflict-title {
@@ -1221,13 +1223,18 @@ html[data-theme=light] .game-view::before {
   background: var(--bg-elev-2);
   border-radius: 12px;
   padding: 10px;
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  gap: 6px;
 }
 
 .deck-import-conflict-card img {
-  width: 100%;
+  width: min(100%, 320px);
   border-radius: 10px;
-  object-fit: cover;
-  aspect-ratio: 0.71;
+  object-fit: contain;
+  aspect-ratio: 800/559;
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
 }
 
 .deck-import-conflict-card h4 {
@@ -1245,6 +1252,19 @@ html[data-theme=light] .game-view::before {
   width: 100%;
 }
 
+@media (max-width: 780px) {
+  .deck-import-conflict-panel {
+    width: min(520px, 100% - 16px);
+    padding: 12px;
+  }
+  .deck-import-conflict-cards {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .deck-import-conflict-card img {
+    width: min(100%, 300px);
+  }
+}
 .deck-autoimport-menu.hidden {
   display: none;
 }

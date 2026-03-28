@@ -162,7 +162,7 @@ export function renderDeckList() {
       <img class="deck-card-thumb" src="${card.thumbPath}" alt="${escapeHtml(card.displayName)}" loading="lazy" />
       <div class="deck-card-info">
         <span class="deck-card-name">${escapeHtml(card.displayName)}</span>
-        <span class="deck-card-type">${escapeHtml(card.type)}</span>
+        <span class="deck-card-type">${escapeHtml(getDeckCardMeta(card))}</span>
       </div>
       <div class="deck-card-controls">
         <button class="deck-count-btn" data-key="${escapeHtml(key)}" data-action="dec" aria-label="Remove one copy" type="button"${count <= 0 ? " disabled" : ""}>−</button>
@@ -181,6 +181,13 @@ export function renderDeckList() {
 
     deckCardList.appendChild(item);
   }
+}
+
+function getDeckCardMeta(card) {
+  const normalized = new Set((card.normalizedTags || []).map((tag) => tag.toLowerCase()));
+  const source = normalized.has("official") ? "Official" : (normalized.has("custom") ? "Custom" : "Unknown");
+  const setCode = getSetCodeFromCard(card);
+  return `${source} • ${card.type}${setCode ? ` • ${setCode}` : ""}`;
 }
 
 // ── Deck slot management ──────────────────────────────────────────────────────
@@ -505,6 +512,17 @@ function triggerDownload(filename, content) {
   document.body.appendChild(anchor);
   anchor.click();
   anchor.remove();
+}
+
+function getCurrentDeckFilenameStem() {
+  const names = ctx.getDeckNames?.() || [];
+  const rawName = names[ctx.getCurrentSlot?.() ?? 0] || "deck";
+  const cleaned = rawName
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return cleaned || "deck";
 }
 
 function matchCardByNameSet(name, setCode = "") {
@@ -870,22 +888,22 @@ function bindDeckPanelEvents() {
     if (format === "B64") {
       const seed = encodeDeck(ctx.deckCards());
       if (!seed) { ctx.showToast("Deck is empty."); return; }
-      triggerDownload("deck.txt", seed);
+      triggerDownload(`${getCurrentDeckFilenameStem()}.txt`, seed);
       ctx.showToast("B64 deck exported.");
       return;
     }
     if (format === "JSON") {
-      triggerDownload("deck.json", createJsonFromDeck());
+      triggerDownload(`${getCurrentDeckFilenameStem()}.json`, createJsonFromDeck());
       ctx.showToast("JSON deck exported.");
       return;
     }
     if (format === "CSV") {
-      triggerDownload("deck.csv", createCsvFromDeck());
+      triggerDownload(`${getCurrentDeckFilenameStem()}.csv`, createCsvFromDeck());
       ctx.showToast("CSV deck exported.");
       return;
     }
     if (format === "RAW") {
-      triggerDownload("deck.txt", createRawTextFromDeck());
+      triggerDownload(`${getCurrentDeckFilenameStem()}.txt`, createRawTextFromDeck());
       ctx.showToast("RAW deck exported.");
     }
   });
