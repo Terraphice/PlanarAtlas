@@ -28,6 +28,41 @@ export function createSearchManager({
 }) {
   // ── Internal helpers ──────────────────────────────────────────────────────────
 
+  function getCardSuggestionMeta(card) {
+    const typeLabel = String(card.type || "").trim();
+    const typeLower = typeLabel.toLowerCase();
+
+    const tagLabels = (Array.isArray(card.tags) ? card.tags : [])
+      .map((tag) => getTagLabel(tag).trim())
+      .filter(Boolean)
+      .filter((label) => label.toLowerCase() !== "hidden");
+
+    const sourceLabel = tagLabels.find((label) => ["official", "custom"].includes(label.toLowerCase())) || "";
+    const sourceLower = sourceLabel.toLowerCase();
+
+    const orderedIdentifiers = [
+      typeLabel,
+      sourceLabel,
+      ...tagLabels.filter((label) => {
+        const lower = label.toLowerCase();
+        if (lower === typeLower) return false;
+        if (sourceLower && lower === sourceLower) return false;
+        return true;
+      })
+    ].filter(Boolean);
+
+    const dedupedIdentifiers = [];
+    const seen = new Set();
+    for (const identifier of orderedIdentifiers) {
+      const lower = identifier.toLowerCase();
+      if (seen.has(lower)) continue;
+      seen.add(lower);
+      dedupedIdentifiers.push(identifier);
+    }
+
+    return dedupedIdentifiers.join(" · ");
+  }
+
   function getActiveSearchElements() {
     return getActiveSearchSurface() === "sidebar"
       ? { input: sidebarSearch, ghost: sidebarSearchGhost, suggestions: null }
@@ -76,7 +111,7 @@ export function createSearchManager({
         kind: "card",
         value: card.displayName,
         title: card.displayName,
-        meta: `${card.type} · ${card.tags.slice(0, 3).map(getTagLabel).join(" · ")}`,
+        meta: getCardSuggestionMeta(card),
         cardKey: card.uid
       });
     }
@@ -107,7 +142,7 @@ export function createSearchManager({
       kind: "card",
       value: card.displayName,
       title: card.displayName,
-      meta: `${card.type} · ${card.tags.slice(0, 3).map(getTagLabel).join(" · ")}`,
+      meta: getCardSuggestionMeta(card),
       cardKey: card.uid
     };
   }
