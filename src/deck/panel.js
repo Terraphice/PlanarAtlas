@@ -27,6 +27,7 @@ const deckImportMenu = document.getElementById("deck-import-menu");
 const deckExportMenu = document.getElementById("deck-export-menu");
 const deckImportFileInput = document.getElementById("deck-import-file-input");
 const deckConflictOverlay = document.getElementById("deck-import-conflict-overlay");
+const deckConflictPanel = document.querySelector(".deck-import-conflict-panel");
 const deckConflictHeader = document.getElementById("deck-conflict-header");
 const deckConflictLeftCard = document.getElementById("deck-conflict-left-card");
 const deckConflictRightCard = document.getElementById("deck-conflict-right-card");
@@ -569,14 +570,14 @@ function parseCsvRow(line) {
   return cells;
 }
 
-async function resolveConflict(name, options, instanceLabel) {
+async function resolveConflict(name, options, copyIndex, copyTotal) {
   return new Promise((resolve) => {
     if (!deckConflictOverlay || !deckConflictHeader || !deckConflictLeftCard || !deckConflictRightCard || !deckConflictLeftSelect || !deckConflictRightSelect) {
       resolve(options[0] || null);
       return;
     }
     const [left, right] = options;
-    deckConflictHeader.textContent = `Choose a card for "${name}" (${instanceLabel})`;
+    deckConflictHeader.textContent = `Conflict Resolver: ${name} ${copyIndex}/${copyTotal}`;
     deckConflictLeftCard.innerHTML = `
       <img src="${left.thumbPath}" alt="${escapeHtml(left.displayName)}" loading="lazy" />
       <h4>${escapeHtml(left.displayName)}</h4>
@@ -597,6 +598,9 @@ async function resolveConflict(name, options, instanceLabel) {
     };
     deckConflictLeftSelect.onclick = () => select(left);
     deckConflictRightSelect.onclick = () => select(right);
+    deckConflictPanel?.classList.remove("deck-import-conflict-panel-animate");
+    void deckConflictPanel?.offsetWidth;
+    deckConflictPanel?.classList.add("deck-import-conflict-panel-animate");
     deckConflictOverlay.classList.remove("hidden");
     document.body.classList.add("modal-open");
   });
@@ -692,7 +696,7 @@ async function parseDeckByFormat(format, text) {
         continue;
       }
       for (let i = 0; i < count; i++) {
-        const selected = await resolveConflict(name, candidates.slice(0, 2), `copy ${i + 1} of ${count}`);
+        const selected = await resolveConflict(name, candidates.slice(0, 2), i + 1, count);
         if (selected) map.set(selected.uid, (map.get(selected.uid) || 0) + 1);
       }
     }

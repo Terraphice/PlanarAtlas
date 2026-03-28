@@ -1202,6 +1202,10 @@ html[data-theme=light] .game-view::before {
   overflow: auto;
 }
 
+.deck-import-conflict-panel-animate {
+  animation: deckConflictPanelFadeIn 220ms ease;
+}
+
 .deck-import-conflict-title {
   margin: 0 0 12px;
   font-size: 1rem;
@@ -1252,6 +1256,16 @@ html[data-theme=light] .game-view::before {
   width: 100%;
 }
 
+@keyframes deckConflictPanelFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
 @media (max-width: 780px) {
   .deck-import-conflict-panel {
     width: min(520px, 100% - 16px);
