@@ -450,8 +450,26 @@
       <div class="deck-panel-actions">
         <button id="deck-play-btn" class="neutral-button-base deck-action-btn deck-play-btn" type="button">▶ Play</button>
         <button id="deck-link-btn" class="neutral-button-base deck-action-btn" type="button">Link</button>
-        <button id="deck-export-btn" class="neutral-button-base deck-action-btn" type="button">Export</button>
-        <button id="deck-import-btn" class="neutral-button-base deck-action-btn" type="button">Import</button>
+        <div class="deck-format-wrap">
+          <button id="deck-export-btn" class="neutral-button-base deck-action-btn" type="button">Export ▾</button>
+          <div id="deck-export-menu" class="deck-format-menu hidden">
+            <button class="deck-format-item" data-action="b64" type="button">B64</button>
+            <button class="deck-format-item" data-action="json" type="button">JSON</button>
+            <button class="deck-format-item" data-action="csv" type="button">CSV</button>
+            <button class="deck-format-item" data-action="raw" type="button">RAW</button>
+            <button class="deck-format-item" data-action="clip" type="button">CLIP</button>
+          </div>
+        </div>
+        <div class="deck-format-wrap">
+          <button id="deck-import-btn" class="neutral-button-base deck-action-btn" type="button">Import ▾</button>
+          <div id="deck-import-menu" class="deck-format-menu hidden">
+            <button class="deck-format-item" data-action="b64" type="button">B64</button>
+            <button class="deck-format-item" data-action="json" type="button">JSON</button>
+            <button class="deck-format-item" data-action="csv" type="button">CSV</button>
+            <button class="deck-format-item" data-action="raw" type="button">RAW</button>
+            <button class="deck-format-item" data-action="clip" type="button">CLIP</button>
+          </div>
+        </div>
         <div class="deck-autoimport-wrap">
           <button id="deck-autoimport-btn" class="neutral-button-base deck-action-btn" type="button">Auto</button>
           <div id="deck-autoimport-menu" class="deck-autoimport-menu hidden">

@@ -22,6 +22,8 @@ const deckTotalEl = document.getElementById("deck-total-count");
 const deckPlayBtn = document.getElementById("deck-play-btn");
 const deckImportBtn = document.getElementById("deck-import-btn");
 const deckExportBtn = document.getElementById("deck-export-btn");
+const deckImportMenu = document.getElementById("deck-import-menu");
+const deckExportMenu = document.getElementById("deck-export-menu");
 const deckLinkBtn = document.getElementById("deck-link-btn");
 const deckClearBtn = document.getElementById("deck-clear-btn");
 const deckCloseBtn = document.getElementById("deck-close-btn");
@@ -417,6 +419,84 @@ function autoImportCards(filter) {
 
 // ── Import / Export ───────────────────────────────────────────────────────────
 
+function getSetCodeFromTags(tags = []) {
+  const setCodes = tags.filter((tag) => /^[A-Z]{2,6}$/.test(tag) || tag === "MagicCon");
+  const upperOnly = setCodes.filter((tag) => /^[A-Z]+$/.test(tag));
+  return upperOnly[0] || setCodes[0] || "";
+}
+
+function parseIllustratorFromTranscript(text) {
+  const match = text.match(/^Illustrated by:\s*(.+)$/m);
+  return match ? match[1].trim() : "";
+}
+
+async function getCardArtist(card) {
+  if (!card?.transcriptPath) return "";
+  try {
+    const response = await fetch(card.transcriptPath);
+    if (!response.ok) return "";
+    const transcript = await response.text();
+    return parseIllustratorFromTranscript(transcript.trim());
+  } catch {
+    return "";
+  }
+}
+
+function toDeckRows(deckMap) {
+  const allCards = ctx.getAllCards();
+  return [...deckMap.entries()]
+    .map(([uid, count]) => ({ card: allCards.find((entry) => entry.uid === uid), count }))
+    .filter((entry) => entry.card && entry.count > 0)
+    .sort((a, b) => a.card.displayName.localeCompare(b.card.displayName, undefined, { sensitivity: "base" }));
+}
+
+function downloadDeckText(text, filename, mimeType = "text/plain;charset=utf-8") {
+  const blob = new globalThis.Blob([text], { type: mimeType });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = filename;
+  document.body.appendChild(anchor);
+  anchor.click();
+  anchor.remove();
+  URL.revokeObjectURL(url);
+}
+
+function formatDeckRaw(deckMap) {
+  return toDeckRows(deckMap)
+    .map(({ card, count }) => {
+      const setCode = getSetCodeFromTags(card.tags);
+      return `${card.displayName}${setCode ? ` (${setCode})` : ""} ${count}`;
+    })
+    .join("\n");
+}
+
+async function formatDeckCsv(deckMap) {
+  const rows = toDeckRows(deckMap);
+  const parts = ["name,set_code,artist,count"];
+  for (const { card, count } of rows) {
+    const setCode = getSetCodeFromTags(card.tags);
+    const artist = await getCardArtist(card);
+    const escaped = [card.displayName, setCode, artist, String(count)].map((value) => `"${String(value).replace(/"/g, "\"\"")}"`);
+    parts.push(escaped.join(","));
+  }
+  return parts.join("\n");
+}
+
+async function formatDeckJson(deckMap) {
+  const rows = toDeckRows(deckMap);
+  const cards = [];
+  for (const { card, count } of rows) {
+    cards.push({
+      name: card.displayName,
+      setCode: getSetCodeFromTags(card.tags),
+      artist: await getCardArtist(card),
+      count
+    });
+  }
+  return JSON.stringify({ format: "planar-atlas-deck-v1", cards }, null, 2);
+}
+
 /** Encodes the current deck to a seed and copies it to the clipboard. */
 export function exportDeckSeed() {
   const seed = encodeDeck(ctx.deckCards());
@@ -428,14 +508,182 @@ export function exportDeckSeed() {
   }
 }
 
-/** Prompts the user for a deck seed and imports it into the current deck slot. */
-export function importDeckPrompt() {
-  const seed = prompt("Paste a deck seed to import:");
-  if (!seed?.trim()) return;
-  const decoded = decodeDeck(seed.trim());
-  if (decoded.size === 0) { ctx.showToast("Invalid deck seed."); return; }
-  const valid = ctx.filterValidDeck(decoded);
-  const skipped = decoded.size - valid.size;
+function parseCsvLines(text) {
+  const lines = text.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+  if (!lines.length) return [];
+  const [header, ...rows] = lines;
+  const hasHeader = header.toLowerCase().includes("name") && header.toLowerCase().includes("set");
+  const body = hasHeader ? rows : [header, ...rows];
+  return body.map((line) => {
+    const cols = [];
+    let current = "";
+    let inQuotes = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (ch === "\"" && line[i + 1] === "\"") {
+        current += "\"";
+        i++;
+      } else if (ch === "\"") {
+        inQuotes = !inQuotes;
+      } else if (ch === "," && !inQuotes) {
+        cols.push(current.trim());
+        current = "";
+      } else {
+        current += ch;
+      }
+    }
+    cols.push(current.trim());
+    return cols;
+  });
+}
+
+function makeNameIndex() {
+  const byName = new Map();
+  for (const card of ctx.getAllCards()) {
+    const key = card.displayName.trim().toLowerCase();
+    const list = byName.get(key) || [];
+    list.push(card);
+    byName.set(key, list);
+  }
+  return byName;
+}
+
+function parseRawLine(line) {
+  const match = line.match(/^(.*\S)\s+(\d+)\s*$/);
+  if (!match) return null;
+  const namePart = match[1].trim();
+  const count = Math.max(1, Math.min(ctx.MAX_CARD_COUNT, parseInt(match[2], 10)));
+  const setMatch = namePart.match(/^(.*\S)\s+\(([A-Za-z0-9]+)\)$/);
+  if (setMatch) {
+    return { name: setMatch[1].trim(), setCode: setMatch[2].trim(), count };
+  }
+  return { name: namePart, setCode: "", count };
+}
+
+function showConflictChoice(name, options, copyIndex, totalCopies) {
+  return new Promise((resolve) => {
+    const overlay = document.createElement("div");
+    overlay.className = "deck-conflict-overlay";
+    const cardsHtml = options.map((card, index) => `
+      <div class="deck-conflict-card">
+        <img class="deck-conflict-image" src="${card.thumbPath}" alt="${escapeHtml(card.displayName)}" />
+        <div class="deck-conflict-meta">
+          <strong>${escapeHtml(card.displayName)}</strong>
+          <span>${escapeHtml(card.type)}</span>
+          <span>Set: ${escapeHtml(getSetCodeFromTags(card.tags) || "Unknown")}</span>
+        </div>
+        <button class="neutral-button-base deck-action-btn deck-conflict-select" data-choice="${index}" type="button">Select</button>
+      </div>
+    `).join("");
+    overlay.innerHTML = `
+      <div class="deck-conflict-dialog">
+        <h3>Resolve duplicate card name</h3>
+        <p>${escapeHtml(name)} copy ${copyIndex} of ${totalCopies}</p>
+        <div class="deck-conflict-grid">${cardsHtml}</div>
+      </div>
+    `;
+    overlay.addEventListener("click", (event) => {
+      const btn = event.target.closest(".deck-conflict-select");
+      if (!btn) return;
+      const choice = parseInt(btn.dataset.choice, 10);
+      overlay.remove();
+      resolve(options[choice] || null);
+    });
+    document.body.appendChild(overlay);
+  });
+}
+
+async function resolveDeckEntries(entries) {
+  const byName = makeNameIndex();
+  const resolved = new Map();
+  let skipped = 0;
+  for (const entry of entries) {
+    const options = byName.get(entry.name.toLowerCase()) || [];
+    if (!options.length) {
+      skipped += entry.count;
+      continue;
+    }
+    if (options.length === 1) {
+      const uid = options[0].uid;
+      resolved.set(uid, Math.min(ctx.MAX_CARD_COUNT, (resolved.get(uid) || 0) + entry.count));
+      continue;
+    }
+    if (entry.setCode) {
+      const bySet = options.find((card) => getSetCodeFromTags(card.tags).toLowerCase() === entry.setCode.toLowerCase());
+      if (bySet) {
+        const uid = bySet.uid;
+        resolved.set(uid, Math.min(ctx.MAX_CARD_COUNT, (resolved.get(uid) || 0) + entry.count));
+        continue;
+      }
+    }
+    for (let i = 0; i < entry.count; i++) {
+      const selected = await showConflictChoice(entry.name, options, i + 1, entry.count);
+      if (!selected) {
+        skipped++;
+        continue;
+      }
+      const uid = selected.uid;
+      resolved.set(uid, Math.min(ctx.MAX_CARD_COUNT, (resolved.get(uid) || 0) + 1));
+    }
+  }
+  return { map: resolved, skipped };
+}
+
+async function parseImportedText(text, formatHint = "auto") {
+  const trimmed = text.trim();
+  if (!trimmed) return { map: new Map(), skipped: 0 };
+
+  if (formatHint === "b64" || (formatHint === "auto" && trimmed.startsWith("d2:"))) {
+    return { map: decodeDeck(trimmed), skipped: 0 };
+  }
+
+  if (formatHint === "json" || formatHint === "auto") {
+    try {
+      const parsed = JSON.parse(trimmed);
+      const items = Array.isArray(parsed) ? parsed : Array.isArray(parsed.cards) ? parsed.cards : [];
+      if (items.length) {
+        const normalized = items
+          .map((item) => ({
+            name: String(item.name || "").trim(),
+            setCode: String(item.setCode || item.set_code || "").trim(),
+            count: Math.max(1, Math.min(ctx.MAX_CARD_COUNT, parseInt(item.count ?? 1, 10) || 1))
+          }))
+          .filter((item) => item.name);
+        return resolveDeckEntries(normalized);
+      }
+    } catch {
+      // continue to next parser
+    }
+  }
+
+  if (formatHint === "csv" || (formatHint === "auto" && trimmed.includes(",") && trimmed.toLowerCase().includes("name"))) {
+    const rows = parseCsvLines(trimmed);
+    const entries = rows
+      .map((cols) => ({
+        name: String(cols[0] || "").replace(/^"|"$/g, "").trim(),
+        setCode: String(cols[1] || "").replace(/^"|"$/g, "").trim(),
+        count: Math.max(1, Math.min(ctx.MAX_CARD_COUNT, parseInt(String(cols[3] || "1").replace(/^"|"$/g, ""), 10) || 1))
+      }))
+      .filter((item) => item.name);
+    return resolveDeckEntries(entries);
+  }
+
+  const rawEntries = trimmed
+    .split(/\r?\n/)
+    .map((line) => parseRawLine(line))
+    .filter(Boolean);
+  return resolveDeckEntries(rawEntries);
+}
+
+async function applyImportedDeckText(text, formatHint = "auto") {
+  const decoded = await parseImportedText(text, formatHint);
+  if (decoded.map.size === 0) {
+    ctx.showToast("Invalid or empty deck import.");
+    return;
+  }
+  const valid = ctx.filterValidDeck(decoded.map);
+  const skippedUnknown = decoded.map.size - valid.size;
+  const skipped = decoded.skipped + skippedUnknown;
   ctx.setCurrentDeckMap(valid);
   ctx.saveDecksToStorage();
   updateDeckButton();
@@ -448,6 +696,32 @@ export function importDeckPrompt() {
   } else {
     ctx.showToast(`Imported deck: ${total} card${total !== 1 ? "s" : ""}.`);
   }
+}
+
+async function importDeckFromClipboard() {
+  if (!navigator.clipboard?.readText) {
+    ctx.showToast("Clipboard read is not supported in this browser.");
+    return;
+  }
+  try {
+    const text = await navigator.clipboard.readText();
+    await applyImportedDeckText(text, "auto");
+  } catch {
+    ctx.showToast("Could not read clipboard.");
+  }
+}
+
+function importDeckFromFile(format) {
+  const input = document.createElement("input");
+  input.type = "file";
+  input.accept = format === "json" ? ".json,application/json" : format === "csv" ? ".csv,text/csv" : ".txt,.text,text/plain";
+  input.addEventListener("change", async () => {
+    const file = input.files?.[0];
+    if (!file) return;
+    const text = await file.text();
+    await applyImportedDeckText(text, format);
+  });
+  input.click();
 }
 
 /** Encodes the current deck as a shareable link and copies it to the clipboard. */
@@ -482,8 +756,20 @@ function bindDeckPanelEvents() {
   deckCloseBtn?.addEventListener("click", closeDeckPanel);
   deckPlayBtn?.addEventListener("click", () => ctx.showGameModeDialog());
   deckClearBtn?.addEventListener("click", () => ctx.clearDeck());
-  deckExportBtn?.addEventListener("click", exportDeckSeed);
-  deckImportBtn?.addEventListener("click", importDeckPrompt);
+  deckExportBtn?.addEventListener("click", (event) => {
+    event.stopPropagation();
+    const hidden = deckExportMenu?.classList.contains("hidden");
+    deckImportMenu?.classList.add("hidden");
+    if (hidden) deckExportMenu?.classList.remove("hidden");
+    else deckExportMenu?.classList.add("hidden");
+  });
+  deckImportBtn?.addEventListener("click", (event) => {
+    event.stopPropagation();
+    const hidden = deckImportMenu?.classList.contains("hidden");
+    deckExportMenu?.classList.add("hidden");
+    if (hidden) deckImportMenu?.classList.remove("hidden");
+    else deckImportMenu?.classList.add("hidden");
+  });
   deckLinkBtn?.addEventListener("click", shareDeckLink);
 
   deckSlotSelect?.addEventListener("change", () => {
@@ -545,8 +831,60 @@ function bindDeckPanelEvents() {
     deckAutoimportTagList?.classList.toggle("hidden");
   });
 
+  deckExportMenu?.addEventListener("click", async (event) => {
+    event.stopPropagation();
+    const item = event.target.closest(".deck-format-item[data-action]");
+    if (!item) return;
+    const action = item.dataset.action;
+    deckExportMenu?.classList.add("hidden");
+    const deckMap = ctx.deckCards();
+    if (deckMap.size === 0) {
+      ctx.showToast("Deck is empty.");
+      return;
+    }
+    if (action === "b64") {
+      const seed = encodeDeck(deckMap);
+      if (!seed) {
+        ctx.showToast("Deck is empty.");
+        return;
+      }
+      downloadDeckText(seed, "deck-export.txt");
+      return;
+    }
+    if (action === "json") {
+      downloadDeckText(await formatDeckJson(deckMap), "deck-export.json", "application/json;charset=utf-8");
+      return;
+    }
+    if (action === "csv") {
+      downloadDeckText(await formatDeckCsv(deckMap), "deck-export.csv", "text/csv;charset=utf-8");
+      return;
+    }
+    if (action === "raw") {
+      downloadDeckText(formatDeckRaw(deckMap), "deck-export.txt");
+      return;
+    }
+    if (action === "clip") {
+      exportDeckSeed();
+    }
+  });
+
+  deckImportMenu?.addEventListener("click", async (event) => {
+    event.stopPropagation();
+    const item = event.target.closest(".deck-format-item[data-action]");
+    if (!item) return;
+    const action = item.dataset.action;
+    deckImportMenu?.classList.add("hidden");
+    if (action === "clip") {
+      await importDeckFromClipboard();
+      return;
+    }
+    importDeckFromFile(action);
+  });
+
   document.addEventListener("click", () => {
     deckAutoimportMenu?.classList.add("hidden");
+    deckExportMenu?.classList.add("hidden");
+    deckImportMenu?.classList.add("hidden");
   });
 
   modalDeckDec?.addEventListener("click", () => {

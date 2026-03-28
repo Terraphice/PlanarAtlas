@@ -1098,6 +1098,45 @@ html[data-theme=light] .game-view::before {
   position: relative;
 }
 
+.deck-format-wrap {
+  position: relative;
+}
+
+.deck-format-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 1300;
+  min-width: 120px;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  padding: 4px 0;
+}
+
+.deck-format-menu.hidden {
+  display: none;
+}
+
+.deck-format-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 9px 14px;
+  background: none;
+  border: none;
+  color: var(--text);
+  cursor: pointer;
+  font-size: 0.88rem;
+  transition: background 100ms ease;
+}
+
+.deck-format-item:hover {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
 .deck-autoimport-menu {
   position: absolute;
   top: calc(100% + 6px);
@@ -1166,6 +1205,57 @@ html[data-theme=light] .game-view::before {
 .deck-autoimport-tag-item:hover {
   background: color-mix(in srgb, var(--accent) 10%, transparent);
   color: var(--text);
+}
+
+.deck-conflict-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3500;
+  background: rgba(3, 7, 18, 0.65);
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+.deck-conflict-dialog {
+  width: min(900px, 100%);
+  background: var(--bg-elev-1);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.deck-conflict-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.deck-conflict-card {
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg-elev-2);
+  display: flex;
+  flex-direction: column;
+}
+
+.deck-conflict-image {
+  width: 100%;
+  aspect-ratio: 5 / 7;
+  object-fit: cover;
+}
+
+.deck-conflict-meta {
+  padding: 10px;
+  display: grid;
+  gap: 4px;
+  color: var(--text-soft);
+}
+
+.deck-conflict-select {
+  margin: 10px;
 }
 
 /* ── Modal deck quantity control ─────────────────────────────────────────────── */
