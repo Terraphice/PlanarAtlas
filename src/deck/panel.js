@@ -9,6 +9,7 @@ import { encodeDeck, decodeDeck } from "./codec.js";
 
 let deckPanelOpen = false;
 let deckPanelShelved = false;
+let pendingImportFormat = null;
 
 // ── Context (set by initDeckPanel) ───────────────────────────────────────────
 
@@ -22,7 +23,16 @@ const deckTotalEl = document.getElementById("deck-total-count");
 const deckPlayBtn = document.getElementById("deck-play-btn");
 const deckImportBtn = document.getElementById("deck-import-btn");
 const deckExportBtn = document.getElementById("deck-export-btn");
-const deckLinkBtn = document.getElementById("deck-link-btn");
+const deckImportMenu = document.getElementById("deck-import-menu");
+const deckExportMenu = document.getElementById("deck-export-menu");
+const deckImportFileInput = document.getElementById("deck-import-file-input");
+const deckConflictOverlay = document.getElementById("deck-import-conflict-overlay");
+const deckConflictPanel = document.querySelector(".deck-import-conflict-panel");
+const deckConflictHeader = document.getElementById("deck-conflict-header");
+const deckConflictLeftCard = document.getElementById("deck-conflict-left-card");
+const deckConflictRightCard = document.getElementById("deck-conflict-right-card");
+const deckConflictLeftSelect = document.getElementById("deck-conflict-left-select");
+const deckConflictRightSelect = document.getElementById("deck-conflict-right-select");
 const deckClearBtn = document.getElementById("deck-clear-btn");
 const deckCloseBtn = document.getElementById("deck-close-btn");
 const deckButton = document.getElementById("deck-button");
@@ -152,7 +162,7 @@ export function renderDeckList() {
       <img class="deck-card-thumb" src="${card.thumbPath}" alt="${escapeHtml(card.displayName)}" loading="lazy" />
       <div class="deck-card-info">
         <span class="deck-card-name">${escapeHtml(card.displayName)}</span>
-        <span class="deck-card-type">${escapeHtml(card.type)}</span>
+        <span class="deck-card-type">${escapeHtml(getDeckCardMeta(card))}</span>
       </div>
       <div class="deck-card-controls">
         <button class="deck-count-btn" data-key="${escapeHtml(key)}" data-action="dec" aria-label="Remove one copy" type="button"${count <= 0 ? " disabled" : ""}>−</button>
@@ -171,6 +181,19 @@ export function renderDeckList() {
 
     deckCardList.appendChild(item);
   }
+}
+
+function getDeckCardMeta(card) {
+  const source = getCardSourceLabel(card);
+  const setCode = getSetCodeFromCard(card);
+  return `${source} • ${card.type}${setCode ? ` • ${setCode}` : ""}`;
+}
+
+function getCardSourceLabel(card) {
+  const normalizedTags = (card.normalizedTags || []).map((tag) => tag.toLowerCase());
+  if (normalizedTags.some((tag) => tag.includes("official"))) return "Official";
+  if (normalizedTags.some((tag) => tag.includes("custom"))) return "Custom";
+  return "Unknown";
 }
 
 // ── Deck slot management ──────────────────────────────────────────────────────
@@ -417,8 +440,7 @@ function autoImportCards(filter) {
 
 // ── Import / Export ───────────────────────────────────────────────────────────
 
-/** Encodes the current deck to a seed and copies it to the clipboard. */
-export function exportDeckSeed() {
+function exportDeckSeedToClipboard() {
   const seed = encodeDeck(ctx.deckCards());
   if (!seed) { ctx.showToast("Deck is empty."); return; }
   if (navigator.clipboard) {
@@ -428,14 +450,266 @@ export function exportDeckSeed() {
   }
 }
 
-/** Prompts the user for a deck seed and imports it into the current deck slot. */
-export function importDeckPrompt() {
-  const seed = prompt("Paste a deck seed to import:");
-  if (!seed?.trim()) return;
-  const decoded = decodeDeck(seed.trim());
-  if (decoded.size === 0) { ctx.showToast("Invalid deck seed."); return; }
+function getSetCodeFromCard(card) {
+  for (const tag of card.tags || []) {
+    if (tag.startsWith(":")) continue;
+    if (/^[A-Z0-9]{2,8}$/.test(tag.trim())) return tag.trim().toUpperCase();
+  }
+  return "";
+}
+
+function getArtistFromCard(card) {
+  return typeof card.artist === "string" && card.artist.trim() ? card.artist.trim() : "Unknown";
+}
+
+function toDeckEntriesByCard() {
+  const allCards = ctx.getAllCards();
+  return [...ctx.deckCards().entries()]
+    .map(([key, count]) => ({ key, count, card: allCards.find((c) => c.uid === key) }))
+    .filter((entry) => entry.card && entry.count > 0);
+}
+
+function createRawTextFromDeck() {
+  const entries = toDeckEntriesByCard();
+  const names = new Map();
+  for (const { card } of entries) {
+    const lower = card.displayName.toLowerCase();
+    names.set(lower, (names.get(lower) || 0) + 1);
+  }
+  return entries
+    .sort((a, b) => a.card.displayName.localeCompare(b.card.displayName, undefined, { sensitivity: "base" }))
+    .map(({ card, count }) => {
+      const duplicateName = (names.get(card.displayName.toLowerCase()) || 0) > 1;
+      const setCode = getSetCodeFromCard(card);
+      return `${card.displayName}${duplicateName && setCode ? ` (${setCode})` : ""} ${count}`;
+    })
+    .join("\n");
+}
+
+function createJsonFromDeck() {
+  return JSON.stringify(
+    toDeckEntriesByCard().map(({ card, count }) => ({
+      uid: card.uid,
+      name: card.displayName,
+      setCode: getSetCodeFromCard(card),
+      artist: getArtistFromCard(card),
+      count
+    })),
+    null,
+    2
+  );
+}
+
+function createCsvFromDeck() {
+  const rows = [["name", "set_code", "artist", "count"]];
+  const entries = toDeckEntriesByCard()
+    .sort((a, b) => a.card.displayName.localeCompare(b.card.displayName, undefined, { sensitivity: "base" }));
+  for (const { card, count } of entries) {
+    rows.push([card.displayName, getSetCodeFromCard(card), getArtistFromCard(card), String(count)]);
+  }
+  return rows.map((row) => row.map((cell) => `"${String(cell).replace(/"/g, "\"\"")}"`).join(",")).join("\n");
+}
+
+function triggerDownload(filename, content) {
+  const url = `data:text/plain;charset=utf-8,${encodeURIComponent(content)}`;
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = filename;
+  document.body.appendChild(anchor);
+  anchor.click();
+  anchor.remove();
+}
+
+function getCurrentDeckFilenameStem() {
+  const names = ctx.getDeckNames?.() || [];
+  const rawName = names[ctx.getCurrentSlot?.() ?? 0] || "deck";
+  const cleaned = rawName
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return cleaned || "deck";
+}
+
+function matchCardByNameSet(name, setCode = "") {
+  const normalizedName = name.trim().toLowerCase();
+  if (!normalizedName) return null;
+  const candidates = ctx.getAllCards().filter((card) => card.displayName.toLowerCase() === normalizedName);
+  if (candidates.length === 1) return candidates[0];
+  const normalizedSet = setCode.trim().toUpperCase();
+  if (normalizedSet) {
+    return candidates.find((card) => getSetCodeFromCard(card) === normalizedSet) || null;
+  }
+  return null;
+}
+
+function parseCsvRow(line) {
+  const cells = [];
+  let current = "";
+  let inQuotes = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (ch === '"') {
+      if (inQuotes && line[i + 1] === '"') {
+        current += '"';
+        i++;
+      } else {
+        inQuotes = !inQuotes;
+      }
+      continue;
+    }
+    if (ch === "," && !inQuotes) {
+      cells.push(current.trim());
+      current = "";
+      continue;
+    }
+    current += ch;
+  }
+  cells.push(current.trim());
+  return cells;
+}
+
+async function resolveConflict(name, options, copyIndex, copyTotal) {
+  return new Promise((resolve) => {
+    if (!deckConflictOverlay || !deckConflictHeader || !deckConflictLeftCard || !deckConflictRightCard || !deckConflictLeftSelect || !deckConflictRightSelect) {
+      resolve(options[0] || null);
+      return;
+    }
+    const [left, right] = options;
+    deckConflictHeader.textContent = `Conflict Resolver: ${name} ${copyIndex}/${copyTotal}`;
+    deckConflictLeftCard.innerHTML = `
+      <img src="${left.thumbPath}" alt="${escapeHtml(left.displayName)}" loading="lazy" />
+      <h4>${escapeHtml(left.displayName)}</h4>
+      <p>${escapeHtml(getCardSourceLabel(left))} • ${escapeHtml(left.type)}${getSetCodeFromCard(left) ? ` • ${escapeHtml(getSetCodeFromCard(left))}` : ""}</p>
+    `;
+    deckConflictRightCard.innerHTML = `
+      <img src="${right.thumbPath}" alt="${escapeHtml(right.displayName)}" loading="lazy" />
+      <h4>${escapeHtml(right.displayName)}</h4>
+      <p>${escapeHtml(getCardSourceLabel(right))} • ${escapeHtml(right.type)}${getSetCodeFromCard(right) ? ` • ${escapeHtml(getSetCodeFromCard(right))}` : ""}</p>
+    `;
+
+    const select = (card) => {
+      deckConflictOverlay.classList.add("hidden");
+      document.body.classList.remove("modal-open");
+      deckConflictLeftSelect.onclick = null;
+      deckConflictRightSelect.onclick = null;
+      resolve(card);
+    };
+    deckConflictLeftSelect.onclick = () => select(left);
+    deckConflictRightSelect.onclick = () => select(right);
+    deckConflictPanel?.classList.remove("deck-import-conflict-panel-animate");
+    void deckConflictPanel?.offsetWidth;
+    deckConflictPanel?.classList.add("deck-import-conflict-panel-animate");
+    deckConflictOverlay.classList.remove("hidden");
+    document.body.classList.add("modal-open");
+  });
+}
+
+async function parseDeckByFormat(format, text) {
+  if (format === "B64") {
+    const decoded = decodeDeck(text.trim());
+    if (decoded.size === 0) throw new Error("Invalid deck seed.");
+    return { deck: decoded, skippedUnknownCount: 0 };
+  }
+
+  if (format === "JSON") {
+    const parsed = JSON.parse(text);
+    const map = new Map();
+    if (Array.isArray(parsed)) {
+      for (const item of parsed) {
+        if (!item || typeof item !== "object" || typeof item.uid !== "string") continue;
+        const uid = item.uid.trim();
+        const count = Math.max(1, Math.min(ctx.MAX_CARD_COUNT, parseInt(item.count ?? 1, 10) || 1));
+        if (uid) map.set(uid, (map.get(uid) || 0) + count);
+      }
+    } else if (parsed && typeof parsed === "object") {
+      for (const [uid, value] of Object.entries(parsed)) {
+        const count = Math.max(1, Math.min(ctx.MAX_CARD_COUNT, parseInt(value, 10) || 1));
+        if (uid.trim()) map.set(uid.trim(), (map.get(uid.trim()) || 0) + count);
+      }
+    }
+    if (map.size === 0) throw new Error("No cards found in JSON.");
+    return { deck: map, skippedUnknownCount: 0 };
+  }
+
+  if (format === "CSV") {
+    const lines = text.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+    if (!lines.length) throw new Error("CSV file is empty.");
+    const rows = lines.map(parseCsvRow);
+    const header = rows[0].map((cell) => cell.toLowerCase());
+    const nameIdx = header.indexOf("name");
+    const setIdx = header.indexOf("set_code");
+    const countIdx = header.indexOf("count");
+    if (nameIdx < 0) throw new Error("CSV must include a name column.");
+    const map = new Map();
+    let skippedUnknownCount = 0;
+    for (const row of rows.slice(1)) {
+      const name = row[nameIdx] || "";
+      const setCode = setIdx >= 0 ? row[setIdx] || "" : "";
+      const count = Math.max(1, Math.min(ctx.MAX_CARD_COUNT, parseInt(row[countIdx] ?? "1", 10) || 1));
+      const matched = matchCardByNameSet(name, setCode);
+      if (!matched) {
+        skippedUnknownCount += count;
+        continue;
+      }
+      map.set(matched.uid, (map.get(matched.uid) || 0) + count);
+    }
+    if (map.size === 0) throw new Error("No matching cards found in CSV.");
+    return { deck: map, skippedUnknownCount };
+  }
+
+  if (format === "RAW") {
+    const merged = new Map();
+    const lines = text.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+    for (const line of lines) {
+      const match = line.match(/^(.*?)\s*(?:\(([^)]+)\))?\s+(\d+)$/);
+      if (!match) continue;
+      const [, nameRaw, setCodeRaw = "", countRaw] = match;
+      const name = nameRaw.trim();
+      const setCode = setCodeRaw.trim().toUpperCase();
+      const count = Math.max(1, Math.min(ctx.MAX_CARD_COUNT, parseInt(countRaw, 10) || 1));
+      const key = `${name.toLowerCase()}::${setCode}`;
+      merged.set(key, { name, setCode, count: (merged.get(key)?.count || 0) + count });
+    }
+    if (merged.size === 0) throw new Error("No valid RAW entries were found.");
+
+    const map = new Map();
+    let skippedUnknownCount = 0;
+    for (const { name, setCode, count } of merged.values()) {
+      if (setCode) {
+        const matched = matchCardByNameSet(name, setCode);
+        if (!matched) {
+          skippedUnknownCount += count;
+          continue;
+        }
+        map.set(matched.uid, (map.get(matched.uid) || 0) + count);
+        continue;
+      }
+      const candidates = ctx.getAllCards().filter((card) => card.displayName.toLowerCase() === name.toLowerCase());
+      if (candidates.length === 0) {
+        skippedUnknownCount += count;
+        continue;
+      }
+      if (candidates.length === 1) {
+        map.set(candidates[0].uid, (map.get(candidates[0].uid) || 0) + count);
+        continue;
+      }
+      for (let i = 0; i < count; i++) {
+        const selected = await resolveConflict(name, candidates.slice(0, 2), i + 1, count);
+        if (selected) map.set(selected.uid, (map.get(selected.uid) || 0) + 1);
+      }
+    }
+    if (map.size === 0) throw new Error("No matching cards were imported.");
+    return { deck: map, skippedUnknownCount };
+  }
+
+  throw new Error("Unsupported deck format.");
+}
+
+async function importDeckFromText(format, text) {
+  const { deck: decoded, skippedUnknownCount } = await parseDeckByFormat(format, text);
   const valid = ctx.filterValidDeck(decoded);
-  const skipped = decoded.size - valid.size;
+  const skipped = skippedUnknownCount + (decoded.size - valid.size);
   ctx.setCurrentDeckMap(valid);
   ctx.saveDecksToStorage();
   updateDeckButton();
@@ -447,6 +721,29 @@ export function importDeckPrompt() {
     ctx.showToast(`Imported ${total} cards (${skipped} unknown card${skipped > 1 ? "s" : ""} skipped).`);
   } else {
     ctx.showToast(`Imported deck: ${total} card${total !== 1 ? "s" : ""}.`);
+  }
+}
+
+function closeFormatMenus() {
+  deckImportMenu?.classList.add("hidden");
+  deckExportMenu?.classList.add("hidden");
+}
+
+function toggleFormatMenu(menuEl) {
+  if (!menuEl) return;
+  const hidden = menuEl.classList.contains("hidden");
+  closeFormatMenus();
+  if (hidden) menuEl.classList.remove("hidden");
+}
+
+function openImportFileDialog(format) {
+  pendingImportFormat = format;
+  if (deckImportFileInput) {
+    const accept = format === "JSON"
+      ? ".json,application/json"
+      : (format === "CSV" ? ".csv,text/csv,.txt,text/plain" : ".txt,.json,.csv,text/plain,text/csv,application/json");
+    deckImportFileInput.setAttribute("accept", accept);
+    deckImportFileInput.click();
   }
 }
 
@@ -482,9 +779,14 @@ function bindDeckPanelEvents() {
   deckCloseBtn?.addEventListener("click", closeDeckPanel);
   deckPlayBtn?.addEventListener("click", () => ctx.showGameModeDialog());
   deckClearBtn?.addEventListener("click", () => ctx.clearDeck());
-  deckExportBtn?.addEventListener("click", exportDeckSeed);
-  deckImportBtn?.addEventListener("click", importDeckPrompt);
-  deckLinkBtn?.addEventListener("click", shareDeckLink);
+  deckExportBtn?.addEventListener("click", (event) => {
+    event.stopPropagation();
+    toggleFormatMenu(deckExportMenu);
+  });
+  deckImportBtn?.addEventListener("click", (event) => {
+    event.stopPropagation();
+    toggleFormatMenu(deckImportMenu);
+  });
 
   deckSlotSelect?.addEventListener("change", () => {
     const slot = parseInt(deckSlotSelect.value, 10);
@@ -547,6 +849,90 @@ function bindDeckPanelEvents() {
 
   document.addEventListener("click", () => {
     deckAutoimportMenu?.classList.add("hidden");
+    closeFormatMenus();
+  });
+
+  deckImportMenu?.addEventListener("click", async (event) => {
+    event.stopPropagation();
+    const button = event.target.closest(".deck-format-item[data-format]");
+    if (!button) return;
+    const format = button.dataset.format;
+    closeFormatMenus();
+    if (format === "CLIP") {
+      try {
+        const text = (await navigator.clipboard.readText()).trim();
+        if (!text) throw new Error("Clipboard is empty.");
+        const firstLine = text.split(/\r?\n/, 1)[0] || "";
+        const looksB64 = text.startsWith("d2:");
+        const looksJson = text.startsWith("{") || text.startsWith("[");
+        const looksCsv = firstLine.includes(",") && /\bname\b/i.test(firstLine);
+        const detected = looksB64 ? "B64" : (looksJson ? "JSON" : (looksCsv ? "CSV" : "RAW"));
+        await importDeckFromText(detected, text);
+      } catch {
+        ctx.showToast("Unable to import from clipboard.");
+      }
+      return;
+    }
+    openImportFileDialog(format);
+  });
+
+  deckExportMenu?.addEventListener("click", (event) => {
+    event.stopPropagation();
+    const button = event.target.closest(".deck-format-item[data-format]");
+    if (!button) return;
+    const format = button.dataset.format;
+    closeFormatMenus();
+
+    if (format === "LINK") {
+      shareDeckLink();
+      return;
+    }
+
+    if (format === "CLIP") {
+      exportDeckSeedToClipboard();
+      return;
+    }
+
+    if (ctx.getDeckTotal() === 0) {
+      ctx.showToast("Deck is empty.");
+      return;
+    }
+
+    if (format === "B64") {
+      const seed = encodeDeck(ctx.deckCards());
+      if (!seed) { ctx.showToast("Deck is empty."); return; }
+      triggerDownload(`${getCurrentDeckFilenameStem()}.txt`, seed);
+      ctx.showToast("B64 deck exported.");
+      return;
+    }
+    if (format === "JSON") {
+      triggerDownload(`${getCurrentDeckFilenameStem()}.json`, createJsonFromDeck());
+      ctx.showToast("JSON deck exported.");
+      return;
+    }
+    if (format === "CSV") {
+      triggerDownload(`${getCurrentDeckFilenameStem()}.csv`, createCsvFromDeck());
+      ctx.showToast("CSV deck exported.");
+      return;
+    }
+    if (format === "RAW") {
+      triggerDownload(`${getCurrentDeckFilenameStem()}.txt`, createRawTextFromDeck());
+      ctx.showToast("RAW deck exported.");
+    }
+  });
+
+  deckImportFileInput?.addEventListener("change", async () => {
+    const file = deckImportFileInput.files?.[0];
+    const format = pendingImportFormat;
+    pendingImportFormat = null;
+    if (!file || !format) return;
+    try {
+      await importDeckFromText(format, await file.text());
+    } catch (error) {
+      ctx.showToast(error instanceof Error ? error.message : "Failed to import deck.");
+    } finally {
+      deckImportFileInput.value = "";
+    }
   });
 
   modalDeckDec?.addEventListener("click", () => {

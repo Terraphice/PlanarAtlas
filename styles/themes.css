@@ -5,7 +5,6 @@
   font-style: normal;
   font-display: swap;
 }
-
 :root {
   color-scheme: dark;
   --bg: #101822;
@@ -29,12 +28,10 @@
   --planechase-ratio: 800 / 559;
   --parallax-image: url('../assets/social-preview.jpg');
   --app-font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-
   --stack-card-width: clamp(300px, 52vw, 620px);
   --stack-overlap: calc(var(--stack-card-width) * 0.48);
   --stack-gap: clamp(4px, 1vw, 12px);
   --singleton-width: clamp(300px, 58vw, 640px);
-
   /* stable badge tones */
   --tone-green-bg: rgba(36, 74, 53, 0.92);
   --tone-green-border: #3b8a61;
@@ -56,43 +53,33 @@
   --tone-gray-text: #f2f5f8;
 }
 
-html[data-phyrexian-script="true"] {
+html[data-phyrexian-script=true] {
   --app-font-family: "PlanarAtlasPhyrexian", "Segoe UI", sans-serif;
   --phyrexian-font-scale: 1.18;
 }
 
-html[data-phyrexian-script="true"] body,
-html[data-phyrexian-script="true"] body *:not(.ms):not(.symbol-glyph):not(code):not(kbd) {
+html[data-phyrexian-script=true] body,
+html[data-phyrexian-script=true] body *:not(.ms):not(.symbol-glyph):not(code):not(kbd) {
   font-family: var(--app-font-family) !important;
   text-transform: lowercase !important;
 }
 
-html[data-phyrexian-script="true"] body {
+html[data-phyrexian-script=true] body {
   font-size: calc(1rem * var(--phyrexian-font-scale));
 }
 
-html[data-phyrexian-script="true"] .toast {
-  font-family:
-    ui-sans-serif,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif !important;
+html[data-phyrexian-script=true] .toast {
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
   text-transform: none !important;
 }
 
-html[data-phyrexian-script="true"] #phyrexia-overlay,
-html[data-phyrexian-script="true"] #phyrexia-overlay * {
-  font-family:
-    ui-sans-serif,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif !important;
+html[data-phyrexian-script=true] #phyrexia-overlay,
+html[data-phyrexian-script=true] #phyrexia-overlay * {
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
   text-transform: none !important;
 }
 
-html[data-theme-name="azorius"] {
+html[data-theme-name=azorius] {
   --bg: #ffffff;
   --bg-elev-1: #f6fbff;
   --bg-elev-2: #eaf3ff;
@@ -109,7 +96,7 @@ html[data-theme-name="azorius"] {
   --parallax-image: url('../assets/theme-azorius.jpg'), url('../assets/social-preview.jpg');
 }
 
-html[data-theme-name="dimir"] {
+html[data-theme-name=dimir] {
   --bg: #0f1116;
   --bg-elev-1: #171b24;
   --bg-elev-2: #1f2633;
@@ -126,7 +113,7 @@ html[data-theme-name="dimir"] {
   --parallax-image: url('../assets/theme-dimir.jpg'), url('../assets/social-preview.jpg');
 }
 
-html[data-theme-name="boros"] {
+html[data-theme-name=boros] {
   --bg: #ffffff;
   --bg-elev-1: #fff8f8;
   --bg-elev-2: #ffecec;
@@ -143,7 +130,7 @@ html[data-theme-name="boros"] {
   --parallax-image: url('../assets/theme-boros.jpg'), url('../assets/social-preview.jpg');
 }
 
-html[data-theme-name="rakdos"] {
+html[data-theme-name=rakdos] {
   --bg: #1e1418;
   --bg-elev-1: #281a20;
   --bg-elev-2: #351c22;
@@ -160,7 +147,7 @@ html[data-theme-name="rakdos"] {
   --parallax-image: url('../assets/theme-rakdos.jpg'), url('../assets/social-preview.jpg');
 }
 
-html[data-theme-name="selesnya"] {
+html[data-theme-name=selesnya] {
   --bg: #ffffff;
   --bg-elev-1: #f8fff8;
   --bg-elev-2: #ecf8ec;
@@ -177,7 +164,7 @@ html[data-theme-name="selesnya"] {
   --parallax-image: url('../assets/theme-selesnya.jpg'), url('../assets/social-preview.jpg');
 }
 
-html[data-theme-name="golgari"] {
+html[data-theme-name=golgari] {
   --bg: #121512;
   --bg-elev-1: #1a201a;
   --bg-elev-2: #232c23;
@@ -194,7 +181,7 @@ html[data-theme-name="golgari"] {
   --parallax-image: url('../assets/theme-golgari.jpg'), url('../assets/social-preview.jpg');
 }
 
-html[data-theme-name="simic-light"] {
+html[data-theme-name=simic-light] {
   --bg: #d8ecf0;
   --bg-elev-1: #cce6df;
   --bg-elev-2: #bedaf0;
@@ -211,7 +198,7 @@ html[data-theme-name="simic-light"] {
   --parallax-image: url('../assets/theme-simic.jpg'), url('../assets/social-preview.jpg');
 }
 
-html[data-theme-name="simic-dark"] {
+html[data-theme-name=simic-dark] {
   --bg: #10171d;
   --bg-elev-1: #16242c;
   --bg-elev-2: #1a3131;
@@ -228,7 +215,7 @@ html[data-theme-name="simic-dark"] {
   --parallax-image: url('../assets/theme-simic.jpg'), url('../assets/social-preview.jpg');
 }
 
-html[data-theme-name="izzet-light"] {
+html[data-theme-name=izzet-light] {
   --bg: #eadfe8;
   --bg-elev-1: #dbe4f7;
   --bg-elev-2: #f3d8cf;
@@ -245,7 +232,7 @@ html[data-theme-name="izzet-light"] {
   --parallax-image: url('../assets/theme-izzet.jpg'), url('../assets/social-preview.jpg');
 }
 
-html[data-theme-name="izzet-dark"] {
+html[data-theme-name=izzet-dark] {
   --bg: #17131d;
   --bg-elev-1: #251b28;
   --bg-elev-2: #302026;
@@ -262,7 +249,7 @@ html[data-theme-name="izzet-dark"] {
   --parallax-image: url('../assets/theme-izzet.jpg'), url('../assets/social-preview.jpg');
 }
 
-html[data-theme-name="gruul-light"] {
+html[data-theme-name=gruul-light] {
   --bg: #e9ddcf;
   --bg-elev-1: #dce8cf;
   --bg-elev-2: #edd1c7;
@@ -279,7 +266,7 @@ html[data-theme-name="gruul-light"] {
   --parallax-image: url('../assets/theme-gruul.jpg'), url('../assets/social-preview.jpg');
 }
 
-html[data-theme-name="gruul-dark"] {
+html[data-theme-name=gruul-dark] {
   --bg: #181410;
   --bg-elev-1: #251d17;
   --bg-elev-2: #2f261c;
@@ -296,7 +283,7 @@ html[data-theme-name="gruul-dark"] {
   --parallax-image: url('../assets/theme-gruul.jpg'), url('../assets/social-preview.jpg');
 }
 
-html[data-theme-name="orzhov-light"] {
+html[data-theme-name=orzhov-light] {
   --bg: #ffffff;
   --bg-elev-1: #fcfbfd;
   --bg-elev-2: #f2eef5;
@@ -313,7 +300,7 @@ html[data-theme-name="orzhov-light"] {
   --parallax-image: url('../assets/theme-orzhov-light.jpg'), url('../assets/social-preview.jpg');
 }
 
-html[data-theme-name="orzhov-dark"] {
+html[data-theme-name=orzhov-dark] {
   --bg: #16141a;
   --bg-elev-1: #222228;
   --bg-elev-2: #2c2c34;
@@ -330,7 +317,7 @@ html[data-theme-name="orzhov-dark"] {
   --parallax-image: url('../assets/theme-orzhov-dark.jpg'), url('../assets/social-preview.jpg');
 }
 
-html[data-theme-name="new-phyrexian"] {
+html[data-theme-name=new-phyrexian] {
   --bg: #fffefe;
   --bg-elev-1: #ffffff;
   --bg-elev-2: #fbefee;
@@ -347,7 +334,7 @@ html[data-theme-name="new-phyrexian"] {
   --parallax-image: url('../assets/theme-new-phyrexian.jpg'), url('../assets/social-preview.jpg');
 }
 
-html[data-theme-name="phyrexian"] {
+html[data-theme-name=phyrexian] {
   --bg: #161a14;
   --bg-elev-1: #1f271d;
   --bg-elev-2: #293227;

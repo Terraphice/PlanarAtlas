@@ -1122,6 +1122,49 @@ html[data-theme="light"] .game-view::before {
   position: relative;
 }
 
+.deck-format-wrap {
+  position: relative;
+}
+
+.deck-format-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 1300;
+  min-width: 110px;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  padding: 4px 0;
+}
+
+.deck-format-menu.hidden {
+  display: none;
+}
+
+.deck-format-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  color: var(--text);
+  cursor: pointer;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.deck-format-item:hover {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+.hidden-file-input {
+  display: none !important;
+}
+
 .deck-autoimport-menu {
   position: absolute;
   top: calc(100% + 6px);
@@ -1134,6 +1177,118 @@ html[data-theme="light"] .game-view::before {
   box-shadow: var(--shadow);
   overflow: hidden;
   padding: 4px 0;
+}
+
+.deck-import-conflict-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2700;
+  display: grid;
+  place-items: center;
+}
+
+.deck-import-conflict-overlay.hidden {
+  display: none;
+}
+
+.deck-import-conflict-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.deck-import-conflict-panel {
+  position: relative;
+  z-index: 1;
+  width: min(760px, calc(100% - 24px));
+  max-height: min(92vh, 760px);
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--bg-elev-1);
+  box-shadow: var(--shadow-strong);
+  padding: 14px;
+  overflow: auto;
+}
+
+.deck-import-conflict-panel-animate {
+  animation: deckConflictPanelFadeIn 220ms ease;
+}
+
+.deck-import-conflict-title {
+  margin: 0 0 12px;
+  font-size: 1rem;
+}
+
+.deck-import-conflict-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.deck-import-conflict-card-wrap {
+  display: grid;
+  gap: 8px;
+}
+
+.deck-import-conflict-card {
+  border: 1px solid var(--border-soft);
+  background: var(--bg-elev-2);
+  border-radius: 12px;
+  padding: 10px;
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  gap: 6px;
+}
+
+.deck-import-conflict-card img {
+  width: min(100%, 320px);
+  border-radius: 10px;
+  object-fit: contain;
+  aspect-ratio: 800 / 559;
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
+}
+
+.deck-import-conflict-card h4 {
+  margin: 8px 0 4px;
+  font-size: 0.95rem;
+}
+
+.deck-import-conflict-card p {
+  margin: 0;
+  color: var(--text-faint);
+  font-size: 0.8rem;
+}
+
+.deck-import-conflict-select {
+  width: 100%;
+}
+
+@keyframes deckConflictPanelFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 780px) {
+  .deck-import-conflict-panel {
+    width: min(520px, calc(100% - 16px));
+    padding: 12px;
+  }
+
+  .deck-import-conflict-cards {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .deck-import-conflict-card img {
+    width: min(100%, 300px);
+  }
 }
 
 .deck-autoimport-menu.hidden {

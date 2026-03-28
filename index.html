@@ -449,9 +449,28 @@
       </div>
       <div class="deck-panel-actions">
         <button id="deck-play-btn" class="neutral-button-base deck-action-btn deck-play-btn" type="button">▶ Play</button>
-        <button id="deck-link-btn" class="neutral-button-base deck-action-btn" type="button">Link</button>
-        <button id="deck-export-btn" class="neutral-button-base deck-action-btn" type="button">Export</button>
-        <button id="deck-import-btn" class="neutral-button-base deck-action-btn" type="button">Import</button>
+        <div class="deck-format-wrap">
+          <button id="deck-export-btn" class="neutral-button-base deck-action-btn" type="button">Export ▾</button>
+          <div id="deck-export-menu" class="deck-format-menu hidden">
+            <button class="deck-format-item" data-format="LINK" type="button">LINK</button>
+            <button class="deck-format-item" data-format="B64" type="button">B64</button>
+            <button class="deck-format-item" data-format="JSON" type="button">JSON</button>
+            <button class="deck-format-item" data-format="CSV" type="button">CSV</button>
+            <button class="deck-format-item" data-format="RAW" type="button">RAW</button>
+            <button class="deck-format-item" data-format="CLIP" type="button">CLIP</button>
+          </div>
+        </div>
+        <div class="deck-format-wrap">
+          <button id="deck-import-btn" class="neutral-button-base deck-action-btn" type="button">Import ▾</button>
+          <div id="deck-import-menu" class="deck-format-menu hidden">
+            <button class="deck-format-item" data-format="B64" type="button">B64</button>
+            <button class="deck-format-item" data-format="JSON" type="button">JSON</button>
+            <button class="deck-format-item" data-format="CSV" type="button">CSV</button>
+            <button class="deck-format-item" data-format="RAW" type="button">RAW</button>
+            <button class="deck-format-item" data-format="CLIP" type="button">CLIP</button>
+          </div>
+        </div>
+        <input id="deck-import-file-input" type="file" class="hidden-file-input" />
         <div class="deck-autoimport-wrap">
           <button id="deck-autoimport-btn" class="neutral-button-base deck-action-btn" type="button">Auto</button>
           <div id="deck-autoimport-menu" class="deck-autoimport-menu hidden">
@@ -468,6 +487,23 @@
       </div>
     </div>
     <div id="deck-card-list" class="deck-card-list"></div>
+  </div>
+
+  <div id="deck-import-conflict-overlay" class="deck-import-conflict-overlay hidden" role="dialog" aria-modal="true" aria-label="Resolve duplicate card">
+    <div class="deck-import-conflict-backdrop"></div>
+    <div class="deck-import-conflict-panel">
+      <h3 id="deck-conflict-header" class="deck-import-conflict-title">Resolve card conflict</h3>
+      <div class="deck-import-conflict-cards">
+        <div class="deck-import-conflict-card-wrap">
+          <div id="deck-conflict-left-card" class="deck-import-conflict-card"></div>
+          <button id="deck-conflict-left-select" class="neutral-button-base deck-import-conflict-select" type="button">Select</button>
+        </div>
+        <div class="deck-import-conflict-card-wrap">
+          <div id="deck-conflict-right-card" class="deck-import-conflict-card"></div>
+          <button id="deck-conflict-right-select" class="neutral-button-base deck-import-conflict-select" type="button">Select</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Game mode selection dialog -->
