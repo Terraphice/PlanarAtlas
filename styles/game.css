@@ -1,5 +1,5 @@
+@charset "UTF-8";
 /* ── Deck button ─────────────────────────────────────────────────────────────── */
-
 .topbar-deck-button {
   position: relative;
   font-size: 1.25rem;
@@ -36,7 +36,6 @@
 }
 
 /* ── Card deck overlay ───────────────────────────────────────────────────────── */
-
 .deck-card-overlay {
   position: absolute;
   inset: 0;
@@ -115,13 +114,12 @@
 }
 
 /* ── Deck panel ──────────────────────────────────────────────────────────────── */
-
 .deck-panel {
   position: fixed;
   top: 0;
   right: 0;
   z-index: 1200;
-  width: min(380px, calc(100vw - 24px));
+  width: min(380px, 100vw - 24px);
   height: 100vh;
   background: color-mix(in srgb, var(--bg-elev-1) 97%, black 3%);
   border-left: 1px solid color-mix(in srgb, var(--border) 58%, transparent);
@@ -307,7 +305,7 @@
   border-radius: 5px;
   flex-shrink: 0;
   object-fit: cover;
-  aspect-ratio: 800 / 559;
+  aspect-ratio: 800/559;
 }
 
 .deck-card-info {
@@ -377,7 +375,6 @@
 }
 
 /* ── Game view ───────────────────────────────────────────────────────────────── */
-
 :root {
   --game-safe-top: env(safe-area-inset-top, 0px);
   --game-safe-right: env(safe-area-inset-right, 0px);
@@ -466,8 +463,9 @@ html[data-theme=light] .game-view::before {
   z-index: -1;
   pointer-events: none;
   opacity: 0.7;
-  background-image: linear-gradient(to right, color-mix(in srgb, var(--accent) 8%, transparent) 1px, transparent 1px), linear-gradient(to bottom, color-mix(in srgb, var(--text-soft) 6%, transparent) 1px, transparent 1px), repeating-linear-gradient(130deg, color-mix(in srgb, var(--accent) 5%, transparent) 0, color-mix(in srgb, var(--accent) 5%, transparent) 1px, transparent 1px, transparent 94px);
-  background-size: 56px 56px, 56px 56px, auto;
+  background-image: linear-gradient(to right, color-mix(in srgb, var(--accent) 8%, transparent) 1px, transparent 1px), linear-gradient(to bottom, color-mix(in srgb, var(--text-soft) 6%, transparent) 1px, transparent 1px);
+  background-size: 56px 56px;
+  background-image: repeating-linear-gradient(130deg, color-mix(in srgb, var(--accent) 5%, transparent) 0, color-mix(in srgb, var(--accent) 5%, transparent) 1px, transparent 1px, transparent 94px);
   mix-blend-mode: normal;
 }
 
@@ -487,7 +485,7 @@ html[data-theme=light] .game-view::before {
 
 .game-card-image {
   display: block;
-  max-width: min(860px, calc(100vw - 180px));
+  max-width: min(860px, 100vw - 180px);
   max-height: var(--game-side-panel-max-height);
   width: auto;
   height: auto;
@@ -526,18 +524,14 @@ html[data-theme=light] .game-view::before {
   overflow: hidden;
   position: relative;
   z-index: 10;
-  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.35),
-              0 0 14px rgba(74, 222, 128, 0.3),
-              0 8px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.35), 0 0 14px rgba(74, 222, 128, 0.3), 0 8px 20px rgba(0, 0, 0, 0.3);
   max-width: calc(100vw - 200px);
 }
 
 .classic-view-card-btn:hover {
   border-color: #4ade80;
   background: color-mix(in srgb, rgba(74, 222, 128, 0.14) 70%, var(--bg-elev-2));
-  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.45),
-              0 0 18px rgba(74, 222, 128, 0.4),
-              0 8px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.45), 0 0 18px rgba(74, 222, 128, 0.4), 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .classic-view-card-btn.hidden {
@@ -552,7 +546,6 @@ html[data-theme=light] .game-view::before {
 }
 
 /* Corner buttons */
-
 .game-corner-btn {
   position: absolute;
   z-index: 10;
@@ -579,10 +572,25 @@ html[data-theme=light] .game-view::before {
   transform: scale(1.06);
 }
 
-.game-tl { top: 16px; left: 16px; }
-.game-tr { top: 16px; right: var(--game-side-panel-right); }
-.game-bl { bottom: 16px; left: 16px; }
-.game-br { bottom: 16px; right: 16px; }
+.game-tl {
+  top: 16px;
+  left: 16px;
+}
+
+.game-tr {
+  top: 16px;
+  right: var(--game-side-panel-right);
+}
+
+.game-bl {
+  bottom: 16px;
+  left: 16px;
+}
+
+.game-br {
+  bottom: 16px;
+  right: 16px;
+}
 
 /* Die button when in tl-group: connected to cost display below */
 .game-tl-group .game-btn-tl.game-die-chaos {
@@ -590,17 +598,21 @@ html[data-theme=light] .game-view::before {
 }
 
 /* Die states */
-
 .game-btn-tl .ms {
   transition: color 200ms ease, transform 200ms ease;
 }
 
 @keyframes gameDieRoll {
-  0%, 100% { transform: rotate(0deg) scale(1); }
-  25% { transform: rotate(-20deg) scale(0.9); }
-  75% { transform: rotate(20deg) scale(1.1); }
+  0%, 100% {
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    transform: rotate(-20deg) scale(0.9);
+  }
+  75% {
+    transform: rotate(20deg) scale(1.1);
+  }
 }
-
 .game-btn-tl.game-die-rolling .ms {
   animation: gameDieRoll 0.4s ease infinite;
 }
@@ -636,7 +648,6 @@ html[data-theme=light] .game-view::before {
 }
 
 /* Side panel */
-
 .game-side-panel {
   position: absolute;
   right: var(--game-side-panel-right);
@@ -718,7 +729,7 @@ html[data-theme=light] .game-view::before {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 800 / 559;
+  aspect-ratio: 800/559;
   object-fit: cover;
 }
 
@@ -734,11 +745,10 @@ html[data-theme=light] .game-view::before {
 }
 
 /* Game menus */
-
 .game-menu {
   position: absolute;
   z-index: 20;
-  width: min(300px, calc(var(--game-viewport-width) - var(--game-inline-safe-start) - var(--game-inline-safe-end) - 100px));
+  width: min(300px, var(--game-viewport-width) - var(--game-inline-safe-start) - var(--game-inline-safe-end) - 100px);
   background: color-mix(in srgb, var(--bg-elev-1) 96%, transparent);
   border: 1px solid var(--border);
   border-radius: 16px;
@@ -748,7 +758,7 @@ html[data-theme=light] .game-view::before {
   padding: 8px 8px 4px;
   display: flex;
   flex-direction: column;
-  max-height: min(var(--game-menu-max-height), calc(var(--game-viewport-height) - var(--game-top-clearance) - var(--game-menu-offset-bottom)));
+  max-height: var(--game-menu-max-height);
 }
 
 .game-menu-scroll {
@@ -881,14 +891,13 @@ html[data-theme=light] .game-view::before {
 }
 
 /* Library view panel */
-
 .game-deck-view-panel {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 30;
-  width: min(340px, calc(100vw - 32px));
+  width: min(340px, 100vw - 32px);
   max-height: 70vh;
   background: color-mix(in srgb, var(--bg-elev-1) 97%, transparent);
   border: 1px solid var(--border);
@@ -986,35 +995,45 @@ html[data-theme=light] .game-view::before {
 }
 
 /* Mobile adjustments for game view */
-
 @media (max-width: 600px) {
   .game-card-image {
     max-width: calc(100vw - 130px);
   }
-
   .game-corner-btn {
     width: 50px;
     height: 50px;
     font-size: 1.4rem;
   }
-
-  .game-tl-group { top: 12px; left: 12px; }
-  .game-tr-group { top: 12px; right: 12px; }
-  .game-bl-group { bottom: 12px; left: 12px; }
-  .game-br-group { bottom: 12px; right: 12px; }
-
-  .game-cost-display { width: 50px; }
-
-  .game-menu-br { bottom: 80px; }
-  .game-menu-bl { bottom: 80px; }
-
+  .game-tl-group {
+    top: 12px;
+    left: 12px;
+  }
+  .game-tr-group {
+    top: 12px;
+    right: 12px;
+  }
+  .game-bl-group {
+    bottom: 12px;
+    left: 12px;
+  }
+  .game-br-group {
+    bottom: 12px;
+    right: 12px;
+  }
+  .game-cost-display {
+    width: 50px;
+  }
+  .game-menu-br {
+    bottom: 80px;
+  }
+  .game-menu-bl {
+    bottom: 80px;
+  }
   .game-side-card {
     width: 60px;
   }
 }
-
 /* ── Active card highlights ──────────────────────────────────────────────────── */
-
 .game-card-image-btn.active-plane .game-card-image {
   box-shadow: 0 0 0 3px #4ade80, 0 0 30px rgba(74, 222, 128, 0.4), 0 24px 60px rgba(0, 0, 0, 0.6);
   border-radius: 14px;
@@ -1026,7 +1045,6 @@ html[data-theme=light] .game-view::before {
 }
 
 /* ── Deck button SVG icon ────────────────────────────────────────────────────── */
-
 .deck-btn-icon {
   width: 20px;
   height: 20px;
@@ -1035,7 +1053,6 @@ html[data-theme=light] .game-view::before {
 }
 
 /* ── Deck slot select & name ─────────────────────────────────────────────────── */
-
 .deck-slot-row {
   display: flex;
   gap: 6px;
@@ -1093,9 +1110,51 @@ html[data-theme=light] .game-view::before {
 }
 
 /* ── Auto-import ────────────────────────────────────────────────────────────── */
-
 .deck-autoimport-wrap {
   position: relative;
+}
+
+.deck-format-wrap {
+  position: relative;
+}
+
+.deck-format-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 1300;
+  min-width: 110px;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  padding: 4px 0;
+}
+
+.deck-format-menu.hidden {
+  display: none;
+}
+
+.deck-format-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  color: var(--text);
+  cursor: pointer;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.deck-format-item:hover {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+.hidden-file-input {
+  display: none !important;
 }
 
 .deck-autoimport-menu {
@@ -1110,6 +1169,80 @@ html[data-theme=light] .game-view::before {
   box-shadow: var(--shadow);
   overflow: hidden;
   padding: 4px 0;
+}
+
+.deck-import-conflict-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2700;
+  display: grid;
+  place-items: center;
+}
+
+.deck-import-conflict-overlay.hidden {
+  display: none;
+}
+
+.deck-import-conflict-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.deck-import-conflict-panel {
+  position: relative;
+  z-index: 1;
+  width: min(940px, 100% - 28px);
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--bg-elev-1);
+  box-shadow: var(--shadow-strong);
+  padding: 14px;
+}
+
+.deck-import-conflict-title {
+  margin: 0 0 12px;
+  font-size: 1rem;
+}
+
+.deck-import-conflict-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.deck-import-conflict-card-wrap {
+  display: grid;
+  gap: 8px;
+}
+
+.deck-import-conflict-card {
+  border: 1px solid var(--border-soft);
+  background: var(--bg-elev-2);
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.deck-import-conflict-card img {
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+  aspect-ratio: 0.71;
+}
+
+.deck-import-conflict-card h4 {
+  margin: 8px 0 4px;
+  font-size: 0.95rem;
+}
+
+.deck-import-conflict-card p {
+  margin: 0;
+  color: var(--text-faint);
+  font-size: 0.8rem;
+}
+
+.deck-import-conflict-select {
+  width: 100%;
 }
 
 .deck-autoimport-menu.hidden {
@@ -1169,7 +1302,6 @@ html[data-theme=light] .game-view::before {
 }
 
 /* ── Modal deck quantity control ─────────────────────────────────────────────── */
-
 .modal-deck-wrap {
   display: flex;
   align-items: center;
@@ -1239,7 +1371,6 @@ html[data-theme=light] .game-view::before {
 }
 
 /* ── Game corner button groups and labels ──────────────────────────────────── */
-
 .game-tl-group {
   position: absolute;
   top: var(--game-top-clearance);
@@ -1346,7 +1477,6 @@ html[data-theme=light] .game-view::before {
 }
 
 /* ── Phenomenon reminder banner ──────────────────────────────────────────────── */
-
 .phenomenon-banner {
   position: absolute;
   top: var(--game-banner-top);
@@ -1380,10 +1510,15 @@ html[data-theme=light] .game-view::before {
 }
 
 @keyframes phenomenonBannerRowIn {
-  from { opacity: 0; transform: translateY(-6px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-
 .phenomenon-banner-btn {
   flex-shrink: 0;
   width: 38px;
@@ -1430,7 +1565,6 @@ html[data-theme=light] .game-view::before {
 }
 
 /* ── Game cost display ───────────────────────────────────────────────────────── */
-
 .game-cost-display {
   display: flex;
   align-items: stretch;
@@ -1493,7 +1627,6 @@ html[data-theme=light] .game-view::before {
 }
 
 /* ── Game library view inline ────────────────────────────────────────────────── */
-
 .game-library-view-list {
   max-height: 220px;
   overflow-y: auto;
@@ -1545,7 +1678,6 @@ html[data-theme=light] .game-view::before {
 }
 
 /* Search result items with actions */
-
 .game-search-result-item {
   padding: 6px 8px;
   border-radius: 8px;
@@ -1562,7 +1694,6 @@ html[data-theme=light] .game-view::before {
 }
 
 /* Reveal input row */
-
 .game-reveal-input-row {
   display: flex;
   gap: 6px;
@@ -1636,7 +1767,6 @@ html[data-theme=light] .game-view::before {
 }
 
 /* ── Reveal overlay ───────────────────────────────────────────────────────────── */
-
 .game-reveal-overlay {
   position: fixed;
   inset: 0;
@@ -1759,7 +1889,6 @@ html[data-theme=light] .game-view::before {
 }
 
 /* List mode */
-
 .game-reveal-mode-list {
   display: flex;
   flex-direction: column;
@@ -1812,7 +1941,6 @@ html[data-theme=light] .game-view::before {
 }
 
 /* Gallery mode */
-
 .game-reveal-mode-gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
@@ -1878,7 +2006,6 @@ html[data-theme=light] .game-view::before {
 }
 
 /* Shared action buttons for reveal cards */
-
 .game-reveal-card-actions {
   display: flex;
   gap: 3px;
@@ -1926,15 +2053,14 @@ html[data-theme=light] .game-view::before {
   border-color: var(--tone-green-border);
 }
 
-html[data-theme="light"] .game-deck-action-btn,
-html[data-theme="light"] .game-reveal-action-btn,
-html[data-theme="light"] .game-reveal-view-btn,
-html[data-theme="light"] .game-reveal-close {
+html[data-theme=light] .game-deck-action-btn,
+html[data-theme=light] .game-reveal-action-btn,
+html[data-theme=light] .game-reveal-view-btn,
+html[data-theme=light] .game-reveal-close {
   color: var(--text);
 }
 
 /* Reveal footer */
-
 .game-reveal-footer {
   display: flex;
   align-items: center;
@@ -1996,7 +2122,6 @@ html[data-theme="light"] .game-reveal-close {
 }
 
 /* ── Mobile landscape optimization for game mode ─────────────────────────────── */
-
 @media (max-height: 520px) and (orientation: landscape) {
   :root {
     --game-edge-gap: 8px;
@@ -2011,53 +2136,43 @@ html[data-theme="light"] .game-reveal-close {
     --bem-grid-padding-block: 128px;
     --bem-zoom-max: 360px;
   }
-
   .game-view {
     flex-direction: row;
   }
-
   .game-main-area {
     flex: 1;
     justify-content: center;
   }
-
   .game-card-image {
     max-height: calc(var(--game-viewport-height) - var(--game-block-safe-start) - var(--game-block-safe-end) - 24px);
     max-width: calc((var(--game-viewport-width) - var(--game-inline-safe-start) - var(--game-inline-safe-end)) * 0.55);
   }
-
   .game-card-name {
     font-size: 0.82rem;
   }
-
   .game-corner-btn {
     width: 44px;
     height: 44px;
     font-size: 1.2rem;
   }
-
-  .game-cost-display { width: 44px; }
-
+  .game-cost-display {
+    width: 44px;
+  }
   .phenomenon-banner {
     min-width: 140px;
   }
-
   .phenomenon-banner-row {
     height: 34px;
   }
-
   .phenomenon-banner-btn {
     width: 34px;
   }
-
   .phenomenon-banner-name {
     font-size: 0.76rem;
     padding: 0 8px;
   }
 }
-
 /* ── Mobile portrait: rotate game view to landscape ──────────────────────────── */
-
 @media (pointer: coarse) and (orientation: portrait) {
   :root {
     --game-viewport-width: 100dvh;
@@ -2090,11 +2205,9 @@ html[data-theme="light"] .game-reveal-close {
     --bem-grid-padding-block: 128px;
     --bem-zoom-max: 360px;
   }
-
   body.game-open {
     overflow: hidden;
   }
-
   .game-view,
   .game-reveal-overlay,
   .die-popup {
@@ -2107,7 +2220,6 @@ html[data-theme="light"] .game-reveal-close {
     transform: rotate(-90deg);
     transform-origin: center center;
   }
-
   body.game-open .game-tutorial-overlay {
     top: calc((100dvh - 100dvw) / 2);
     right: auto;
@@ -2118,40 +2230,33 @@ html[data-theme="light"] .game-reveal-close {
     transform: rotate(-90deg);
     transform-origin: center center;
   }
-
   .game-card-image {
     max-width: calc(var(--game-viewport-width) - var(--game-inline-safe-start) - var(--game-inline-safe-end) - 180px);
     max-height: calc(var(--game-viewport-height) - var(--game-block-safe-start) - var(--game-block-safe-end) - 120px);
   }
-
   .game-btn-label {
     min-height: 20px;
     padding: 3px 8px;
     font-size: 0.6rem;
   }
-
   .game-card-name {
     font-size: 0.88rem;
     margin-top: 8px;
   }
-
   .game-corner-btn {
     width: 50px;
     height: 50px;
     font-size: 1.3rem;
   }
-
-  .game-cost-display { width: 50px; }
-
+  .game-cost-display {
+    width: 50px;
+  }
   .game-menu {
     max-width: calc(var(--game-viewport-width) - var(--game-inline-safe-start) - var(--game-inline-safe-end) - 100px);
   }
 }
-
 /* ── Scryfall palette overrides ───────────────────────────────────────────────── */
-
 /* ── Site footer ──────────────────────────────────────────────────────────────── */
-
 .site-footer {
   display: flex;
   flex-wrap: wrap;
@@ -2296,20 +2401,23 @@ body.privacy-modal-open {
     text-align: left;
   }
 }
-
 /* ── Modal image flip animation ──────────────────────────────────────────────── */
-
 .modal-image-wrap {
   position: relative;
   cursor: pointer;
 }
 
 @keyframes modalImageSpin {
-  0% { transform: scaleX(1); }
-  50% { transform: scaleX(0); }
-  100% { transform: scaleX(1); }
+  0% {
+    transform: scaleX(1);
+  }
+  50% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
 }
-
 .modal-image-spinning .modal-image {
   animation: modalImageSpin 0.4s ease forwards;
 }
@@ -2349,19 +2457,25 @@ body.privacy-modal-open {
 }
 
 /* ── Die roll flash animation ────────────────────────────────────────────────── */
-
 @keyframes gameDieFlash {
-  0% { transform: scale(0.5); opacity: 0.3; }
-  60% { transform: scale(1.25); opacity: 1; }
-  100% { transform: scale(1); opacity: 1; }
+  0% {
+    transform: scale(0.5);
+    opacity: 0.3;
+  }
+  60% {
+    transform: scale(1.25);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
-
 .game-die-flash {
   animation: gameDieFlash 0.28s ease forwards;
 }
 
 /* ── Game card image button ───────────────────────────────────────────────────── */
-
 .game-card-image-btn {
   border: 0;
   background: transparent;
@@ -2383,7 +2497,6 @@ body.privacy-modal-open {
 }
 
 /* ── Game reader view ─────────────────────────────────────────────────────────── */
-
 .game-reader-view {
   position: fixed;
   inset: 0;
@@ -2394,7 +2507,6 @@ body.privacy-modal-open {
   padding-block: calc(var(--game-block-safe-start) + var(--game-reader-padding-block)) calc(var(--game-block-safe-end) + var(--game-reader-padding-block));
   padding-inline: calc(var(--game-inline-safe-start) + var(--game-reader-padding-inline)) calc(var(--game-inline-safe-end) + var(--game-reader-padding-inline));
   overflow: hidden;
-  box-sizing: border-box;
 }
 
 .game-reader-view.hidden {
@@ -2578,12 +2690,16 @@ body.privacy-modal-open {
   color: var(--text-soft);
   overflow-y: auto;
   flex: 1 1 auto;
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
 }
 
-.game-reader-transcript p { margin: 0 0 0.5em; }
-.game-reader-transcript p:last-child { margin-bottom: 0; }
+.game-reader-transcript p {
+  margin: 0 0 0.5em;
+}
+
+.game-reader-transcript p:last-child {
+  margin-bottom: 0;
+}
+
 .game-reader-transcript h1, .game-reader-transcript h2, .game-reader-transcript h3 {
   font-size: 0.9rem;
   font-weight: 700;
@@ -2629,52 +2745,42 @@ body.privacy-modal-open {
     --game-reader-padding-inline: 12px;
     --game-reader-padding-block: 12px;
   }
-
   .game-reader-panel {
     flex-direction: column;
     max-height: var(--game-reader-panel-max-block);
     overflow-y: auto;
   }
-
   .game-reader-image-col {
     padding: 16px 16px 0;
     justify-content: center;
   }
-
   .game-reader-image {
-    max-width: min(340px, calc(var(--game-reader-panel-max-inline) - 32px));
-    max-height: min(46svh, calc(var(--game-reader-panel-max-block) * 0.48));
+    max-width: min(340px, var(--game-reader-panel-max-inline) - 32px);
+    max-height: min(46svh, var(--game-reader-panel-max-block) * 0.48);
   }
-
   .game-reader-info-col {
     padding: 12px 16px 16px;
     overflow-y: visible;
   }
-
   .game-reader-transcript-block {
     max-height: none;
   }
-
   /* Larger action buttons on mobile */
   .game-reader-action-btn {
     min-height: 44px;
     font-size: 0.9rem;
     padding: 10px 14px;
   }
-
   .game-deck-action-btn {
     min-height: 40px;
     font-size: 0.85rem;
     padding: 8px 10px;
   }
-
   .game-reveal-action-btn {
     min-height: 40px;
   }
 }
-
 /* ── Mobile portrait: game-reader-view rotates with game view ─── */
-
 @media (pointer: coarse) and (orientation: portrait) {
   .game-reader-view {
     top: calc((100dvh - 100dvw) / 2);
@@ -2688,7 +2794,6 @@ body.privacy-modal-open {
     transform: rotate(-90deg);
     transform-origin: center center;
   }
-
   .game-reader-panel {
     flex-direction: row;
     width: var(--game-reader-panel-max-inline);
@@ -2696,46 +2801,37 @@ body.privacy-modal-open {
     max-height: var(--game-reader-panel-max-block);
     overflow: hidden;
   }
-
   .game-reader-image-col {
     padding: 16px 0 16px 16px;
     justify-content: center;
     overflow-y: visible;
   }
-
   .game-reader-image {
     max-width: var(--game-reader-image-max-inline);
     max-height: var(--game-reader-image-max-block);
     width: auto;
   }
-
   .game-reader-info-col {
     overflow-y: auto;
     padding: 16px 16px 16px 0;
   }
-
   .game-reader-zoom-img {
     max-width: calc(var(--game-viewport-width) - var(--game-inline-safe-start) - var(--game-inline-safe-end));
     max-height: calc(var(--game-viewport-height) - var(--game-block-safe-start) - var(--game-block-safe-end));
   }
 }
-
 /* ── Mobile: sidebar and deck panel ──────────────────────────────────────────── */
-
 @media (max-width: 480px) {
   :root {
     --sidebar-width: 300px;
     --deck-lip-w: 44px;
   }
-
   .sidebar {
     width: min(84vw, 300px);
   }
-
   .topbar-actions {
     gap: 6px;
   }
-
   .deck-panel {
     width: 100vw;
     max-width: 100vw;
@@ -2750,15 +2846,12 @@ body.privacy-modal-open {
     transform: translateY(100%);
     box-shadow: 0 -4px 40px rgba(0, 0, 0, 0.4);
   }
-
   .deck-panel.open {
     transform: translateY(0);
   }
-
   .deck-panel.shelved {
     transform: translateY(calc(100% - 52px));
   }
-
   /* Mobile lip: horizontal tab at top of panel */
   .deck-panel-lip {
     position: absolute;
@@ -2773,57 +2866,51 @@ body.privacy-modal-open {
     border-bottom: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
     flex-direction: row;
     gap: 8px;
-    box-shadow: 0 -6px 16px rgba(0, 0, 0, 0.18),
-                0 0 0 1px color-mix(in srgb, var(--border) 55%, transparent);
+    box-shadow: 0 -6px 16px rgba(0, 0, 0, 0.18), 0 0 0 1px color-mix(in srgb, var(--border) 55%, transparent);
   }
-
   .deck-panel-lip:hover,
   .deck-panel-lip:focus-visible {
-    box-shadow:
-      0 -12px 28px rgba(0, 0, 0, 0.24),
-      0 0 0 1px color-mix(in srgb, var(--accent) 26%, transparent),
-      0 0 24px color-mix(in srgb, var(--accent) 16%, transparent);
+    box-shadow: 0 -12px 28px rgba(0, 0, 0, 0.24), 0 0 0 1px color-mix(in srgb, var(--accent) 26%, transparent), 0 0 24px color-mix(in srgb, var(--accent) 16%, transparent);
     animation: deckPanelLipMobileBounce 420ms ease;
   }
-
   @keyframes deckPanelLipMobileBounce {
-    0% { transform: translateX(-50%) translateY(0); }
-    35% { transform: translateX(-50%) translateY(-3px); }
-    65% { transform: translateX(-50%) translateY(1px); }
-    100% { transform: translateX(-50%) translateY(0); }
+    0% {
+      transform: translateX(-50%) translateY(0);
+    }
+    35% {
+      transform: translateX(-50%) translateY(-3px);
+    }
+    65% {
+      transform: translateX(-50%) translateY(1px);
+    }
+    100% {
+      transform: translateX(-50%) translateY(0);
+    }
   }
-
   .deck-panel-lip-label {
     writing-mode: horizontal-tb;
     transform: none;
     letter-spacing: 0.12em;
   }
-
   .deck-panel-header {
     padding: 12px 14px;
   }
-
   .deck-panel-actions {
     gap: 4px;
   }
-
   .deck-action-btn {
     padding: 5px 8px;
     font-size: 0.76rem;
   }
-
   .card-grid {
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: 10px;
   }
-
   .content {
     padding: 10px;
   }
 }
-
 /* ── Game mode selection dialog ─────────────────────────────────────────────── */
-
 .game-mode-dialog {
   position: fixed;
   inset: 0;
@@ -2854,7 +2941,7 @@ body.privacy-modal-open {
   background-image: linear-gradient(180deg, color-mix(in srgb, var(--accent) 7%, transparent), transparent 46%), repeating-linear-gradient(135deg, color-mix(in srgb, var(--accent) 5%, transparent) 0, color-mix(in srgb, var(--accent) 5%, transparent) 1px, transparent 1px, transparent 80px);
   padding: 28px 24px 20px;
   box-shadow: 0 32px 80px rgba(0, 0, 0, 0.55);
-  width: min(480px, calc(100vw - 32px));
+  width: min(480px, 100vw - 32px);
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -2934,7 +3021,6 @@ body.privacy-modal-open {
 }
 
 /* ── BEM map area ────────────────────────────────────────────────────────────── */
-
 .bem-map-area {
   position: relative;
   display: flex;
@@ -3011,8 +3097,7 @@ body.privacy-modal-open {
 
 .bem-cell-player {
   border: 2px solid #4ade80 !important;
-  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.35),
-              0 8px 24px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.35), 0 8px 24px rgba(0, 0, 0, 0.4);
   z-index: 2;
 }
 
@@ -3043,8 +3128,7 @@ body.privacy-modal-open {
 
 .bem-cell-phenomenon {
   border: 2px solid #c084fc !important;
-  box-shadow: 0 0 0 2px rgba(192, 132, 252, 0.35),
-              0 8px 24px rgba(0, 0, 0, 0.4) !important;
+  box-shadow: 0 0 0 2px rgba(192, 132, 252, 0.35), 0 8px 24px rgba(0, 0, 0, 0.4) !important;
 }
 
 /* Placeholder cell — card was removed from this position */
@@ -3055,8 +3139,7 @@ body.privacy-modal-open {
 
 .bem-cell-placeholder.bem-cell-player {
   border: 2px dashed #4ade80 !important;
-  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.2),
-              0 8px 24px rgba(0, 0, 0, 0.4) !important;
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.2), 0 8px 24px rgba(0, 0, 0, 0.4) !important;
 }
 
 .bem-cell-placeholder-icon {
@@ -3077,34 +3160,48 @@ body.privacy-modal-open {
 
 /* Phenomenon landing animation */
 @keyframes bemPhenomenonLand {
-  0%   { transform: scale(1) rotate(0deg);
-         box-shadow: 0 0 0 2px rgba(192,132,252,0.35), 0 8px 24px rgba(0,0,0,0.4); }
-  12%  { transform: scale(1.12) rotate(-1.5deg);
-         box-shadow: 0 0 0 5px rgba(192,132,252,0.9), 0 0 35px rgba(192,132,252,0.7); }
-  28%  { transform: scale(1.10) rotate(1.2deg);
-         box-shadow: 0 0 0 7px rgba(192,132,252,1.0), 0 0 55px rgba(192,132,252,0.85); }
-  40%  { transform: scale(1.11) rotate(-0.8deg);
-         box-shadow: 0 0 0 6px rgba(192,132,252,0.95), 0 0 48px rgba(192,132,252,0.75); }
-  56%  { transform: scale(1.08) rotate(0.5deg);
-         box-shadow: 0 0 0 4px rgba(192,132,252,0.7), 0 0 34px rgba(192,132,252,0.6); }
-  72%  { transform: scale(1.04) rotate(-0.3deg);
-         box-shadow: 0 0 0 3px rgba(192,132,252,0.55), 0 0 22px rgba(192,132,252,0.45); }
-  86%  { transform: scale(1.01);
-         box-shadow: 0 0 0 2.5px rgba(192,132,252,0.42), 0 0 14px rgba(192,132,252,0.36); }
-  100% { transform: scale(1) rotate(0deg);
-         box-shadow: 0 0 0 2px rgba(192,132,252,0.35), 0 8px 24px rgba(0,0,0,0.4); }
+  0% {
+    transform: scale(1) rotate(0deg);
+    box-shadow: 0 0 0 2px rgba(192, 132, 252, 0.35), 0 8px 24px rgba(0, 0, 0, 0.4);
+  }
+  12% {
+    transform: scale(1.12) rotate(-1.5deg);
+    box-shadow: 0 0 0 5px rgba(192, 132, 252, 0.9), 0 0 35px rgba(192, 132, 252, 0.7);
+  }
+  28% {
+    transform: scale(1.1) rotate(1.2deg);
+    box-shadow: 0 0 0 7px rgb(192, 132, 252), 0 0 55px rgba(192, 132, 252, 0.85);
+  }
+  40% {
+    transform: scale(1.11) rotate(-0.8deg);
+    box-shadow: 0 0 0 6px rgba(192, 132, 252, 0.95), 0 0 48px rgba(192, 132, 252, 0.75);
+  }
+  56% {
+    transform: scale(1.08) rotate(0.5deg);
+    box-shadow: 0 0 0 4px rgba(192, 132, 252, 0.7), 0 0 34px rgba(192, 132, 252, 0.6);
+  }
+  72% {
+    transform: scale(1.04) rotate(-0.3deg);
+    box-shadow: 0 0 0 3px rgba(192, 132, 252, 0.55), 0 0 22px rgba(192, 132, 252, 0.45);
+  }
+  86% {
+    transform: scale(1.01);
+    box-shadow: 0 0 0 2.5px rgba(192, 132, 252, 0.42), 0 0 14px rgba(192, 132, 252, 0.36);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    box-shadow: 0 0 0 2px rgba(192, 132, 252, 0.35), 0 8px 24px rgba(0, 0, 0, 0.4);
+  }
 }
-
 .bem-cell-phenomenon-landing {
   z-index: 10 !important;
-  animation: bemPhenomenonLand 1.5s cubic-bezier(0.2, 0.8, 0.4, 1.0) forwards;
+  animation: bemPhenomenonLand 1.5s cubic-bezier(0.2, 0.8, 0.4, 1) forwards;
 }
 
 /* Planeswalk pending glow — cool blue for valid moves */
 .bem-cell-planeswalk-glow {
   border-color: #60a5fa !important;
-  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.55),
-              0 0 18px rgba(96, 165, 250, 0.45);
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.55), 0 0 18px rgba(96, 165, 250, 0.45);
   cursor: pointer;
   animation: bemBluePulse 1.4s ease infinite;
 }
@@ -3117,9 +3214,7 @@ body.privacy-modal-open {
 /* Hellride glow — spooky red/flame for face-down diagonals */
 .bem-cell-hellride-glow {
   border-color: #f97316 !important;
-  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.55),
-              0 0 22px rgba(239, 68, 68, 0.5),
-              0 0 40px rgba(239, 68, 68, 0.2);
+  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.55), 0 0 22px rgba(239, 68, 68, 0.5), 0 0 40px rgba(239, 68, 68, 0.2);
   cursor: pointer;
   animation: bemFirePulse 1.4s ease infinite;
   background: color-mix(in srgb, rgba(239, 68, 68, 0.12) 70%, var(--bg-elev-2));
@@ -3131,25 +3226,37 @@ body.privacy-modal-open {
 }
 
 @keyframes bemBluePulse {
-  0%, 100% { box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.55), 0 0 18px rgba(96, 165, 250, 0.45); }
-  50% { box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.75), 0 0 30px rgba(96, 165, 250, 0.65); }
+  0%, 100% {
+    box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.55), 0 0 18px rgba(96, 165, 250, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.75), 0 0 30px rgba(96, 165, 250, 0.65);
+  }
 }
-
 @keyframes diePopupBluePulse {
-  0%, 100% { box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.55), 0 0 22px rgba(96, 165, 250, 0.6), 0 0 44px rgba(96, 165, 250, 0.3); }
-  50% { box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.75), 0 0 32px rgba(96, 165, 250, 0.8), 0 0 60px rgba(96, 165, 250, 0.45); }
+  0%, 100% {
+    box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.55), 0 0 22px rgba(96, 165, 250, 0.6), 0 0 44px rgba(96, 165, 250, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.75), 0 0 32px rgba(96, 165, 250, 0.8), 0 0 60px rgba(96, 165, 250, 0.45);
+  }
 }
-
 @keyframes bemFirePulse {
-  0%, 100% { box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.55), 0 0 22px rgba(239, 68, 68, 0.5), 0 0 40px rgba(239, 68, 68, 0.2); }
-  50% { box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.75), 0 0 32px rgba(239, 68, 68, 0.7), 0 0 55px rgba(239, 68, 68, 0.35); }
+  0%, 100% {
+    box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.55), 0 0 22px rgba(239, 68, 68, 0.5), 0 0 40px rgba(239, 68, 68, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.75), 0 0 32px rgba(239, 68, 68, 0.7), 0 0 55px rgba(239, 68, 68, 0.35);
+  }
 }
-
 @keyframes chaosTitlePulse {
-  0%, 100% { text-shadow: 0 0 8px rgba(239, 68, 68, 0.9), 0 0 22px rgba(239, 68, 68, 0.7), 0 0 45px rgba(239, 68, 68, 0.4); }
-  50% { text-shadow: 0 0 14px rgba(249, 115, 22, 1), 0 0 32px rgba(239, 68, 68, 0.9), 0 0 60px rgba(239, 68, 68, 0.6); }
+  0%, 100% {
+    text-shadow: 0 0 8px rgba(239, 68, 68, 0.9), 0 0 22px rgba(239, 68, 68, 0.7), 0 0 45px rgba(239, 68, 68, 0.4);
+  }
+  50% {
+    text-shadow: 0 0 14px rgb(249, 115, 22), 0 0 32px rgba(239, 68, 68, 0.9), 0 0 60px rgba(239, 68, 68, 0.6);
+  }
 }
-
 /* Planeswalk pending state on TR button */
 .game-btn-tr.bem-planeswalk-pending {
   border-color: var(--accent);
@@ -3158,10 +3265,13 @@ body.privacy-modal-open {
 }
 
 @keyframes bemTrPulse {
-  0%, 100% { box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
-  50% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 30%, transparent), 0 8px 24px rgba(0,0,0,0.4); }
+  0%, 100% {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 30%, transparent), 0 8px 24px rgba(0, 0, 0, 0.4);
+  }
 }
-
 .bem-cell-img {
   display: block;
   width: 100%;
@@ -3220,7 +3330,7 @@ body.privacy-modal-open {
   transition: border-color 140ms ease, background 140ms ease, box-shadow 140ms ease;
   white-space: nowrap;
   overflow: hidden;
-  max-width: min(280px, calc((100% - 44px) / 2));
+  max-width: min(280px, (100% - 44px) / 2);
   flex: 0 1 auto;
 }
 
@@ -3230,48 +3340,35 @@ body.privacy-modal-open {
 
 .bem-info-bar-btn--active {
   border-color: #4ade80;
-  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.35),
-              0 0 14px rgba(74, 222, 128, 0.3),
-              0 8px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.35), 0 0 14px rgba(74, 222, 128, 0.3), 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .bem-info-bar-btn--active:hover {
   border-color: #4ade80;
   background: color-mix(in srgb, rgba(74, 222, 128, 0.14) 70%, var(--bg-elev-2));
-  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.45),
-              0 0 18px rgba(74, 222, 128, 0.4),
-              0 8px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.45), 0 0 18px rgba(74, 222, 128, 0.4), 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .bem-info-bar-btn--panned {
   border-color: #fb923c;
-  box-shadow: 0 0 0 2px rgba(251, 146, 60, 0.35),
-              0 0 14px rgba(251, 146, 60, 0.28),
-              0 8px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0 2px rgba(251, 146, 60, 0.35), 0 0 14px rgba(251, 146, 60, 0.28), 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .bem-info-bar-btn--panned:hover {
   border-color: #fb923c;
   background: color-mix(in srgb, rgba(251, 146, 60, 0.16) 70%, var(--bg-elev-2));
-  box-shadow: 0 0 0 2px rgba(251, 146, 60, 0.45),
-              0 0 18px rgba(251, 146, 60, 0.38),
-              0 8px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0 2px rgba(251, 146, 60, 0.45), 0 0 18px rgba(251, 146, 60, 0.38), 0 8px 20px rgba(0, 0, 0, 0.3);
 }
-
 
 .bem-info-bar-btn--phenomenon {
   border-color: #c084fc;
-  box-shadow: 0 0 0 2px rgba(192, 132, 252, 0.35),
-              0 0 14px rgba(192, 132, 252, 0.28),
-              0 8px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0 2px rgba(192, 132, 252, 0.35), 0 0 14px rgba(192, 132, 252, 0.28), 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .bem-info-bar-btn--phenomenon:hover {
   border-color: #c084fc;
   background: color-mix(in srgb, rgba(192, 132, 252, 0.16) 70%, var(--bg-elev-2));
-  box-shadow: 0 0 0 2px rgba(192, 132, 252, 0.45),
-              0 0 18px rgba(192, 132, 252, 0.38),
-              0 8px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0 2px rgba(192, 132, 252, 0.45), 0 0 18px rgba(192, 132, 252, 0.38), 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .bem-card-name-label {
@@ -3303,55 +3400,45 @@ body.privacy-modal-open {
 }
 
 /* ── BEM responsive styles ───────────────────────────────────────────────────── */
-
 @media (max-width: 680px) {
   :root {
     --bem-zoom-max: 400px;
   }
-
   .bem-map {
     gap: 4px;
   }
 }
-
 @media (max-width: 480px) {
   :root {
     --bem-zoom-max: 320px;
   }
-
   .bem-map {
     gap: 3px;
   }
 }
-
 @media (max-height: 520px) and (orientation: landscape) {
   .bem-map-area {
     padding: calc(var(--game-block-safe-start) + 48px) var(--game-inline-safe-end) calc(var(--game-block-safe-end) + 68px) var(--game-inline-safe-start);
     flex: 1;
   }
-
   .bem-info-bar {
     bottom: var(--game-bottom-clearance);
   }
 }
-
 /* Mobile portrait: BEM grid rotates with the game view */
 @media (pointer: coarse) and (orientation: portrait) {
   .bem-map-area {
     padding: calc(var(--game-block-safe-start) + 48px) var(--game-inline-safe-end) calc(var(--game-block-safe-end) + 68px) var(--game-inline-safe-start);
   }
-
   .bem-info-bar-btn {
     height: 52px;
     min-height: 52px;
     font-size: 0.9rem;
     padding: 0 14px;
-    max-width: min(240px, calc((100% - 36px) / 2));
+    max-width: min(240px, (100% - 36px) / 2);
   }
 }
-
 /* ── BEM zoom levels ─────────────────────────────────────────────────────────── */
-
 /* BEM-only controls are hidden by default; visible only in BEM mode */
 .bem-only-setting {
   display: none;
@@ -3411,7 +3498,6 @@ body.privacy-modal-open {
 }
 
 /* ── Die result popups ───────────────────────────────────────────────────────── */
-
 .die-popup {
   position: fixed;
   inset: 0;
@@ -3456,9 +3542,7 @@ body.privacy-modal-open {
   border: 2px solid #60a5fa;
   border-radius: 18px;
   cursor: pointer;
-  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.55),
-              0 0 22px rgba(96, 165, 250, 0.6),
-              0 0 44px rgba(96, 165, 250, 0.3);
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.55), 0 0 22px rgba(96, 165, 250, 0.6), 0 0 44px rgba(96, 165, 250, 0.3);
   animation: diePopupBluePulse 1.4s ease infinite;
   backdrop-filter: blur(12px);
   transition: transform 120ms ease, background 120ms ease;
@@ -3489,9 +3573,7 @@ body.privacy-modal-open {
   border: 2px solid #4ade80;
   border-radius: 14px;
   cursor: pointer;
-  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.35),
-              0 0 18px rgba(74, 222, 128, 0.4),
-              0 8px 24px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.35), 0 0 18px rgba(74, 222, 128, 0.4), 0 8px 24px rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(12px);
   transition: transform 120ms ease, background 120ms ease;
 }
@@ -3510,9 +3592,7 @@ body.privacy-modal-open {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: #f97316;
-  text-shadow: 0 0 8px rgba(239, 68, 68, 0.9),
-               0 0 22px rgba(239, 68, 68, 0.7),
-               0 0 45px rgba(239, 68, 68, 0.4);
+  text-shadow: 0 0 8px rgba(239, 68, 68, 0.9), 0 0 22px rgba(239, 68, 68, 0.7), 0 0 45px rgba(239, 68, 68, 0.4);
   animation: chaosTitlePulse 1.4s ease infinite;
 }
 
@@ -3529,9 +3609,7 @@ body.privacy-modal-open {
   color: #f97316;
   cursor: pointer;
   font-size: 3.5rem;
-  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.55),
-              0 0 22px rgba(239, 68, 68, 0.5),
-              0 0 40px rgba(239, 68, 68, 0.2);
+  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.55), 0 0 22px rgba(239, 68, 68, 0.5), 0 0 40px rgba(239, 68, 68, 0.2);
   animation: bemFirePulse 1.4s ease infinite;
   backdrop-filter: blur(12px);
   transition: transform 120ms ease;
@@ -3543,9 +3621,7 @@ body.privacy-modal-open {
 }
 
 /* Mobile portrait: die popups rotate with the shared mobile game viewport rules. */
-
 /* ── List view ───────────────────────────────────────────────────────────────── */
-
 .list-card-layout {
   display: flex;
   flex-direction: column;
@@ -3558,14 +3634,7 @@ body.privacy-modal-open {
 .list-card-header,
 .list-card-row {
   display: grid;
-  grid-template-columns:
-    minmax(0, 2.5fr)
-    100px
-    minmax(0, 1.4fr)
-    62px
-    minmax(0, 1.4fr)
-    minmax(0, 0.8fr)
-    auto;
+  grid-template-columns: minmax(0, 2.5fr) 100px minmax(0, 1.4fr) 62px minmax(0, 1.4fr) minmax(0, 0.8fr) auto;
   align-items: center;
   gap: 0 14px;
   padding: 0 16px;
@@ -3717,30 +3786,18 @@ body.privacy-modal-open {
 @media (max-width: 900px) {
   .list-card-header,
   .list-card-row {
-    grid-template-columns:
-      minmax(0, 2.5fr)
-      100px
-      minmax(0, 1.4fr)
-      62px
-      minmax(0, 0.8fr)
-      auto;
+    grid-template-columns: minmax(0, 2.5fr) 100px minmax(0, 1.4fr) 62px minmax(0, 0.8fr) auto;
   }
-
   .list-card-illustrator,
   .list-header-cell:nth-child(5) {
     display: none;
   }
 }
-
 @media (max-width: 600px) {
   .list-card-header,
   .list-card-row {
-    grid-template-columns:
-      minmax(0, 1fr)
-      72px
-      auto;
+    grid-template-columns: minmax(0, 1fr) 72px auto;
   }
-
   .list-card-plane,
   .list-card-set,
   .list-card-illustrator,
@@ -3752,9 +3809,7 @@ body.privacy-modal-open {
     display: none;
   }
 }
-
 /* ── Confirm dialog ──────────────────────────────────────────────────────────── */
-
 .confirm-dialog {
   position: fixed;
   inset: 0;
@@ -3782,17 +3837,22 @@ body.privacy-modal-open {
   border: 1px solid var(--border);
   border-radius: 18px;
   padding: 28px 28px 24px;
-  max-width: min(420px, calc(100vw - 32px));
+  max-width: min(420px, 100vw - 32px);
   width: 100%;
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
   animation: confirm-pop 180ms ease;
 }
 
 @keyframes confirm-pop {
-  from { transform: scale(0.94); opacity: 0; }
-  to   { transform: scale(1);    opacity: 1; }
+  from {
+    transform: scale(0.94);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
-
 .confirm-title {
   margin: 0 0 10px;
   font-size: 1.2rem;
@@ -3835,7 +3895,6 @@ body.privacy-modal-open {
 }
 
 /* ── Tutorial overlay ─────────────────────────────────────────────────────────── */
-
 .game-tutorial-overlay {
   position: fixed;
   inset: 0;
@@ -3945,9 +4004,7 @@ body.privacy-modal-open {
 }
 
 /* Tutorial overlay in portrait mobile — rotation handled with the shared mobile game viewport variables. */
-
 /* ── Deck panel close button in title row ─────────────────────────────────────── */
-
 .deck-panel-title-row {
   align-items: center;
 }
